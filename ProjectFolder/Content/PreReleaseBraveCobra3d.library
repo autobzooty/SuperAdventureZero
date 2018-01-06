@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "PreReleaseBraveCobra3d"
+	var LibraryId = 0x592193503e3fdd98
+	var SourceControlType = ""
+	var ReadOnly = false
+}

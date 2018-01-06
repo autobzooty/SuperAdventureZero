@@ -1,0 +1,8 @@
+[Version:1]
+ContentLibrary 
+{
+	var Name = "SuperAdventure3D"
+	var LibraryId = 0x5ab964d1d74f77a2
+	var SourceControlType = ""
+	var ReadOnly = false
+}

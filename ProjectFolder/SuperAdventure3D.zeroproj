@@ -1,0 +1,35 @@
+[Version:1]
+Cog 
+{
+	var Name = ""
+	ProjectSettings 
+	{
+		var ProjectName = "SuperAdventure3D"
+		var ProjectOwner = ""
+		var DefaultLevel = "Level"
+		var ProjectSpace = "Space"
+		var AutoTakeProjectScreenshot = true
+		var Guid = 0x7367156449672124
+	}
+	WindowLaunchSettings 
+	{
+		var LaunchFullscreen = true
+		var WindowedResolution = Integer2{1280, 720}
+	}
+	FrameRateSettings 
+	{
+		var VerticalSync = false
+		var LimitFrameRate = true
+		var FrameRate = 60
+	}
+	LauncherProjectInfo 
+	{
+		var Tags = ""
+		var ExperimentalBranchName = ""
+		var MajorVersion = 1
+		var MinorVersion = 3
+		var PatchVersion = 0
+		var RevisionId = 643
+		var ShortChangeSet = "d97d87b14c9d"
+	}
+}
