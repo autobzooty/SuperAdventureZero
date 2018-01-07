@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "InputManager"
+		var ResourceId = 0x5ab9012fa366923d
+	}
+}

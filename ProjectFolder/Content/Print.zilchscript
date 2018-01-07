@@ -1,0 +1,19 @@
+class Print
+{
+  [Static] var PrintToZeroConsole : Boolean = true;
+  [Static] var PrintToGameConsole : Boolean = true;
+  
+  
+  constructor()                                                 { Print.Helper(""); }
+  constructor(v0 : any)                                         { Print.Helper("`v0`"); }
+  constructor(v0 : any, v1 : any)                               { Print.Helper("`v0`, `v1`"); }
+  constructor(v0 : any, v1 : any, v2 : any)                     { Print.Helper("`v0`, `v1`, `v2`"); }
+  constructor(v0 : any, v1 : any, v2 : any, v3 : any)           { Print.Helper("`v0`, `v1`, `v2`, `v3`"); }
+  constructor(v0 : any, v1 : any, v2 : any, v3 : any, v4 : any) { Print.Helper("`v0`, `v1`, `v2`, `v3`, `v4`"); }
+  
+  
+  [Static] function Helper(str : String)
+  {
+    Console.WriteLine(String.FormatC("%8d | `str`", Main.Frame));
+  }
+}

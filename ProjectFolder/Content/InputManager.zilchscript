@@ -1,0 +1,199 @@
+class IM : ZilchComponent
+{
+  var Mode : InputMode = InputMode.Default;
+  
+  var Current : InputData = InputData();
+  var Previous : InputData = InputData();
+  
+  var History : Array[InputData] = Array[InputData]();
+  var HistoryIndex = 0;
+  
+  var GameStickToMappingList : HashMap[GameStick, Array[StickMapping]] =
+    HashMap[GameStick, Array[StickMapping]]();
+  var GameActionToMappingList : HashMap[GameAction, Array[ActionMapping]] =
+    HashMap[GameAction, Array[ActionMapping]]();
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.GameSession, Events.InputMappingSetup, this.OnInputMappingSetup);
+    Zero.Connect(this.GameSession, Events.IMUpdate, this.OnIMUpdate);
+    Zero.Connect(this.GameSession, Events.IMCleanup, this.OnIMCleanup);
+  }
+  
+  
+  function OnInputMappingSetup(event : InputMappingSetupEvent)
+  {
+    this.GameStickToMappingList = event.Sticks;
+    this.GameActionToMappingList = event.Actions;
+    
+    //Console.WriteLine("- Printing Stick Mappings");
+    //foreach (var entry in this.GameStickToMappingList)
+    //{
+    //  Console.WriteLine("  - Stick: `entry.Key`");
+      
+    //  foreach (var mapping in entry.Value)
+    //  {
+    //    Console.WriteLine("    - Mapping");
+    //  }
+    //}
+    
+    //Console.WriteLine("- Printing Action Mappings");
+    //foreach (var entry in this.GameActionToMappingList)
+    //{
+    //  Console.WriteLine("  - Action: `entry.Key`");
+      
+    //  foreach (var mapping in entry.Value)
+    //  {
+    //    Console.WriteLine("    - Mapping");
+    //  }
+    //}
+  }
+  
+  
+  function OnIMUpdate(event : UpdateEvent)
+  {
+    if (this.Mode == InputMode.Replay)
+    {
+      this.Current = this.GetReplayCurrent();
+    }
+    else
+    {
+      this.Current = InputData();
+      
+      this.RecordStickValues();
+      this.RecordActionValues();
+    }
+  }
+  
+  
+  function OnIMCleanup(event : UpdateEvent)
+  {
+    if (this.Mode == InputMode.Replay)
+    {
+      this.Previous = this.GetReplayPrevious();
+      ++this.HistoryIndex;
+    }
+    else if (this.Mode == InputMode.Record)
+    {
+      this.History.Add(this.Current);
+      
+      this.Previous = this.Current.Copy();
+    }
+    else
+    {
+      this.Previous = this.Current.Copy();
+    }
+  }
+  
+  
+  function RecordStickValues()
+  {
+    foreach (var entry in this.GameStickToMappingList)
+    {
+      var stick = entry.Key;
+      var mappingList = entry.Value;
+      
+      foreach (var mapping in mappingList)
+        this.Current.Sticks[stick] += mapping.GetValue();
+    }
+  }
+  
+  
+  function RecordActionValues()
+  {
+    foreach (var entry in this.GameActionToMappingList)
+    {
+      var action = entry.Key;
+      var mappingList = entry.Value;
+      
+      foreach (var mapping in mappingList)
+        this.Current.Actions[action] = this.Current.Actions[action] || mapping.GetDown();
+    }
+  }
+  
+  
+  function Down(action : GameAction) : Boolean
+  {
+    return this.Current.Actions[action];
+  }
+  
+  function Up(action : GameAction) : Boolean
+  {
+    return !this.Current.Actions[action];
+  }
+  
+  function Triggered(action : GameAction) : Boolean
+  {
+    return this.Current.Actions[action] && !this.Previous.Actions[action];
+  }
+  
+  function Released(action : GameAction) : Boolean
+  {
+    return !this.Current.Actions[action] && this.Previous.Actions[action];
+  }
+  
+  function GetStick(stick : GameStick) : Real2
+  {
+    return this.Current.Sticks[stick];
+  }
+  
+  
+  function GetReplayCurrent() : InputData
+  {
+    return this.History[this.HistoryIndex];
+  }
+  
+  
+  function GetReplayPrevious() : InputData
+  {
+    if (this.HistoryIndex > 0)
+      return this.History[this.HistoryIndex - 1];
+    else
+      return this.History[0];
+  }
+}
+
+
+class InputData
+{
+  var Sticks : Array[Real2] = Array[Real2](GameStick.COUNT_ + 1);
+  var Actions : Array[Boolean] = Array[Boolean](GameAction.COUNT_ + 1);
+  
+  function Copy() : InputData
+  {
+    return InputData()
+    {
+      Sticks  = this.Sticks.Copy(),
+      Actions = this.Actions.Copy(),
+    };
+  }
+}
+
+
+enum InputMode
+{
+  Default,
+  Record,
+  Replay,
+}
+
+
+enum GameStick
+{
+  Move,
+  Camera,
+  
+  COUNT_
+}
+
+
+enum GameAction
+{
+  Jump,
+  Trick,
+  Attack,
+  Interact,
+  
+  COUNT_
+}

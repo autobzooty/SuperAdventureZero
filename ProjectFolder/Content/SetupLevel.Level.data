@@ -1,0 +1,1693 @@
+[Version:1]
+Level 
+{
+	Cog [ContextId:1]
+	{
+		var Name = "LevelSettings"
+		GravityEffect 
+		{
+			var Active = true
+			var WakeUpOnChange = false
+			var DebugDrawEffect = false
+			var LocalSpaceDirection = true
+			var Strength = 10
+			var Direction = Real3{0, -1, 0}
+		}
+		DragEffect 
+		{
+			var Active = true
+			var WakeUpOnChange = false
+			var DebugDrawEffect = false
+			var LinearDamping = 0.200000003
+			var AngularDamping = 0.100000001
+			var LinearDrag = 0
+			var AngularDrag = 0
+		}
+		GridDraw 
+		{
+			var Active = false
+			var HalfCellOffset = false
+			var CellSize = 1
+			var Axis = AxisDirection.Z
+			var Lines = 100
+			var DrawAxisOrigins = true
+			var AlwaysDrawInEditor = true
+			var DrawInGame = false
+			var GridColor = Real4{0.5, 0.5, 0.5, 0.400000006}
+			var GridHighlight = Real4{0, 0, 0, 0.400000006}
+			var HighlightInterval = 10
+			var FollowEditorCamera = false
+		}
+		UiEditorExtension 
+		{
+			var HighlightColor = Real4{1, 0, 0, 1}
+		}
+	}
+	Cog [ContextId:2]
+	{
+		var Name = "EditorCamera"
+		Transform 
+		{
+			var Translation = Real3{480, -299.5, 10}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = true
+			var RenderInGame = false
+			var RenderOrder = 0
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 2
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = ":/RootWidget"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 3
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Fill
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.100000001
+			var FarPlane = 100
+			var PerspectiveMode = PerspectiveMode.Orthographic
+			var FieldOfView = 45
+			var Size = 755
+		}
+		EditorCameraController 
+		{
+			var ControlMode = ControlMode.ZPlane
+			var Previous3DMode = ControlMode.Orbit
+			var LookDistance = 20
+			var VerticalAngle = 0
+			var HorizontalAngle = 0
+			var LookTarget = Real3{480, -300, 0}
+			var MoveSensitivity = 1
+		}
+	}
+	Cog [ContextId:4]
+	{
+		var Name = "GameCamera"
+		Transform 
+		{
+			var Translation = Real3{250, 100, 10}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		SelectionIcon 
+		{
+			var Visible = true
+			var VisibilityEvents = true
+			var Material = "56581e2bb81777be:DebugDrawOnTop"
+			var SpriteSource = "58f8e4be7360cf7c:CameraIcon"
+			var ViewScale = 1
+			var OverrideSelections = true
+		}
+		CameraViewport 
+		{
+			var RenderInEditor = false
+			var RenderInGame = true
+			var RenderOrder = 0
+			var CameraPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 4
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var RendererPath = CogPath
+			{
+				var Path = ":/RootWidget"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 3
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var ResolutionOrAspect = Integer2{1920, 1080}
+			var RenderToViewport = true
+			var ForwardViewportEvents = false
+			var ViewportScaling = ViewportScaling.Letterbox
+			var MarginColor = Real4{0, 0, 0, 1}
+			var NormalizedSize = Real2{1, 1}
+			var NormalizedOffset = Real2{0, 0}
+		}
+		Camera 
+		{
+			var NearPlane = 0.100000001
+			var FarPlane = 100
+			var PerspectiveMode = PerspectiveMode.Orthographic
+			var FieldOfView = 60
+			var Size = 20
+		}
+		SoundListener 
+		{
+			var Active = true
+		}
+	}
+	Cog [ContextId:3]
+	{
+		var Name = "RootWidget"
+		Transform 
+		{
+			var Translation = Real3{0, 0, 0}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Area 
+		{
+			var Size = Real2{960, 600}
+			var Origin = Location.TopLeft
+		}
+		Sprite 
+		{
+			var Visible = true
+			var ViewCulling = true
+			var VisibilityEvents = true
+			var OverrideBoundingBox = false
+			var LocalAabbCenter = Real3{0, 0, 0}
+			var LocalAabbHalfExtents = Real3{1, 1, 1}
+			var GroupSortValue = 0
+			var Material = "582c575af53d18c9:AlphaSprite"
+			var VertexColor = Real4{0.0627451017, 0.0627451017, 0.0627451017, 1}
+			var GeometryMode = SpriteGeometryMode.ZPlane
+			var SpriteSource = "5275aa4d802dd6dc:Square"
+			var FlipX = false
+			var FlipY = false
+			var AnimationActive = true
+			var AnimationSpeed = 1
+			var StartFrame = 0
+		}
+		Reactive 
+		{
+			var Active = true
+		}
+		UiRootWidget 
+		{
+			var Active = true
+			var Visible = true
+			var Interactive = true
+			var InLayout = true
+			var ClipChildren = true
+			var CanTakeFocus = false
+			var LocalColor = Real4{0.0627451017, 0.0627451017, 0.0627451017, 1}
+			var HierarchyColor = Real4{1, 1, 1, 1}
+			var SizePolicyX = UiSizePolicy.Auto
+			var SizePolicyY = UiSizePolicy.Auto
+			var FlexSize = Real2{1, 1}
+			var AbsoluteMinSize = Real2{1, 1}
+			var VerticalAlignment = UiVerticalAlignment.Top
+			var HorizontalAlignment = UiHorizontalAlignment.Left
+			var MarginLeft = 0
+			var MarginTop = 0
+			var MarginRight = 0
+			var MarginBottom = 0
+			var DockMode = UiDockMode.Left
+			var MouseHoverTime = 0.100000001
+			var MouseHoldTime = 1
+			var DoubleClickTime = 0.300000012
+			var DepthSeparation = 0.00999999978
+			var DebugMouseInteraction = false
+		}
+		UiRenderer 
+		{
+			var ClearColor = Real4{0, 0, 0, 0}
+			var EditorDebugDraw = true
+			var GameDebugDraw = true
+		}
+		UiStackLayout 
+		{
+			var PaddingLeft = 5
+			var PaddingTop = 5
+			var PaddingRight = 5
+			var PaddingBottom = 5
+			var StackDirection = UiStackLayoutDirection.TopToBottom
+			var Spacing = Real2{0, 5}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5ab90d884ae10720][ContextId:5]
+			{
+				var Name = "InputMapper"
+				Transform 
+				{
+					var Translation = Real3{5, -5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Sprite 
+				{
+					var Visible = true
+					var ViewCulling = true
+					var VisibilityEvents = true
+					var OverrideBoundingBox = false
+					var LocalAabbCenter = Real3{0, 0, 0}
+					var LocalAabbHalfExtents = Real3{1, 1, 1}
+					var GroupSortValue = 0
+					var Material = "582c575af53d18c9:AlphaSprite"
+					var VertexColor = Real4{0.189150006, 0.485000014, 0.307489961, 0.504999995}
+					var GeometryMode = SpriteGeometryMode.ZPlane
+					var SpriteSource = "5275aa4d802dd6dc:Square"
+					var FlipX = false
+					var FlipY = false
+					var AnimationActive = true
+					var AnimationSpeed = 1
+					var StartFrame = 0
+				}
+				Area 
+				{
+					var Size = Real2{400, 590}
+					var Origin = Location.TopLeft
+				}
+				UiWidget 
+				{
+					var Active = true
+					var Visible = true
+					var Interactive = true
+					var InLayout = true
+					var ClipChildren = false
+					var CanTakeFocus = false
+					var LocalColor = Real4{0.189150006, 0.485000014, 0.307489961, 0.504999995}
+					var HierarchyColor = Real4{1, 1, 1, 1}
+					var SizePolicyX = UiSizePolicy.Fixed
+					var SizePolicyY = UiSizePolicy.Flex
+					var FlexSize = Real2{1, 1}
+					var AbsoluteMinSize = Real2{1, 1}
+					var VerticalAlignment = UiVerticalAlignment.Top
+					var HorizontalAlignment = UiHorizontalAlignment.Left
+					var MarginLeft = 0
+					var MarginTop = 0
+					var MarginRight = 0
+					var MarginBottom = 0
+					var DockMode = UiDockMode.Left
+				}
+				UiStackLayout 
+				{
+					var PaddingLeft = 2
+					var PaddingTop = 2
+					var PaddingRight = 2
+					var PaddingBottom = 2
+					var StackDirection = UiStackLayoutDirection.LeftToRight
+					var Spacing = Real2{2, 2}
+				}
+				InputMapper 
+				{
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5ab9f53bfd8c790f][ContextId:6]
+					{
+						var Name = "StickMappings"
+						Transform 
+						{
+							var Translation = Real3{2, -2, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Area 
+						{
+							var Size = Real2{197, 586}
+							var Origin = Location.TopLeft
+						}
+						Sprite 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "582c575af53d18c9:AlphaSprite"
+							var VertexColor = Real4{1, 1, 1, 0.105000019}
+							var GeometryMode = SpriteGeometryMode.ZPlane
+							var SpriteSource = "5586f579ca73ecc2:SquareBordered"
+							var FlipX = false
+							var FlipY = false
+							var AnimationActive = true
+							var AnimationSpeed = 1
+							var StartFrame = 0
+						}
+						UiWidget 
+						{
+							var Active = true
+							var Visible = true
+							var Interactive = true
+							var InLayout = true
+							var ClipChildren = false
+							var CanTakeFocus = false
+							var LocalColor = Real4{1, 1, 1, 0.105000019}
+							var HierarchyColor = Real4{1, 1, 1, 1}
+							var SizePolicyX = UiSizePolicy.Flex
+							var SizePolicyY = UiSizePolicy.Flex
+							var FlexSize = Real2{1, 1}
+							var AbsoluteMinSize = Real2{1, 1}
+							var VerticalAlignment = UiVerticalAlignment.Top
+							var HorizontalAlignment = UiHorizontalAlignment.Left
+							var MarginLeft = 0
+							var MarginTop = 0
+							var MarginRight = 0
+							var MarginBottom = 0
+							var DockMode = UiDockMode.Left
+						}
+						UiStackLayout 
+						{
+							var PaddingLeft = 1
+							var PaddingTop = 1
+							var PaddingRight = 1
+							var PaddingBottom = 1
+							var StackDirection = UiStackLayoutDirection.TopToBottom
+							var Spacing = Real2{1, 1}
+						}
+						Hierarchy 
+						{
+							Cog [Id:0x5ab9f2141959e05e][ContextId:7]
+							{
+								var Name = "Label"
+								Transform 
+								{
+									var Translation = Real3{99, -10, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Area 
+								{
+									var Size = Real2{195, 18}
+									var Origin = Location.Center
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{1, 1, 1, 1}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Center
+									var HorizontalAlignment = UiHorizontalAlignment.Center
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								SpriteText 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{1, 1, 1, 1}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var Text = "Stick Mappings"
+									var Font = "57343753bb4eaaec:NotoSans-Regular"
+									var FontSize = 12
+									var PixelsPerUnit = 1
+									var TextAlign = TextAlign.Center
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9f5eff3aa0bc1][ContextId:8]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -20, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								GamepadLeftStickMappingSetter 
+								{
+									var Mapping = GamepadLeftStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Move
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9f11670f7dd91][ContextId:9]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -45, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								GamepadRightStickMappingSetter 
+								{
+									var Mapping = GamepadRightStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Camera
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9f1a865ffd9bb][ContextId:10]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -70, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{0, 1}
+										var Stick = GameStick.Move
+										var Key = Keys.W
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9fe9f84c24a12][ContextId:11]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -95, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{0, -1}
+										var Stick = GameStick.Move
+										var Key = Keys.S
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9feaa87f47e70][ContextId:12]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -120, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{1, 0}
+										var Stick = GameStick.Move
+										var Key = Keys.D
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9ff41ba133928][ContextId:13]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -145, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{-1, 0}
+										var Stick = GameStick.Move
+										var Key = Keys.A
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9ff89a589f178][ContextId:14]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -170, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{0, 1}
+										var Stick = GameStick.Camera
+										var Key = Keys.Up
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9ffbcdbe8139c][ContextId:15]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -195, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{0, -1}
+										var Stick = GameStick.Camera
+										var Key = Keys.Down
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9fc6cd1043fe5][ContextId:16]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -220, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{1, 0}
+										var Stick = GameStick.Camera
+										var Key = Keys.Right
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9fc7fd3c0b8da][ContextId:17]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -245, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardStickMappingSetter 
+								{
+									var Mapping = KeyboardStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{-1, 0}
+										var Stick = GameStick.Camera
+										var Key = Keys.Left
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9ff27b629c060][ContextId:18]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -270, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.400000006, 0.533333421, 0.800000012, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.400000006, 0.533333421, 0.800000012, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								MouseStickMappingSetter 
+								{
+									var Mapping = MouseStickMapping
+									{
+										var PlayerIndex = 0
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Camera
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+						}
+					}
+					Cog [Id:0x5ab9f1247225680d][ContextId:19]
+					{
+						var Name = "ActionMappings"
+						Transform 
+						{
+							var Translation = Real3{201, -2, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Area 
+						{
+							var Size = Real2{197, 586}
+							var Origin = Location.TopLeft
+						}
+						Sprite 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "582c575af53d18c9:AlphaSprite"
+							var VertexColor = Real4{1, 1, 1, 0.105000019}
+							var GeometryMode = SpriteGeometryMode.ZPlane
+							var SpriteSource = "5586f579ca73ecc2:SquareBordered"
+							var FlipX = false
+							var FlipY = false
+							var AnimationActive = true
+							var AnimationSpeed = 1
+							var StartFrame = 0
+						}
+						UiWidget 
+						{
+							var Active = true
+							var Visible = true
+							var Interactive = true
+							var InLayout = true
+							var ClipChildren = false
+							var CanTakeFocus = false
+							var LocalColor = Real4{1, 1, 1, 0.105000019}
+							var HierarchyColor = Real4{1, 1, 1, 1}
+							var SizePolicyX = UiSizePolicy.Flex
+							var SizePolicyY = UiSizePolicy.Flex
+							var FlexSize = Real2{1, 1}
+							var AbsoluteMinSize = Real2{1, 1}
+							var VerticalAlignment = UiVerticalAlignment.Top
+							var HorizontalAlignment = UiHorizontalAlignment.Left
+							var MarginLeft = 0
+							var MarginTop = 0
+							var MarginRight = 0
+							var MarginBottom = 0
+							var DockMode = UiDockMode.Left
+						}
+						UiStackLayout 
+						{
+							var PaddingLeft = 1
+							var PaddingTop = 1
+							var PaddingRight = 1
+							var PaddingBottom = 1
+							var StackDirection = UiStackLayoutDirection.TopToBottom
+							var Spacing = Real2{1, 1}
+						}
+						Hierarchy 
+						{
+							Cog [Id:0x5ab9f2141959e05e][ContextId:20]
+							{
+								var Name = "Label"
+								Transform 
+								{
+									var Translation = Real3{99, -10, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Area 
+								{
+									var Size = Real2{195, 18}
+									var Origin = Location.Center
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{1, 1, 1, 1}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Center
+									var HorizontalAlignment = UiHorizontalAlignment.Center
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								SpriteText 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{1, 1, 1, 1}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var Text = "Action Mappings"
+									var Font = "57343753bb4eaaec:NotoSans-Regular"
+									var FontSize = 12
+									var PixelsPerUnit = 1
+									var TextAlign = TextAlign.Center
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9f5eff3aa0bc1][ContextId:21]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -20, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								GamepadActionMappingSetter 
+								{
+									var Mapping = GamepadActionMapping
+									{
+										var PlayerIndex = 0
+										var Action = GameAction.Jump
+										var Button = Buttons.A
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9f19162bf2940][ContextId:22]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -45, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								GamepadActionMappingSetter 
+								{
+									var Mapping = GamepadActionMapping
+									{
+										var PlayerIndex = 0
+										var Action = GameAction.Attack
+										var Button = Buttons.X
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9fc82c6f9813b][ContextId:23]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -70, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardActionMappingSetter 
+								{
+									var Mapping = KeyboardActionMapping
+									{
+										var PlayerIndex = 0
+										var Action = GameAction.Jump
+										var Key = Keys.Space
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9fd09e82646ec][ContextId:24]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -95, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								KeyboardActionMappingSetter 
+								{
+									var Mapping = KeyboardActionMapping
+									{
+										var PlayerIndex = 0
+										var Action = GameAction.Attack
+										var Key = Keys.Shift
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+							Cog [Id:0x5ab9fd3dee37e0e2][ContextId:25]
+							{
+								var Name = "Mapping"
+								Transform 
+								{
+									var Translation = Real3{1, -120, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0.400000006, 0.533333421, 0.800000012, 0.899999976}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Area 
+								{
+									var Size = Real2{195, 24}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0.400000006, 0.533333421, 0.800000012, 0.899999976}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								MouseActionMappingSetter 
+								{
+									var Mapping = MouseActionMapping
+									{
+										var PlayerIndex = 0
+										var Action = GameAction.Attack
+										var Button = MouseButtons.Left
+									}
+								}
+								Hierarchy 
+								{
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

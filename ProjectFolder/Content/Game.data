@@ -2,18 +2,26 @@
 GameSession 
 {
 	var Name = ""
-	var LinkId = 1
-	DefaultGameSetup 
+	CustomGameSetup 
 	{
-		var StartingSpace = "576f215c0825de61:Space"
+		var MainSpaceArchetype = "576f215c0825de61:Space"
+		var SetupSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
 		var StartingLevel = "576f215c0825c3a8:Level"
-		var LoadEditingLevel = true
+		var ChosenLevel = "576f215c0825c3a8:Level"
+		var SetupLevel = "5ab90cdb31e5b884:SetupLevel"
+		var LevelChoice = EditorStartingLevelChoice.EditorLevel
+	}
+	IM 
+	{
 	}
 	NetPeer 
 	{
 		var DetectOutgoingChanges = true
 		var AcceptIncomingChanges = true
 		var AllowNapping = true
+		var AccurateTimestampOnOnline = true
+		var AccurateTimestampOnChange = true
+		var AccurateTimestampOnOffline = true
 		var AutomaticChannel = "56f22bdc94800e65:Default"
 		var NetPropertyInfos = Array
 		{

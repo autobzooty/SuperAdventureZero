@@ -1,0 +1,54 @@
+class GameSetupEvent : ZilchEvent
+{
+  sends CustomGameSetup : GameSetupEvent;
+}
+
+class InputMappingSetupEvent : ZilchEvent
+{
+  sends InputMappingSetup : InputMappingSetupEvent;
+  
+  var Sticks : HashMap[GameStick, Array[StickMapping]];
+  var Actions : HashMap[GameAction, Array[ActionMapping]];
+}
+
+class UpdateEventDummy
+{
+  sends IMUpdate : UpdateEvent;
+  
+  sends ConsoleUpkeep : UpdateEvent;
+  sends Upkeep : UpdateEvent;
+  
+  sends PlayerUpdate : UpdateEvent;
+  sends StandardUpdate : UpdateEvent;
+  
+  sends CameraUpdate : UpdateEvent;
+  sends GUIUpdate : UpdateEvent;
+  sends PhysicsUpdate : UpdateEvent;
+  
+  sends Cleanup : UpdateEvent;
+  
+  sends IMCleanup : UpdateEvent;
+}
+
+class MWEvent : ZilchEvent
+{
+  var Instigator : Cog;
+  // var InstigatingFaction : FactionValue;
+  var InstigatorName : String;
+  
+  constructor() : base() {}
+  
+  constructor(instigator : Cog) : base()
+  {
+    this.Instigator = instigator;
+    // this.InstigatingFaction = ... something
+    this.InstigatorName = instigator.Name;
+  }
+  
+  //constructor(instigatingFaction : FactionValue) : base()
+  //{
+  //  this.InstigatingFaction = instigatingFaction;
+  //}
+}
+
+

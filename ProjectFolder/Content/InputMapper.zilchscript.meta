@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "InputMapper"
+		var ResourceId = 0x5ab9c0af2fa91214
+	}
+}

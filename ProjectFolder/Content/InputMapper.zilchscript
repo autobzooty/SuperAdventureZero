@@ -1,0 +1,305 @@
+class InputMapper : ZilchComponent
+{
+  [Property]
+  var Sticks : CogPath = CogPath("StickMappings");
+  [Property]
+  var Actions : CogPath = CogPath("ActionMappings");
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.CustomGameSetup, this.OnCustomGameSetup);
+  }
+  
+  
+  function OnCustomGameSetup(event : GameSetupEvent)
+  {
+    var gameStickToMappingList = HashMap[GameStick, Array[StickMapping]]();
+    var gameActionTomappingList = HashMap[GameAction, Array[ActionMapping]]();
+    
+    foreach (var child in this.Sticks.Cog.Children)
+    {
+      var stickMappingSetter = child.StickMappingSetter;
+      
+      if (stickMappingSetter != null)
+      {
+        var stickMapping = stickMappingSetter.GetMapping();
+        var stick = stickMapping.Stick;
+        
+        var list = gameStickToMappingList.GetOrDefault(stick, null);
+        
+        if (list == null)
+        {
+          list = Array[StickMapping]();
+          gameStickToMappingList[stick] = list;
+        }
+        
+        list.Add(stickMapping);
+      }
+    }
+    
+    foreach (var child in this.Actions.Cog.Children)
+    {
+      var actionMappingSetter = child.ActionMappingSetter;
+      
+      if (actionMappingSetter != null)
+      {
+        var actionMapping = actionMappingSetter.GetMapping();
+        var action = actionMapping.Action;
+        
+        var list = gameActionTomappingList.GetOrDefault(action, null);
+        
+        if (list == null)
+        {
+          list = Array[ActionMapping]();
+          gameActionTomappingList[action] = list;
+        }
+        
+        list.Add(actionMapping);
+      }
+    }
+    
+    var imse = InputMappingSetupEvent();
+    imse.Sticks = gameStickToMappingList;
+    imse.Actions = gameActionTomappingList;
+    this.GameSession.DispatchEvent(Events.InputMappingSetup, imse);
+  }
+}
+
+
+class InputMapping
+{
+  [Property] var PlayerIndex : Integer;
+  var Gamepad_ : Gamepad;
+  var Gamepad : Gamepad
+  {
+    get
+    {
+      if (this.Gamepad_ == null) this.Gamepad_ = Zero.Gamepads.GetGamePad(this.PlayerIndex);
+      
+      return this.Gamepad_;
+    }
+  }
+}
+
+class InputMappingSetter : ZilchComponent {}
+
+
+class StickMapping : InputMapping
+{
+  [Property] var Multiplier : Real2 = Real2.One;
+  [Property] var Stick : GameStick = GameStick.Move;
+  
+  [Virtual] function GetValue() : Real2
+  {
+    throw Exception("Base StickMapping GetValue function called");
+  }
+}
+
+class StickMappingSetter : InputMappingSetter
+{
+  [Virtual] function GetMapping() : StickMapping
+  {
+    throw Exception("Base StickMappingSetter GetMapping function called");
+  }
+}
+
+
+class KeyboardStickMapping : StickMapping
+{
+  [Property] var Key : Keys;
+  
+  [Override] function GetValue() : Real2
+  {
+    return Zero.Keyboard.KeyIsDown(this.Key) as Real * this.Multiplier;
+  }
+}
+
+class KeyboardStickMappingSetter : StickMappingSetter
+{
+  [Property] var Mapping : KeyboardStickMapping;
+  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+}
+
+
+class GamepadLeftStickMapping : StickMapping
+{
+  [Override] function GetValue() : Real2
+  {
+    return this.Gamepad.LeftStick * this.Multiplier;
+  }
+}
+
+class GamepadLeftStickMappingSetter : StickMappingSetter
+{
+  [Property] var Mapping : GamepadLeftStickMapping;
+  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+}
+
+
+class GamepadRightStickMapping : StickMapping
+{
+  [Override] function GetValue() : Real2
+  {
+    return this.Gamepad.RightStick * this.Multiplier;
+  }
+}
+
+class GamepadRightStickMappingSetter : StickMappingSetter
+{
+  [Property] var Mapping : GamepadRightStickMapping;
+  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+}
+
+
+class GamepadButtonStickMapping : StickMapping
+{
+  [Property] var Button : Buttons;
+  
+  [Override] function GetValue() : Real2
+  {
+    return this.Gamepad.IsButtonHeld(this.Button) as Real * this.Multiplier;
+  }
+}
+
+class GamepadButtonStickMappingSetter : StickMappingSetter
+{
+  [Property] var Mapping : GamepadButtonStickMapping;
+  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+}
+
+
+class MouseStickMapping : StickMapping
+{
+  [Override] function GetValue() : Real2
+  {
+    return Zero.Mouse.RawMovement * this.Multiplier;
+  }
+}
+
+class MouseStickMappingSetter : StickMappingSetter
+{
+  [Property] var Mapping : MouseStickMapping;
+  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+}
+
+
+class MouseButtonStickMapping : StickMapping
+{
+  [Property] var Button : MouseButtons;
+  
+  [Override] function GetValue() : Real2
+  {
+    return Zero.Mouse.IsButtonDown(this.Button) as Real * this.Multiplier;
+  }
+}
+
+class MouseButtonStickMappingSetter : StickMappingSetter
+{
+  [Property] var Mapping : MouseButtonStickMapping;
+  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+}
+
+
+class ActionMapping : InputMapping
+{
+  [Property] var Action : GameAction = GameAction.Jump;
+  
+  [Virtual] function GetDown() : Boolean
+  {
+    throw Exception("Base ActionMapping GetDown function called");
+  }
+}
+
+class ActionMappingSetter : InputMappingSetter
+{
+  [Virtual] function GetMapping() : ActionMapping
+  {
+    throw Exception("Base ActionMappingSetter GetMapping function called");
+  }
+}
+
+
+class KeyboardActionMapping : ActionMapping
+{
+  [Property] var Key : Keys;
+  
+  [Override] function GetDown() : Boolean
+  {
+    return Zero.Keyboard.KeyIsDown(this.Key);
+  }
+}
+
+class KeyboardActionMappingSetter : ActionMappingSetter
+{
+  [Property] var Mapping : KeyboardActionMapping;
+  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+}
+
+
+class GamepadActionMapping : ActionMapping
+{
+  [Property] var Button : Buttons;
+  
+  [Override] function GetDown() : Boolean
+  {
+    return this.Gamepad.IsButtonHeld(this.Button);
+  }
+}
+
+class GamepadActionMappingSetter : ActionMappingSetter
+{
+  [Property] var Mapping : GamepadActionMapping;
+  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+}
+
+
+class LeftTriggerActionMapping : ActionMapping
+{
+  [Property] var Threshold : Real = 0.25;
+  
+  [Override] function GetDown() : Boolean
+  {
+    return this.Gamepad.LeftTrigger >= this.Threshold;
+  }
+}
+
+class LeftTriggerActionMappingSetter : ActionMappingSetter
+{
+  [Property] var Mapping : LeftTriggerActionMapping;
+  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+}
+
+
+class RightTriggerActionMapping : ActionMapping
+{
+  [Property] var Threshold : Real = 0.25;
+  
+  [Override] function GetDown() : Boolean
+  {
+    return this.Gamepad.RightTrigger >= this.Threshold;
+  }
+}
+
+class RightTriggerActionMappingSetter : ActionMappingSetter
+{
+  [Property] var Mapping : RightTriggerActionMapping;
+  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+}
+
+
+class MouseActionMapping : ActionMapping
+{
+  [Property] var Button : MouseButtons;
+  
+  [Override] function GetDown() : Boolean
+  {
+    return Zero.Mouse.IsButtonDown(this.Button);
+  }
+}
+
+class MouseActionMappingSetter : ActionMappingSetter
+{
+  [Property] var Mapping : MouseActionMapping;
+  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+}

@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "SimpleMover"
+		var ResourceId = 0x5ab9e934b9cff280
+	}
+}

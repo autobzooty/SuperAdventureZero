@@ -1,0 +1,69 @@
+class Main : ZilchComponent
+{
+  [Static]
+  var MainMain : Main;          // just so that static Print has a static Main it can access
+  [Static]
+  var Frame = 0;                // static Print accesses this
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Main.Frame = 0;
+    
+    if (Main.MainMain == null)
+      Main.MainMain = this;
+    
+    this.HideCursor();
+    
+    Zero.Connect(this.Space, Events.LevelStarted, this.OnLevelStarted);
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    Zero.Connect(this.Owner, Events.CogDestroy, this.OnCogDestroy);
+  }
+  
+  
+  function OnLevelStarted(event : GameEvent)
+  {
+    
+  }
+  
+  
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    this.GameSession.DispatchEvent(Events.IMUpdate, event);
+    
+    this.GameSession.DispatchEvent(Events.ConsoleUpkeep, event);
+    
+    this.GameSession.DispatchEvent(Events.Upkeep, event);
+    
+    this.Space.DispatchEvent(Events.PlayerUpdate, event);
+    this.Space.DispatchEvent(Events.StandardUpdate, event);
+    
+    this.Space.DispatchEvent(Events.CameraUpdate, event);
+    this.Space.DispatchEvent(Events.GUIUpdate, event);
+    this.Space.DispatchEvent(Events.PhysicsUpdate, event);
+    
+    this.GameSession.DispatchEvent(Events.Cleanup, event);
+    
+    this.GameSession.DispatchEvent(Events.IMCleanup, event);
+    
+    ++Main.Frame;
+  }
+  
+  
+  function HideCursor()
+  {
+    Zero.Mouse.Cursor = Cursor.Invisible;
+  }
+  
+  
+  function ShowCursor()
+  {
+    Zero.Mouse.Cursor = Cursor.Arrow;
+  }
+  
+  
+  function OnCogDestroy(event : ObjectEvent)
+  {
+    this.ShowCursor();
+  }
+}

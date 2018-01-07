@@ -1,0 +1,64 @@
+class CustomGameSetup : ZilchComponent
+{
+  [Property]
+  // The MainSpace is where the game takes place
+  var MainSpaceArchetype : Archetype = Archetype.Space;
+  [Property]
+  // This space exists to be initialized and then destroyed immediately. It's useful
+  // for setting things up, like the input manager, for instance
+  var SetupSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property]
+  var StartingLevel : Level = Level.Level;
+  [Property]
+  var ChosenLevel : Level = Level.Level;
+  [Property]
+  // This level will only be loaded once into the SetupSpace at the very beginning
+  // of the game, and then that space will be destroyed
+  var SetupLevel : Level = Level.SetupLevel;
+  [Property]
+  var LevelChoice : EditorStartingLevelChoice = EditorStartingLevelChoice.EditorLevel;
+  
+  var MainSpace : Space;
+  
+  var LevelToLoad : Level
+  {
+    get
+    {
+      if      (this.LevelChoice == EditorStartingLevelChoice.StartingLevel)
+        return this.StartingLevel;
+      else if (this.LevelChoice == EditorStartingLevelChoice.ChosenLevel)
+        return this.ChosenLevel;
+      else //  this.LevelChoice == EditorStartingLevelChoice.EditorLevel
+        return Zero.Editor.EditLevel;
+    }
+  }
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.GameSession, Events.GameSetup, this.OnGameSetup);
+  }
+  
+  
+  function OnGameSetup(event : GameEvent)
+  {
+    var setupSpace = this.GameSession.CreateNamedSpace("SetupSpace", this.SetupSpaceArchetype);
+    setupSpace.LoadLevel(this.SetupLevel);
+    
+    setupSpace.DispatchEvent(Events.CustomGameSetup, GameSetupEvent());
+    
+    // but this one must be destroyed, for it is only for setup
+    setupSpace.Destroy();
+    
+    this.MainSpace = this.GameSession.CreateNamedSpace("MainSpace", this.MainSpaceArchetype);
+    this.MainSpace.LoadLevel(this.LevelToLoad);
+  }
+}
+
+
+enum EditorStartingLevelChoice
+{
+  StartingLevel,
+  ChosenLevel,
+  EditorLevel,
+}

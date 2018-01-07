@@ -1,0 +1,32 @@
+class SimpleMover : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  
+  
+  var Speed : Real = 5;
+  
+  var IM_ : IM;
+  var IM : IM
+  {
+    get
+    {
+      if (this.IM_ == null) this.IM_ = this.GameSession.IM;
+      return this.IM_;
+    }
+  }
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+  
+  
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    var movement = Real3.Zero;
+    movement.XY = this.IM.GetStick(GameStick.Move);
+    this.Transform.LocalTranslation += movement * this.Speed * event.Dt;
+  }
+}
