@@ -48,9 +48,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{480, -299.5, 10}
+			var Translation = Real3{400, -250, 20}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, 0, 0, 1}
+			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -101,7 +101,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 755
+			var Size = 535
 		}
 		EditorCameraController 
 		{
@@ -110,7 +110,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{480, -300, 0}
+			var LookTarget = Real3{400, -250, 0}
 			var MoveSensitivity = 1
 		}
 	}
@@ -199,7 +199,7 @@ Level
 		}
 		Area 
 		{
-			var Size = Real2{960, 600}
+			var Size = Real2{800, 500}
 			var Origin = Location.TopLeft
 		}
 		Sprite 
@@ -238,7 +238,7 @@ Level
 			var SizePolicyX = UiSizePolicy.Auto
 			var SizePolicyY = UiSizePolicy.Auto
 			var FlexSize = Real2{1, 1}
-			var AbsoluteMinSize = Real2{1, 1}
+			var AbsoluteMinSize = Real2{0, 1}
 			var VerticalAlignment = UiVerticalAlignment.Top
 			var HorizontalAlignment = UiHorizontalAlignment.Left
 			var MarginLeft = 0
@@ -299,7 +299,7 @@ Level
 				}
 				Area 
 				{
-					var Size = Real2{400, 590}
+					var Size = Real2{400, 490}
 					var Origin = Location.TopLeft
 				}
 				UiWidget 
@@ -349,7 +349,7 @@ Level
 						}
 						Area 
 						{
-							var Size = Real2{197, 586}
+							var Size = Real2{197, 486}
 							var Origin = Location.TopLeft
 						}
 						Sprite 
@@ -523,7 +523,7 @@ Level
 									{
 										var PlayerIndex = 0
 										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
+										var Stick = GameStick.Camera
 									}
 								}
 								Hierarchy 
@@ -591,7 +591,7 @@ Level
 									{
 										var PlayerIndex = 0
 										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Camera
+										var Stick = GameStick.Move
 									}
 								}
 								Hierarchy 
@@ -658,9 +658,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{0, 1}
+										var Multiplier = Real2{1, 1}
 										var Stick = GameStick.Move
-										var Key = Keys.W
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -727,9 +727,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{0, -1}
+										var Multiplier = Real2{1, 1}
 										var Stick = GameStick.Move
-										var Key = Keys.S
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -796,9 +796,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{1, 0}
+										var Multiplier = Real2{1, 1}
 										var Stick = GameStick.Move
-										var Key = Keys.D
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -865,9 +865,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{-1, 0}
+										var Multiplier = Real2{1, 1}
 										var Stick = GameStick.Move
-										var Key = Keys.A
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -934,9 +934,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{0, 1}
-										var Stick = GameStick.Camera
-										var Key = Keys.Up
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Move
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -1003,9 +1003,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{0, -1}
-										var Stick = GameStick.Camera
-										var Key = Keys.Down
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Move
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -1072,9 +1072,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{1, 0}
-										var Stick = GameStick.Camera
-										var Key = Keys.Right
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Move
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -1141,9 +1141,9 @@ Level
 									var Mapping = KeyboardStickMapping
 									{
 										var PlayerIndex = 0
-										var Multiplier = Real2{-1, 0}
-										var Stick = GameStick.Camera
-										var Key = Keys.Left
+										var Multiplier = Real2{1, 1}
+										var Stick = GameStick.Move
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -1231,7 +1231,7 @@ Level
 						}
 						Area 
 						{
-							var Size = Real2{197, 586}
+							var Size = Real2{197, 486}
 							var Origin = Location.TopLeft
 						}
 						Sprite 
@@ -1472,8 +1472,8 @@ Level
 									var Mapping = GamepadActionMapping
 									{
 										var PlayerIndex = 0
-										var Action = GameAction.Attack
-										var Button = Buttons.X
+										var Action = GameAction.Jump
+										var Button = Buttons.A
 									}
 								}
 								Hierarchy 
@@ -1541,7 +1541,7 @@ Level
 									{
 										var PlayerIndex = 0
 										var Action = GameAction.Jump
-										var Key = Keys.Space
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -1608,8 +1608,8 @@ Level
 									var Mapping = KeyboardActionMapping
 									{
 										var PlayerIndex = 0
-										var Action = GameAction.Attack
-										var Key = Keys.Shift
+										var Action = GameAction.Jump
+										var Key = Keys.Unknown
 									}
 								}
 								Hierarchy 
@@ -1676,7 +1676,7 @@ Level
 									var Mapping = MouseActionMapping
 									{
 										var PlayerIndex = 0
-										var Action = GameAction.Attack
+										var Action = GameAction.Jump
 										var Button = MouseButtons.Left
 									}
 								}

@@ -1,11 +1,5 @@
 class InputMapper : ZilchComponent
 {
-  [Property]
-  var Sticks : CogPath = CogPath("StickMappings");
-  [Property]
-  var Actions : CogPath = CogPath("ActionMappings");
-  
-  
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Space, Events.CustomGameSetup, this.OnCustomGameSetup);
@@ -14,55 +8,9 @@ class InputMapper : ZilchComponent
   
   function OnCustomGameSetup(event : GameSetupEvent)
   {
-    var gameStickToMappingList = HashMap[GameStick, Array[StickMapping]]();
-    var gameActionTomappingList = HashMap[GameAction, Array[ActionMapping]]();
-    
-    foreach (var child in this.Sticks.Cog.Children)
-    {
-      var stickMappingSetter = child.StickMappingSetter;
-      
-      if (stickMappingSetter != null)
-      {
-        var stickMapping = stickMappingSetter.GetMapping();
-        var stick = stickMapping.Stick;
-        
-        var list = gameStickToMappingList.GetOrDefault(stick, null);
-        
-        if (list == null)
-        {
-          list = Array[StickMapping]();
-          gameStickToMappingList[stick] = list;
-        }
-        
-        list.Add(stickMapping);
-      }
-    }
-    
-    foreach (var child in this.Actions.Cog.Children)
-    {
-      var actionMappingSetter = child.ActionMappingSetter;
-      
-      if (actionMappingSetter != null)
-      {
-        var actionMapping = actionMappingSetter.GetMapping();
-        var action = actionMapping.Action;
-        
-        var list = gameActionTomappingList.GetOrDefault(action, null);
-        
-        if (list == null)
-        {
-          list = Array[ActionMapping]();
-          gameActionTomappingList[action] = list;
-        }
-        
-        list.Add(actionMapping);
-      }
-    }
-    
-    var imse = InputMappingSetupEvent();
-    imse.Sticks = gameStickToMappingList;
-    imse.Actions = gameActionTomappingList;
-    this.GameSession.DispatchEvent(Events.InputMappingSetup, imse);
+    var ime = InputMappingEvent();
+    this.Space.DispatchEvent(Events.InputMappingRequest, ime);
+    this.GameSession.DispatchEvent(Events.InputMappingSetup, ime);
   }
 }
 
@@ -98,6 +46,27 @@ class StickMapping : InputMapping
 
 class StickMappingSetter : InputMappingSetter
 {
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.InputMappingRequest, this.OnInputMappingRequest);
+  }
+  
+  function OnInputMappingRequest(event : InputMappingEvent)
+  {
+    var mapping = this.GetMapping();
+    var stick = mapping.Stick;
+    var list = event.Sticks.GetOrDefault(stick, null);
+    
+    if (list == null)
+    {
+      list = Array[StickMapping]();
+      event.Sticks[stick] = list;
+    }
+    
+    list.Add(mapping);
+    Console.WriteLine(mapping);
+  }
+  
   [Virtual] function GetMapping() : StickMapping
   {
     throw Exception("Base StickMappingSetter GetMapping function called");
@@ -213,6 +182,26 @@ class ActionMapping : InputMapping
 
 class ActionMappingSetter : InputMappingSetter
 {
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.InputMappingRequest, this.OnInputMappingRequest);
+  }
+  
+  function OnInputMappingRequest(event : InputMappingEvent)
+  {
+    var mapping = this.GetMapping();
+    var action = mapping.Action;
+    var list = event.Actions.GetOrDefault(action, null);
+    
+    if (list == null)
+    {
+      list = Array[ActionMapping]();
+      event.Actions[action] = list;
+    }
+    
+    list.Add(mapping);
+  }
+  
   [Virtual] function GetMapping() : ActionMapping
   {
     throw Exception("Base ActionMappingSetter GetMapping function called");

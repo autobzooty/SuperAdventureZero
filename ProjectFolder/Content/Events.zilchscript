@@ -3,12 +3,13 @@ class GameSetupEvent : ZilchEvent
   sends CustomGameSetup : GameSetupEvent;
 }
 
-class InputMappingSetupEvent : ZilchEvent
+class InputMappingEvent : ZilchEvent
 {
-  sends InputMappingSetup : InputMappingSetupEvent;
+  sends InputMappingRequest : InputMappingEvent;
+  sends InputMappingSetup : InputMappingEvent;
   
-  var Sticks : HashMap[GameStick, Array[StickMapping]];
-  var Actions : HashMap[GameAction, Array[ActionMapping]];
+  var Sticks = HashMap[GameStick, Array[StickMapping]]();
+  var Actions = HashMap[GameAction, Array[ActionMapping]]();
 }
 
 class UpdateEventDummy

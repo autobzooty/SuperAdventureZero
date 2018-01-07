@@ -22,7 +22,7 @@ class IM : ZilchComponent
   }
   
   
-  function OnInputMappingSetup(event : InputMappingSetupEvent)
+  function OnInputMappingSetup(event : InputMappingEvent)
   {
     this.GameStickToMappingList = event.Sticks;
     this.GameActionToMappingList = event.Actions;
