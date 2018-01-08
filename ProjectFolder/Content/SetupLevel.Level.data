@@ -48,9 +48,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{400, -250, 20}
+			var Translation = Real3{400, -249.5, 10}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -519,12 +519,9 @@ Level
 								}
 								GamepadLeftStickMappingSetter 
 								{
-									var Mapping = GamepadLeftStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Camera
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{1, 1}
+									var Stick = GameStick.Move
 								}
 								Hierarchy 
 								{
@@ -587,12 +584,9 @@ Level
 								}
 								GamepadRightStickMappingSetter 
 								{
-									var Mapping = GamepadRightStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{1, 1}
+									var Stick = GameStick.Camera
 								}
 								Hierarchy 
 								{
@@ -655,13 +649,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{0, 1}
+									var Stick = GameStick.Move
+									var Key = Keys.W
 								}
 								Hierarchy 
 								{
@@ -724,13 +715,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{-1, 0}
+									var Stick = GameStick.Move
+									var Key = Keys.A
 								}
 								Hierarchy 
 								{
@@ -793,13 +781,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{0, -1}
+									var Stick = GameStick.Move
+									var Key = Keys.S
 								}
 								Hierarchy 
 								{
@@ -862,13 +847,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{1, 0}
+									var Stick = GameStick.Move
+									var Key = Keys.D
 								}
 								Hierarchy 
 								{
@@ -931,13 +913,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{0, 1}
+									var Stick = GameStick.Camera
+									var Key = Keys.Up
 								}
 								Hierarchy 
 								{
@@ -1000,13 +979,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{-1, 0}
+									var Stick = GameStick.Camera
+									var Key = Keys.Left
 								}
 								Hierarchy 
 								{
@@ -1069,13 +1045,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{0, -1}
+									var Stick = GameStick.Camera
+									var Key = Keys.Down
 								}
 								Hierarchy 
 								{
@@ -1138,13 +1111,10 @@ Level
 								}
 								KeyboardStickMappingSetter 
 								{
-									var Mapping = KeyboardStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Move
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{1, 0}
+									var Stick = GameStick.Camera
+									var Key = Keys.Right
 								}
 								Hierarchy 
 								{
@@ -1207,12 +1177,9 @@ Level
 								}
 								MouseStickMappingSetter 
 								{
-									var Mapping = MouseStickMapping
-									{
-										var PlayerIndex = 0
-										var Multiplier = Real2{1, 1}
-										var Stick = GameStick.Camera
-									}
+									var PlayerIndex = 0
+									var Multiplier = Real2{1, 1}
+									var Stick = GameStick.Camera
 								}
 								Hierarchy 
 								{
@@ -1401,12 +1368,9 @@ Level
 								}
 								GamepadActionMappingSetter 
 								{
-									var Mapping = GamepadActionMapping
-									{
-										var PlayerIndex = 0
-										var Action = GameAction.Jump
-										var Button = Buttons.A
-									}
+									var PlayerIndex = 0
+									var Action = GameAction.Jump
+									var Button = Buttons.A
 								}
 								Hierarchy 
 								{
@@ -1469,12 +1433,9 @@ Level
 								}
 								GamepadActionMappingSetter 
 								{
-									var Mapping = GamepadActionMapping
-									{
-										var PlayerIndex = 0
-										var Action = GameAction.Jump
-										var Button = Buttons.A
-									}
+									var PlayerIndex = 0
+									var Action = GameAction.Attack
+									var Button = Buttons.X
 								}
 								Hierarchy 
 								{
@@ -1537,12 +1498,9 @@ Level
 								}
 								KeyboardActionMappingSetter 
 								{
-									var Mapping = KeyboardActionMapping
-									{
-										var PlayerIndex = 0
-										var Action = GameAction.Jump
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Action = GameAction.Jump
+									var Key = Keys.Space
 								}
 								Hierarchy 
 								{
@@ -1605,12 +1563,9 @@ Level
 								}
 								KeyboardActionMappingSetter 
 								{
-									var Mapping = KeyboardActionMapping
-									{
-										var PlayerIndex = 0
-										var Action = GameAction.Jump
-										var Key = Keys.Unknown
-									}
+									var PlayerIndex = 0
+									var Action = GameAction.Attack
+									var Key = Keys.Shift
 								}
 								Hierarchy 
 								{
@@ -1673,12 +1628,9 @@ Level
 								}
 								MouseActionMappingSetter 
 								{
-									var Mapping = MouseActionMapping
-									{
-										var PlayerIndex = 0
-										var Action = GameAction.Jump
-										var Button = MouseButtons.Left
-									}
+									var PlayerIndex = 0
+									var Action = GameAction.Attack
+									var Button = MouseButtons.Left
 								}
 								Hierarchy 
 								{

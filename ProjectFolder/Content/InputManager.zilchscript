@@ -26,28 +26,6 @@ class IM : ZilchComponent
   {
     this.GameStickToMappingList = event.Sticks;
     this.GameActionToMappingList = event.Actions;
-    
-    //Console.WriteLine("- Printing Stick Mappings");
-    //foreach (var entry in this.GameStickToMappingList)
-    //{
-    //  Console.WriteLine("  - Stick: `entry.Key`");
-      
-    //  foreach (var mapping in entry.Value)
-    //  {
-    //    Console.WriteLine("    - Mapping");
-    //  }
-    //}
-    
-    //Console.WriteLine("- Printing Action Mappings");
-    //foreach (var entry in this.GameActionToMappingList)
-    //{
-    //  Console.WriteLine("  - Action: `entry.Key`");
-      
-    //  foreach (var mapping in entry.Value)
-    //  {
-    //    Console.WriteLine("    - Mapping");
-    //  }
-    //}
   }
   
   

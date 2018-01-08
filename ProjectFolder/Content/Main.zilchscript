@@ -65,5 +65,6 @@ class Main : ZilchComponent
   function OnCogDestroy(event : ObjectEvent)
   {
     this.ShowCursor();
+    Zero.Mouse.Trapped = false;
   }
 }

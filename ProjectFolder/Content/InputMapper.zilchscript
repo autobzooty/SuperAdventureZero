@@ -30,7 +30,10 @@ class InputMapping
   }
 }
 
-class InputMappingSetter : ZilchComponent {}
+class InputMappingSetter : ZilchComponent
+{
+  [Property] var PlayerIndex = 0;
+}
 
 
 class StickMapping : InputMapping
@@ -46,6 +49,9 @@ class StickMapping : InputMapping
 
 class StickMappingSetter : InputMappingSetter
 {
+  [Property] var Multiplier = Real2(1);
+  [Property] var Stick : GameStick = GameStick.Move;
+  
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Space, Events.InputMappingRequest, this.OnInputMappingRequest);
@@ -86,8 +92,20 @@ class KeyboardStickMapping : StickMapping
 
 class KeyboardStickMappingSetter : StickMappingSetter
 {
-  [Property] var Mapping : KeyboardStickMapping;
-  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+  //[Property] var Mapping : KeyboardStickMapping;
+  
+  [Property] var Key : Keys = Keys.None;
+  
+  [Override] function GetMapping() : StickMapping
+  {
+    return KeyboardStickMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Multiplier  = this.Multiplier,
+      Stick       = this.Stick,
+      Key         = this.Key,
+    };
+  }
 }
 
 
@@ -101,8 +119,17 @@ class GamepadLeftStickMapping : StickMapping
 
 class GamepadLeftStickMappingSetter : StickMappingSetter
 {
-  [Property] var Mapping : GamepadLeftStickMapping;
-  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+  //[Property] var Mapping : GamepadLeftStickMapping;
+  
+  [Override] function GetMapping() : StickMapping
+  {
+    return GamepadLeftStickMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Multiplier  = this.Multiplier,
+      Stick       = this.Stick,
+    };
+  }
 }
 
 
@@ -116,8 +143,17 @@ class GamepadRightStickMapping : StickMapping
 
 class GamepadRightStickMappingSetter : StickMappingSetter
 {
-  [Property] var Mapping : GamepadRightStickMapping;
-  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+  //[Property] var Mapping : GamepadRightStickMapping;
+  
+  [Override] function GetMapping() : StickMapping
+  {
+    return GamepadRightStickMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Multiplier  = this.Multiplier,
+      Stick       = this.Stick,
+    };
+  }
 }
 
 
@@ -133,8 +169,20 @@ class GamepadButtonStickMapping : StickMapping
 
 class GamepadButtonStickMappingSetter : StickMappingSetter
 {
-  [Property] var Mapping : GamepadButtonStickMapping;
-  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+  //[Property] var Mapping : GamepadButtonStickMapping;
+  
+  [Property] var Button : Buttons = Buttons.AnyButton;
+  
+  [Override] function GetMapping() : StickMapping
+  {
+    return GamepadButtonStickMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Multiplier  = this.Multiplier,
+      Stick       = this.Stick,
+      Button      = this.Button,
+    };
+  }
 }
 
 
@@ -148,8 +196,17 @@ class MouseStickMapping : StickMapping
 
 class MouseStickMappingSetter : StickMappingSetter
 {
-  [Property] var Mapping : MouseStickMapping;
-  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+  //[Property] var Mapping : MouseStickMapping;
+  
+  [Override] function GetMapping() : StickMapping
+  {
+    return MouseStickMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Multiplier  = this.Multiplier,
+      Stick       = this.Stick,
+    };
+  }
 }
 
 
@@ -165,8 +222,20 @@ class MouseButtonStickMapping : StickMapping
 
 class MouseButtonStickMappingSetter : StickMappingSetter
 {
-  [Property] var Mapping : MouseButtonStickMapping;
-  [Override] function GetMapping() : StickMapping { return this.Mapping; }
+  //[Property] var Mapping : MouseButtonStickMapping;
+  
+  [Property] var Button : MouseButtons = MouseButtons.None;
+  
+  [Override] function GetMapping() : StickMapping
+  {
+    return MouseButtonStickMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Multiplier  = this.Multiplier,
+      Stick       = this.Stick,
+      Button      = this.Button,
+    };
+  }
 }
 
 
@@ -182,6 +251,8 @@ class ActionMapping : InputMapping
 
 class ActionMappingSetter : InputMappingSetter
 {
+  [Property] var Action : GameAction = GameAction.Jump;
+  
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Space, Events.InputMappingRequest, this.OnInputMappingRequest);
@@ -221,8 +292,19 @@ class KeyboardActionMapping : ActionMapping
 
 class KeyboardActionMappingSetter : ActionMappingSetter
 {
-  [Property] var Mapping : KeyboardActionMapping;
-  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+  //[Property] var Mapping : KeyboardActionMapping;
+  
+  [Property] var Key : Keys = Keys.None;
+  
+  [Override] function GetMapping() : ActionMapping
+  {
+    return KeyboardActionMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Action      = this.Action,
+      Key         = this.Key,
+    };
+  }
 }
 
 
@@ -238,8 +320,19 @@ class GamepadActionMapping : ActionMapping
 
 class GamepadActionMappingSetter : ActionMappingSetter
 {
-  [Property] var Mapping : GamepadActionMapping;
-  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+  //[Property] var Mapping : GamepadActionMapping;
+  
+  [Property] var Button : Buttons = Buttons.AnyButton;
+  
+  [Override] function GetMapping() : ActionMapping
+  {
+    return GamepadActionMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Action      = this.Action,
+      Button      = this.Button,
+    };
+  }
 }
 
 
@@ -255,8 +348,19 @@ class LeftTriggerActionMapping : ActionMapping
 
 class LeftTriggerActionMappingSetter : ActionMappingSetter
 {
-  [Property] var Mapping : LeftTriggerActionMapping;
-  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+  //[Property] var Mapping : LeftTriggerActionMapping;
+  
+  [Property] var Threshold = 0.25;
+  
+  [Override] function GetMapping() : ActionMapping
+  {
+    return LeftTriggerActionMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Action      = this.Action,
+      Threshold   = this.Threshold,
+    };
+  }
 }
 
 
@@ -272,8 +376,19 @@ class RightTriggerActionMapping : ActionMapping
 
 class RightTriggerActionMappingSetter : ActionMappingSetter
 {
-  [Property] var Mapping : RightTriggerActionMapping;
-  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+  //[Property] var Mapping : RightTriggerActionMapping;
+  
+  [Property] var Threshold = 0.25;
+  
+  [Override] function GetMapping() : ActionMapping
+  {
+    return RightTriggerActionMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Action      = this.Action,
+      Threshold   = this.Threshold,
+    };
+  }
 }
 
 
@@ -289,6 +404,17 @@ class MouseActionMapping : ActionMapping
 
 class MouseActionMappingSetter : ActionMappingSetter
 {
-  [Property] var Mapping : MouseActionMapping;
-  [Override] function GetMapping() : ActionMapping { return this.Mapping; }
+  //[Property] var Mapping : MouseActionMapping;
+  
+  [Property] var Button : MouseButtons = MouseButtons.None;
+  
+  [Override] function GetMapping() : ActionMapping
+  {
+    return MouseActionMapping()
+    {
+      PlayerIndex = this.PlayerIndex,
+      Action      = this.Action,
+      Button      = this.Button,
+    };
+  }
 }

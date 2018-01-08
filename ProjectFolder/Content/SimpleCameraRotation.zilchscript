@@ -1,0 +1,63 @@
+class SimpleCameraRotation : ZilchComponent
+{
+  [Property] var RotationNode = CogPath(".");
+  [Property] var Sensitivity = Real2(1);
+  [Property] var InvertX = false;
+  [Property] var InvertY = false;
+  
+  var IM_ : IM;
+  var IM : IM
+  {
+    get
+    {
+      if (this.IM_ == null) this.IM_ = this.GameSession.IM;
+      return this.IM_;
+    }
+  }
+  
+  var Angles_ : Real3;
+  var Angles : Real3
+  {
+    get { return Math.ToDegrees(this.Angles_); }
+    
+    set
+    {
+      value = Math.ToRadians(value);
+      
+      var x = Math.Clamp(value.X, -Math.Pi / 2, Math.Pi / 2);
+      var y = value.Y;
+      var z = value.Z;
+      
+      this.Angles_ = Real3(x, y, z);
+      this.RotationNode.Transform.EulerAngles = this.Angles_;
+    }
+  }
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Mouse.Trapped = true;
+    
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+  
+  
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    var cameraStickValue = this.IM.GetStick(GameStick.Camera);
+    var rotation = cameraStickValue * this.Sensitivity;
+    var angles = this.Angles;
+    
+    if (this.InvertX)
+      angles.X -= rotation.Y;
+    else
+      angles.X += rotation.Y;
+    
+    if (this.InvertY)
+      angles.Y -= rotation.X;
+    else
+      angles.Y += rotation.X;
+    
+    this.Angles = angles;
+  }
+}
