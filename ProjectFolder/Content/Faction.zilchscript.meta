@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "Faction"
+		var ResourceId = 0x5abc6207290b7da9
+	}
+}

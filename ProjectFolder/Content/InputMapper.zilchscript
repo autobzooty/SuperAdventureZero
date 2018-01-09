@@ -70,7 +70,6 @@ class StickMappingSetter : InputMappingSetter
     }
     
     list.Add(mapping);
-    Console.WriteLine(mapping);
   }
   
   [Virtual] function GetMapping() : StickMapping

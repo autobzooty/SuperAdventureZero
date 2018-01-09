@@ -49,14 +49,14 @@ class SimpleCameraRotation : ZilchComponent
     var angles = this.Angles;
     
     if (this.InvertX)
-      angles.X -= rotation.Y;
-    else
       angles.X += rotation.Y;
+    else
+      angles.X -= rotation.Y;
     
     if (this.InvertY)
-      angles.Y -= rotation.X;
-    else
       angles.Y += rotation.X;
+    else
+      angles.Y -= rotation.X;
     
     this.Angles = angles;
   }

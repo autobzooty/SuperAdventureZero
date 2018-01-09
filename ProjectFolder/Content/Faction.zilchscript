@@ -1,0 +1,136 @@
+class Faction : ZilchComponent
+{
+  [Property] var AssignedFaction : FactionValue;
+  
+  
+  [Static] function Find(cog : Cog) : FactionValue
+  {
+    var faction = cog.Faction;
+    
+    if (faction != null)
+      return faction.AssignedFaction;
+    
+    var stack = Array[Cog]();
+    stack.Add(cog.FindRoot());
+    
+    for (var i = 0; i < stack.Count; ++i)
+    {
+      var node = stack[i];
+      
+      faction = node.Faction;
+      
+      if (faction == null)
+      {
+        foreach (var child in node.Children)
+          stack.Add(child);
+      }
+      else
+      {
+        return faction.AssignedFaction;
+      }
+    }
+    
+    return FactionValue.Neutral;
+  }
+}
+
+
+enum FactionValue
+{
+  Neutral,
+  Good,
+  Bad,
+  
+  COUNT_
+}
+
+
+class Relationship
+{
+  // instigator first, affectee second
+  [Static] var Grid = Array[Array[Relationship]]();
+  
+  [Static] function Setup()
+  {
+    for (var i = 0; i < FactionValue.COUNT_; ++i)
+    {
+      var row = Array[Relationship]();
+      
+      for (var j = 0; j < FactionValue.COUNT_; ++j)
+      {
+        var relationship = Relationship();
+        
+        row.Add(relationship);
+      }
+      
+      Relationship.Grid.Add(row);
+    }
+  }
+  
+  [Static] function Get(instigatingFaction : FactionValue, affecteeFaction : FactionValue) : Relationship
+  {
+    return Relationship.Grid[instigatingFaction][affecteeFaction];
+  }
+  
+  var CanDealDamage    = true;
+  var CanDealKnockback = true;
+  var DamageScalar     = 1.0;
+  var KnockbackScalar  = 1.0;
+  
+  var String : String
+  {
+    get
+    {
+      var format = "D: %5s, x% 4.1f | K: %5s, x% 4.1f";
+      
+      return String.FormatC(format, this.CanDealDamage,    this.DamageScalar,
+                                    this.CanDealKnockback, this.KnockbackScalar);
+    }
+  }
+}
+
+
+class RelationshipGridSetter : ZilchComponent
+{
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.CustomGameSetup, this.OnCustomGameSetup);
+  }
+  
+  
+  function OnCustomGameSetup(event : GameSetupEvent)
+  {
+    Relationship.Setup();
+    
+    this.Space.DispatchEvent(Events.RelationshipSetupRequest, RelationshipSetupEvent());
+  }
+}
+
+
+class RelationshipSetter : ZilchComponent
+{
+  [Property] var InstigatingFaction : FactionValue = FactionValue.Neutral;
+  [Property] var AffecteeFaction    : FactionValue = FactionValue.Neutral;
+  [Property] var CanDealDamage    = true;
+  [Property] var CanDealKnockback = true;
+  [Property] var DamageScalar     = 1.0;
+  [Property] var KnockbackScalar  = 1.0;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.RelationshipSetupRequest, this.OnRelationshipSetupRequest);
+  }
+  
+  
+  function OnRelationshipSetupRequest(event : RelationshipSetupEvent)
+  {
+    Relationship.Grid[this.InstigatingFaction][this.AffecteeFaction] = Relationship()
+    {
+      CanDealDamage    = this.CanDealDamage,
+      CanDealKnockback = this.CanDealKnockback,
+      DamageScalar     = this.DamageScalar,
+      KnockbackScalar  = this.KnockbackScalar,
+    };
+  }
+}

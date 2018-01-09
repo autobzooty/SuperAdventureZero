@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-23.8362427, 3.58724141, 5.85473585}
+			var Translation = Real3{-12.8955164, 11.9910583, -2.39005017}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0254046712, -0.616714358, -0.0199198127, 0.786524832}
+			var Rotation = Quaternion{-0.204483777, -0.728469908, -0.245865211, 0.605861604}
 		}
 		CameraViewport 
 		{
@@ -234,9 +234,9 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 24.5960102
-			var VerticalAngle = 0.0645773485
-			var HorizontalAngle = 1.32994115
+			var LookDistance = 16.4872055
+			var VerticalAngle = 0.65100801
+			var HorizontalAngle = 1.75405645
 			var LookTarget = Real3{0, 2, 0}
 			var MoveSensitivity = 1
 		}
@@ -313,9 +313,9 @@ Level
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Sensitivity = Real2{1, 1}
-			var InvertX = true
-			var InvertY = true
+			var Sensitivity = Real2{0.25, 0.25}
+			var InvertX = false
+			var InvertY = false
 		}
 		Hierarchy 
 		{

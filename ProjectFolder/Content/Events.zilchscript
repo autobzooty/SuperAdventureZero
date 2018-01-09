@@ -12,6 +12,11 @@ class InputMappingEvent : ZilchEvent
   var Actions = HashMap[GameAction, Array[ActionMapping]]();
 }
 
+class RelationshipSetupEvent : ZilchEvent
+{
+  sends RelationshipSetupRequest : RelationshipSetupEvent;
+}
+
 class UpdateEventDummy
 {
   sends IMUpdate : UpdateEvent;
@@ -34,7 +39,7 @@ class UpdateEventDummy
 class MWEvent : ZilchEvent
 {
   var Instigator : Cog;
-  // var InstigatingFaction : FactionValue;
+   var InstigatingFaction : FactionValue;
   var InstigatorName : String;
   
   constructor() : base() {}
@@ -42,14 +47,14 @@ class MWEvent : ZilchEvent
   constructor(instigator : Cog) : base()
   {
     this.Instigator = instigator;
-    // this.InstigatingFaction = ... something
+    this.InstigatingFaction = Faction.Find(instigator);
     this.InstigatorName = instigator.Name;
   }
   
-  //constructor(instigatingFaction : FactionValue) : base()
-  //{
-  //  this.InstigatingFaction = instigatingFaction;
-  //}
+  constructor(instigatingFaction : FactionValue) : base()
+  {
+    this.InstigatingFaction = instigatingFaction;
+  }
 }
 
 
