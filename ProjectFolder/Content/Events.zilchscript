@@ -17,7 +17,7 @@ class RelationshipSetupEvent : ZilchEvent
   sends RelationshipSetupRequest : RelationshipSetupEvent;
 }
 
-class UpdateEventDummy
+class UpdateEventSends
 {
   sends IMUpdate : UpdateEvent;
   
