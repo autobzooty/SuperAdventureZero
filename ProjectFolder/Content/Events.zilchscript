@@ -57,4 +57,47 @@ class MWEvent : ZilchEvent
   }
 }
 
+class HealthEvent : MWEvent
+{
+  // the amount of damage being dealt. the effects of whether it's a
+  // crit are already factored in. this number should always be positive:
+  // a positive value in a Damage event indicates a negative HP change,
+  // and a positive value in a Heal event indicates a positive HP change
+  var Amount : Real;
+  // whether this is a crit
+  var Critical : Boolean;
+  // whether this attack can be dodged
+  var Dodgeable : Boolean;
+  // whether factions should be ignored for this HP change
+  var IgnoreFaction : Boolean = false;
+  // whether invincibility should be ignored for this HP change
+  var IgnoreInvincibility : Boolean = false;
+  
+  // where this health change occurred, if applicable
+  var WorldPoint : Real3;
+  // normal of the contact that caused this health change, if applicable
+  var ContactNormal : Real3;
+  
+  // the cog that causes this HP change (e.g., the weapon used by a
+  // player, etc.)
+  var Affecter : Cog;
+  // the cog that receives this HP change (e.g., the foe struck by a
+  // sword, etc.). generally speaking this is the Owner of the
+  // Health component that is involved in this interaction
+  var Affectee : Cog;
+  
+  // whether this event has been "intercepted" -- typically useful for
+  // death-related stuff
+  var Handled : Boolean = false;
+  
+  // the inter-faction relationship between the instigator and the
+  // affectee
+  var Relationship : Relationship
+  {
+    get
+    {
+      return Relationship.Get(this.InstigatingFaction, this.Affectee.Faction.AssignedFaction);
+    }
+  }
+}
 

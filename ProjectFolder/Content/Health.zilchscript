@@ -1,0 +1,6 @@
+class Health : ZilchComponent
+{
+  // we'll do this later
+}
+
+
