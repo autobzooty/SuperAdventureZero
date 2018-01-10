@@ -24,7 +24,7 @@ class SimpleCameraRotation : ZilchComponent
     {
       value = Math.ToRadians(value);
       
-      var x = Math.Clamp(value.X, -Math.Pi / 2, Math.Pi / 2);
+      var x = Math.Clamp(value.X, -HM[Real].TauOver4, HM[Real].TauOver4);
       var y = value.Y;
       var z = value.Z;
       

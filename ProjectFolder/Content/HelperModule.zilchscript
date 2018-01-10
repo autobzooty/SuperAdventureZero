@@ -1,0 +1,90 @@
+class HM[T]
+{
+  [Static] var Tau      : Real { get { return 2.0 * Math.Pi; }}
+  [Static] var TauOver2 : Real { get { return       Math.Pi; }}
+  [Static] var TauOver4 : Real { get { return       Math.Pi / 2.0; }}
+  
+  // Returns n - amount if n > 0, n + amount if n < 0, or 0 if |n| <= |amount|.
+  [Static] function Decay(n : T, amount : T) : T
+  {
+    if (n > 0 as T)
+    {
+      n -= amount;
+      
+      if (n < 0 as T)
+        n = 0;
+    }
+    else if (n < 0)
+    {
+      n += amount;
+      
+      if (n > 0)
+        n = 0;
+    }
+    
+    return n;
+  }
+  
+  // Returns whether n >= -bounds and n <= bounds.
+  [Static] function Bounds(n : T, bounds : T) : Boolean
+  {
+    return n >= -bounds && n <= bounds;
+  }
+  
+  // Scales n's position in the range [minIn, maxIn] to the range [minOut, maxOut].
+  [Static] function Sample(n : T, minIn : T, maxIn : T, minOut : T, maxOut : T) : T
+  {
+    return (((n - minIn) / (maxIn - minIn)) * (maxOut - minOut)) + minOut;
+  }
+  
+  // Scales n's position in the range [minIn, maxIn] to the range [minOut, maxOut].
+  [Static] function Sample(n : T, minIn : T, maxIn : T, minOut : Real4, maxOut : Real4) : Real4
+  {
+    return (((n - minIn) / (maxIn - minIn)) * (maxOut - minOut)) + minOut;
+  }
+  
+  // Oscillates between min and max
+  [Static] function CosineMagic(t : Real, period : Real, min : T, max : T) : T
+  {
+    return (max - min) * (1.0 - Math.Cos(HM[T].Tau * t / period)) / 2.0 + min;
+  }
+  
+  // Modulo the way it SHOULD be
+  [Static] function ZMod(a : T, b : T) : T
+  {
+    var modPrime = T();
+    
+    if (b >= 0 as T)
+      modPrime = a % b;
+    else
+      modPrime = a % -b;
+    
+    if (modPrime >= 0 as T)
+      return modPrime;
+    else
+      return modPrime + b;
+  }
+  
+  [Static] function Wrap(n : T, min : T, max : T) : T
+  {
+    return HM[T].ZMod(n - min, max - min) + min;
+  }
+}
+
+
+class Radians
+{
+  [Static] function FromDegrees(degrees : Real) : Real
+  {
+    return Math.ToRadians(degrees);
+  }
+}
+
+
+class Degrees
+{
+  [Static] function FromRadians(radians : Real) : Real
+  {
+    return Math.ToDegrees(radians);
+  }
+}
