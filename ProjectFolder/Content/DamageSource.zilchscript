@@ -1,0 +1,103 @@
+class DamageSource : ZilchComponent
+{
+  // base damage dealt
+  [Property] var Damage : Real = 1.0;
+  // how far from the base it's possible to get
+  [Property] var DamageVariance : Real = 0.0;
+  // damage per second for DOT-style damage
+  [Property] var DOT : Real = 1.0;
+  // how far from the base DOT it's possible to get
+  [Property] var DOTVariance : Real = 0.0;
+  // there's an X in Y chance for a crit
+  [Property] var CritXinY : Real2 = Real2(1.0, 10.0);
+  // damage is multiplied by this on a crit
+  [Property] var CritMultiplier : Real = 2.0;
+  // after the multiplier is applied, this is added
+  [Property] var CritAddend : Real = 0.0;
+  // whether this damage can be dodged
+  [Property] var Dodgeable : Boolean = true;
+  // whether this damage should ignore faction
+  [Property] var IgnoreFaction : Boolean = false;
+  // whether this damage should ignore invincibility
+  [Property] var IgnoreInvincibility : Boolean = false;
+  // point this at your face, jerk
+  [Property] var InstigatorPath : CogPath = CogPath(".");
+  
+  var Instigator : Cog { get { return this.InstigatorPath.Cog; }}
+  var InstigatingFaction : FactionValue { get { return this.Instigator.Faction.AssignedFaction; }}
+  
+  var MinDamage : Real { get { return this.Damage - this.DamageVariance; }}
+  var MaxDamage : Real { get { return this.Damage + this.DamageVariance; }}
+  var MinDOT    : Real { get { return this.DOT - this.DOTVariance; }}
+  var MaxDOT    : Real { get { return this.DOT + this.DOTVariance; }}
+  var MinCrit   : Real { get { return this.CritMultiplier * this.MinDamage + this.CritAddend; }}
+  var MaxCrit   : Real { get { return this.CritMultiplier * this.MaxDamage + this.CritAddend; }}
+  
+  
+  function GetDamage() : HealthEvent
+  {
+    var crit = this.CritRoll();
+    var amount = this.DamageRoll(this.MinDamage, this.MaxDamage);
+    
+    if (crit)
+    {
+      amount *= this.CritMultiplier;
+      amount += this.CritAddend;
+    }
+    
+    if (amount < 0.0) amount = 0.0;
+    
+    var he = HealthEvent();
+    he.Amount = amount;
+    he.Critical = crit;
+    he.Dodgeable = this.Dodgeable;
+    he.IgnoreFaction = this.IgnoreFaction;
+    he.IgnoreInvincibility = this.IgnoreInvincibility;
+    he.Instigator = this.Instigator;
+    he.InstigatingFaction = this.InstigatingFaction;
+    he.InstigatorName = this.Instigator.Name;
+    he.Deliverer = this.Owner;
+    
+    return he;
+  }
+  
+  
+  function GetDOT(event : UpdateEvent) : HealthEvent
+  {
+    var crit = this.CritRoll();
+    var amount = this.DOT * event.Dt;
+    
+    if (crit)
+    {
+      amount *= this.CritMultiplier;
+      amount += this.CritAddend;
+    }
+    
+    if (amount < 0.0) amount = 0.0;
+    
+    var he = HealthEvent();
+    he.Amount = amount;
+    he.Critical = crit;
+    he.Dodgeable = this.Dodgeable;
+    he.IgnoreFaction = this.IgnoreFaction;
+    he.IgnoreInvincibility = this.IgnoreInvincibility;
+    he.Instigator = this.Instigator;
+    he.InstigatingFaction = this.InstigatingFaction;
+    he.InstigatorName = this.Instigator.Name;
+    he.Deliverer = this.Owner;
+    
+    return he;
+  }
+  
+  
+  function DamageRoll(min : Real, max : Real) : Real
+  {
+    return PRNG.DamageRoll(min, max);
+  }
+  
+  
+  function CritRoll() : Boolean
+  {
+    return PRNG.CritRoll(this.CritXinY);
+  }
+}

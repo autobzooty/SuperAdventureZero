@@ -47,7 +47,7 @@ enum FactionValue
 
 class Relationship
 {
-  // instigator first, affectee second
+  // instigator first, receiver second
   [Static] var Grid = Array[Array[Relationship]]();
   
   [Static] function Setup()
@@ -67,9 +67,9 @@ class Relationship
     }
   }
   
-  [Static] function Get(instigatingFaction : FactionValue, affecteeFaction : FactionValue) : Relationship
+  [Static] function Get(instigatingFaction : FactionValue, receivingFaction : FactionValue) : Relationship
   {
-    return Relationship.Grid[instigatingFaction][affecteeFaction];
+    return Relationship.Grid[instigatingFaction][receivingFaction];
   }
   
   var CanDealDamage    = true;
@@ -110,7 +110,7 @@ class RelationshipGridSetter : ZilchComponent
 class RelationshipSetter : ZilchComponent
 {
   [Property] var InstigatingFaction : FactionValue = FactionValue.Neutral;
-  [Property] var AffecteeFaction    : FactionValue = FactionValue.Neutral;
+  [Property] var ReceivingFaction   : FactionValue = FactionValue.Neutral;
   [Property] var CanDealDamage    = true;
   [Property] var CanDealKnockback = true;
   [Property] var DamageScalar     = 1.0;
@@ -125,7 +125,7 @@ class RelationshipSetter : ZilchComponent
   
   function OnRelationshipSetupRequest(event : RelationshipSetupEvent)
   {
-    Relationship.Grid[this.InstigatingFaction][this.AffecteeFaction] = Relationship()
+    Relationship.Grid[this.InstigatingFaction][this.ReceivingFaction] = Relationship()
     {
       CanDealDamage    = this.CanDealDamage,
       CanDealKnockback = this.CanDealKnockback,

@@ -59,6 +59,17 @@ class MWEvent : ZilchEvent
 
 class HealthEvent : MWEvent
 {
+  sends RequestDamage : HealthEvent;
+  sends WasDamaged : HealthEvent;
+  sends DidDamage : HealthEvent;
+  sends RequestHeal : HealthEvent;
+  sends WasHealed : HealthEvent;
+  sends DidHeal : HealthEvent;
+  sends WasDealtCritical : HealthEvent;
+  sends DidDealCritical : HealthEvent;
+  sends HPDepleted : HealthEvent;
+  sends Death : HealthEvent;
+  
   // the amount of damage being dealt. the effects of whether it's a
   // crit are already factored in. this number should always be positive:
   // a positive value in a Damage event indicates a negative HP change,
@@ -80,23 +91,30 @@ class HealthEvent : MWEvent
   
   // the cog that causes this HP change (e.g., the weapon used by a
   // player, etc.)
-  var Affecter : Cog;
+  var Deliverer : Cog;
   // the cog that receives this HP change (e.g., the foe struck by a
   // sword, etc.). generally speaking this is the Owner of the
   // Health component that is involved in this interaction
-  var Affectee : Cog;
+  var Receiver : Cog;
   
   // whether this event has been "intercepted" -- typically useful for
   // death-related stuff
   var Handled : Boolean = false;
   
+  // whether death is being prevented for this HP change
+  var PreventDeath : Boolean = false;
+  
+  // TODO:
+  // 
+  // results
+  
   // the inter-faction relationship between the instigator and the
-  // affectee
+  // receiver
   var Relationship : Relationship
   {
     get
     {
-      return Relationship.Get(this.InstigatingFaction, this.Affectee.Faction.AssignedFaction);
+      return Relationship.Get(this.InstigatingFaction, this.Receiver.Faction.AssignedFaction);
     }
   }
 }

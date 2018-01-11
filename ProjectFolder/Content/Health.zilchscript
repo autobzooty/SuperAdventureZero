@@ -1,6 +1,223 @@
 class Health : ZilchComponent
 {
-  // we'll do this later
+  [Dependency] var Faction : Faction;
+  
+  
+  [Property]
+  var Invincible = false;
+  [Property]
+  var BaseHP = 10.0;
+  [Property][Slider(0, 1, 0.05)]
+  var BaseDodgeChange = 0.0;
+  
+  var HPMultiplier = 1.0;
+  var DodgeChanceMultiplier = 1.0;
+  
+  var HP : Real;
+  var MaxHP : Real;
+  var DodgeChance : Real;
+  
+  // if true, messages about damage and death will be printed to the console
+  var PrintStatusMessages : Boolean = true;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.MaxHP = this.BaseHP;
+    this.HP = this.MaxHP;
+    this.DodgeChance = this.BaseDodgeChange;
+    
+    // connect for stat events
+    
+    // connect for HP change events
+    Zero.Connect(this.Owner, Events.RequestDamage, this.OnRequestDamage);
+    Zero.Connect(this.Owner, Events.RequestHeal, this.OnRequestHeal);
+  }
+  
+  
+  function OnRequestDamage(event : HealthEvent)
+  {
+    if (this.Invincible && !event.IgnoreInvincibility)
+      return;
+    
+    var ignoreFaction = event.IgnoreFaction;
+    var relationship = event.Relationship;
+    var canDealDamage = relationship.CanDealDamage;
+    
+    if (ignoreFaction || canDealDamage)
+    {
+      if (this.DodgeRoll())
+        this.Dodge(event);
+      else
+        this.TakeDamage(event);
+    }
+  }
+  
+  
+  function OnRequestHeal(event : HealthEvent)
+  {
+    // can this ever fail? if so, check here. for now, just let it through
+    this.Heal(event);
+  }
+  
+  
+  function DodgeRoll() : Boolean
+  {
+    return PRNG.DodgeRoll(this.DodgeChance);
+  }
+  
+  
+  function Dodge(event : HealthEvent)
+  {
+    // dodge feedback
+  }
+  
+  
+  function TakeDamage(event : HealthEvent)
+  {
+    // first, we're going to make sure the damage isn't zero (or, for whatever
+    // reason, negative), because we don't want to fire off WasDamaged events
+    // etc. if there was not actually any damage
+    if (event.Amount <= 0.0)
+      return;
+    
+    // we took damage! time to dispatch some events
+    this.Owner.DispatchEvent(Events.WasDamaged, event);
+    if (event.Instigator != null)
+      event.Instigator.DispatchEvent(Events.DidDamage, event);
+    if (event.Deliverer != null && event.Deliverer != event.Instigator)
+      event.Deliverer.DispatchEvent(Events.DidDamage, event);
+    // TODO:
+    // 
+    // we should have a DidDeliverDamage event that the deliverer gets
+    // instead of DidDamage
+    
+    // note: it may matter whether we dispatch the was/did damage events before
+    // or after the was/did deal critical events, but for now, here's wonderwall
+    if (event.Critical)
+    {
+      this.Owner.DispatchEvent(Events.WasDealtCritical, event);
+      if (event.Instigator != null)
+        event.Instigator.DispatchEvent(Events.DidDealCritical, event);
+      // Events.DidDeliverCritical...?
+    }
+    
+    if (this.PrintStatusMessages)
+    {
+      var message = String.FormatC("%s dealt %.2f damage to %s",
+                                   event.InstigatorName,
+                                   event.Amount,
+                                   this.Owner.Name);
+      
+      if (event.Critical)
+        message = "CRITICAL HIT!! `message`";
+      
+      Print(message);
+    }
+    
+    this.HP -= event.Amount;
+    
+    if (this.HP < 0)
+    {
+      // should we do anything special at 0 HP exactly (or nearly exactly)?
+      
+      this.HP = 0;
+      this.Owner.DispatchEvent(Events.HPDepleted, event);
+      
+      if (event.PreventDeath)
+      {
+        // something
+      }
+      else
+      {
+        this.Die(event);
+      }
+    }
+  }
+  
+  
+  function Heal(event : HealthEvent)
+  {
+    // check if this amount <= 0, for the same reason as with damage
+    if (event.Amount <= 0)
+      return;
+    
+    this.Owner.DispatchEvent(Events.WasHealed, event);
+    if (event.Instigator != null)
+      event.Instigator.DispatchEvent(Events.DidHeal, event);
+    // TODO:
+    // 
+    // do stuff with the deliverer
+    
+    this.HP += event.Amount;
+    
+    if (this.HP >= this.MaxHP)
+      this.HPHitMax(event);
+  }
+  
+  
+  function Die(event : HealthEvent)
+  {
+    this.Owner.DispatchEvent(Events.Death, event);
+    
+    // TODO:
+    // 
+    // whatever you are, you dispatch an event that says you died
+    
+    if (this.PrintStatusMessages)
+    {
+      var message = String.FormatC("%s defeated %s!",
+                                   event.InstigatorName,
+                                   this.Owner.Name);
+      Print(message);
+    }
+    
+    if (!event.Handled)
+      this.Owner.Destroy();
+  }
+  
+  
+  function HPHitMax(event : HealthEvent)
+  {
+    // TODO:
+    // 
+    // make it so that this function doesn't get called if we already
+    // had maxed out HP
+    
+    // feedback and stuff, maybe an event, for when HP gets topped off
+    
+    this.HP = this.MaxHP;
+  }
 }
 
 
+enum DamageResult
+{
+  
+}
+
+enum HealResult
+{
+  
+}
+
+enum DamageType
+{
+  None,         // no type -- typical for non-magical / physical attacks
+  Heat,         // typically thought of as "fire" in standard rpg canon -- damage by too much molecular vibration?
+  Cold,         // typically thought of as "ice" -- damage by too little molecular vibration?
+  Electricity,  // typically thought of as "lightning" -- damage by electrical interference
+  Chemical,     // basically "acid" damage, but could work for bases too -- damage by chemical reaction
+  Shockwave,    // called "sonic" in some D&D contexts -- damage by shockwaves propagating through a fluid medium
+  Psychic,      // damage dealt directly to a mind
+  Biological,   // damage caused by microbial infection
+  Poison,       // damage caused by chemical interference with biological systems
+  Holy,         // damage caused by "good" divine power
+  Dark,         // damage caused by "evil" divine power
+  Water,        // (Big Four) damage dealt to electrical systems / fire-based entities
+  Wind,         // (Big Four) this can maybe damage fires?
+  Fire,         // (Big Four) what is this even doing here?
+  Earth,        // (Big Four) okay so now i guess i have all of these?
+  
+  COUNT_
+}

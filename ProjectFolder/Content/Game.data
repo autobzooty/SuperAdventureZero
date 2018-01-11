@@ -9,7 +9,7 @@ GameSession
 		var StartingLevel = "576f215c0825c3a8:Level"
 		var ChosenLevel = "576f215c0825c3a8:Level"
 		var SetupLevel = "5ab90cdb31e5b884:SetupLevel"
-		var LevelChoice = EditorStartingLevelChoice.EditorLevel
+		var LevelChoice = EditorStartingLevelChoice.ChosenLevel
 	}
 	IM 
 	{
@@ -39,5 +39,8 @@ GameSession
 		var InternetHostListTimeout = 4
 		var BasicHostInfoTimeout = 3
 		var ExtraHostInfoTimeout = 4
+	}
+	PRNG 
+	{
 	}
 }

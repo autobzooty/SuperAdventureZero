@@ -1,0 +1,33 @@
+class PRNG : ZilchComponent
+{
+  [Static] var RNG : Random = Random();
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    // seed the RNG here, when the time is right
+  }
+  
+  
+  // returns a random Real between min and max
+  [Static] function DamageRoll(min : Real, max : Real) : Real
+  {
+    return PRNG.RNG.Range(min, max);
+  }
+  
+  
+  // did i get a sweet crit???
+  [Static] function CritRoll(criticalXinY : Real2) : Boolean
+  {
+    if (criticalXinY.Y == 0.0) return false;
+    
+    return PRNG.RNG.Real() < criticalXinY.X / criticalXinY.Y;
+  }
+  
+  
+  // did i dodge?????
+  [Static] function DodgeRoll(dodgeChance : Real) : Boolean
+  {
+    return PRNG.RNG.Real() < dodgeChance;
+  }
+}

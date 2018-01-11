@@ -48,7 +48,7 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{400, -251.5, 10}
+			var Translation = Real3{400, -252, 10}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -101,7 +101,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 755
+			var Size = 966
 		}
 		EditorCameraController 
 		{
@@ -585,7 +585,7 @@ Level
 								GamepadRightStickMappingSetter 
 								{
 									var PlayerIndex = 0
-									var Multiplier = Real2{1, 1}
+									var Multiplier = Real2{10, -10}
 									var Stick = GameStick.Camera
 								}
 								Hierarchy 
