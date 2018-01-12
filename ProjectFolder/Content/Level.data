@@ -317,6 +317,16 @@ Level
 			var InvertX = false
 			var InvertY = false
 		}
+		Faction 
+		{
+			var AssignedFaction = FactionValue.Neutral
+		}
+		Health 
+		{
+			var Invincible = false
+			var BaseHP = 10
+			var BaseDodgeChange = 0
+		}
 		Hierarchy 
 		{
 			Cog [Id:0x5abab90f2e3f59c4][ContextId:7]

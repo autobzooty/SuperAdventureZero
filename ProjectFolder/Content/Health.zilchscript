@@ -9,9 +9,16 @@ class Health : ZilchComponent
   var BaseHP = 10.0;
   [Property][Slider(0, 1, 0.05)]
   var BaseDodgeChange = 0.0;
+  [Property]
+  var TypeMultiplierBlock = TypeMultiplierBlock();
   
   var HPMultiplier = 1.0;
   var DodgeChanceMultiplier = 1.0;
+  
+  var TypeMultipliers = HashMap[DamageType, Real]()
+  {
+    { DamageType.None, 1 },
+  };
   
   var HP : Real;
   var MaxHP : Real;
@@ -26,6 +33,8 @@ class Health : ZilchComponent
     this.MaxHP = this.BaseHP;
     this.HP = this.MaxHP;
     this.DodgeChance = this.BaseDodgeChange;
+    
+    this.TypeMultiplierBlock.Apply(this);
     
     // connect for stat events
     
@@ -75,6 +84,24 @@ class Health : ZilchComponent
   
   function TakeDamage(event : HealthEvent)
   {
+    // TODO:
+    // 
+    // we need events for all the different ways that damage can be modified by
+    // type multipliers. did you take extra damage because of type weakness?
+    // or were you healed? etc. for now, the event's damage will just be
+    // multiplied at the top of the function
+    
+    // TODO:
+    // 
+    // when damage gets canceled by type multipliers, we shouldn't just return
+    // and be done with it, but we also shouldn't proceed through this whole
+    // works when it's gonna be 0 damage. instead, there should be an event
+    // just for such an occasion. for now we'll just return early, though
+    
+    var type = event.Type;
+    var typeMultiplier = this.TypeMultipliers[type];
+    event.Amount *= typeMultiplier;
+    
     // first, we're going to make sure the damage isn't zero (or, for whatever
     // reason, negative), because we don't want to fire off WasDamaged events
     // etc. if there was not actually any damage
@@ -116,6 +143,13 @@ class Health : ZilchComponent
     }
     
     this.HP -= event.Amount;
+    
+    // TODO:
+    // 
+    // we should probably consider values very close to zero to be zero, for
+    // floating-point safety -- if i have what looks like 2 hp left, but really
+    // it's 2.001 hp, and i take what looks like 2 damage, but really it's
+    // 2.0005, i won't be dead but the UI might make things confusing
     
     if (this.HP < 0)
     {
@@ -207,17 +241,36 @@ enum DamageType
   Heat,         // typically thought of as "fire" in standard rpg canon -- damage by too much molecular vibration?
   Cold,         // typically thought of as "ice" -- damage by too little molecular vibration?
   Electricity,  // typically thought of as "lightning" -- damage by electrical interference
-  Chemical,     // basically "acid" damage, but could work for bases too -- damage by chemical reaction
-  Shockwave,    // called "sonic" in some D&D contexts -- damage by shockwaves propagating through a fluid medium
   Psychic,      // damage dealt directly to a mind
   Biological,   // damage caused by microbial infection
   Poison,       // damage caused by chemical interference with biological systems
   Holy,         // damage caused by "good" divine power
   Dark,         // damage caused by "evil" divine power
-  Water,        // (Big Four) damage dealt to electrical systems / fire-based entities
-  Wind,         // (Big Four) this can maybe damage fires?
-  Fire,         // (Big Four) what is this even doing here?
-  Earth,        // (Big Four) okay so now i guess i have all of these?
   
   COUNT_
+}
+
+class TypeMultiplierBlock : ZilchObject
+{
+  [Property] var Heat        = 1.0;
+  [Property] var Cold        = 1.0;
+  [Property] var Electricity = 1.0;
+  [Property] var Psychic     = 1.0;
+  [Property] var Biological  = 1.0;
+  [Property] var Poison      = 1.0;
+  [Property] var Holy        = 1.0;
+  [Property] var Dark        = 1.0;
+  
+  function Apply(health : Health)
+  {
+    var types = health.TypeMultipliers;
+    types[DamageType.Heat]        = this.Heat;
+    types[DamageType.Cold]        = this.Cold;
+    types[DamageType.Electricity] = this.Electricity;
+    types[DamageType.Psychic]     = this.Psychic;
+    types[DamageType.Biological]  = this.Biological;
+    types[DamageType.Poison]      = this.Poison;
+    types[DamageType.Holy]        = this.Holy;
+    types[DamageType.Dark]        = this.Dark;
+  }
 }

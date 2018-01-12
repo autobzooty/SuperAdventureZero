@@ -70,15 +70,17 @@ class HealthEvent : MWEvent
   sends HPDepleted : HealthEvent;
   sends Death : HealthEvent;
   
-  // the amount of damage being dealt. the effects of whether it's a
-  // crit are already factored in. this number should always be positive:
-  // a positive value in a Damage event indicates a negative HP change,
+  // the amount of the HP change. the effects of whether it's a crit are
+  // already factored in. this number should always be positive: a
+  // positive value in a Damage event indicates a negative HP change,
   // and a positive value in a Heal event indicates a positive HP change
   var Amount : Real;
   // whether this is a crit
   var Critical : Boolean;
   // whether this attack can be dodged
   var Dodgeable : Boolean;
+  // what type this HP change is
+  var Type : DamageType = DamageType.None;
   // whether factions should be ignored for this HP change
   var IgnoreFaction : Boolean = false;
   // whether invincibility should be ignored for this HP change
