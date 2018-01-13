@@ -1,0 +1,11 @@
+class RESOURCE_NAME_ : ZilchComponent
+{
+  [Dependency]
+  var EB : EquipmentBase;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    
+  }
+}
