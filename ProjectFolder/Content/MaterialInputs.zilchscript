@@ -1,0 +1,7 @@
+class MaterialInputs : ZilchComponent
+{
+  [Property][ShaderInput] var AlbedoValue    : Real4 = Real4(0.5.XXX, 1);
+  [Property][Slider(0, 1, 0.05)][ShaderInput] var MetallicValue  : Real  = 0.5;
+  [Property][Slider(0, 1, 0.05)][ShaderInput] var RoughnessValue : Real  = 0.5;
+  [Property][Slider(0, 1, 0.05)][ShaderInput] var SpecularValue  : Real  = 0.5;
+}

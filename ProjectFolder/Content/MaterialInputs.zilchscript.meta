@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "MaterialInputs"
+		var ResourceId = 0x5ab2d8505a918185
+	}
+}

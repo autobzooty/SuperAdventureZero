@@ -1,0 +1,28 @@
+class EquipmentInterface : ZilchComponent
+{
+  function Initialize(init : CogInitializer)
+  {
+  }
+}
+
+
+class EquipmentSlot : ZilchComponent
+{
+  [Property]
+  var SlotType : EquipmentSlotType;
+  
+  var Item : Cog = null;
+}
+
+
+enum EquipmentSlotType
+{
+  OneHand,
+  Head,
+  Body,
+  Glove,
+  Foot,
+  Accessory,
+  
+  COUNT_
+}

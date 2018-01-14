@@ -7,13 +7,16 @@ class Health : ZilchComponent
   var Invincible = false;
   [Property]
   var BaseHP = 10.0;
+  [Property]
+  var BaseDefense = 0.0;
   [Property][Slider(0, 1, 0.05)]
-  var BaseDodgeChange = 0.0;
+  var BaseEvasion = 0.0;
   [Property]
   var TypeMultiplierBlock = TypeMultiplierBlock();
   
   var HPMultiplier = 1.0;
-  var DodgeChanceMultiplier = 1.0;
+  var DefenseMultiplier = 1.0;
+  var EvasionMultiplier = 1.0;
   
   var TypeMultipliers = HashMap[DamageType, Real]()
   {
@@ -22,7 +25,8 @@ class Health : ZilchComponent
   
   var HP : Real;
   var MaxHP : Real;
-  var DodgeChance : Real;
+  var Defense : Real;
+  var Evasion : Real;
   
   // if true, messages about damage and death will be printed to the console
   var PrintStatusMessages : Boolean = true;
@@ -32,7 +36,8 @@ class Health : ZilchComponent
   {
     this.MaxHP = this.BaseHP;
     this.HP = this.MaxHP;
-    this.DodgeChance = this.BaseDodgeChange;
+    this.Defense = this.BaseDefense;
+    this.Evasion = this.BaseEvasion;
     
     this.TypeMultiplierBlock.Apply(this);
     
@@ -55,8 +60,8 @@ class Health : ZilchComponent
     
     if (ignoreFaction || canDealDamage)
     {
-      if (this.DodgeRoll())
-        this.Dodge(event);
+      if (this.EvadeRoll())
+        this.Evade(event);
       else
         this.TakeDamage(event);
     }
@@ -70,13 +75,13 @@ class Health : ZilchComponent
   }
   
   
-  function DodgeRoll() : Boolean
+  function EvadeRoll() : Boolean
   {
-    return PRNG.DodgeRoll(this.DodgeChance);
+    return PRNG.EvadeRoll(this.Evasion);
   }
   
   
-  function Dodge(event : HealthEvent)
+  function Evade(event : HealthEvent)
   {
     // dodge feedback
   }
@@ -84,6 +89,12 @@ class Health : ZilchComponent
   
   function TakeDamage(event : HealthEvent)
   {
+    // HUGE TODO:
+    // 
+    // come up with a defense formula
+    
+    
+    
     // TODO:
     // 
     // we need events for all the different ways that damage can be modified by

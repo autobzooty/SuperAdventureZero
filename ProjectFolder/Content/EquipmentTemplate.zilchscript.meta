@@ -17,8 +17,8 @@ TextContent
 	{
 		var DisplayName = "Equipment"
 		var Description = "Use this for components of equipment items"
-		var SortWeight = 100000
+		var SortWeight = 0
 		var Category = "Super Adventure 3D"
-		var CategorySortWeight = 0
+		var CategorySortWeight = 4294967286
 	}
 }

@@ -25,9 +25,9 @@ class PRNG : ZilchComponent
   }
   
   
-  // did i dodge?????
-  [Static] function DodgeRoll(dodgeChance : Real) : Boolean
+  // did i evade?????
+  [Static] function EvadeRoll(evadeChance : Real) : Boolean
   {
-    return PRNG.RNG.Real() < dodgeChance;
+    return PRNG.RNG.Real() < evadeChance;
   }
 }

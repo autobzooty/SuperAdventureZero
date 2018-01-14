@@ -14,8 +14,8 @@ class DamageSource : ZilchComponent
   [Property] var CritMultiplier : Real = 2.0;
   // after the multiplier is applied, this is added
   [Property] var CritAddend : Real = 0.0;
-  // whether this damage can be dodged
-  [Property] var Dodgeable : Boolean = true;
+  // whether this damage can be evaded
+  [Property] var Evadable : Boolean = true;
   // whether this damage should ignore faction
   [Property] var IgnoreFaction : Boolean = false;
   // whether this damage should ignore invincibility
@@ -50,7 +50,7 @@ class DamageSource : ZilchComponent
     var he = HealthEvent();
     he.Amount = amount;
     he.Critical = crit;
-    he.Dodgeable = this.Dodgeable;
+    he.Evadable = this.Evadable;
     he.IgnoreFaction = this.IgnoreFaction;
     he.IgnoreInvincibility = this.IgnoreInvincibility;
     he.Instigator = this.Instigator;
@@ -78,7 +78,7 @@ class DamageSource : ZilchComponent
     var he = HealthEvent();
     he.Amount = amount;
     he.Critical = crit;
-    he.Dodgeable = this.Dodgeable;
+    he.Evadable = this.Evadable;
     he.IgnoreFaction = this.IgnoreFaction;
     he.IgnoreInvincibility = this.IgnoreInvincibility;
     he.Instigator = this.Instigator;

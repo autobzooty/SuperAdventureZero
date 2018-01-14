@@ -39,7 +39,7 @@ class UpdateEventSends
 class MWEvent : ZilchEvent
 {
   var Instigator : Cog;
-   var InstigatingFaction : FactionValue;
+  var InstigatingFaction : FactionValue;
   var InstigatorName : String;
   
   constructor() : base() {}
@@ -77,8 +77,8 @@ class HealthEvent : MWEvent
   var Amount : Real;
   // whether this is a crit
   var Critical : Boolean;
-  // whether this attack can be dodged
-  var Dodgeable : Boolean;
+  // whether this attack can be evaded
+  var Evadable : Boolean;
   // what type this HP change is
   var Type : DamageType = DamageType.None;
   // whether factions should be ignored for this HP change
@@ -121,3 +121,20 @@ class HealthEvent : MWEvent
   }
 }
 
+class EquipmentEvent : MWEvent
+{
+  sends ItemEquipped : EquipmentEvent;
+  sends ItemUnequipped : EquipmentEvent;
+  
+  // TODO:
+  // 
+  // i strongly suspect that we'll want to differentiate between when an item is
+  // equipped by a player during the game, like through the menu or whatever, and
+  // when it is "equipped" on initialize, like when a character with equipment is
+  // created or loaded. i think it's mostly going to be a matter of a difference
+  // in feedback, but there could be mechanical implications as well, and it
+  // would certainly be relevant for data tracking
+  
+  var Equipment : EquipmentBase;
+  var StatBlock : StatBlock;
+}

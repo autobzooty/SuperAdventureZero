@@ -1,6 +1,54 @@
 class EquipmentBase : ZilchComponent
 {
+  [Property]
+  var StatBlock : StatBlock = StatBlock();
+  
+  
   function Initialize(init : CogInitializer)
   {
   }
+}
+
+
+class StatMod : ZilchObject
+{
+  [Property]
+  var Addend : Real = 0;
+  [Property]
+  var Bonus : Real = 0;
+}
+
+
+class StatBlock : ZilchObject
+{
+  [Property]
+  var HP : StatMod = StatMod();
+  [Property]
+  var Defense : StatMod = StatMod();
+  [Property]
+  var Evasion : StatMod = StatMod();
+  [Property]
+  var TypeAddends : TypeMultiplierBlock = TypeMultiplierBlock()
+  {
+    Heat = 0,
+    Cold = 0,
+    Electricity = 0,
+    Psychic = 0,
+    Biological = 0,
+    Poison = 0,
+    Holy = 0,
+    Dark = 0,
+  };
+  [Property]
+  var TypeBonuses : TypeMultiplierBlock = TypeMultiplierBlock()
+  {
+    Heat = 0,
+    Cold = 0,
+    Electricity = 0,
+    Psychic = 0,
+    Biological = 0,
+    Poison = 0,
+    Holy = 0,
+    Dark = 0,
+  };
 }
