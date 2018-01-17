@@ -48,7 +48,7 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{400, -252, 10}
+			var Translation = Real3{400, -251.5, 10}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -101,7 +101,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 966
+			var Size = 755
 		}
 		EditorCameraController 
 		{
@@ -2022,7 +2022,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Neutral
-											var AffecteeFaction = FactionValue.Neutral
+											var ReceivingFaction = FactionValue.Neutral
 											var CanDealDamage = false
 											var CanDealKnockback = true
 											var DamageScalar = 0
@@ -2155,7 +2155,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Neutral
-											var AffecteeFaction = FactionValue.Good
+											var ReceivingFaction = FactionValue.Good
 											var CanDealDamage = false
 											var CanDealKnockback = true
 											var DamageScalar = 0
@@ -2288,7 +2288,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Neutral
-											var AffecteeFaction = FactionValue.Bad
+											var ReceivingFaction = FactionValue.Bad
 											var CanDealDamage = false
 											var CanDealKnockback = true
 											var DamageScalar = 0
@@ -2547,7 +2547,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Good
-											var AffecteeFaction = FactionValue.Neutral
+											var ReceivingFaction = FactionValue.Neutral
 											var CanDealDamage = false
 											var CanDealKnockback = true
 											var DamageScalar = 0
@@ -2680,7 +2680,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Good
-											var AffecteeFaction = FactionValue.Good
+											var ReceivingFaction = FactionValue.Good
 											var CanDealDamage = false
 											var CanDealKnockback = false
 											var DamageScalar = 0
@@ -2813,7 +2813,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Good
-											var AffecteeFaction = FactionValue.Bad
+											var ReceivingFaction = FactionValue.Bad
 											var CanDealDamage = true
 											var CanDealKnockback = true
 											var DamageScalar = 1
@@ -3072,7 +3072,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Bad
-											var AffecteeFaction = FactionValue.Neutral
+											var ReceivingFaction = FactionValue.Neutral
 											var CanDealDamage = false
 											var CanDealKnockback = true
 											var DamageScalar = 0
@@ -3205,7 +3205,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Bad
-											var AffecteeFaction = FactionValue.Good
+											var ReceivingFaction = FactionValue.Good
 											var CanDealDamage = true
 											var CanDealKnockback = true
 											var DamageScalar = 1
@@ -3338,7 +3338,7 @@ Level
 										RelationshipSetter 
 										{
 											var InstigatingFaction = FactionValue.Bad
-											var AffecteeFaction = FactionValue.Bad
+											var ReceivingFaction = FactionValue.Bad
 											var CanDealDamage = true
 											var CanDealKnockback = true
 											var DamageScalar = 0.100000001

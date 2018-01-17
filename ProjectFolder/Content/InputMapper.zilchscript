@@ -238,6 +238,21 @@ class MouseButtonStickMappingSetter : StickMappingSetter
 }
 
 
+// TODO:
+// 
+// this cannot exist until Zero.Mouse has Scroll on it, or until i talk to the
+// zero devs and figure out a workaround. otherwise, maybe i'll just have to
+// wait until the input refactor =\
+
+//class MouseScrollStickMapping : StickMapping
+//{
+//  [Override] function GetValue : Real2
+//  {
+//    Zero.Mouse
+//  }
+//}
+
+
 class ActionMapping : InputMapping
 {
   [Property] var Action : GameAction = GameAction.Jump;

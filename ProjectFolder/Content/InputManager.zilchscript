@@ -161,6 +161,7 @@ enum GameStick
 {
   Move,
   Camera,
+  Zoom,
   
   COUNT_
 }

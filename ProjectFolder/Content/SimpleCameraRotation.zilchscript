@@ -1,9 +1,14 @@
 class SimpleCameraRotation : ZilchComponent
 {
   [Property] var RotationNode = CogPath(".");
+  [Property] var ZoomNode = CogPath(".");
   [Property] var Sensitivity = Real2(1);
+  [Property] var ZoomSpeed = 5.0;
   [Property] var InvertX = false;
   [Property] var InvertY = false;
+  
+  var MinZoom = 0.0;
+  var MaxZoom = 100.0;
   
   var IM_ : IM;
   var IM : IM
@@ -33,12 +38,21 @@ class SimpleCameraRotation : ZilchComponent
     }
   }
   
+  var Zoom_ : Real;
+  var Zoom : Real
+  {
+    get { return this.ZoomNode.Transform.LocalTranslation.Z; }
+    
+    set { this.ZoomNode.Transform.LocalTranslation = Real3.ZAxis * Math.Clamp(value, this.MinZoom, this.MaxZoom); }
+  }
   
+   
   function Initialize(init : CogInitializer)
   {
     Zero.Mouse.Trapped = true;
     
     Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    Zero.Connect(this.Space, Events.MouseScroll, this.OnMouseScroll);
   }
   
   
@@ -59,5 +73,11 @@ class SimpleCameraRotation : ZilchComponent
       angles.Y -= rotation.X;
     
     this.Angles = angles;
+  }
+  
+  
+  function OnMouseScroll(event : ViewportMouseEvent)
+  {
+    this.Zoom -= event.Scroll.Y * this.ZoomSpeed * this.Space.TimeSpace.Dt;
   }
 }
