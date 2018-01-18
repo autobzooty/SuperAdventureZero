@@ -1,6 +1,8 @@
 class EquipmentBase : ZilchComponent
 {
   [Property]
+  var SlotType : EquipmentSlotType = EquipmentSlotType.OneHand;
+  [Property]
   var StatBlock : StatBlock = StatBlock();
   
   

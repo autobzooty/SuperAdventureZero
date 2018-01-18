@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-0.75877285, 2.08864093, 3.30512357}
+			var Translation = Real3{-2.28770781, 2.2435112, 2.45194864}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0701799169, -0.112047553, -0.00793337729, 0.991189837}
+			var Rotation = Quaternion{-0.0873172581, -0.371327996, -0.035100814, 0.9237203}
 		}
 		CameraViewport 
 		{
@@ -235,8 +235,8 @@ Level
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
 			var LookDistance = 3.33196187
-			var VerticalAngle = 0.141371489
-			var HorizontalAngle = 12.791502
+			var VerticalAngle = 0.188495517
+			var HorizontalAngle = 13.3308153
 			var LookTarget = Real3{-0.022384733, 1.61916387, 0.0896463096}
 			var MoveSensitivity = 1
 		}
@@ -348,6 +348,21 @@ Level
 		}
 		EquipmentInterface 
 		{
+			var EquipmentRoot = CogPath
+			{
+				var Path = "EquipmentSlots"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 9
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
 		}
 		Hierarchy 
 		{

@@ -1,7 +1,80 @@
 class EquipmentInterface : ZilchComponent
 {
+  [Property]
+  var EquipmentRoot = CogPath(".");
+  
+  
   function Initialize(init : CogInitializer)
   {
+  }
+  
+  
+  function AttemptEquip(equipment : EquipmentBase)
+  {
+    var type = equipment.SlotType;
+    var slot = this.FindEmptySlot(type);
+    
+    if (slot == null)
+      this.FailToEquip(equipment);
+    else
+      this.Equip(equipment);
+  }
+  
+  
+  function Equip(equipment : EquipmentBase)
+  {
+    
+  }
+  
+  
+  function FailToEquip(equipment : EquipmentBase)
+  {
+    
+  }
+  
+  
+  function FindEmptySlot(type : EquipmentSlotType) : EquipmentSlot
+  {
+    // TODO:
+    // 
+    // i've got all these swell bools here. what i want to do is
+    // make an enum of slot-find statuses (found, no slots, no
+    // empties, etc.) and return that, and make the found slot
+    // be an output parameter or something... but for now, these
+    // will just sit here looking pretty
+    
+    var childrenWereFound = false;
+    var slotsWereFound = false;
+    var matchingSlotsWereFound = false;
+    var emptyMatchingSlotsWereFound = false;
+    
+    var slotThatWasFound : EquipmentSlot = null;
+    
+    foreach (var child in this.EquipmentRoot.Cog.Children)
+    {
+      childrenWereFound = true;
+      
+      var slot = child.EquipmentSlot;
+      
+      if (slot != null)
+      {
+        slotsWereFound = true;
+        
+        if (slot.SlotType == type)
+        {
+          matchingSlotsWereFound = true;
+          
+          if (slot.Item == null)
+          {
+            emptyMatchingSlotsWereFound = true;
+            
+            slotThatWasFound = slot;
+          }
+        }
+      }
+    }
+    
+    return slotThatWasFound;
   }
 }
 

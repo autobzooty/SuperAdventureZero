@@ -10,6 +10,7 @@ class Faction : ZilchComponent
     if (faction != null)
       return faction.AssignedFaction;
     
+    // shoutouts to Nibiru for this breadth-first strat
     var stack = Array[Cog]();
     stack.Add(cog.FindRoot());
     
