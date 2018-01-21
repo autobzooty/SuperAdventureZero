@@ -1,0 +1,40 @@
+class HumanMoverInterface : ZilchComponent
+{
+  [Property] var CameraPath = CogPath();
+  
+  var IM : IM;
+  var StickThreshold : Real { get { return 0.03; }}
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.IM = this.GameSession.IM;
+    
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+  
+  
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    var ie = InputEvent();
+    
+    var moveStick = this.IM.GetStick(GameStick.Move);
+    var magnitude = Math.Length(moveStick);
+    
+    if (magnitude >= this.StickThreshold)
+    {
+      var direction = Math.Normalize(Real3(moveStick.X, 0, -moveStick.Y));
+      direction = this.CameraPath.Transform.TransformNormal(direction);
+      
+      ie.Direction = direction;
+      ie.Magnitude = magnitude;
+      ie.ActiveInput = true;
+    }
+    
+    ie.JumpTriggered = this.IM.Triggered(GameAction.Jump);
+    ie.JumpReleased = this.IM.Released(GameAction.Jump);
+    ie.Dt = event.Dt;
+    
+    this.Owner.DispatchEvent(Events.MovementRequest, ie);
+  }
+}

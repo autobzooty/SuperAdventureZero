@@ -36,6 +36,18 @@ class UpdateEventSends
   sends IMCleanup : UpdateEvent;
 }
 
+class InputEvent : ZilchEvent
+{
+  sends MovementRequest : InputEvent;
+  
+  var Direction : Real3;
+  var Magnitude : Real;
+  var JumpTriggered : Boolean;
+  var JumpReleased : Boolean;
+  var Dt : Real;
+  var ActiveInput : Boolean;
+}
+
 class MWEvent : ZilchEvent
 {
   var Instigator : Cog;

@@ -1,0 +1,37 @@
+class LerpPositionOnUpdate : ZilchComponent
+{
+  [Property]
+  var MoverPath = CogPath();  // the object that will move
+  [Property]
+  var FocusPath = CogPath();  // the object the mover will move to
+  [Property]
+  var Snappiness : Real = 0.5;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
+  }
+  
+  
+  function OnStandardUpdate(event : UpdateEvent)
+  {
+    var moverPosition = this.MoverPath.Transform.WorldTranslation;
+    var focusPosition = this.FocusPath.Transform.WorldTranslation;
+    var difference = focusPosition - moverPosition;
+    
+    // TODO:
+    // 
+    // this could maybe be slightly rewritten to take snappiness into account
+    if (Math.LengthSq(difference) >= 0.001)
+    {
+      var movement = difference * this.Snappiness;
+      
+      this.MoverPath.Transform.WorldTranslation = moverPosition + movement;
+    }
+    else
+    {
+      this.MoverPath.Transform.WorldTranslation = focusPosition;
+    }
+  }
+}
