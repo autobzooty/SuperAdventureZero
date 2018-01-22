@@ -1,0 +1,26 @@
+[RunInEditor]
+class ViewPositionTracker : ZilchComponent
+{
+  [Dependency]
+  var CameraViewport : CameraViewport;
+  
+  
+  [Property]
+  var ToTrackPath : CogPath = CogPath();
+  [Property]
+  var WorldOffset : Real3 = Real3.Zero;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+  }
+  
+  
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    var worldPosition = this.ToTrackPath.Transform.WorldTranslation + this.WorldOffset;
+    var viewPosition = Math.MultiplyPoint(this.CameraViewport.WorldToView, worldPosition);
+    Material.DistanceStippledFlat.DistanceVisibilityStippling.PlayerViewPosition = viewPosition;
+  }
+}

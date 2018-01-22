@@ -1,0 +1,81 @@
+class BasicSpringArm : ZilchComponent
+{
+  [Property]
+  var PivotPath : CogPath = CogPath(".");
+  [Property]
+  var MoverPath : CogPath = CogPath("GameCamera");
+  [Property]
+  var Snappiness : Real = 1;
+  
+  var SegmentLength : Real;
+  var CastFilter : CastFilter;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    var pivotPosition = this.PivotPath.Transform.WorldTranslation;
+    var moverPosition = this.MoverPath.Transform.WorldTranslation;
+    var difference = moverPosition - pivotPosition;
+    var distance = Math.Length(difference);
+    this.SegmentLength = distance;
+    
+    this.CastFilter = CastFilter();
+    this.CastFilter.IgnoreCog = this.MoverPath.Cog;
+    this.CastFilter.IgnoreDynamic = true;
+    this.CastFilter.IgnoreKinematic = true;
+    this.CastFilter.IgnoreStatic = false;
+    
+    Zero.Connect(this.Space, Events.CameraUpdate, this.OnCameraUpdate);
+  }
+  
+  
+  function OnCameraUpdate(event : UpdateEvent)
+  {
+    var pivotPosition = this.PivotPath.Transform.WorldTranslation;
+    var moverPosition = this.MoverPath.Transform.WorldTranslation;
+    var vectorFromPivotToMover = moverPosition - pivotPosition;
+    var distanceFromPivotToMover = Math.Length(vectorFromPivotToMover);
+    var directionFromPivotToMover = vectorFromPivotToMover / distanceFromPivotToMover;
+    var segmentEnd = pivotPosition + directionFromPivotToMover * this.SegmentLength;
+    
+    var segment = Segment();
+    segment.Start = pivotPosition;
+    segment.End = segmentEnd;
+    
+    var results = this.Space.PhysicsSpace.CastSegment(segment, 10, this.CastFilter);
+    
+    var somethingWasHit = false;
+    var lerpToWorldPosition = Real3();
+    
+    foreach (var result in results)
+    {
+      somethingWasHit = true;
+      lerpToWorldPosition = result.WorldPosition;
+      
+      break;
+    }
+    
+    // if nothing was hit, then the spring arm should extent out to its max length
+    // (i.e., the mover should lerp to end of the segment)
+    if (!somethingWasHit)
+    {
+      lerpToWorldPosition = segmentEnd;
+    }
+    
+    var lerpVector = lerpToWorldPosition - moverPosition;
+    
+    // TODO:
+    // 
+    // this could maybe be slightly rewritten to take snappiness into account
+    if (Math.LengthSq(lerpVector) >= 0.001)
+    {
+      var movement = lerpVector * this.Snappiness;
+      
+      this.MoverPath.Transform.WorldTranslation = moverPosition + movement;
+    }
+    else
+    {
+      this.MoverPath.Transform.WorldTranslation = lerpToWorldPosition;
+    }
+  }
+}

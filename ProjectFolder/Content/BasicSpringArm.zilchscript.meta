@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "BasicSpringArm"
+		var ResourceId = 0x5a8d629562a9a7a3
+	}
+}

@@ -1,0 +1,16 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"56dc0b2bbc86c4cb:AlphaBlend"
+	}
+	DistanceVisibilityStippling 
+	{
+		var StippleScale = 1
+		var NearDistance = 8.5
+		var FarDistance = 12.8000002
+		var MinVisibility = 0
+		var MaxVisibility = 1
+	}
+}

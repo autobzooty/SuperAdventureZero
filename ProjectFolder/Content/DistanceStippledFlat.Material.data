@@ -1,0 +1,35 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"581cffd64d449122:Opaque"
+		"580269d9a1d6b870:ShadowCasters"
+	}
+	AlbedoValue 
+	{
+		var AlbedoValue = Real4{1, 1, 1, 1}
+		var GammaCorrect = true
+	}
+	MetallicValue 
+	{
+		var MetallicValue = 0
+	}
+	RoughnessValue 
+	{
+		var RoughnessValue = 1
+	}
+	SpecularValue 
+	{
+		var SpecularValue = 0.5
+	}
+	DistanceVisibilityStippling 
+	{
+		var StippleScale = 1
+		var NearDistance = 16
+		var FarDistance = 20
+		var MinVisibility = 0
+		var MaxVisibility = 1
+		var PlayerViewPosition = Real3{-2.38418579e-07, -2.38418579e-07, -10}
+	}
+}

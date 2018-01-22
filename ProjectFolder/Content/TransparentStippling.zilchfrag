@@ -1,0 +1,34 @@
+[Pixel]
+struct VisibilityStippling
+{
+  [BuiltInInput] var ViewportSize : Real2;
+  [BuiltInInput] var ViewToPerspective : Real4x4;
+  
+  [PropertyInput][Slider(1, 16, 1)] var StippleScale : Real = 1;
+  
+  [FragmentInput][StageInput] var ViewPosition : Real3;
+  
+  
+  function Main()
+  {
+    var ndc = Math.Multiply(this.ViewToPerspective, Real4(this.ViewPosition, 1));
+    ndc.XY /= ndc.W;
+    ndc.XY = (ndc.XY / 2) + Real2(0.5);
+    
+    var pixelPos = ndc.XY * this.ViewportSize;
+    var pixel = pixelPos as Integer2;
+    var x = pixel.X;
+    var y = pixel.Y;
+    
+    if (((x / this.StippleScale) as Integer % 2 == 0) == ((y / this.StippleScale) as Integer % 2 == 0))
+      Shader.Discard();
+  }
+  
+  //[Static][Extension(typeid(Shader))][PixelIntrinsic]
+  //function FragCoord() : Real4
+  //{
+  //  var result = Real4();
+  //  Shader.AddInlineShaderCode("glsl", "`result` = gl_FragCoord");
+  //  return result;
+  //}
+}

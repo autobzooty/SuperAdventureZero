@@ -1,0 +1,43 @@
+[Pixel]
+struct DistanceVisibilityStippling
+{
+  [BuiltInInput] var ViewportSize : Real2;
+  [BuiltInInput] var ViewToPerspective : Real4x4;
+  
+  [PropertyInput][Slider(1, 16, 1)] var StippleScale : Real = 1;
+  [PropertyInput][Slider(0, 30, 0.1)] var NearDistance : Real = 20;
+  [PropertyInput][Slider(5, 100, 0.1)] var FarDistance : Real = 30;
+  [PropertyInput][Slider(0, 1, 0.05)] var MinVisibility : Real = 0;
+  [PropertyInput][Slider(0, 1, 0.05)] var MaxVisibility : Real = 1;
+  [PropertyInput] var PlayerViewPosition : Real3;
+  
+  [FragmentInput][StageInput] var ViewPosition : Real3;
+  
+  
+  function Main()
+  {
+    var ndc = Math.Multiply(this.ViewToPerspective, Real4(this.ViewPosition, 1));
+    ndc.XY /= ndc.W;
+    ndc.XY = (ndc.XY / 2) + Real2(0.5);
+    
+    var pixelPos = ndc.XY * this.ViewportSize;
+    var pixel = pixelPos as Integer2;
+    var index = (pixel / this.StippleScale) as Integer2 % 8;
+    var matrixValue = StipplingUtilities.IndexMatrix8x8[index.X + index.Y * 8] as Real / 64.0;
+    var pixelDifferenceFromPlayer = this.ViewPosition - this.PlayerViewPosition;
+    var pixelDistanceFromPlayer = Math.Length(pixelDifferenceFromPlayer);
+    
+    var minDistance = this.NearDistance;
+    var maxDistance = this.FarDistance;
+    
+    var normalizedDistance = (pixelDistanceFromPlayer - minDistance) / (maxDistance - minDistance);
+    normalizedDistance = Math.Clamp(normalizedDistance, 0, 1);
+    
+    var minOutput = 1 - this.MaxVisibility;
+    var maxOutput = 1 - this.MinVisibility;
+    var scaledDistance = (maxOutput - minOutput) * normalizedDistance + minOutput;
+    
+    if (scaledDistance > matrixValue)
+      Shader.Discard();
+  }
+}

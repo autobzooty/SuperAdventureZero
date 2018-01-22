@@ -4,4 +4,5 @@ class MaterialInputs : ZilchComponent
   [Property][Slider(0, 1, 0.05)][ShaderInput] var MetallicValue  : Real  = 0.5;
   [Property][Slider(0, 1, 0.05)][ShaderInput] var RoughnessValue : Real  = 0.5;
   [Property][Slider(0, 1, 0.05)][ShaderInput] var SpecularValue  : Real  = 0.5;
+  [Property][Slider(1, 16, 1)][ShaderInput] var StippleScale : Real = 1;
 }

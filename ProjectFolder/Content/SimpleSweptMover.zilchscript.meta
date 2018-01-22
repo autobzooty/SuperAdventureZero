@@ -1,6 +1,13 @@
 [Version:1]
 TextContent 
 {
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"ZilchScript"
+		}
+	}
 	ZilchScriptBuilder 
 	{
 		var Name = "SimpleSweptMover"
