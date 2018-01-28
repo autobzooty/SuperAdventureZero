@@ -6,6 +6,11 @@ class BasicSpringArm : ZilchComponent
   var MoverPath : CogPath = CogPath("GameCamera");
   [Property]
   var Snappiness : Real = 1;
+  [Property]
+  var ZoomSpeed : Real = 20;
+  
+  var MinZoom : Real = 1;
+  var MaxZoom : Real = 100;
   
   var SegmentLength : Real;
   var CastFilter : CastFilter;
@@ -26,6 +31,17 @@ class BasicSpringArm : ZilchComponent
     this.CastFilter.IgnoreStatic = false;
     
     Zero.Connect(this.Space, Events.CameraUpdate, this.OnCameraUpdate);
+    // TODO:
+    // 
+    // use the IM for zooming
+    Zero.Connect(this.Space, Events.MouseScroll, this.OnMouseScroll);
+  }
+  
+  
+  function OnMouseScroll(event : ViewportMouseEvent)
+  {
+    this.SegmentLength -= event.Scroll.Y * this.ZoomSpeed * this.Space.TimeSpace.Dt;
+    this.SegmentLength = Math.Clamp(this.SegmentLength, this.MinZoom, this.MaxZoom);
   }
   
   

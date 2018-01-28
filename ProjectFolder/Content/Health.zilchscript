@@ -7,15 +7,12 @@ class Health : ZilchComponent
   var Invincible = false;
   [Property]
   var BaseHP = 10.0;
-  [Property]
-  var BaseDefense = 0.0;
   [Property][Slider(0, 1, 0.05)]
   var BaseEvasion = 0.0;
   [Property]
   var TypeMultiplierBlock = TypeMultiplierBlock();
   
   var HPMultiplier = 1.0;
-  var DefenseMultiplier = 1.0;
   var EvasionMultiplier = 1.0;
   
   var TypeMultipliers = HashMap[DamageType, Real]()
@@ -25,7 +22,6 @@ class Health : ZilchComponent
   
   var HP : Real;
   var MaxHP : Real;
-  var Defense : Real;
   var Evasion : Real;
   
   // if true, messages about damage and death will be printed to the console
@@ -36,7 +32,6 @@ class Health : ZilchComponent
   {
     this.MaxHP = this.BaseHP;
     this.HP = this.MaxHP;
-    this.Defense = this.BaseDefense;
     this.Evasion = this.BaseEvasion;
     
     this.TypeMultiplierBlock.Apply(this);

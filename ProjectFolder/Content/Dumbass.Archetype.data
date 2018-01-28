@@ -28,7 +28,7 @@ Cog
 	}
 	RigidBody 
 	{
-		var Velocity = Real3{0, -31.2499981, 0}
+		var Velocity = Real3{0, 0, 0}
 		var AngularVelocity = Real3{0, 0, 0}
 		var DynamicState = RigidBodyDynamicState.Kinematic
 		var AllowSleep = true
@@ -47,7 +47,6 @@ Cog
 	{
 		var Invincible = false
 		var BaseHP = 10
-		var BaseDefense = 0
 		var BaseEvasion = 0
 		var TypeMultiplierBlock = TypeMultiplierBlock
 		{
@@ -107,8 +106,8 @@ Cog
 	}
 	SimpleSweptMover 
 	{
-		var MaxSpeed = 5
-		var TurnSpeed = 720
+		var MaxSpeed = 16
+		var TurnSpeed = 1080
 	}
 	HumanMoverInterface 
 	{
@@ -218,519 +217,13 @@ Cog
 					}
 					Hierarchy 
 					{
-						Cog [Id:0x5ab56edb74d3e039]
+						Cog [Id:0x5a860333c3e8fa8f][InheritId:"5a86688cccbefab5:HornedHelmet"]
 						{
-							var Name = "Helmet"
 							Transform 
 							{
 								var Translation = Real3{0, 0, 0}
-								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, 0, 1}
-							}
-							EquipmentBase 
-							{
-								var SlotType = EquipmentSlotType.OneHand
-								var StatBlock = StatBlock
-								{
-									var HP = StatMod
-									{
-										var Addend = 0
-										var Bonus = 0
-									}
-									var Defense = StatMod
-									{
-										var Addend = 0
-										var Bonus = 0
-									}
-									var Evasion = StatMod
-									{
-										var Addend = 0
-										var Bonus = 0
-									}
-									var TypeAddends = TypeMultiplierBlock
-									{
-										var Heat = 0
-										var Cold = 0
-										var Electricity = 0
-										var Psychic = 0
-										var Biological = 0
-										var Poison = 0
-										var Holy = 0
-										var Dark = 0
-									}
-									var TypeBonuses = TypeMultiplierBlock
-									{
-										var Heat = 0
-										var Cold = 0
-										var Electricity = 0
-										var Psychic = 0
-										var Biological = 0
-										var Poison = 0
-										var Holy = 0
-										var Dark = 0
-									}
-								}
-							}
-							Hierarchy 
-							{
-								Cog [Id:0x5ab572a5d1775d8a]
-								{
-									var Name = "MainPart"
-									Transform 
-									{
-										var Translation = Real3{0, 0.130935431, -0.0558358431}
-										var Scale = Real3{1, 1, 1}
-										var Rotation = Quaternion{0, 0, 0, 1}
-									}
-									Hierarchy 
-									{
-										Cog [Id:0x5ab572a5d1775df0]
-										{
-											var Name = "Sphere"
-											Transform 
-											{
-												var Translation = Real3{0, 0, 0}
-												var Scale = Real3{1.04999995, 1.04999995, 1.04999995}
-												var Rotation = Quaternion{0, 0, 0, 1}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.546000004, 0.56400001, 0.600000024, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab5616a23f064be]
-										{
-											var Name = "KnobPivot"
-											Transform 
-											{
-												var Translation = Real3{0, 0, 0}
-												var Scale = Real3{1, 1, 1}
-												var Rotation = Quaternion{-0.113039002, -0.0652631, 0.495722443, 0.858616471}
-											}
-											Hierarchy 
-											{
-												Cog [Id:0x5ab5617424a19c61]
-												{
-													var Name = "Sphere"
-													Transform 
-													{
-														var Translation = Real3{0, 0.5, 0}
-														var Scale = Real3{0.25, 1, 0.25}
-														var Rotation = Quaternion{0, 0, 0, 1}
-													}
-													Model 
-													{
-														var Visible = true
-														var ViewCulling = true
-														var VisibilityEvents = true
-														var OverrideBoundingBox = false
-														var LocalAabbCenter = Real3{0, 0, 0}
-														var LocalAabbHalfExtents = Real3{1, 1, 1}
-														var GroupSortValue = 0
-														var Material = "5828b036bd65b5d8:OpaqueFlat"
-														var Mesh = "4de0354322b376ae:Sphere"
-													}
-													MaterialInputs 
-													{
-														var AlbedoValue = Real4{0.600000024, 0.564705908, 0.12156862, 1}
-														var MetallicValue = 1
-														var RoughnessValue = 0.200000003
-														var SpecularValue = 1
-													}
-												}
-											}
-										}
-										Cog [Id:0x5ab56e4f4039a40a]
-										{
-											var Name = "KnobPivot"
-											Transform 
-											{
-												var Translation = Real3{0, 0, 0}
-												var Scale = Real3{1, 1, 1}
-												var Rotation = Quaternion{-0.113039002, 0.0652631, -0.495722443, 0.858616471}
-											}
-											Hierarchy 
-											{
-												Cog [Id:0x5ab5617424a19c61]
-												{
-													var Name = "Sphere"
-													Transform 
-													{
-														var Translation = Real3{0, 0.5, 0}
-														var Scale = Real3{0.25, 1, 0.25}
-														var Rotation = Quaternion{0, 0, 0, 1}
-													}
-													Model 
-													{
-														var Visible = true
-														var ViewCulling = true
-														var VisibilityEvents = true
-														var OverrideBoundingBox = false
-														var LocalAabbCenter = Real3{0, 0, 0}
-														var LocalAabbHalfExtents = Real3{1, 1, 1}
-														var GroupSortValue = 0
-														var Material = "5828b036bd65b5d8:OpaqueFlat"
-														var Mesh = "4de0354322b376ae:Sphere"
-													}
-													MaterialInputs 
-													{
-														var AlbedoValue = Real4{0.600000024, 0.564705908, 0.12156862, 1}
-														var MetallicValue = 1
-														var RoughnessValue = 0.200000003
-														var SpecularValue = 1
-													}
-												}
-											}
-										}
-									}
-								}
-								Cog [Id:0x5ab5777254980be1]
-								{
-									var Name = "Ring"
-									Transform 
-									{
-										var Translation = Real3{0, 0.126974106, -0.0555703491}
-										var Scale = Real3{1, 1, 1}
-										var Rotation = Quaternion{0, 0, 0, 1}
-									}
-									Hierarchy 
-									{
-										Cog [Id:0x5ab5777254980c3e]
-										{
-											var Name = "Cylinder"
-											Transform 
-											{
-												var Translation = Real3{0, 0, 0}
-												var Scale = Real3{1.10000014, 0.100000016, 1.10000002}
-												var Rotation = Quaternion{0, 0, 0.707106829, 0.707106769}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b3572e:Cylinder"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.600000024, 0.566400051, 0.120000005, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.150000006
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aef9c0]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, -0.305563688, -0.457308233}
-												var Scale = Real3{0.0500000007, 0.0500000156, 0.0500000156}
-												var Rotation = Quaternion{0.956940353, 0, 0, 0.290284634}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aef9eb]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, -0.107299566, -0.53943181}
-												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
-												var Rotation = Quaternion{0.99518472, 0, 0, 0.0980171561}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefa13]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.107299566, -0.53943193}
-												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
-												var Rotation = Quaternion{0.995184779, 0, 0, -0.0980170146}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefa3f]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.30556345, -0.457308233}
-												var Scale = Real3{0.0500000007, 0.0500000156, 0.0500000156}
-												var Rotation = Quaternion{0.956940353, 0, 0, -0.290284634}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefa69]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.457308292, -0.305563629}
-												var Scale = Real3{0.0500000007, 0.0500000156, 0.0500000156}
-												var Rotation = Quaternion{0.881921291, 0, 0, -0.471396655}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefa91]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.53943181, -0.10729973}
-												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
-												var Rotation = Quaternion{-0.773010492, 0, 0, 0.634393215}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefab8]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.539432049, 0.107299581}
-												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
-												var Rotation = Quaternion{-0.634393334, 0, 0, 0.773010373}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefae1]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.457308292, 0.305563569}
-												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
-												var Rotation = Quaternion{-0.471396774, 0, 0, 0.881921351}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefb0d]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.305563688, 0.457308114}
-												var Scale = Real3{0.0500000007, 0.049999997, 0.049999997}
-												var Rotation = Quaternion{-0.290284842, 0, 0, 0.956940353}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-										Cog [Id:0x5ab572e6d9aefb35]
-										{
-											var Name = "Stud"
-											Transform 
-											{
-												var Translation = Real3{0, 0.107299805, 0.539431691}
-												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
-												var Rotation = Quaternion{-0.0980172828, 0, 0, 0.99518472}
-											}
-											Model 
-											{
-												var Visible = true
-												var ViewCulling = true
-												var VisibilityEvents = true
-												var OverrideBoundingBox = false
-												var LocalAabbCenter = Real3{0, 0, 0}
-												var LocalAabbHalfExtents = Real3{1, 1, 1}
-												var GroupSortValue = 0
-												var Material = "5828b036bd65b5d8:OpaqueFlat"
-												var Mesh = "4de0354322b376ae:Sphere"
-											}
-											MaterialInputs 
-											{
-												var AlbedoValue = Real4{0.694999993, 0.694999993, 0.694999993, 1}
-												var MetallicValue = 1
-												var RoughnessValue = 0.100000001
-												var SpecularValue = 1
-											}
-										}
-									}
-								}
+								var Scale = Real3{1, 1, 1}
 							}
 						}
 					}
@@ -765,11 +258,6 @@ Cog
 								var StatBlock = StatBlock
 								{
 									var HP = StatMod
-									{
-										var Addend = 0
-										var Bonus = 0
-									}
-									var Defense = StatMod
 									{
 										var Addend = 0
 										var Bonus = 0
@@ -828,10 +316,12 @@ Cog
 									}
 									MaterialInputs 
 									{
+										var Color = Real4{0.5, 0.5, 0.5, 1}
 										var AlbedoValue = Real4{0.545098066, 0.564705908, 0.600000024, 1}
 										var MetallicValue = 1
 										var RoughnessValue = 0.100000001
 										var SpecularValue = 1
+										var StippleScale = 1
 									}
 								}
 							}
@@ -955,10 +445,12 @@ Cog
 							}
 							MaterialInputs 
 							{
+								var Color = Real4{0.5, 0.5, 0.5, 1}
 								var AlbedoValue = Real4{0.754999995, 0.568514943, 0.396375, 1}
 								var MetallicValue = 0
 								var RoughnessValue = 0.75
 								var SpecularValue = 0.5
+								var StippleScale = 1
 							}
 						}
 						Cog [Id:0x5ab2c409ca875506]
@@ -1017,10 +509,12 @@ Cog
 													}
 													MaterialInputs 
 													{
+														var Color = Real4{0.5, 0.5, 0.5, 1}
 														var AlbedoValue = Real4{1, 1, 1, 1}
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.5
+														var StippleScale = 1
 													}
 												}
 												Cog [Id:0x5ab2c771b46edb2f]
@@ -1046,10 +540,12 @@ Cog
 													}
 													MaterialInputs 
 													{
+														var Color = Real4{0.5, 0.5, 0.5, 1}
 														var AlbedoValue = Real4{0, 0, 0, 1}
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.300000012
+														var StippleScale = 1
 													}
 												}
 												Cog [Id:0x5ab2c782a75051cf]
@@ -1075,10 +571,12 @@ Cog
 													}
 													MaterialInputs 
 													{
+														var Color = Real4{0.5, 0.5, 0.5, 1}
 														var AlbedoValue = Real4{0.184313729, 0.184313729, 0.184313729, 1}
 														var MetallicValue = 0
 														var RoughnessValue = 1
 														var SpecularValue = 0
+														var StippleScale = 1
 													}
 												}
 											}
@@ -1117,10 +615,12 @@ Cog
 													}
 													MaterialInputs 
 													{
+														var Color = Real4{0.5, 0.5, 0.5, 1}
 														var AlbedoValue = Real4{1, 1, 1, 1}
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.5
+														var StippleScale = 1
 													}
 												}
 												Cog [Id:0x5ab2c770b5b071fc]
@@ -1146,10 +646,12 @@ Cog
 													}
 													MaterialInputs 
 													{
+														var Color = Real4{0.5, 0.5, 0.5, 1}
 														var AlbedoValue = Real4{0, 0, 0, 1}
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.300000012
+														var StippleScale = 1
 													}
 												}
 												Cog [Id:0x5ab2c78fd8e88e95]
@@ -1175,10 +677,12 @@ Cog
 													}
 													MaterialInputs 
 													{
+														var Color = Real4{0.5, 0.5, 0.5, 1}
 														var AlbedoValue = Real4{0.184313729, 0.184313729, 0.184313729, 1}
 														var MetallicValue = 0
 														var RoughnessValue = 1
 														var SpecularValue = 0
+														var StippleScale = 1
 													}
 												}
 											}
@@ -1219,10 +723,12 @@ Cog
 											}
 											MaterialInputs 
 											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
 												var AlbedoValue = Real4{0.185000002, 0.185000002, 0.185000002, 1}
 												var MetallicValue = 0
 												var RoughnessValue = 1
 												var SpecularValue = 0
+												var StippleScale = 1
 											}
 										}
 									}
@@ -1265,10 +771,12 @@ Cog
 							}
 							MaterialInputs 
 							{
+								var Color = Real4{0.5, 0.5, 0.5, 1}
 								var AlbedoValue = Real4{0.275575012, 0.435383409, 0.754999995, 1}
 								var MetallicValue = 0
 								var RoughnessValue = 0.75
 								var SpecularValue = 0.450000018
+								var StippleScale = 1
 							}
 						}
 					}
@@ -1329,10 +837,12 @@ Cog
 											}
 											MaterialInputs 
 											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
 												var AlbedoValue = Real4{0.756862819, 0.568627477, 0.396078467, 1}
 												var MetallicValue = 0
 												var RoughnessValue = 0.75
 												var SpecularValue = 0.5
+												var StippleScale = 1
 											}
 										}
 									}
@@ -1384,10 +894,12 @@ Cog
 											}
 											MaterialInputs 
 											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
 												var AlbedoValue = Real4{0.756862819, 0.568627477, 0.396078467, 1}
 												var MetallicValue = 0
 												var RoughnessValue = 0.75
 												var SpecularValue = 0.5
+												var StippleScale = 1
 											}
 										}
 									}
@@ -1441,10 +953,12 @@ Cog
 									}
 									MaterialInputs 
 									{
+										var Color = Real4{0.5, 0.5, 0.5, 1}
 										var AlbedoValue = Real4{0.200000003, 0.13439998, 0.119999997, 1}
 										var MetallicValue = 0
 										var RoughnessValue = 0.5
 										var SpecularValue = 0.5
+										var StippleScale = 1
 									}
 								}
 							}
@@ -1483,10 +997,12 @@ Cog
 									}
 									MaterialInputs 
 									{
+										var Color = Real4{0.5, 0.5, 0.5, 1}
 										var AlbedoValue = Real4{0.200000003, 0.13439998, 0.119999997, 1}
 										var MetallicValue = 0
 										var RoughnessValue = 0.5
 										var SpecularValue = 0.5
+										var StippleScale = 1
 									}
 								}
 							}

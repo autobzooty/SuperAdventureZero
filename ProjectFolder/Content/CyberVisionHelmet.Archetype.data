@@ -18,11 +18,6 @@ Cog
 				var Addend = 0
 				var Bonus = 0
 			}
-			var Defense = StatMod
-			{
-				var Addend = 0
-				var Bonus = 0
-			}
 			var Evasion = StatMod
 			{
 				var Addend = 0
@@ -88,6 +83,7 @@ Cog
 					}
 					MaterialInputs 
 					{
+						var Color = Real4{0.5, 0.5, 0.5, 1}
 						var AlbedoValue = Real4{0.546000004, 0.56400001, 0.600000024, 1}
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
@@ -131,6 +127,7 @@ Cog
 					}
 					MaterialInputs 
 					{
+						var Color = Real4{0.5, 0.5, 0.5, 1}
 						var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
 						var MetallicValue = 1
 						var RoughnessValue = 0
@@ -172,6 +169,7 @@ Cog
 							}
 							MaterialInputs 
 							{
+								var Color = Real4{0.5, 0.5, 0.5, 1}
 								var AlbedoValue = Real4{0.250980407, 0.0941176414, 0.0941176414, 1}
 								var MetallicValue = 1
 								var RoughnessValue = 0
@@ -216,6 +214,7 @@ Cog
 									}
 									MaterialInputs 
 									{
+										var Color = Real4{0.5, 0.5, 0.5, 1}
 										var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
 										var MetallicValue = 1
 										var RoughnessValue = 0
@@ -259,6 +258,7 @@ Cog
 									}
 									MaterialInputs 
 									{
+										var Color = Real4{0.5, 0.5, 0.5, 1}
 										var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
 										var MetallicValue = 1
 										var RoughnessValue = 0
@@ -300,6 +300,7 @@ Cog
 											}
 											MaterialInputs 
 											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
 												var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
 												var MetallicValue = 1
 												var RoughnessValue = 0
@@ -330,6 +331,7 @@ Cog
 											}
 											MaterialInputs 
 											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
 												var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
 												var MetallicValue = 1
 												var RoughnessValue = 0
@@ -355,16 +357,17 @@ Cog
 												var LocalAabbCenter = Real3{0, 0, 0}
 												var LocalAabbHalfExtents = Real3{1, 1, 1}
 												var GroupSortValue = 0
-												var Material = "5a8c40c024c76419:StippledFlat"
+												var Material = "5a86122c8cf069bc:TranslucentFlat"
 												var Mesh = "4de0354322b345ae:Cube"
 											}
 											MaterialInputs 
 											{
+												var Color = Real4{0.199999973, 0.5, 0.0500000119, 0.5}
 												var AlbedoValue = Real4{0.26000005, 0.800000012, 0.0800000429, 1}
 												var MetallicValue = 0
 												var RoughnessValue = 0
 												var SpecularValue = 1
-												var StippleScale = 2
+												var StippleScale = 1
 											}
 										}
 									}

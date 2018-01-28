@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-0.715759397, 2.40974236, 2.51676893}
+			var Translation = Real3{0.278777897, 2.46118283, 2.57564735}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.175318778, -0.138675615, -0.0249517821, 0.974376678}
+			var Rotation = Quaternion{-0.187012389, 0.0616770573, 0.0117655769, 0.980348885}
 		}
 		CameraViewport 
 		{
@@ -235,8 +235,8 @@ Level
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
 			var LookDistance = 2.63087702
-			var VerticalAngle = 0.356048644
-			var HorizontalAngle = 0.282745868
+			var VerticalAngle = 0.376992792
+			var HorizontalAngle = -0.125661179
 			var LookTarget = Real3{-0.0277968608, 1.49268842, 0.148809046}
 			var MoveSensitivity = 1
 		}
@@ -299,7 +299,8 @@ Level
 					var MetallicValue = 0
 					var RoughnessValue = 1
 					var SpecularValue = 0.150000006
-					var StippleScale = 1
+					var StippleDensity = 0.5
+					var StippleScale = 2
 				}
 			}
 		}
@@ -352,7 +353,6 @@ Level
 		{
 			var Invincible = false
 			var BaseHP = 10
-			var BaseDefense = 0
 			var BaseEvasion = 0
 			var TypeMultiplierBlock = TypeMultiplierBlock
 			{
@@ -523,7 +523,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5a86689ccea2d70b][InheritId:"5a86689ccea35445:CyberVisionHelmet"][ContextId:14]
+							Cog [Id:0x5a8603d7c7af70cb][InheritId:"5a86689ccea35445:CyberVisionHelmet"][ContextId:14]
 							{
 								Transform 
 								{
@@ -531,49 +531,10 @@ Level
 									var Rotation = Quaternion{0, 0, 0, 1}
 									var Scale = Real3{1, 1, 1}
 								}
-								Hierarchy 
-								{
-									Cog [Id:0x5ab5777254980be1][ContextId:15]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5a8616cc1750299d][ContextId:16]
-											{
-												Hierarchy 
-												{
-													Cog [Id:0x5a8616860fa6647e][ContextId:17]
-													{
-														Hierarchy 
-														{
-															Cog [Id:0x5a86175e3a62575d][ContextId:18]
-															{
-																Hierarchy 
-																{
-																	Cog [Id:0x5a86140d5333ae70][ContextId:19]
-																	{
-																		Model 
-																		{
-																			var Material = "5a86122c8cf069bc:TranslucentFlat"
-																		}
-																		MaterialInputs 
-																		{
-																			var Color = Real4{0.199999973, 0.5, 0.0500000119, 0.5}
-																			var StippleScale = 1
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
 							}
 						}
 					}
-					Cog [Id:0x5ab2ce31bc0beb80][ContextId:20]
+					Cog [Id:0x5ab2ce31bc0beb80][ContextId:15]
 					{
 						var Name = "Body"
 						Transform 
@@ -588,7 +549,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5ab2fc7d1c8034d0][ContextId:21]
+							Cog [Id:0x5ab2fc7d1c8034d0][ContextId:16]
 							{
 								var Name = "Armor"
 								Transform 
@@ -603,11 +564,6 @@ Level
 									var StatBlock = StatBlock
 									{
 										var HP = StatMod
-										{
-											var Addend = 0
-											var Bonus = 0
-										}
-										var Defense = StatMod
 										{
 											var Addend = 0
 											var Bonus = 0
@@ -643,7 +599,7 @@ Level
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5ab2cbed4e10d339][ContextId:22]
+									Cog [Id:0x5ab2cbed4e10d339][ContextId:17]
 									{
 										var Name = "Cylinder"
 										Transform 
@@ -671,6 +627,7 @@ Level
 											var MetallicValue = 1
 											var RoughnessValue = 0.100000001
 											var SpecularValue = 1
+											var StippleDensity = 0.5
 											var StippleScale = 1
 										}
 									}
@@ -678,7 +635,7 @@ Level
 							}
 						}
 					}
-					Cog [Id:0x5ab2a9c670ad3d65][ContextId:23]
+					Cog [Id:0x5ab2a9c670ad3d65][ContextId:18]
 					{
 						var Name = "RightGlove"
 						Transform 
@@ -692,7 +649,7 @@ Level
 							var SlotType = EquipmentSlotType.Glove
 						}
 					}
-					Cog [Id:0x5ab2a9f676371c2f][ContextId:24]
+					Cog [Id:0x5ab2a9f676371c2f][ContextId:19]
 					{
 						var Name = "LeftGlove"
 						Transform 
@@ -706,7 +663,7 @@ Level
 							var SlotType = EquipmentSlotType.Glove
 						}
 					}
-					Cog [Id:0x5ab2a2aae636baff][ContextId:25]
+					Cog [Id:0x5ab2a2aae636baff][ContextId:20]
 					{
 						var Name = "RightFoot"
 						Transform 
@@ -720,7 +677,7 @@ Level
 							var SlotType = EquipmentSlotType.Foot
 						}
 					}
-					Cog [Id:0x5ab2a2bb18c0a102][ContextId:26]
+					Cog [Id:0x5ab2a2bb18c0a102][ContextId:21]
 					{
 						var Name = "LeftFoot"
 						Transform 
@@ -734,7 +691,7 @@ Level
 							var SlotType = EquipmentSlotType.Foot
 						}
 					}
-					Cog [Id:0x5ab2ce39bd6d7757][ContextId:27]
+					Cog [Id:0x5ab2ce39bd6d7757][ContextId:22]
 					{
 						var Name = "Accessory"
 						Transform 
@@ -750,7 +707,7 @@ Level
 					}
 				}
 			}
-			Cog [Id:0x5ab2db7c3c0368f9][ContextId:28]
+			Cog [Id:0x5ab2db7c3c0368f9][ContextId:23]
 			{
 				var Name = "Graphicals"
 				Transform 
@@ -761,7 +718,7 @@ Level
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5ab2db153f7c7dca][ContextId:29]
+					Cog [Id:0x5ab2db153f7c7dca][ContextId:24]
 					{
 						var Name = "Head"
 						Transform 
@@ -772,7 +729,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5ab2dbdd29ecdad8][ContextId:30]
+							Cog [Id:0x5ab2dbdd29ecdad8][ContextId:25]
 							{
 								var Name = "Sphere"
 								Transform 
@@ -800,10 +757,11 @@ Level
 									var MetallicValue = 0
 									var RoughnessValue = 0.75
 									var SpecularValue = 0.5
+									var StippleDensity = 0.5
 									var StippleScale = 1
 								}
 							}
-							Cog [Id:0x5ab2c409ca875506][ContextId:31]
+							Cog [Id:0x5ab2c409ca875506][ContextId:26]
 							{
 								var Name = "Face"
 								Transform 
@@ -814,7 +772,7 @@ Level
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5ab2c409ca8755aa][ContextId:32]
+									Cog [Id:0x5ab2c409ca8755aa][ContextId:27]
 									{
 										var Name = "Eyes"
 										Transform 
@@ -825,7 +783,7 @@ Level
 										}
 										Hierarchy 
 										{
-											Cog [Id:0x5ab2d9b29ab5bf6b][ContextId:33]
+											Cog [Id:0x5ab2d9b29ab5bf6b][ContextId:28]
 											{
 												var Name = "Right"
 												Transform 
@@ -836,7 +794,7 @@ Level
 												}
 												Hierarchy 
 												{
-													Cog [Id:0x5ab2dbdd29ecdad8][ContextId:34]
+													Cog [Id:0x5ab2dbdd29ecdad8][ContextId:29]
 													{
 														var Name = "Sphere"
 														Transform 
@@ -864,10 +822,11 @@ Level
 															var MetallicValue = 0
 															var RoughnessValue = 0
 															var SpecularValue = 0.5
+															var StippleDensity = 0.5
 															var StippleScale = 1
 														}
 													}
-													Cog [Id:0x5ab2c771b46edb2f][ContextId:35]
+													Cog [Id:0x5ab2c771b46edb2f][ContextId:30]
 													{
 														var Name = "Sphere"
 														Transform 
@@ -895,10 +854,11 @@ Level
 															var MetallicValue = 0
 															var RoughnessValue = 0
 															var SpecularValue = 0.300000012
+															var StippleDensity = 0.5
 															var StippleScale = 1
 														}
 													}
-													Cog [Id:0x5ab2c782a75051cf][ContextId:36]
+													Cog [Id:0x5ab2c782a75051cf][ContextId:31]
 													{
 														var Name = "Sphere"
 														Transform 
@@ -926,12 +886,13 @@ Level
 															var MetallicValue = 0
 															var RoughnessValue = 1
 															var SpecularValue = 0
+															var StippleDensity = 0.5
 															var StippleScale = 1
 														}
 													}
 												}
 											}
-											Cog [Id:0x5ab2c6459b0dc616][ContextId:37]
+											Cog [Id:0x5ab2c6459b0dc616][ContextId:32]
 											{
 												var Name = "Left"
 												Transform 
@@ -942,7 +903,7 @@ Level
 												}
 												Hierarchy 
 												{
-													Cog [Id:0x5ab2dbdd29ecdad8][ContextId:38]
+													Cog [Id:0x5ab2dbdd29ecdad8][ContextId:33]
 													{
 														var Name = "Sphere"
 														Transform 
@@ -970,10 +931,11 @@ Level
 															var MetallicValue = 0
 															var RoughnessValue = 0
 															var SpecularValue = 0.5
+															var StippleDensity = 0.5
 															var StippleScale = 1
 														}
 													}
-													Cog [Id:0x5ab2c770b5b071fc][ContextId:39]
+													Cog [Id:0x5ab2c770b5b071fc][ContextId:34]
 													{
 														var Name = "Sphere"
 														Transform 
@@ -1001,10 +963,11 @@ Level
 															var MetallicValue = 0
 															var RoughnessValue = 0
 															var SpecularValue = 0.300000012
+															var StippleDensity = 0.5
 															var StippleScale = 1
 														}
 													}
-													Cog [Id:0x5ab2c78fd8e88e95][ContextId:40]
+													Cog [Id:0x5ab2c78fd8e88e95][ContextId:35]
 													{
 														var Name = "Sphere"
 														Transform 
@@ -1032,6 +995,7 @@ Level
 															var MetallicValue = 0
 															var RoughnessValue = 1
 															var SpecularValue = 0
+															var StippleDensity = 0.5
 															var StippleScale = 1
 														}
 													}
@@ -1039,7 +1003,7 @@ Level
 											}
 										}
 									}
-									Cog [Id:0x5ab2c502eb8dbdc8][ContextId:41]
+									Cog [Id:0x5ab2c502eb8dbdc8][ContextId:36]
 									{
 										var Name = "Mouth"
 										Transform 
@@ -1050,7 +1014,7 @@ Level
 										}
 										Hierarchy 
 										{
-											Cog [Id:0x5ab2c50aecf9acfa][ContextId:42]
+											Cog [Id:0x5ab2c50aecf9acfa][ContextId:37]
 											{
 												var Name = "Cylinder"
 												Transform 
@@ -1078,6 +1042,7 @@ Level
 													var MetallicValue = 0
 													var RoughnessValue = 1
 													var SpecularValue = 0
+													var StippleDensity = 0.5
 													var StippleScale = 1
 												}
 											}
@@ -1087,7 +1052,7 @@ Level
 							}
 						}
 					}
-					Cog [Id:0x5ab2c3a856efd879][ContextId:43]
+					Cog [Id:0x5ab2c3a856efd879][ContextId:38]
 					{
 						var Name = "Body"
 						Transform 
@@ -1098,7 +1063,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5ab2c3a856efd8e1][ContextId:44]
+							Cog [Id:0x5ab2c3a856efd8e1][ContextId:39]
 							{
 								var Name = "Cylinder"
 								Transform 
@@ -1126,12 +1091,13 @@ Level
 									var MetallicValue = 0
 									var RoughnessValue = 0.75
 									var SpecularValue = 0.450000018
+									var StippleDensity = 0.5
 									var StippleScale = 1
 								}
 							}
 						}
 					}
-					Cog [Id:0x5ab2a1605221120e][ContextId:45]
+					Cog [Id:0x5ab2a1605221120e][ContextId:40]
 					{
 						var Name = "Hands"
 						Transform 
@@ -1142,7 +1108,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5ab2acf9ddf99669][ContextId:46]
+							Cog [Id:0x5ab2acf9ddf99669][ContextId:41]
 							{
 								var Name = "RightBase"
 								Transform 
@@ -1153,7 +1119,7 @@ Level
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5ab2adb5f6d951fa][ContextId:47]
+									Cog [Id:0x5ab2adb5f6d951fa][ContextId:42]
 									{
 										var Name = "Right"
 										Transform 
@@ -1164,7 +1130,7 @@ Level
 										}
 										Hierarchy 
 										{
-											Cog [Id:0x5ab2ae8799846593][ContextId:48]
+											Cog [Id:0x5ab2ae8799846593][ContextId:43]
 											{
 												var Name = "Sphere"
 												Transform 
@@ -1192,6 +1158,7 @@ Level
 													var MetallicValue = 0
 													var RoughnessValue = 0.75
 													var SpecularValue = 0.5
+													var StippleDensity = 0.5
 													var StippleScale = 1
 												}
 											}
@@ -1199,7 +1166,7 @@ Level
 									}
 								}
 							}
-							Cog [Id:0x5ab2adadf5ee5294][ContextId:49]
+							Cog [Id:0x5ab2adadf5ee5294][ContextId:44]
 							{
 								var Name = "LeftBase"
 								Transform 
@@ -1210,7 +1177,7 @@ Level
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5ab2adb3f6024889][ContextId:50]
+									Cog [Id:0x5ab2adb3f6024889][ContextId:45]
 									{
 										var Name = "Left"
 										Transform 
@@ -1221,7 +1188,7 @@ Level
 										}
 										Hierarchy 
 										{
-											Cog [Id:0x5ab2ae8799846593][ContextId:51]
+											Cog [Id:0x5ab2ae8799846593][ContextId:46]
 											{
 												var Name = "Sphere"
 												Transform 
@@ -1249,6 +1216,7 @@ Level
 													var MetallicValue = 0
 													var RoughnessValue = 0.75
 													var SpecularValue = 0.5
+													var StippleDensity = 0.5
 													var StippleScale = 1
 												}
 											}
@@ -1258,7 +1226,7 @@ Level
 							}
 						}
 					}
-					Cog [Id:0x5ab2b9c35dc4a6ec][ContextId:52]
+					Cog [Id:0x5ab2b9c35dc4a6ec][ContextId:47]
 					{
 						var Name = "Feet"
 						Transform 
@@ -1269,7 +1237,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5ab2b9d65f98cbb7][ContextId:53]
+							Cog [Id:0x5ab2b9d65f98cbb7][ContextId:48]
 							{
 								var Name = "Right"
 								Transform 
@@ -1280,7 +1248,7 @@ Level
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5ab2a66d432ea029][ContextId:54]
+									Cog [Id:0x5ab2a66d432ea029][ContextId:49]
 									{
 										var Name = "Wedge"
 										Transform 
@@ -1308,12 +1276,13 @@ Level
 											var MetallicValue = 0
 											var RoughnessValue = 0.5
 											var SpecularValue = 0.5
+											var StippleDensity = 0.5
 											var StippleScale = 1
 										}
 									}
 								}
 							}
-							Cog [Id:0x5ab2a4ccb459215e][ContextId:55]
+							Cog [Id:0x5ab2a4ccb459215e][ContextId:50]
 							{
 								var Name = "Left"
 								Transform 
@@ -1324,7 +1293,7 @@ Level
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5ab2a66d432ea029][ContextId:56]
+									Cog [Id:0x5ab2a66d432ea029][ContextId:51]
 									{
 										var Name = "Wedge"
 										Transform 
@@ -1352,6 +1321,7 @@ Level
 											var MetallicValue = 0
 											var RoughnessValue = 0.5
 											var SpecularValue = 0.5
+											var StippleDensity = 0.5
 											var StippleScale = 1
 										}
 									}
@@ -1389,23 +1359,7 @@ Level
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var ZoomNode = CogPath
-			{
-				var Path = "GameCamera"
-				var ErrorOnResolveToNull = false
-				var ErrorOnPathCantCompute = false
-				var ErrorOnDirectLinkFail = false
-				var UpdateCogOnPathChange = true
-				var UpdatePathOnCogChange = true
-				var UpdateCogOnInitialize = true
-				var ResolvedNullErrorOccurred = false
-				var Cog = 57
-				var PathPreference0 = CogPathPreference.CogRelative
-				var PathPreference1 = CogPathPreference.SpaceRelative
-				var PathPreference2 = CogPathPreference.Absolute
-			}
 			var Sensitivity = Real2{0.25, 0.25}
-			var ZoomSpeed = 30
 			var InvertX = false
 			var InvertY = false
 		}
@@ -1442,16 +1396,17 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 57
+				var Cog = 52
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Snappiness = 0.75
+			var Snappiness = 0.699999988
+			var ZoomSpeed = 20
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5abab9792d88d165][ContextId:57]
+			Cog [Id:0x5abab9792d88d165][ContextId:52]
 			{
 				var Name = "GameCamera"
 				Transform 
@@ -1484,7 +1439,7 @@ Level
 						var UpdatePathOnCogChange = true
 						var UpdateCogOnInitialize = true
 						var ResolvedNullErrorOccurred = false
-						var Cog = 57
+						var Cog = 52
 						var PathPreference0 = CogPathPreference.CogRelative
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
@@ -1546,7 +1501,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:58]
+	Cog [ContextId:53]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1583,10 +1538,11 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0.150000006
+			var StippleDensity = 0.5
 			var StippleScale = 2
 		}
 	}
-	Cog [ContextId:59]
+	Cog [ContextId:54]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1623,10 +1579,11 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0.150000006
+			var StippleDensity = 0.5
 			var StippleScale = 2
 		}
 	}
-	Cog [ContextId:60]
+	Cog [ContextId:55]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1663,10 +1620,11 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0.150000006
+			var StippleDensity = 0.5
 			var StippleScale = 2
 		}
 	}
-	Cog [ContextId:61]
+	Cog [ContextId:56]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1703,10 +1661,11 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0.150000006
+			var StippleDensity = 0.5
 			var StippleScale = 2
 		}
 	}
-	Cog [ContextId:62]
+	Cog [ContextId:57]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1743,10 +1702,11 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0.150000006
+			var StippleDensity = 0.5
 			var StippleScale = 2
 		}
 	}
-	Cog [ContextId:63]
+	Cog [ContextId:58]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1783,10 +1743,11 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0.150000006
+			var StippleDensity = 0.5
 			var StippleScale = 2
 		}
 	}
-	Cog [ContextId:64]
+	Cog [ContextId:59]
 	{
 		var Name = "Sphere"
 		Transform 
@@ -1814,6 +1775,7 @@ Level
 			var MetallicValue = 0
 			var RoughnessValue = 1
 			var SpecularValue = 0
+			var StippleDensity = 0.5
 			var StippleScale = 4
 		}
 	}

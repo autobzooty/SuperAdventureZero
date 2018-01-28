@@ -175,7 +175,7 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-4.20704937, 6.18591404, 15.3864632}
+			var Translation = Real3{-1.05431116, 2.74531126, 3.86179757}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{-0.138485834, -0.131813183, -0.0186006464, 0.981377065}
 		}
@@ -234,7 +234,7 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 16.5033092
+			var LookDistance = 4.06966877
 			var VerticalAngle = 0.280376285
 			var HorizontalAngle = 12.8334017
 			var LookTarget = Real3{-0.022384733, 1.61916387, 0.0896463096}
@@ -307,7 +307,34 @@ Level
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var ZoomNode = CogPath
+			var Sensitivity = Real2{0.25, 0.25}
+			var InvertX = false
+			var InvertY = false
+		}
+		Orientation 
+		{
+			var GlobalUp = Real3{0, 1, 0}
+			var LocalOrientationBasis = Quaternion{0, 1, 0, 0}
+			var DefaultBases = OrientationBases.ForwardZUpY
+		}
+		BasicSpringArm 
+		{
+			var PivotPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 7
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var MoverPath = CogPath
 			{
 				var Path = "GameCamera"
 				var ErrorOnResolveToNull = false
@@ -322,16 +349,8 @@ Level
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var Sensitivity = Real2{0.25, 0.25}
-			var ZoomSpeed = 30
-			var InvertX = false
-			var InvertY = false
-		}
-		Orientation 
-		{
-			var GlobalUp = Real3{0, 1, 0}
-			var LocalOrientationBasis = Quaternion{0, 1, 0, 0}
-			var DefaultBases = OrientationBases.ForwardZUpY
+			var Snappiness = 0.5
+			var ZoomSpeed = 20
 		}
 		Hierarchy 
 		{

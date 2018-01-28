@@ -26,8 +26,6 @@ class StatBlock : ZilchObject
   [Property]
   var HP : StatMod = StatMod();
   [Property]
-  var Defense : StatMod = StatMod();
-  [Property]
   var Evasion : StatMod = StatMod();
   [Property]
   var TypeAddends : TypeMultiplierBlock = TypeMultiplierBlock()
