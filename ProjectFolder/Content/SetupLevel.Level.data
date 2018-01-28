@@ -38,10 +38,6 @@ Level
 			var HighlightInterval = 10
 			var FollowEditorCamera = false
 		}
-		UiEditorExtension 
-		{
-			var HighlightColor = Real4{1, 0, 0, 1}
-		}
 	}
 	Cog [ContextId:2]
 	{
@@ -101,7 +97,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 755
+			var Size = 535
 		}
 		EditorCameraController 
 		{
@@ -231,6 +227,7 @@ Level
 			var Visible = true
 			var Interactive = true
 			var InLayout = true
+			var OnTop = false
 			var ClipChildren = true
 			var CanTakeFocus = false
 			var LocalColor = Real4{0.0627451017, 0.0627451017, 0.0627451017, 1}
@@ -266,6 +263,10 @@ Level
 			var PaddingBottom = 0
 			var StackDirection = UiStackLayoutDirection.LeftToRight
 			var Spacing = Real2{0, 0}
+		}
+		UiEditorExtension 
+		{
+			var HighlightColor = Real4{1, 0, 0, 1}
 		}
 		Hierarchy 
 		{
@@ -308,6 +309,7 @@ Level
 					var Visible = true
 					var Interactive = true
 					var InLayout = true
+					var OnTop = false
 					var ClipChildren = false
 					var CanTakeFocus = false
 					var LocalColor = Real4{0.189150006, 0.485000014, 0.307489961, 0.504999995}
@@ -377,6 +379,7 @@ Level
 							var Visible = true
 							var Interactive = true
 							var InLayout = true
+							var OnTop = false
 							var ClipChildren = false
 							var CanTakeFocus = false
 							var LocalColor = Real4{1, 1, 1, 0.105000019}
@@ -424,6 +427,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{1, 1, 1, 1}
@@ -501,6 +505,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
@@ -566,6 +571,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
@@ -631,6 +637,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -697,6 +704,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -763,6 +771,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -829,6 +838,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -895,6 +905,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -961,6 +972,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -1027,6 +1039,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -1093,6 +1106,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -1159,6 +1173,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.400000006, 0.533333421, 0.800000012, 0.899999976}
@@ -1226,6 +1241,7 @@ Level
 							var Visible = true
 							var Interactive = true
 							var InLayout = true
+							var OnTop = false
 							var ClipChildren = false
 							var CanTakeFocus = false
 							var LocalColor = Real4{1, 1, 1, 0.105000019}
@@ -1273,6 +1289,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{1, 1, 1, 1}
@@ -1350,6 +1367,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
@@ -1415,6 +1433,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.733333409, 0.400000006, 0.899999976}
@@ -1480,6 +1499,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -1545,6 +1565,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.800000012, 0.400000006, 0.466666818, 0.899999976}
@@ -1610,6 +1631,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.400000006, 0.533333421, 0.800000012, 0.899999976}
@@ -1679,6 +1701,7 @@ Level
 					var Visible = true
 					var Interactive = true
 					var InLayout = true
+					var OnTop = false
 					var ClipChildren = false
 					var CanTakeFocus = false
 					var LocalColor = Real4{0.319999993, 0.346666664, 0.400000006, 0.504999995}
@@ -1726,6 +1749,7 @@ Level
 							var Visible = true
 							var Interactive = true
 							var InLayout = true
+							var OnTop = false
 							var ClipChildren = false
 							var CanTakeFocus = false
 							var LocalColor = Real4{1, 1, 1, 1}
@@ -1803,6 +1827,7 @@ Level
 							var Visible = true
 							var Interactive = true
 							var InLayout = true
+							var OnTop = false
 							var ClipChildren = false
 							var CanTakeFocus = false
 							var LocalColor = Real4{1, 1, 1, 0.100000024}
@@ -1872,6 +1897,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{1, 1, 1, 0.25}
@@ -1919,6 +1945,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 1, 1, 1}
@@ -1996,6 +2023,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 1, 1, 0.25}
@@ -2050,6 +2078,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{1, 1, 1, 1}
@@ -2129,6 +2158,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{0.199999988, 0.466666788, 1, 0.25}
@@ -2183,6 +2213,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{0.5, 0.666666746, 1, 1}
@@ -2262,6 +2293,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 0.199999988, 0.333333582, 0.25}
@@ -2316,6 +2348,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{1, 0.5, 0.666666746, 1}
@@ -2397,6 +2430,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{0.199999988, 0.466666788, 1, 0.25}
@@ -2444,6 +2478,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{0.5, 0.666666746, 1, 1}
@@ -2521,6 +2556,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 1, 1, 0.25}
@@ -2575,6 +2611,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{1, 1, 1, 1}
@@ -2654,6 +2691,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{0.199999988, 0.466666788, 1, 0.25}
@@ -2708,6 +2746,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{0.5, 0.666666746, 1, 1}
@@ -2787,6 +2826,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 0.199999988, 0.333333582, 0.25}
@@ -2841,6 +2881,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{1, 0.5, 0.666666746, 1}
@@ -2922,6 +2963,7 @@ Level
 									var Visible = true
 									var Interactive = true
 									var InLayout = true
+									var OnTop = false
 									var ClipChildren = false
 									var CanTakeFocus = false
 									var LocalColor = Real4{1, 0.199999988, 0.333333582, 0.25}
@@ -2969,6 +3011,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 0.5, 0.666666746, 1}
@@ -3046,6 +3089,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 1, 1, 0.25}
@@ -3100,6 +3144,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{1, 1, 1, 1}
@@ -3179,6 +3224,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{0.199999988, 0.466666788, 1, 0.25}
@@ -3233,6 +3279,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{0.5, 0.666666746, 1, 1}
@@ -3312,6 +3359,7 @@ Level
 											var Visible = true
 											var Interactive = true
 											var InLayout = true
+											var OnTop = false
 											var ClipChildren = false
 											var CanTakeFocus = false
 											var LocalColor = Real4{1, 0.199999988, 0.333333582, 0.25}
@@ -3366,6 +3414,7 @@ Level
 													var Visible = true
 													var Interactive = true
 													var InLayout = true
+													var OnTop = false
 													var ClipChildren = false
 													var CanTakeFocus = false
 													var LocalColor = Real4{1, 0.5, 0.666666746, 1}

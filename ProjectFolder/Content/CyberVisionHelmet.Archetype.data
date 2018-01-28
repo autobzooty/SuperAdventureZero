@@ -1,0 +1,379 @@
+[Version:1]
+Cog 
+{
+	var Name = "CyberVisionHelmet"
+	Transform 
+	{
+		var Translation = Real3{0, 0, 0}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	EquipmentBase 
+	{
+		var SlotType = EquipmentSlotType.Head
+		var StatBlock = StatBlock
+		{
+			var HP = StatMod
+			{
+				var Addend = 0
+				var Bonus = 0
+			}
+			var Defense = StatMod
+			{
+				var Addend = 0
+				var Bonus = 0
+			}
+			var Evasion = StatMod
+			{
+				var Addend = 0
+				var Bonus = 0
+			}
+			var TypeAddends = TypeMultiplierBlock
+			{
+				var Heat = 0
+				var Cold = 0
+				var Electricity = 0
+				var Psychic = 0
+				var Biological = 0
+				var Poison = 0
+				var Holy = 0
+				var Dark = 0
+			}
+			var TypeBonuses = TypeMultiplierBlock
+			{
+				var Heat = 0
+				var Cold = 0
+				var Electricity = 0
+				var Psychic = 0
+				var Biological = 0
+				var Poison = 0
+				var Holy = 0
+				var Dark = 0
+			}
+		}
+	}
+	Hierarchy 
+	{
+		Cog [Id:0x5ab572a5d1775d8a]
+		{
+			var Name = "MainPart"
+			Transform 
+			{
+				var Translation = Real3{0, 0.130935431, -0.0558358431}
+				var Scale = Real3{1, 1, 1}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+			Hierarchy 
+			{
+				Cog [Id:0x5ab572a5d1775df0]
+				{
+					var Name = "Sphere"
+					Transform 
+					{
+						var Translation = Real3{0, 0, 0}
+						var Scale = Real3{1.04999995, 1.04999995, 1.04999995}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5828b036bd65b5d8:OpaqueFlat"
+						var Mesh = "4de0354322b376ae:Sphere"
+					}
+					MaterialInputs 
+					{
+						var AlbedoValue = Real4{0.546000004, 0.56400001, 0.600000024, 1}
+						var MetallicValue = 1
+						var RoughnessValue = 0.100000001
+						var SpecularValue = 1
+						var StippleScale = 1
+					}
+				}
+			}
+		}
+		Cog [Id:0x5ab5777254980be1]
+		{
+			var Name = "Ring"
+			Transform 
+			{
+				var Translation = Real3{0, 0.126974106, -0.0555703491}
+				var Scale = Real3{1, 1, 1}
+				var Rotation = Quaternion{0, 0.707106829, 0, 0.707106829}
+			}
+			Hierarchy 
+			{
+				Cog [Id:0x5ab5777254980c3e]
+				{
+					var Name = "TopCylinder"
+					Transform 
+					{
+						var Translation = Real3{0, 0, 0}
+						var Scale = Real3{1.10000014, 0.100000016, 1.10000002}
+						var Rotation = Quaternion{0, 0, 0.707106829, 0.707106769}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5828b036bd65b5d8:OpaqueFlat"
+						var Mesh = "4de0354322b3572e:Cylinder"
+					}
+					MaterialInputs 
+					{
+						var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
+						var MetallicValue = 1
+						var RoughnessValue = 0
+						var SpecularValue = 1
+						var StippleScale = 1
+					}
+				}
+				Cog [Id:0x5a8616cc1750299d]
+				{
+					var Name = "EarThing"
+					Transform 
+					{
+						var Translation = Real3{0, -0.170000002, -6.62450006e-09}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Hierarchy 
+					{
+						Cog [Id:0x5a8616cc17502bc9]
+						{
+							var Name = "EarCylinder"
+							Transform 
+							{
+								var Translation = Real3{0, 0, 0}
+								var Scale = Real3{0.25, 1.25, 0.25}
+								var Rotation = Quaternion{0.50000006, 0.5, -0.5, -0.49999994}
+							}
+							Model 
+							{
+								var Visible = true
+								var ViewCulling = true
+								var VisibilityEvents = true
+								var OverrideBoundingBox = false
+								var LocalAabbCenter = Real3{0, 0, 0}
+								var LocalAabbHalfExtents = Real3{1, 1, 1}
+								var GroupSortValue = 0
+								var Material = "5828b036bd65b5d8:OpaqueFlat"
+								var Mesh = "4de0354322b3572e:Cylinder"
+							}
+							MaterialInputs 
+							{
+								var AlbedoValue = Real4{0.250980407, 0.0941176414, 0.0941176414, 1}
+								var MetallicValue = 1
+								var RoughnessValue = 0
+								var SpecularValue = 1
+								var StippleScale = 1
+							}
+							Hierarchy 
+							{
+							}
+						}
+						Cog [Id:0x5a8616e30b9865ab]
+						{
+							var Name = "Ring"
+							Transform 
+							{
+								var Translation = Real3{-0.0556388721, 0.0482295752, -6.63266952e-09}
+								var Scale = Real3{0.99999994, 0.999999881, 0.999999881}
+								var Rotation = Quaternion{-0.593029678, -0.385118097, 0.385118008, 0.593029618}
+							}
+							Hierarchy 
+							{
+								Cog [Id:0x5ab5777254980c3e]
+								{
+									var Name = "Cylinder"
+									Transform 
+									{
+										var Translation = Real3{0, 0, 0}
+										var Scale = Real3{1.10000014, 0.100000016, 1.10000002}
+										var Rotation = Quaternion{0, 0, 0.707106829, 0.707106769}
+									}
+									Model 
+									{
+										var Visible = true
+										var ViewCulling = true
+										var VisibilityEvents = true
+										var OverrideBoundingBox = false
+										var LocalAabbCenter = Real3{0, 0, 0}
+										var LocalAabbHalfExtents = Real3{1, 1, 1}
+										var GroupSortValue = 0
+										var Material = "5828b036bd65b5d8:OpaqueFlat"
+										var Mesh = "4de0354322b3572e:Cylinder"
+									}
+									MaterialInputs 
+									{
+										var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
+										var MetallicValue = 1
+										var RoughnessValue = 0
+										var SpecularValue = 1
+										var StippleScale = 1
+									}
+								}
+							}
+						}
+						Cog [Id:0x5a8616860fa6647e]
+						{
+							var Name = "SideHinge"
+							Transform 
+							{
+								var Translation = Real3{0, 0, -0.600000024}
+								var Scale = Real3{0.999999881, 1, 0.999999881}
+								var Rotation = Quaternion{0, 0, 0.707106829, 0.707106829}
+							}
+							Hierarchy 
+							{
+								Cog [Id:0x5a866987ec0fbc0a]
+								{
+									var Name = "SideArm"
+									Transform 
+									{
+										var Translation = Real3{8.55273561e-15, 0.350000083, 0.00184547901}
+										var Scale = Real3{0.0299999993, 0.5, 0.0299999993}
+										var Rotation = Quaternion{0, 0, 0, 1}
+									}
+									Model 
+									{
+										var Visible = true
+										var ViewCulling = true
+										var VisibilityEvents = true
+										var OverrideBoundingBox = false
+										var LocalAabbCenter = Real3{0, 0, 0}
+										var LocalAabbHalfExtents = Real3{1, 1, 1}
+										var GroupSortValue = 0
+										var Material = "5828b036bd65b5d8:OpaqueFlat"
+										var Mesh = "4de0354322b345ae:Cube"
+									}
+									MaterialInputs 
+									{
+										var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
+										var MetallicValue = 1
+										var RoughnessValue = 0
+										var SpecularValue = 1
+										var StippleScale = 1
+									}
+								}
+								Cog [Id:0x5a86175e3a62575d]
+								{
+									var Name = "FrontHinge"
+									Transform 
+									{
+										var Translation = Real3{8.55273561e-15, 0.600000083, 0.00184547901}
+										var Scale = Real3{1, 1, 1}
+										var Rotation = Quaternion{0, 0, 0, 1}
+									}
+									Hierarchy 
+									{
+										Cog [Id:0x5a861712327ac88e]
+										{
+											var Name = "Sphere"
+											Transform 
+											{
+												var Translation = Real3{0, 0, 0}
+												var Scale = Real3{0.0500000007, 0.0500000007, 0.0500000007}
+												var Rotation = Quaternion{0, 0, 0, 1}
+											}
+											Model 
+											{
+												var Visible = true
+												var ViewCulling = true
+												var VisibilityEvents = true
+												var OverrideBoundingBox = false
+												var LocalAabbCenter = Real3{0, 0, 0}
+												var LocalAabbHalfExtents = Real3{1, 1, 1}
+												var GroupSortValue = 0
+												var Material = "5828b036bd65b5d8:OpaqueFlat"
+												var Mesh = "4de0354322b376ae:Sphere"
+											}
+											MaterialInputs 
+											{
+												var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
+												var MetallicValue = 1
+												var RoughnessValue = 0
+												var SpecularValue = 1
+												var StippleScale = 1
+											}
+										}
+										Cog [Id:0x5a8617e42d8fb0a2]
+										{
+											var Name = "FrontArm"
+											Transform 
+											{
+												var Translation = Real3{0, 0, 0.150000006}
+												var Scale = Real3{0.0299999993, 0.0299999993, 0.270000011}
+												var Rotation = Quaternion{0, 0, 0, 1}
+											}
+											Model 
+											{
+												var Visible = true
+												var ViewCulling = true
+												var VisibilityEvents = true
+												var OverrideBoundingBox = false
+												var LocalAabbCenter = Real3{0, 0, 0}
+												var LocalAabbHalfExtents = Real3{1, 1, 1}
+												var GroupSortValue = 0
+												var Material = "5828b036bd65b5d8:OpaqueFlat"
+												var Mesh = "4de0354322b345ae:Cube"
+											}
+											MaterialInputs 
+											{
+												var AlbedoValue = Real4{0.250980407, 0.0941176564, 0.0941176564, 1}
+												var MetallicValue = 1
+												var RoughnessValue = 0
+												var SpecularValue = 1
+												var StippleScale = 1
+											}
+										}
+										Cog [Id:0x5a86140d5333ae70]
+										{
+											var Name = "Screen"
+											Transform 
+											{
+												var Translation = Real3{0.0359096527, -4.2807633e-09, 0.400000006}
+												var Scale = Real3{0.25, 0.00999999978, 0.319999993}
+												var Rotation = Quaternion{0, 0, 0, 1}
+											}
+											Model 
+											{
+												var Visible = true
+												var ViewCulling = true
+												var VisibilityEvents = true
+												var OverrideBoundingBox = false
+												var LocalAabbCenter = Real3{0, 0, 0}
+												var LocalAabbHalfExtents = Real3{1, 1, 1}
+												var GroupSortValue = 0
+												var Material = "5a8c40c024c76419:StippledFlat"
+												var Mesh = "4de0354322b345ae:Cube"
+											}
+											MaterialInputs 
+											{
+												var AlbedoValue = Real4{0.26000005, 0.800000012, 0.0800000429, 1}
+												var MetallicValue = 0
+												var RoughnessValue = 0
+												var SpecularValue = 1
+												var StippleScale = 2
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
