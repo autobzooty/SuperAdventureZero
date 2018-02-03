@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{0.278777897, 2.46118283, 2.57564735}
+			var Translation = Real3{2.80209494, 2.78183675, 3.79710245}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.187012389, 0.0616770573, 0.0117655769, 0.980348885}
+			var Rotation = Quaternion{-0.128399417, 0.320919216, 0.043960765, 0.937332332}
 		}
 		CameraViewport 
 		{
@@ -234,9 +234,9 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 2.63087702
-			var VerticalAngle = 0.376992792
-			var HorizontalAngle = -0.125661179
+			var LookDistance = 4.79377079
+			var VerticalAngle = 0.272273153
+			var HorizontalAngle = -0.659731925
 			var LookTarget = Real3{-0.0277968608, 1.49268842, 0.148809046}
 			var MoveSensitivity = 1
 		}
@@ -301,6 +301,10 @@ Level
 					var SpecularValue = 0.150000006
 					var StippleDensity = 0.5
 					var StippleScale = 2
+					var NearDistance = 20
+					var FarDistance = 20
+					var MinVisibility = 0
+					var MaxVisibility = 1
 				}
 			}
 		}
@@ -629,6 +633,10 @@ Level
 											var SpecularValue = 1
 											var StippleDensity = 0.5
 											var StippleScale = 1
+											var NearDistance = 20
+											var FarDistance = 20
+											var MinVisibility = 0
+											var MaxVisibility = 1
 										}
 									}
 								}
@@ -759,6 +767,10 @@ Level
 									var SpecularValue = 0.5
 									var StippleDensity = 0.5
 									var StippleScale = 1
+									var NearDistance = 20
+									var FarDistance = 20
+									var MinVisibility = 0
+									var MaxVisibility = 1
 								}
 							}
 							Cog [Id:0x5ab2c409ca875506][ContextId:26]
@@ -824,6 +836,10 @@ Level
 															var SpecularValue = 0.5
 															var StippleDensity = 0.5
 															var StippleScale = 1
+															var NearDistance = 20
+															var FarDistance = 20
+															var MinVisibility = 0
+															var MaxVisibility = 1
 														}
 													}
 													Cog [Id:0x5ab2c771b46edb2f][ContextId:30]
@@ -856,6 +872,10 @@ Level
 															var SpecularValue = 0.300000012
 															var StippleDensity = 0.5
 															var StippleScale = 1
+															var NearDistance = 20
+															var FarDistance = 20
+															var MinVisibility = 0
+															var MaxVisibility = 1
 														}
 													}
 													Cog [Id:0x5ab2c782a75051cf][ContextId:31]
@@ -888,6 +908,10 @@ Level
 															var SpecularValue = 0
 															var StippleDensity = 0.5
 															var StippleScale = 1
+															var NearDistance = 20
+															var FarDistance = 20
+															var MinVisibility = 0
+															var MaxVisibility = 1
 														}
 													}
 												}
@@ -933,6 +957,10 @@ Level
 															var SpecularValue = 0.5
 															var StippleDensity = 0.5
 															var StippleScale = 1
+															var NearDistance = 20
+															var FarDistance = 20
+															var MinVisibility = 0
+															var MaxVisibility = 1
 														}
 													}
 													Cog [Id:0x5ab2c770b5b071fc][ContextId:34]
@@ -965,6 +993,10 @@ Level
 															var SpecularValue = 0.300000012
 															var StippleDensity = 0.5
 															var StippleScale = 1
+															var NearDistance = 20
+															var FarDistance = 20
+															var MinVisibility = 0
+															var MaxVisibility = 1
 														}
 													}
 													Cog [Id:0x5ab2c78fd8e88e95][ContextId:35]
@@ -997,6 +1029,10 @@ Level
 															var SpecularValue = 0
 															var StippleDensity = 0.5
 															var StippleScale = 1
+															var NearDistance = 20
+															var FarDistance = 20
+															var MinVisibility = 0
+															var MaxVisibility = 1
 														}
 													}
 												}
@@ -1044,6 +1080,10 @@ Level
 													var SpecularValue = 0
 													var StippleDensity = 0.5
 													var StippleScale = 1
+													var NearDistance = 20
+													var FarDistance = 20
+													var MinVisibility = 0
+													var MaxVisibility = 1
 												}
 											}
 										}
@@ -1093,6 +1133,10 @@ Level
 									var SpecularValue = 0.450000018
 									var StippleDensity = 0.5
 									var StippleScale = 1
+									var NearDistance = 20
+									var FarDistance = 20
+									var MinVisibility = 0
+									var MaxVisibility = 1
 								}
 							}
 						}
@@ -1160,6 +1204,10 @@ Level
 													var SpecularValue = 0.5
 													var StippleDensity = 0.5
 													var StippleScale = 1
+													var NearDistance = 20
+													var FarDistance = 20
+													var MinVisibility = 0
+													var MaxVisibility = 1
 												}
 											}
 										}
@@ -1218,6 +1266,10 @@ Level
 													var SpecularValue = 0.5
 													var StippleDensity = 0.5
 													var StippleScale = 1
+													var NearDistance = 20
+													var FarDistance = 20
+													var MinVisibility = 0
+													var MaxVisibility = 1
 												}
 											}
 										}
@@ -1278,6 +1330,10 @@ Level
 											var SpecularValue = 0.5
 											var StippleDensity = 0.5
 											var StippleScale = 1
+											var NearDistance = 20
+											var FarDistance = 20
+											var MinVisibility = 0
+											var MaxVisibility = 1
 										}
 									}
 								}
@@ -1323,6 +1379,10 @@ Level
 											var SpecularValue = 0.5
 											var StippleDensity = 0.5
 											var StippleScale = 1
+											var NearDistance = 20
+											var FarDistance = 20
+											var MinVisibility = 0
+											var MaxVisibility = 1
 										}
 									}
 								}
@@ -1540,6 +1600,10 @@ Level
 			var SpecularValue = 0.150000006
 			var StippleDensity = 0.5
 			var StippleScale = 2
+			var NearDistance = 20
+			var FarDistance = 30
+			var MinVisibility = 0.25
+			var MaxVisibility = 0.5
 		}
 	}
 	Cog [ContextId:54]
@@ -1581,6 +1645,10 @@ Level
 			var SpecularValue = 0.150000006
 			var StippleDensity = 0.5
 			var StippleScale = 2
+			var NearDistance = 20
+			var FarDistance = 30
+			var MinVisibility = 0.25
+			var MaxVisibility = 0.5
 		}
 	}
 	Cog [ContextId:55]
@@ -1622,6 +1690,10 @@ Level
 			var SpecularValue = 0.150000006
 			var StippleDensity = 0.5
 			var StippleScale = 2
+			var NearDistance = 20
+			var FarDistance = 30
+			var MinVisibility = 0.25
+			var MaxVisibility = 0.5
 		}
 	}
 	Cog [ContextId:56]
@@ -1663,6 +1735,10 @@ Level
 			var SpecularValue = 0.150000006
 			var StippleDensity = 0.5
 			var StippleScale = 2
+			var NearDistance = 20
+			var FarDistance = 30
+			var MinVisibility = 0.25
+			var MaxVisibility = 0.5
 		}
 	}
 	Cog [ContextId:57]
@@ -1704,6 +1780,10 @@ Level
 			var SpecularValue = 0.150000006
 			var StippleDensity = 0.5
 			var StippleScale = 2
+			var NearDistance = 20
+			var FarDistance = 30
+			var MinVisibility = 0.25
+			var MaxVisibility = 0.5
 		}
 	}
 	Cog [ContextId:58]
@@ -1745,6 +1825,10 @@ Level
 			var SpecularValue = 0.150000006
 			var StippleDensity = 0.5
 			var StippleScale = 2
+			var NearDistance = 20
+			var FarDistance = 30
+			var MinVisibility = 0.25
+			var MaxVisibility = 0.5
 		}
 	}
 	Cog [ContextId:59]
@@ -1777,6 +1861,10 @@ Level
 			var SpecularValue = 0
 			var StippleDensity = 0.5
 			var StippleScale = 4
+			var NearDistance = 20
+			var FarDistance = 20
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
 }
