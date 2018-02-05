@@ -3,9 +3,54 @@ class EquipmentInterface : ZilchComponent
   [Property]
   var EquipmentRoot = CogPath(".");
   
+  var IM : IM;
+  
   
   function Initialize(init : CogInitializer)
   {
+    this.IM = this.GameSession.IM;
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+  
+  
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    if (this.IM.Triggered(GameAction.Attack))
+    {
+      var head : EquipmentSlot = null;
+      
+      foreach (var child in this.EquipmentRoot.Cog.Children)
+      {
+        var slot = child.EquipmentSlot;
+        
+        if (slot.SlotType == EquipmentSlotType.Head)
+        {
+          head = slot;
+          break;
+        }
+      }
+      
+      if (head.Empty)
+      {
+        var ii = this.Owner.InventoryInterface;
+        var helmet : EquipmentBase = null;
+        
+        foreach (var item in ii.InventoryRoot.Cog.Children)
+        {
+          var eb = item.EquipmentBase;
+          
+          if (eb.SlotType == EquipmentSlotType.Head)
+            helmet = eb;
+        }
+        
+        if (helmet != null)
+          this.AttemptEquip(helmet);
+      }
+      else
+      {
+        this.AttemptUnequip(head);
+      }
+    }
   }
   
   
@@ -17,12 +62,57 @@ class EquipmentInterface : ZilchComponent
     if (slot == null)
       this.FailToEquip(equipment);
     else
-      this.Equip(equipment);
+      this.Equip(equipment, slot);
   }
   
   
-  function Equip(equipment : EquipmentBase)
+  function Equip(equipment : EquipmentBase, slot : EquipmentSlot)
   {
+    Print("Equipping `equipment.IB.Name`....");
+    
+    var ee = EquipmentEvent();
+    ee.Equipment = equipment;
+    ee.Equipper = this;
+    ee.Slot = slot;
+    equipment.Owner.DispatchEvent(Events.WasEquipped, ee);
+    this.Owner.DispatchEvent(Events.DidEquip, ee);
+    
+    slot.Equip(equipment);
+    
+    
+  }
+  
+  
+  function AttemptUnequip(slot : EquipmentSlot)
+  {
+    if (!slot.Empty)
+    {
+      this.Unequip(slot);
+    }
+  }
+  
+  
+  function AttemptUnequip(equipment : EquipmentBase)
+  {
+    this.AttemptUnequip(equipment.EquippedSlot);
+  }
+  
+  
+  function Unequip(slot : EquipmentSlot)
+  {
+    var equipment = slot.Equipment;
+    
+    Print("Unequipping `equipment.IB.Name`....");
+    
+    var ee = EquipmentEvent();
+    ee.Equipment = equipment;
+    ee.Equipper = this;
+    ee.Slot = slot;
+    equipment.Owner.DispatchEvent(Events.WasUnequipped, ee);
+    this.Owner.DispatchEvent(Events.DidUnequip, ee);
+    
+    slot.Unequip();
+    
     
   }
   
@@ -64,7 +154,7 @@ class EquipmentInterface : ZilchComponent
         {
           matchingSlotsWereFound = true;
           
-          if (slot.Item == null)
+          if (slot.Empty)
           {
             emptyMatchingSlotsWereFound = true;
             
@@ -84,7 +174,26 @@ class EquipmentSlot : ZilchComponent
   [Property]
   var SlotType : EquipmentSlotType;
   
-  var Item : Cog = null;
+  var Equipment : EquipmentBase = null;
+  
+  var Empty : Boolean { get { return this.Equipment == null; }}
+  
+  
+  function Equip(equipment : EquipmentBase)
+  {
+    this.Equipment = equipment;
+    equipment.Owner.AttachToPreserveLocal(this.Owner);
+    var tf = equipment.Owner.Transform;
+    tf.LocalTranslation = Real3.Zero;
+    tf.LocalRotation = Quaternion.Identity;
+  }
+  
+  
+  function Unequip()
+  {
+    this.Equipment.Owner.Detach();
+    this.Equipment = null;
+  }
 }
 
 

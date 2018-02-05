@@ -1,0 +1,149 @@
+class ItemBase : ZilchComponent
+{
+  [Property]
+  var Name = "Unknown Item";
+  [Property]
+  var Type : ItemType = ItemType.Consumable;
+  
+  var InitialGhosts = HashMap[Collider, Boolean]();
+  var InitialSendsEventses = HashMap[Collider, Boolean]();
+  var InitialDynamicStates = HashMap[RigidBody, RigidBodyDynamicState]();
+  var InitialVisibles = HashMap[Graphical, Boolean]();
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.PrepareValuesRecursively(this.Owner);
+    
+    Zero.Connect(this.Owner, Events.WasCollected, this.OnWasCollected);
+  }
+  
+  
+  function OnWasCollected(event : CollectionEvent)
+  {
+    this.ClearValuesRecursively(this.Owner);
+  }
+  
+  
+  // TODO:
+  // 
+  // make this
+  function OnWasDropped(/* some event that i need to make later */)
+  {
+    this.RetrieveValuesRecursively(this.Owner);
+  }
+  
+  
+  function PrepareValuesRecursively(root : Cog)
+  {
+    var collider = root.Collider;
+    var rigidBody = root.RigidBody;
+    var graphical = root.Graphical;
+    
+    if (collider != null)
+    {
+      this.InitialGhosts[collider] = collider.Ghost;
+      this.InitialSendsEventses[collider] = collider.SendsEvents;
+    }
+    
+    if (rigidBody != null)
+    {
+      this.InitialDynamicStates[rigidBody] = rigidBody.DynamicState;
+    }
+    
+    if (graphical != null)
+    {
+      this.InitialVisibles[graphical] = graphical.Visible;
+    }
+    
+    foreach (var child in root.Children)
+      this.PrepareValuesRecursively(child);
+  }
+  
+  
+  function RetrieveValuesRecursively(root : Cog)
+  {
+    var collider = root.Collider;
+    var rigidBody = root.RigidBody;
+    var graphical = root.Graphical;
+    
+    if (collider != null)
+    {
+      collider.Ghost = this.InitialGhosts[collider];
+      collider.SendsEvents = this.InitialSendsEventses[collider];
+    }
+    
+    if (rigidBody != null)
+    {
+      rigidBody.DynamicState = this.InitialDynamicStates[rigidBody];
+    }
+    
+    if (graphical != null)
+    {
+      graphical.Visible = this.InitialVisibles[graphical];
+    }
+    
+    foreach (var child in root.Children)
+      this.RetrieveValuesRecursively(child);
+  }
+  
+  
+  function ClearValuesRecursively(root : Cog)
+  {
+    var collider = root.Collider;
+    var rigidBody = root.RigidBody;
+    var graphical = root.Graphical;
+    
+    if (collider != null)
+    {
+      collider.Ghost = true;
+      collider.SendsEvents = false;
+    }
+    
+    if (rigidBody != null)
+    {
+      rigidBody.DynamicState = RigidBodyDynamicState.Kinematic;
+    }
+    
+    if (graphical != null)
+    {
+      graphical.Visible = false;
+    }
+    
+    foreach (var child in root.Children)
+      this.ClearValuesRecursively(child);
+  }
+  
+  
+  function ShowRecursively(root : Cog)
+  {
+    var graphical = root.Graphical;
+    
+    if (graphical != null)
+      graphical.Visible = this.InitialVisibles[graphical];
+    
+    foreach (var child in root.Children)
+      this.ShowRecursively(child);
+  }
+  
+  
+  function HideRecursively(root : Cog)
+  {
+    var graphical = root.Graphical;
+    
+    if (graphical != null)
+      graphical.Visible = false;
+    
+    foreach (var child in root.Children)
+      this.HideRecursively(child);
+  }
+}
+
+
+enum ItemType
+{
+  Consumable,
+  Equipment,
+  
+  COUNT_
+}

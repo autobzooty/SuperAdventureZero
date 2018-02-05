@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "Collector"
+		var ResourceId = 0x5a9fd6692fe03540
+	}
+}

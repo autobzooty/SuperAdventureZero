@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{2.80209494, 2.78183675, 3.79710245}
+			var Translation = Real3{-5.10648918, 4.214149, 10.7309799}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.128399417, 0.320919216, 0.043960765, 0.937332332}
+			var Rotation = Quaternion{-0.0936669707, -0.0962867439, -0.00910176337, 0.990894854}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 4.79377079
-			var VerticalAngle = 0.272273153
-			var HorizontalAngle = -0.659731925
-			var LookTarget = Real3{-0.0277968608, 1.49268842, 0.148809046}
+			var LookDistance = 11.13867
+			var VerticalAngle = 0.188495219
+			var HorizontalAngle = 0.193734735
+			var LookTarget = Real3{-3.00000048, 2.12697411, -0.00570297241}
 			var MoveSensitivity = 1
 		}
 	}
@@ -373,6 +373,24 @@ Level
 		Stats 
 		{
 		}
+		InventoryInterface 
+		{
+			var InventoryRoot = CogPath
+			{
+				var Path = "Inventory"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 9
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+		}
 		EquipmentInterface 
 		{
 			var EquipmentRoot = CogPath
@@ -385,7 +403,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 9
+				var Cog = 10
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -431,7 +449,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 10
+				var Cog = 11
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -449,7 +467,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 10
+				var Cog = 11
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -471,9 +489,22 @@ Level
 			}
 			var Snappiness = 0.100000001
 		}
+		Collector 
+		{
+		}
 		Hierarchy 
 		{
-			Cog [Id:0x5ab2c1b28b2635b7][ContextId:9]
+			Cog [Id:0x5a9fe3d5412be544][ContextId:9]
+			{
+				var Name = "Inventory"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+			}
+			Cog [Id:0x5ab2c1b28b2635b7][ContextId:10]
 			{
 				var Name = "EquipmentSlots"
 				Transform 
@@ -484,7 +515,7 @@ Level
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5ab3573eb3c4d9f6][ContextId:11]
+					Cog [Id:0x5ab3573eb3c4d9f6][ContextId:12]
 					{
 						var Name = "RightHand"
 						Transform 
@@ -498,7 +529,7 @@ Level
 							var SlotType = EquipmentSlotType.OneHand
 						}
 					}
-					Cog [Id:0x5ab357e2a9fd6c52][ContextId:12]
+					Cog [Id:0x5ab357e2a9fd6c52][ContextId:13]
 					{
 						var Name = "LeftHand"
 						Transform 
@@ -512,7 +543,7 @@ Level
 							var SlotType = EquipmentSlotType.OneHand
 						}
 					}
-					Cog [Id:0x5ab2ce34bce39642][ContextId:13]
+					Cog [Id:0x5ab2ce34bce39642][ContextId:14]
 					{
 						var Name = "Head"
 						Transform 
@@ -527,15 +558,6 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5a8603d7c7af70cb][InheritId:"5a86689ccea35445:CyberVisionHelmet"][ContextId:14]
-							{
-								Transform 
-								{
-									var Translation = Real3{0, 0, 0}
-									var Rotation = Quaternion{0, 0, 0, 1}
-									var Scale = Real3{1, 1, 1}
-								}
-							}
 						}
 					}
 					Cog [Id:0x5ab2ce31bc0beb80][ContextId:15]
@@ -561,6 +583,11 @@ Level
 									var Translation = Real3{0, 0, 0}
 									var Scale = Real3{1, 1, 1}
 									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								ItemBase 
+								{
+									var Name = "Cylinder Vest"
+									var Type = ItemType.Equipment
 								}
 								EquipmentBase 
 								{
@@ -600,6 +627,7 @@ Level
 											var Dark = 0
 										}
 									}
+									var VisibleOnEquip = false
 								}
 								Hierarchy 
 								{
@@ -1393,7 +1421,16 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:10]
+	Cog [InheritId:"5a86689ccea35445:CyberVisionHelmet"][ContextId:52]
+	{
+		Transform 
+		{
+			var Translation = Real3{-3, 2, 0}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
+		}
+	}
+	Cog [ContextId:11]
 	{
 		var Name = "Dolly"
 		Transform 
@@ -1414,7 +1451,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 10
+				var Cog = 11
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -1441,7 +1478,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 10
+				var Cog = 11
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -1456,7 +1493,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 52
+				var Cog = 53
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -1466,7 +1503,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5abab9792d88d165][ContextId:52]
+			Cog [Id:0x5abab9792d88d165][ContextId:53]
 			{
 				var Name = "GameCamera"
 				Transform 
@@ -1499,7 +1536,7 @@ Level
 						var UpdatePathOnCogChange = true
 						var UpdateCogOnInitialize = true
 						var ResolvedNullErrorOccurred = false
-						var Cog = 52
+						var Cog = 53
 						var PathPreference0 = CogPathPreference.CogRelative
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
@@ -1561,7 +1598,7 @@ Level
 			}
 		}
 	}
-	Cog [ContextId:53]
+	Cog [ContextId:54]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1602,11 +1639,11 @@ Level
 			var StippleScale = 2
 			var NearDistance = 20
 			var FarDistance = 30
-			var MinVisibility = 0.25
-			var MaxVisibility = 0.5
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
-	Cog [ContextId:54]
+	Cog [ContextId:55]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1647,11 +1684,11 @@ Level
 			var StippleScale = 2
 			var NearDistance = 20
 			var FarDistance = 30
-			var MinVisibility = 0.25
-			var MaxVisibility = 0.5
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
-	Cog [ContextId:55]
+	Cog [ContextId:56]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1692,11 +1729,11 @@ Level
 			var StippleScale = 2
 			var NearDistance = 20
 			var FarDistance = 30
-			var MinVisibility = 0.25
-			var MaxVisibility = 0.5
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
-	Cog [ContextId:56]
+	Cog [ContextId:57]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1737,11 +1774,11 @@ Level
 			var StippleScale = 2
 			var NearDistance = 20
 			var FarDistance = 30
-			var MinVisibility = 0.25
-			var MaxVisibility = 0.5
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
-	Cog [ContextId:57]
+	Cog [ContextId:58]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1782,11 +1819,11 @@ Level
 			var StippleScale = 2
 			var NearDistance = 20
 			var FarDistance = 30
-			var MinVisibility = 0.25
-			var MaxVisibility = 0.5
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
-	Cog [ContextId:58]
+	Cog [ContextId:59]
 	{
 		var Name = "Wall"
 		Transform 
@@ -1827,11 +1864,11 @@ Level
 			var StippleScale = 2
 			var NearDistance = 20
 			var FarDistance = 30
-			var MinVisibility = 0.25
-			var MaxVisibility = 0.5
+			var MinVisibility = 0
+			var MaxVisibility = 1
 		}
 	}
-	Cog [ContextId:59]
+	Cog [ContextId:60]
 	{
 		var Name = "Sphere"
 		Transform 
@@ -1860,9 +1897,9 @@ Level
 			var RoughnessValue = 1
 			var SpecularValue = 0
 			var StippleDensity = 0.5
-			var StippleScale = 4
+			var StippleScale = 2
 			var NearDistance = 20
-			var FarDistance = 20
+			var FarDistance = 30
 			var MinVisibility = 0
 			var MaxVisibility = 1
 		}

@@ -48,6 +48,29 @@ class InputEvent : ZilchEvent
   var ActiveInput : Boolean;
 }
 
+//
+// Should I Make this New Event an MWEvent?
+// a short story by doug, age 35
+// 
+// the point of the MWEvent class is that it is
+// designed to facilitate the Request-Was-Did event
+// model. if an event is not likely to use that model,
+// then it is not likely to benefit from inheriting
+// from MWEvent. furthermore, if it is likely that
+// there will be ambiguity about who or what the
+// Instigator is (e.g., with a CollectionEvent, who is
+// the Instigator? is it the collector? is it the thing
+// that dropped the collectable? unclear), then it's
+// probably not worth having a thing around called
+// "Instigator" that can get in the way of clarity.
+// however, if the new event is likely to be used in a
+// manner in which it is strongly tied to some faction
+// (e.g., damage being dealt by a Bad guy is Bad
+// damage), then it may be a good idea to make it
+// inherit from MWEvent after all
+// 
+// the end :)
+//
 class MWEvent : ZilchEvent
 {
   var Instigator : Cog;
@@ -135,8 +158,12 @@ class HealthEvent : MWEvent
 
 class EquipmentEvent : MWEvent
 {
-  sends ItemEquipped : EquipmentEvent;
-  sends ItemUnequipped : EquipmentEvent;
+  sends RequestEquip : EquipmentEvent;
+  sends WasEquipped : EquipmentEvent;
+  sends DidEquip : EquipmentEvent;
+  sends RequestUnequip : EquipmentEvent;
+  sends WasUnequipped : EquipmentEvent;
+  sends DidUnequip : EquipmentEvent;
   
   // TODO:
   // 
@@ -148,5 +175,23 @@ class EquipmentEvent : MWEvent
   // would certainly be relevant for data tracking
   
   var Equipment : EquipmentBase;
+  var Equipper : EquipmentInterface;
+  var Slot : EquipmentSlot;
+}
+
+class StatsEvent : MWEvent
+{
+  sends StatsCalculationRequest : StatsEvent;
+  
   var StatBlock : StatBlock;
+}
+
+class CollectionEvent : ZilchEvent
+{
+  sends CollectionRequest : CollectionEvent;
+  sends WasCollected : CollectionEvent;
+  sends DidCollect : CollectionEvent;
+  
+  var Collector : Collector;
+  var Collectee : Collectable;
 }

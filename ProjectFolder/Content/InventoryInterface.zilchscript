@@ -1,0 +1,35 @@
+class InventoryInterface : ZilchComponent
+{
+  [Property]
+  var InventoryRoot = CogPath(".");
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.DidUnequip, this.OnDidUnequip);
+    Zero.Connect(this.Owner, Events.DidCollect, this.OnDidCollect);
+  }
+  
+  
+  function OnDidUnequip(event : EquipmentEvent)
+  {
+    this.AddToInventory(event.Equipment.IB);
+  }
+  
+  
+  function OnDidCollect(event : CollectionEvent)
+  {
+    this.AddToInventory(event.Collectee.IB);
+  }
+  
+  
+  function AddToInventory(item : ItemBase)
+  {
+    // TODO:
+    // 
+    // some cool events and feedback and ish!
+    
+    item.Owner.AttachToPreserveLocal(this.InventoryRoot.Cog);
+    item.Owner.Transform.LocalTranslation = Real3.Zero;
+  }
+}

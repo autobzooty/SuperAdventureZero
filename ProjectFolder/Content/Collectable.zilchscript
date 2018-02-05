@@ -1,0 +1,42 @@
+// A "collectable" is a thing that can be collected
+// A "collectible" is something of worth to collectors
+// arguably this is both but i went with the A
+class Collectable : ZilchComponent
+{
+  [Dependency]
+  var IB : ItemBase;
+  
+  
+  [Property]
+  var CollectOnCollide = false;
+  
+  var CanBeCollected : Boolean { get { return true; }}
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.CollectionRequest, this.OnCollectionRequest);
+  }
+  
+  
+  function OnCollectionRequest(event : CollectionEvent)
+  {
+    if (this.CanBeCollected)
+      this.BeCollected(event);
+    else
+      this.FailToBeCollected(event);
+  }
+  
+  
+  function BeCollected(event : CollectionEvent)
+  {
+    event.Collector.Owner.DispatchEvent(Events.DidCollect, event);
+    this.Owner.DispatchEvent(Events.WasCollected, event);
+  }
+  
+  
+  function FailToBeCollected(event : CollectionEvent)
+  {
+    
+  }
+}

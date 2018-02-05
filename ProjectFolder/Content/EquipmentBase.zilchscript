@@ -1,13 +1,50 @@
 class EquipmentBase : ZilchComponent
 {
+  [Dependency]
+  var IB : ItemBase;
+  
+  
   [Property]
   var SlotType : EquipmentSlotType = EquipmentSlotType.OneHand;
   [Property]
   var StatBlock : StatBlock = StatBlock();
+  [Property]
+  var VisibleOnEquip : Boolean = false;
+  
+  var Equipper : EquipmentInterface;
+  var EquippedSlot : EquipmentSlot;
   
   
   function Initialize(init : CogInitializer)
   {
+    Zero.Connect(this.Owner, Events.WasEquipped, this.OnWasEquipped);
+    Zero.Connect(this.Owner, Events.WasUnequipped, this.OnWasUnequipped);
+  }
+  
+  
+  function OnWasEquipped(event : EquipmentEvent)
+  {
+    this.EquippedSlot = event.Slot;
+    this.Equipper = event.Equipper;
+    
+    if (this.VisibleOnEquip)
+      this.IB.ShowRecursively(this.Owner);
+  }
+  
+  
+  function OnWasUnequipped(event : EquipmentEvent)
+  {
+    this.EquippedSlot = null;
+    this.Equipper = null;
+    
+    if (this.VisibleOnEquip)
+      this.IB.HideRecursively(this.Owner);
+  }
+  
+  
+  function Unequip()
+  {
+    
   }
 }
 

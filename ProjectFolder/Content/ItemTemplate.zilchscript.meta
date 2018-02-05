@@ -1,0 +1,24 @@
+[Version:1]
+TextContent 
+{
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"ZilchScript"
+		}
+	}
+	ResourceTemplate 
+	{
+		var DisplayName = "Item"
+		var Description = "Use this for components of items"
+		var SortWeight = 0
+		var Category = "Super Adventure 3D"
+		var CategorySortWeight = 4294967286
+	}
+	ZilchScriptBuilder 
+	{
+		var Name = "ItemTemplate"
+		var ResourceId = 0x5a9f8aba85389382
+	}
+}
