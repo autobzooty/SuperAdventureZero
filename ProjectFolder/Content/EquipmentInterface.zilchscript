@@ -23,7 +23,7 @@ class EquipmentInterface : ZilchComponent
       {
         var slot = child.EquipmentSlot;
         
-        if (slot.SlotType == EquipmentSlotType.Head)
+        if (slot.SlotType == EquipmentType.Head)
         {
           head = slot;
           break;
@@ -39,7 +39,7 @@ class EquipmentInterface : ZilchComponent
         {
           var eb = item.EquipmentBase;
           
-          if (eb.SlotType == EquipmentSlotType.Head)
+          if (eb.SlotType == EquipmentType.Head)
             helmet = eb;
         }
         
@@ -70,16 +70,14 @@ class EquipmentInterface : ZilchComponent
   {
     Print("Equipping `equipment.IB.Name`....");
     
+    slot.Equip(equipment);
+    
     var ee = EquipmentEvent();
     ee.Equipment = equipment;
     ee.Equipper = this;
     ee.Slot = slot;
     equipment.Owner.DispatchEvent(Events.WasEquipped, ee);
     this.Owner.DispatchEvent(Events.DidEquip, ee);
-    
-    slot.Equip(equipment);
-    
-    
   }
   
   
@@ -104,16 +102,14 @@ class EquipmentInterface : ZilchComponent
     
     Print("Unequipping `equipment.IB.Name`....");
     
+    slot.Unequip();
+    
     var ee = EquipmentEvent();
     ee.Equipment = equipment;
     ee.Equipper = this;
     ee.Slot = slot;
     equipment.Owner.DispatchEvent(Events.WasUnequipped, ee);
     this.Owner.DispatchEvent(Events.DidUnequip, ee);
-    
-    slot.Unequip();
-    
-    
   }
   
   
@@ -123,7 +119,7 @@ class EquipmentInterface : ZilchComponent
   }
   
   
-  function FindEmptySlot(type : EquipmentSlotType) : EquipmentSlot
+  function FindEmptySlot(type : EquipmentType) : EquipmentSlot
   {
     // TODO:
     // 
@@ -172,7 +168,7 @@ class EquipmentInterface : ZilchComponent
 class EquipmentSlot : ZilchComponent
 {
   [Property]
-  var SlotType : EquipmentSlotType;
+  var SlotType : EquipmentType;
   
   var Equipment : EquipmentBase = null;
   
@@ -197,7 +193,7 @@ class EquipmentSlot : ZilchComponent
 }
 
 
-enum EquipmentSlotType
+enum EquipmentType
 {
   OneHand,
   Head,

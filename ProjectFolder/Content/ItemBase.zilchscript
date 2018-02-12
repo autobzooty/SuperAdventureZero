@@ -3,12 +3,30 @@ class ItemBase : ZilchComponent
   [Property]
   var Name = "Unknown Item";
   [Property]
+  var Description = "Dunno but probably cool";
+  [Property]
   var Type : ItemType = ItemType.Consumable;
   
   var InitialGhosts = HashMap[Collider, Boolean]();
   var InitialSendsEventses = HashMap[Collider, Boolean]();
   var InitialDynamicStates = HashMap[RigidBody, RigidBodyDynamicState]();
   var InitialVisibles = HashMap[Graphical, Boolean]();
+  
+  var TypeString : String
+  {
+    get
+    {
+      // TODO:
+      // 
+      // replace this with a switch when we get that
+      if (this.Type == ItemType.Consumable)
+        return "Consumable";
+      if (this.Type == ItemType.Equipment)
+        return "Equipment (ERROR)";
+      
+      return "Unknown (ERROR)";
+    }
+  }
   
   
   function Initialize(init : CogInitializer)

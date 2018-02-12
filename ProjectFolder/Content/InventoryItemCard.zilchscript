@@ -1,0 +1,35 @@
+class InventoryItemCard : ZilchComponent
+{
+  [Property]
+  var IconPath : CogPath = CogPath("Icon");
+  [Property]
+  var NamePath : CogPath = CogPath("Body/ItemName");
+  [Property]
+  var DescriptionPath : CogPath = CogPath("Body/InfoBlock/Info/Description");
+  [Property]
+  var TypePath : CogPath = CogPath("Body/InfoBlock/Info/Type");
+  [Property]
+  var TypeIconPath : CogPath = CogPath("Body/InfoBlock/TypeIcon");
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.InventoryListItemSetup, this.OnInventoryListItemSetup);
+  }
+  
+  
+  function OnInventoryListItemSetup(event : InventoryMenuEvent)
+  {
+    var itemBase = event.ItemBase;
+    
+    this.NamePath.SpriteText.Text = itemBase.Name;
+    this.DescriptionPath.SpriteText.Text = itemBase.Description;
+    
+    var itemType = itemBase.Type;
+    
+    if (itemType == ItemType.Equipment)
+      this.TypePath.SpriteText.Text = itemBase.Owner.EquipmentBase.TypeString;
+    else
+      this.TypePath.SpriteText.Text = itemBase.TypeString;
+  }
+}

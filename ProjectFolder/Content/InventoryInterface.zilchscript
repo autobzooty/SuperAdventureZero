@@ -2,24 +2,76 @@ class InventoryInterface : ZilchComponent
 {
   [Property]
   var InventoryRoot = CogPath(".");
+  [Property]
+  var InventoryMenuLevel : Level;
+  
+  var IM : IM;
+  var InventoryMenuSpace : Space;
+  var MenuOpen : Boolean = false;
   
   
   function Initialize(init : CogInitializer)
   {
+    this.IM = this.GameSession.IM;
+    
+    this.InventoryMenuSpace = this.GameSession.CreateNamedSpace("InventoryMenu", Archetype.DefaultSpace);
+    this.InventoryMenuSpace.LoadLevel(this.InventoryMenuLevel);
+    
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    Zero.Connect(this.Owner, Events.DidEquip, this.OnDidEquip);
     Zero.Connect(this.Owner, Events.DidUnequip, this.OnDidUnequip);
     Zero.Connect(this.Owner, Events.DidCollect, this.OnDidCollect);
+    Zero.Connect(this.Owner, Events.CogDestroy, this.OnCogDestroy);
+  }
+  
+  
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    if (this.IM.Triggered(GameAction.Menu))
+    {
+      if (this.MenuOpen)
+        this.CloseMenu();
+      else
+        this.OpenMenu();
+    }
+  }
+  
+  
+  function OnDidEquip(event : EquipmentEvent)
+  {
+    this.RemoveFromInventory(event.Equipment.IB);
+    this.UpdateList();
   }
   
   
   function OnDidUnequip(event : EquipmentEvent)
   {
     this.AddToInventory(event.Equipment.IB);
+    this.UpdateList();
   }
   
   
   function OnDidCollect(event : CollectionEvent)
   {
     this.AddToInventory(event.Collectee.IB);
+    this.UpdateList();
+  }
+  
+  
+  function OpenMenu()
+  {
+    this.MenuOpen = true;
+    var ime = InventoryMenuEvent();
+    ime.InventoryRoot = this.InventoryRoot.Cog;
+    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuOpenRequest, ime);
+  }
+  
+  
+  function CloseMenu()
+  {
+    this.MenuOpen = false;
+    var ime = InventoryMenuEvent();
+    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuCloseRequest, ime);
   }
   
   
@@ -31,5 +83,25 @@ class InventoryInterface : ZilchComponent
     
     item.Owner.AttachToPreserveLocal(this.InventoryRoot.Cog);
     item.Owner.Transform.LocalTranslation = Real3.Zero;
+  }
+  
+  
+  function RemoveFromInventory(item : ItemBase)
+  {
+    
+  }
+  
+  
+  function UpdateList()
+  {
+    var ime = InventoryMenuEvent();
+    ime.InventoryRoot = this.InventoryRoot.Cog;
+    this.InventoryMenuSpace.DispatchEvent(Events.InventoryUpdated, ime);
+  }
+  
+  
+  function OnCogDestroy(event : ObjectEvent)
+  {
+    this.InventoryMenuSpace.Destroy();
   }
 }

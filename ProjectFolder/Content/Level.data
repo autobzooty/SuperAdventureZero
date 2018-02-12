@@ -280,8 +280,40 @@ Level
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
 		}
+		Hierarchy 
+		{
+			Cog [Id:0x5ab2c1b28b2635b7][ContextId:7]
+			{
+				Hierarchy 
+				{
+					Cog [Id:0x5ab2ce31bc0beb80][ContextId:8]
+					{
+						Hierarchy 
+						{
+							Cog [Id:0x5ab2fc7d1c8034d0][ChildOrderOverride][ContextId:9]
+							{
+								Transform 
+								{
+								}
+								ItemBase [LocallyAdded]
+								{
+									var Name = "Unknown Item"
+									var Type = ItemType.Consumable
+								}
+								EquipmentBase 
+								{
+								}
+								Hierarchy 
+								{
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
-	Cog [ContextId:7]
+	Cog [ContextId:10]
 	{
 		var Name = "Dolly"
 		Transform 
@@ -302,7 +334,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 7
+				var Cog = 10
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -329,7 +361,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 7
+				var Cog = 10
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -344,7 +376,7 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 8
+				var Cog = 11
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
@@ -354,7 +386,7 @@ Level
 		}
 		Hierarchy 
 		{
-			Cog [Id:0x5abab9792d88d165][ContextId:8]
+			Cog [Id:0x5abab9792d88d165][ContextId:11]
 			{
 				var Name = "GameCamera"
 				Transform 
@@ -387,7 +419,7 @@ Level
 						var UpdatePathOnCogChange = true
 						var UpdateCogOnInitialize = true
 						var ResolvedNullErrorOccurred = false
-						var Cog = 8
+						var Cog = 11
 						var PathPreference0 = CogPathPreference.CogRelative
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute

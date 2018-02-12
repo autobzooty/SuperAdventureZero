@@ -173,6 +173,7 @@ enum GameAction
   Trick,
   Attack,
   Interact,
+  Menu,
   
   COUNT_
 }

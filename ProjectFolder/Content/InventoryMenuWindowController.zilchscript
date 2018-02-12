@@ -1,0 +1,85 @@
+class InventoryMenuWindowController : ZilchComponent
+{
+  [Dependency]
+  var UiWidget : UiWidget;
+  
+  
+  [Property]
+  var ListRoot : CogPath = CogPath(".");
+  [Property]
+  var ItemCardArchetype : Archetype = Archetype.ItemCard;
+  
+  var WindowHiddenFlexSizeX : Real = 0;
+  var WindowShownFlexSizeX : Real = 1;
+  var SpacerHiddenFlexSizeX : Real = 100;
+  var SpacerShownFlexSizeX : Real = 1;
+  var Duration : Real = 10 / 60.0;
+  
+  var Sequence : ActionSet;
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.Sequence = Action.Sequence(this.Owner.Actions);
+    
+    this.UiWidget.FlexSize = Real2(this.WindowHiddenFlexSizeX, 1);
+    this.UiWidget.Visible = false;
+    
+    Zero.Connect(this.Space, Events.InventoryMenuOpenRequest, this.OnInventoryMenuOpenRequest);
+    Zero.Connect(this.Space, Events.InventoryMenuCloseRequest, this.OnInventoryMenuCloseRequest);
+    Zero.Connect(this.Space, Events.InventoryUpdated, this.OnInventoryUpdated);
+  }
+  
+  
+  function OnInventoryMenuOpenRequest(event : InventoryMenuEvent)
+  {
+    this.Show();
+  }
+  
+  
+  function OnInventoryMenuCloseRequest(event : InventoryMenuEvent)
+  {
+    this.Hide();
+  }
+  
+  
+  function OnInventoryUpdated(event : InventoryMenuEvent)
+  {
+    foreach (var child in this.ListRoot.Cog.Children)
+    {
+      child.Destroy();
+    }
+    
+    var root = event.InventoryRoot;
+    
+    foreach (var child in root.Children)
+    {
+      var card = this.Space.Create(this.ItemCardArchetype);
+      card.AttachToPreserveLocal(this.ListRoot.Cog);
+      event.ItemBase = child.ItemBase;
+      card.DispatchEvent(Events.InventoryListItemSetup, event);
+    }
+  }
+  
+  
+  function Show()
+  {
+    this.Sequence.Cancel();
+    this.Sequence = Action.Sequence(this.Owner.Actions);
+      
+      Action.Property(this.Sequence, @this.UiWidget.Visible, true, 0, Ease.Linear);
+      Action.Property(this.Sequence, @this.UiWidget.FlexSize,
+        Real2(this.WindowShownFlexSizeX, 1), this.Duration, Ease.QuadInOut);
+  }
+  
+  
+  function Hide()
+  {
+    this.Sequence.Cancel();
+    this.Sequence = Action.Sequence(this.Owner.Actions);
+      
+      Action.Property(this.Sequence, @this.UiWidget.FlexSize,
+        Real2(this.WindowHiddenFlexSizeX, 1), this.Duration, Ease.QuadInOut);
+      Action.Property(this.Sequence, @this.UiWidget.Visible, false, 0, Ease.Linear);
+  }
+}

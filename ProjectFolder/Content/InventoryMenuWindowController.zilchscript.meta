@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "InventoryMenuWindowController"
+		var ResourceId = 0x5a97e0ce70ac266c
+	}
+}

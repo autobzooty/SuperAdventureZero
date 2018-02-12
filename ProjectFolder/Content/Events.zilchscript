@@ -63,6 +63,7 @@ class InputEvent : ZilchEvent
 // that dropped the collectable? unclear), then it's
 // probably not worth having a thing around called
 // "Instigator" that can get in the way of clarity.
+// 
 // however, if the new event is likely to be used in a
 // manner in which it is strongly tied to some faction
 // (e.g., damage being dealt by a Bad guy is Bad
@@ -194,4 +195,15 @@ class CollectionEvent : ZilchEvent
   
   var Collector : Collector;
   var Collectee : Collectable;
+}
+
+class InventoryMenuEvent : ZilchEvent
+{
+  sends InventoryMenuOpenRequest : InventoryMenuEvent;
+  sends InventoryMenuCloseRequest : InventoryMenuEvent;
+  sends InventoryListItemSetup : InventoryMenuEvent;
+  sends InventoryUpdated : InventoryMenuEvent;
+  
+  var InventoryRoot : Cog;
+  var ItemBase : ItemBase;
 }

@@ -5,7 +5,7 @@ class EquipmentBase : ZilchComponent
   
   
   [Property]
-  var SlotType : EquipmentSlotType = EquipmentSlotType.OneHand;
+  var SlotType : EquipmentType = EquipmentType.OneHand;
   [Property]
   var StatBlock : StatBlock = StatBlock();
   [Property]
@@ -13,6 +13,27 @@ class EquipmentBase : ZilchComponent
   
   var Equipper : EquipmentInterface;
   var EquippedSlot : EquipmentSlot;
+  
+  var TypeString : String
+  {
+    get
+    {
+      if (this.SlotType == EquipmentType.OneHand)
+        return "One-Handed Weapon";
+      if (this.SlotType == EquipmentType.Body)
+        return "Armor";
+      if (this.SlotType == EquipmentType.Head)
+        return "Helmet";
+      if (this.SlotType == EquipmentType.Glove)
+        return "Glove";
+      if (this.SlotType == EquipmentType.Foot)
+        return "Footwear";
+      if (this.SlotType == EquipmentType.Accessory)
+        return "Accessory";
+      
+      return "Unknown Equipment (ERROR)";
+    }
+  }
   
   
   function Initialize(init : CogInitializer)

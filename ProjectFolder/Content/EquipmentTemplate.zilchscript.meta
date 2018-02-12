@@ -8,11 +8,6 @@ TextContent
 			"ZilchScript"
 		}
 	}
-	ZilchScriptBuilder 
-	{
-		var Name = "EquipmentTemplate"
-		var ResourceId = 0x5ab231b63005339e
-	}
 	ResourceTemplate 
 	{
 		var DisplayName = "Equipment"
@@ -20,5 +15,10 @@ TextContent
 		var SortWeight = 0
 		var Category = "Super Adventure 3D"
 		var CategorySortWeight = 4294967286
+	}
+	ZilchScriptBuilder 
+	{
+		var Name = "EquipmentTemplate"
+		var ResourceId = 0x5ab231b63005339e
 	}
 }
