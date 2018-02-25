@@ -1,0 +1,19 @@
+[Version:1]
+DataContent 
+{
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"Level"
+		}
+	}
+	DataBuilder 
+	{
+		var Name = "MovementTest"
+		var ResourceId = 0x5ac29566b8463cbb
+		var LoaderType = "Level"
+		var Version = 0
+		var ShowInEditor = true
+	}
+}

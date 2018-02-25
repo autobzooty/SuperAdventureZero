@@ -1,0 +1,46 @@
+[Version:1]
+GeometryContent 
+{
+	GeometryImport 
+	{
+		var OriginOffset = Real3{0, 0, 0}
+		var ScaleFactor = 1
+		var ChangeBasis = true
+		var XBasisTo = BasisType.PositiveX
+		var YBasisTo = BasisType.NegativeZ
+		var ZBasisTo = BasisType.PositiveY
+	}
+	GeneratedArchetype 
+	{
+		var ResourceId = 0x5ac2bf41c80b4772
+	}
+	PhysicsMeshBuilder 
+	{
+		var Meshes = Array
+		{
+			Object
+			{
+				var Name = "wedge15"
+				var ResourceId = 0x5ac2bf41c9e8c7ac
+			}
+		}
+		var MeshBuilt = PhysicsMeshType.ConvexMesh
+	}
+	MeshBuilder 
+	{
+		var GenerateSmoothNormals = false
+		var SmoothingAngleDegreesThreshold = 30
+		var GenerateTangentSpace = true
+		var InvertUvYAxis = false
+		var FlipWindingOrder = false
+		var FlipNormals = false
+		var Meshes = Array
+		{
+			Object
+			{
+				var Name = "wedge15"
+				var ResourceId = 0x5ac2bf41c9e8c7a4
+			}
+		}
+	}
+}
