@@ -7,7 +7,7 @@ class InventoryInterface : ZilchComponent
   
   var IM : IM;
   var InventoryMenuSpace : Space;
-  var MenuOpen : Boolean = false;
+  //var MenuOpen : Boolean = false;
   
   
   function Initialize(init : CogInitializer)
@@ -16,8 +16,12 @@ class InventoryInterface : ZilchComponent
     
     this.InventoryMenuSpace = this.GameSession.CreateNamedSpace("InventoryMenu", Archetype.DefaultSpace);
     this.InventoryMenuSpace.LoadLevel(this.InventoryMenuLevel);
+    var ime = InventoryMenuEvent();
+    ime.GameSpace = this.Space;
+    this.InventoryMenuSpace.DispatchEvent(Events.InventorySpaceSetup, ime);
     
     Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    Zero.Connect(this.Space, Events.InventoryMenuClosed, this.OnInventoryMenuClosed);
     Zero.Connect(this.Owner, Events.DidEquip, this.OnDidEquip);
     Zero.Connect(this.Owner, Events.DidUnequip, this.OnDidUnequip);
     Zero.Connect(this.Owner, Events.DidCollect, this.OnDidCollect);
@@ -29,11 +33,17 @@ class InventoryInterface : ZilchComponent
   {
     if (this.IM.Triggered(GameAction.Menu))
     {
-      if (this.MenuOpen)
-        this.CloseMenu();
-      else
+      //if (this.MenuOpen)
+      //  this.CloseMenu();
+      //else
         this.OpenMenu();
     }
+  }
+  
+  
+  function OnInventoryMenuClosed(event : InventoryMenuEvent)
+  {
+    //this.Space.TimeSpace.Paused = false;
   }
   
   
@@ -60,19 +70,21 @@ class InventoryInterface : ZilchComponent
   
   function OpenMenu()
   {
-    this.MenuOpen = true;
+    //this.MenuOpen = true;
     var ime = InventoryMenuEvent();
     ime.InventoryRoot = this.InventoryRoot.Cog;
     this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuOpenRequest, ime);
+    
+    //this.Space.TimeSpace.Paused = true;
   }
   
   
-  function CloseMenu()
-  {
-    this.MenuOpen = false;
-    var ime = InventoryMenuEvent();
-    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuCloseRequest, ime);
-  }
+  //function CloseMenu()
+  //{
+  //  this.MenuOpen = false;
+  //  var ime = InventoryMenuEvent();
+  //  this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuCloseRequest, ime);
+  //}
   
   
   function AddToInventory(item : ItemBase)

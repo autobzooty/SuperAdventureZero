@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-5.10648918, 4.214149, 10.7309799}
+			var Translation = Real3{-12.8619556, 5.45788479, 3.95874143}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0936669707, -0.0962867439, -0.00910176337, 0.990894854}
+			var Rotation = Quaternion{-0.125326678, -0.553475082, -0.0846934393, 0.819015026}
 		}
 		CameraViewport 
 		{
@@ -235,8 +235,8 @@ Level
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
 			var LookDistance = 11.13867
-			var VerticalAngle = 0.188495219
-			var HorizontalAngle = 0.193734735
+			var VerticalAngle = 0.303686738
+			var HorizontalAngle = 1.18857241
 			var LookTarget = Real3{-3.00000048, 2.12697411, -0.00570297241}
 			var MoveSensitivity = 1
 		}
@@ -1430,10 +1430,6 @@ Level
 			var Translation = Real3{-3, 2, 0}
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
-		}
-		ItemBase 
-		{
-			var Description = "Shows things as they really are."
 		}
 	}
 	Cog [ContextId:11]

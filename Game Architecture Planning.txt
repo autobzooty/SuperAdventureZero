@@ -1,0 +1,31 @@
+GameSession
+- IM
+- Main
+  - top-level update dispatcher
+  - game flow manager
+
+Spaces
+  main space
+  - player etc
+  
+  hud
+  - health bars, etc
+  
+  other hud
+  - speech bubbles, etc
+  
+  menu(s)
+  
+  data
+  - persistent data
+  
+  streamed adjacent game area spaces
+  - houses, etc
+  
+  loading screen space
+  - also for fading
+  
+  (cutscene spaces?)
+  
+  fade spaces
+  - ad hoc as needed

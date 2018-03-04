@@ -1,0 +1,28 @@
+class GameFlowController : ZilchComponent
+{
+  [Static]
+  var Instance : GameFlowController;  // just so that static Print has a static Main it can access
+  [Static]
+  var Frame = 0;                      // static Print accesses this
+  
+  
+  //****************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    GameFlowController.Frame = 0;
+    
+    if (GameFlowController.Instance == null)
+      GameFlowController.Instance = this;
+    
+    Zero.Connect(Zero.Engine, Events.EngineUpdate, this.OnEngineUpdate);
+  }
+  
+  
+  //****************************************************************************
+  function OnEngineUpdate(event : UpdateEvent)
+  {
+    Console.WriteLine(GameFlowController.Frame);
+    
+    ++GameFlowController.Frame;
+  }
+}

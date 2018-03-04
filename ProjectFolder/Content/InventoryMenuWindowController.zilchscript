@@ -14,20 +14,50 @@ class InventoryMenuWindowController : ZilchComponent
   var SpacerHiddenFlexSizeX : Real = 100;
   var SpacerShownFlexSizeX : Real = 1;
   var Duration : Real = 10 / 60.0;
-  
+  var Shown : Boolean = false;
   var Sequence : ActionSet;
+  
+  var IM : IM;
+  var GameSpace : Space;
   
   
   function Initialize(init : CogInitializer)
   {
+    this.IM = this.GameSession.IM;
+    
     this.Sequence = Action.Sequence(this.Owner.Actions);
     
     this.UiWidget.FlexSize = Real2(this.WindowHiddenFlexSizeX, 1);
     this.UiWidget.Visible = false;
     
+    Zero.Connect(this.Space, Events.InventorySpaceSetup, this.OnInventorySpaceSetup);
     Zero.Connect(this.Space, Events.InventoryMenuOpenRequest, this.OnInventoryMenuOpenRequest);
-    Zero.Connect(this.Space, Events.InventoryMenuCloseRequest, this.OnInventoryMenuCloseRequest);
+    //Zero.Connect(this.Space, Events.InventoryMenuCloseRequest, this.OnInventoryMenuCloseRequest);
     Zero.Connect(this.Space, Events.InventoryUpdated, this.OnInventoryUpdated);
+  }
+  
+  
+  function OnInventorySpaceSetup(event : InventoryMenuEvent)
+  {
+    this.GameSpace = event.GameSpace;
+  }
+  
+  
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    // TODO:
+    // 
+    // this all seems a little wonky
+    // 
+    // almost nothing in this game is using the LogicUpdate event, because
+    // we have our own update events instead. this controller works in a
+    // separate menu space, which doesn't have a Main, so it won't have
+    // access to custom update events. so i basically just don't know for
+    // sure whether it's a good idea to use LogicUpdate here when it will
+    // end up being one of the few things that do use it
+    
+    if (this.IM.Triggered(GameAction.Menu))
+      this.Hide();
   }
   
   
@@ -37,10 +67,10 @@ class InventoryMenuWindowController : ZilchComponent
   }
   
   
-  function OnInventoryMenuCloseRequest(event : InventoryMenuEvent)
-  {
-    this.Hide();
-  }
+  //function OnInventoryMenuCloseRequest(event : InventoryMenuEvent)
+  //{
+  //  this.Hide();
+  //}
   
   
   function OnInventoryUpdated(event : InventoryMenuEvent)
@@ -67,6 +97,7 @@ class InventoryMenuWindowController : ZilchComponent
     this.Sequence.Cancel();
     this.Sequence = Action.Sequence(this.Owner.Actions);
       
+      Action.Call(this.Sequence, this.BeginShowing);
       Action.Property(this.Sequence, @this.UiWidget.Visible, true, 0, Ease.Linear);
       Action.Property(this.Sequence, @this.UiWidget.FlexSize,
         Real2(this.WindowShownFlexSizeX, 1), this.Duration, Ease.QuadInOut);
@@ -81,5 +112,20 @@ class InventoryMenuWindowController : ZilchComponent
       Action.Property(this.Sequence, @this.UiWidget.FlexSize,
         Real2(this.WindowHiddenFlexSizeX, 1), this.Duration, Ease.QuadInOut);
       Action.Property(this.Sequence, @this.UiWidget.Visible, false, 0, Ease.Linear);
+      Action.Call(this.Sequence, this.EndHiding);
+  }
+  
+  
+  function BeginShowing()
+  {
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+  
+  
+  function EndHiding()
+  {
+    Zero.Disconnect(this.Space, Events.LogicUpdate, this);
+    
+    this.GameSpace.DispatchEvent(Events.InventoryMenuClosed, InventoryMenuEvent());
   }
 }

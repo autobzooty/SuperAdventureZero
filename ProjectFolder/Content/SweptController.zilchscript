@@ -728,7 +728,7 @@ class SweptController : ZilchComponent
   // Does not add duplicate entries.
   function AddIfKinematic(cog : Cog)
   {
-    if (cog.RigidBody != null && cog.RigidBody.DynamicState == RigidBodyDynamicState.Kinematic)
+    if (cog.RigidBody != null && cog.RigidBody.DynamicState == RigidBodyDynamicState.Kinematic && !cog.Collider.Ghost)
     {
       var has = false;
       

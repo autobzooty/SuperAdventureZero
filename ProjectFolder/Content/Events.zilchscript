@@ -199,11 +199,14 @@ class CollectionEvent : ZilchEvent
 
 class InventoryMenuEvent : ZilchEvent
 {
+  sends InventorySpaceSetup : InventoryMenuEvent;
   sends InventoryMenuOpenRequest : InventoryMenuEvent;
   sends InventoryMenuCloseRequest : InventoryMenuEvent;
+  sends InventoryMenuClosed : InventoryMenuEvent;
   sends InventoryListItemSetup : InventoryMenuEvent;
   sends InventoryUpdated : InventoryMenuEvent;
   
   var InventoryRoot : Cog;
   var ItemBase : ItemBase;
+  var GameSpace : Space;
 }
