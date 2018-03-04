@@ -1,38 +1,18 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright 2017 DigiPen USA Corporation, All Rights Reserved
-// Author: Nathan Carlson
-// Last updated by: Arend Danielek
-// Last update: 1/4/2017
-// Class: SweptController
-// Brief: The user will need to make their own script for peripheral input.
+// Copyright 2014 DigiPen USA Corporation, All Rights Reserved
+// Author: Zero Engine Team
+
+// The user will need to make their own script for peripheral input.
 // Each LogicUpdate, the input script should determine the direction of
 // desired movement (does not need to be normalized) and pass it to the
 // Update function of this script, along with the Dt from the UpdateEvent.
-//
+
 // Modifying the RigidBody velocity will have no affect on the controller.
 // ControllerVelocity can be modified externally for specific needs
 // or behaviors, in which case, other states like Grounded and Jumping
 // should also be set appropriately to reflect the intended behavior.
-//
+
 // Character controller is independent of physics update.
 // The RigidBody is expected to be Kinematic when using this controller.
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Event for passing the ContinuousResult information,
-// the ContinuousResult structure itself should not be stored elsewhere.
-// If information is needed to be stored, it should be copied from the
-// result structure and stored as an independent variable.
-class SweptControllerEvent : ZilchEvent
-{
-    var Result : SweepResult = null;
-    
-    constructor() : base() {}
-    
-    constructor(result : SweepResult) : base()
-    {
-        this.Result = result;
-    }
-}
 
 class SweptController : ZilchComponent
 {
@@ -380,7 +360,8 @@ class SweptController : ZilchComponent
     // using the velocity of that object. (for moving platforms and such)
     foreach (var cog in this.KinematicContacts)
     {
-      this.SweptCollision(cog.RigidBody.Velocity, dt, true);
+      if (cog != null)
+        this.SweptCollision(cog.RigidBody.Velocity, dt, true);
     }
     
     // Done after the sweep to stay in contact with the ground when detected.
@@ -721,6 +702,10 @@ class SweptController : ZilchComponent
   // Forwards object to kinematic check.
   function OnCollision(event : CollisionEvent)
   {
+    // Check the cast filter to see if we ignore ghost objects
+    if (this.CastFilter.IgnoreGhost && event.OtherObject.Collider.Ghost)
+      return;
+      
     this.AddIfKinematic(event.OtherObject);
   }
 
@@ -728,7 +713,7 @@ class SweptController : ZilchComponent
   // Does not add duplicate entries.
   function AddIfKinematic(cog : Cog)
   {
-    if (cog.RigidBody != null && cog.RigidBody.DynamicState == RigidBodyDynamicState.Kinematic && !cog.Collider.Ghost)
+    if (cog.RigidBody != null && cog.RigidBody.DynamicState == RigidBodyDynamicState.Kinematic)
     {
       var has = false;
       
@@ -754,3 +739,20 @@ class SweptController : ZilchComponent
     this.KinematicPending.Clear();
   }
 }
+
+// Event for passing the ContinuousResult information,
+// the ContinuousResult structure itself should not be stored elsewhere.
+// If information is needed to be stored, it should be copied from the
+// result structure and stored as an independent variable.
+class SweptControllerEvent : ZilchEvent
+{
+  var Result : SweepResult = null;
+  
+  constructor() : base() {}
+  
+  constructor(result : SweepResult) : base()
+  {
+    this.Result = result;
+  }
+}
+

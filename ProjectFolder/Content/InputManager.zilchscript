@@ -31,6 +31,18 @@ class IM : ZilchComponent
   
   function OnIMUpdate(event : UpdateEvent)
   {
+    // TODO:
+    // 
+    // if the IM is updated by a space, then if that space is paused, the IM will
+    // also be paused. this is bad because any other space that wants to get input,
+    // like, say, a menu, is outta luck.
+    // 
+    // however, if i want to, say,  pause the game and step a frame at a time while
+    // providing input, it's very difficult to carefully get my input to happen
+    // exactly the way i want it just right while i'm frame-stepping. i need to
+    // come up with a good way to be able to provide proper input while i'm frame
+    // stepping and yet still have the input manager be unpaused for other spaces
+    
     if (this.Mode == InputMode.Replay)
     {
       this.Current = this.GetReplayCurrent();

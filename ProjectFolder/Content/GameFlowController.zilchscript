@@ -1,15 +1,33 @@
 class GameFlowController : ZilchComponent
 {
+  [Dependency]
+  var CustomGameSetup : CustomGameSetup;
+  
+  
   [Static]
   var Instance : GameFlowController;  // just so that static Print has a static Main it can access
   [Static]
-  var Frame = 0;                      // static Print accesses this
+  var AbsoluteFrame = 0;
+  [Static]
+  var Frame : Integer                 // static Print accesses this
+  {
+    get
+    {
+      return GameFlowController.Instance.MainSpace.TimeSpace.Frame;
+    }
+  }
+  
+  var DataSpace     : Space { get { return this.CustomGameSetup.DataSpace; }}
+  var MenuSpace     : Space { get { return this.CustomGameSetup.MenuSpace; }}
+  var DialogueSpace : Space { get { return this.CustomGameSetup.DialogueSpace; }}
+  var MainSpace     : Space { get { return this.CustomGameSetup.MainSpace; }}
+  var HudSpace      : Space { get { return this.CustomGameSetup.HudSpace; }}
   
   
   //****************************************************************************
   function Initialize(init : CogInitializer)
   {
-    GameFlowController.Frame = 0;
+    GameFlowController.AbsoluteFrame = 0;
     
     if (GameFlowController.Instance == null)
       GameFlowController.Instance = this;
@@ -21,8 +39,6 @@ class GameFlowController : ZilchComponent
   //****************************************************************************
   function OnEngineUpdate(event : UpdateEvent)
   {
-    Console.WriteLine(GameFlowController.Frame);
-    
-    ++GameFlowController.Frame;
+    ++GameFlowController.AbsoluteFrame;
   }
 }
