@@ -3,8 +3,8 @@ DataContent
 {
 	DataBuilder 
 	{
-		var Name = "ItemCard"
-		var ResourceId = 0x5a68b0e01f5f0e24
+		var Name = "UiShadowedText"
+		var ResourceId = 0x5a7354897853d51a
 		var LoaderType = "Cog"
 		var Version = 0
 		var ShowInEditor = true
@@ -13,9 +13,7 @@ DataContent
 	{
 		var Tags = Array
 		{
-			"Archetype"
 			"Ui"
-			"Cog"
 		}
 	}
 }

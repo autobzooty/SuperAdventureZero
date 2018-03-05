@@ -1,0 +1,183 @@
+[RunInEditor]
+class UiTextShadow : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  [Dependency]
+  var Ui : UiWidget;
+  [Dependency]
+  var ST : SpriteText;
+  
+  
+  [Display]
+  var Text : String
+  {
+    get
+    {
+      if (this.ST == null) return null;
+      return this.ST.Text;
+    }
+    
+    set
+    {
+      if (this.ST == null) return;
+      this.ST.Text = value;
+      this.CoverST.Text = value;
+      this.ShadowST.Text = value;
+    }
+  }
+  [Display]
+  var TextColor : Real4
+  {
+    get
+    {
+      if (this.Ui == null) return Real4();
+      return this.Ui.LocalColor;
+    }
+    
+    set
+    {
+      if (this.Ui == null) return;
+      this.Ui.LocalColor = value;
+      this.CoverUi.LocalColor = value;
+    }
+  }
+  
+  [Property]
+  var ShadowColor : Real4
+  {
+    get { return this.ShadowColor_; }
+    
+    set
+    {
+      this.ShadowColor_ = value;
+      
+      if (this.Shadow != null)
+        this.ShadowUi.LocalColor = value;
+    }
+  }
+  [Property]
+  var Offset : Real2
+  {
+    get { return this.Offset_; }
+    
+    set
+    {
+      this.Offset_ = value;
+      
+      if (this.Shadow != null)
+        this.ShadowUi.LocalTranslation = value;
+    }
+  }
+  [Property]
+  var CoverArchetype : Archetype = Archetype.UiSpriteText;
+  [Property]
+  var ShadowArchetype : Archetype = Archetype.UiSpriteText;
+  
+  var ShadowColor_ = Real4(0, 0, 0, 0.75);
+  var Offset_ = Real2(1, -1);
+  
+  var Shadow : Cog;
+  var Cover : Cog;
+  var ShadowT : Transform { get { return this.Shadow.Transform; }}
+  var CoverT : Transform { get { return this.Cover.Transform; }}
+  var ShadowST : SpriteText { get { return this.Shadow.SpriteText; }}
+  var CoverST : SpriteText { get { return this.Cover.SpriteText; }}
+  var ShadowUi : UiWidget { get { return this.Shadow.UiWidget; }}
+  var CoverUi : UiWidget { get { return this.Cover.UiWidget; }}
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.CreateShadow();
+    this.CreateCover();
+    this.CopyAllProperties();
+    this.ST.Visible = false;
+    
+    Zero.Connect(this.Owner, "PropertyModified", this.OnPropertyModified);
+  }
+  
+  
+  function OnPropertyModified(event : Event)
+  {
+    this.CopyAllProperties();
+    this.ShadowUi.LocalTranslation = this.Offset;
+  }
+  
+  
+  function CreateShadow()
+  {
+    this.Shadow = this.Space.Create(this.ShadowArchetype);
+    this.Shadow.ClearArchetype();
+    this.Shadow.Name = "Shadow";
+    this.Shadow.Transient = true;
+    this.Shadow.AttachTo(this.Owner);
+    this.ShadowUi.InLayout = false;
+    this.ShadowUi.LocalTranslation = this.Offset;
+  }
+  
+  
+  function CreateCover()
+  {
+    this.Cover = this.Space.Create(this.CoverArchetype);
+    this.Cover.ClearArchetype();
+    this.Cover.Name = "Cover";
+    this.Cover.Transient = true;
+    this.Cover.AttachTo(this.Owner);
+    this.CoverUi.InLayout = false;
+    this.CoverUi.LocalTranslation = Real2.Zero;
+  }
+  
+  
+  function CopyAllProperties()
+  {
+    this.ShadowST.Font = this.ST.Font;
+    this.ShadowST.FontSize = this.ST.FontSize;
+    this.ShadowST.PixelsPerUnit = this.ST.PixelsPerUnit;
+    this.ShadowST.Text = this.ST.Text;
+    this.ShadowST.TextAlign = this.ST.TextAlign;
+    this.ShadowST.ViewCulling = this.ST.ViewCulling;
+    this.ShadowST.VisibilityEvents = this.ST.VisibilityEvents;
+    
+    this.ShadowUi.LocalColor = this.ShadowColor;
+    this.ShadowUi.Size = this.Ui.Size;
+    this.ShadowUi.AbsoluteMinSize = this.Ui.AbsoluteMinSize;
+    this.ShadowUi.HorizontalAlignment = this.Ui.HorizontalAlignment;
+    this.ShadowUi.VerticalAlignment = this.Ui.VerticalAlignment;
+    
+    this.ShadowT.LocalRotation = this.Transform.LocalRotation;
+    this.ShadowT.LocalScale = this.Transform.LocalScale;
+    
+    this.CoverST.Font = this.ST.Font;
+    this.CoverST.FontSize = this.ST.FontSize;
+    this.CoverST.PixelsPerUnit = this.ST.PixelsPerUnit;
+    this.CoverST.Text = this.ST.Text;
+    this.CoverST.TextAlign = this.ST.TextAlign;
+    this.CoverST.ViewCulling = this.ST.ViewCulling;
+    this.CoverST.VisibilityEvents = this.ST.VisibilityEvents;
+    
+    this.CoverUi.LocalColor = this.ST.VertexColor;
+    this.CoverUi.Size = this.Ui.Size;
+    this.CoverUi.AbsoluteMinSize = this.Ui.AbsoluteMinSize;
+    this.CoverUi.HorizontalAlignment = this.Ui.HorizontalAlignment;
+    this.CoverUi.VerticalAlignment = this.Ui.VerticalAlignment;
+    
+    this.CoverT.LocalRotation = this.Transform.LocalRotation;
+    this.CoverT.LocalScale = this.Transform.LocalScale;
+  }
+  
+  
+  function CopyText()
+  {
+    this.ShadowST.Text = this.ST.Text;
+    this.CoverST.Text = this.ST.Text;
+  }
+  
+  
+  destructor()
+  {
+    if (this.ST != null)       this.ST.Visible = true;
+    if (this.Shadow != null)   this.Shadow.Destroy();
+    if (this.Cover != null)    this.Cover.Destroy();
+  }
+}
