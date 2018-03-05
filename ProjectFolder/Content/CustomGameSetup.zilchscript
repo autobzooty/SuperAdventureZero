@@ -1,31 +1,36 @@
 class CustomGameSetup : ZilchComponent
 {
-  [Property]
+  [Property][Group("Archetypes")]
+  var ConsoleSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
   // This space exists to be initialized and then destroyed immediately. It's useful
   // for setting things up, like the input manager, for instance
   var SetupSpaceArchetype : Archetype = Archetype.DefaultSpace;
-  [Property]
+  [Property][Group("Archetypes")]
   var DataSpaceArchetype : Archetype = Archetype.DefaultSpace;
-  [Property]
+  [Property][Group("Archetypes")]
   var MenuSpaceArchetype : Archetype = Archetype.DefaultSpace;
-  [Property]
+  [Property][Group("Archetypes")]
   var DialogueSpaceArchetype : Archetype = Archetype.DefaultSpace;
-  [Property]
+  [Property][Group("Archetypes")]
   // The MainSpace is where the game takes place
   var MainSpaceArchetype : Archetype = Archetype.Space;
-  [Property]
+  [Property][Group("Levels")]
   var StartingLevel : Level = Level.Level;
-  [Property]
+  [Property][Group("Levels")]
   var ChosenLevel : Level = Level.Level;
-  [Property]
+  [Property][Group("Levels")]
+  var ConsoleLevel : Level;
+  [Property][Group("Levels")]
   // This level will only be loaded once into the SetupSpace at the very beginning
   // of the game, and then that space will be destroyed
   var SetupLevel : Level = Level.SetupLevel;
-  [Property]
+  [Property][Group("Levels")]
   var DialogueLevel : Level;
   [Property]
   var LevelChoice : EditorStartingLevelChoice = EditorStartingLevelChoice.EditorLevel;
   
+  var ConsoleSpace : Space;       // the cool custom console goes here!
   var DataSpace : Space;          // persistent data goes here. no level needed, just make the objects
   var MenuSpace : Space;          // menus go here
   var DialogueSpace : Space;      // all dialogue boxes go here
@@ -54,6 +59,9 @@ class CustomGameSetup : ZilchComponent
   
   function OnGameSetup(event : GameEvent)
   {
+    this.ConsoleSpace = this.GameSession.CreateNamedSpace("ConsoleSpace", this.ConsoleSpaceArchetype);
+    this.ConsoleSpace.LoadLevel(this.ConsoleLevel);
+    
     var setupSpace = this.GameSession.CreateNamedSpace("SetupSpace", this.SetupSpaceArchetype);
     setupSpace.LoadLevel(this.SetupLevel);
     

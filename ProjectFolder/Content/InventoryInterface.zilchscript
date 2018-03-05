@@ -75,7 +75,7 @@ class InventoryInterface : ZilchComponent
     ime.InventoryRoot = this.InventoryRoot.Cog;
     this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuOpenRequest, ime);
     
-    //this.Space.TimeSpace.Paused = true;
+    this.Space.TimeSpace.Paused = true;
   }
   
   
