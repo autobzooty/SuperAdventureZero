@@ -6,8 +6,29 @@ class InventoryInterface : ZilchComponent
   var InventoryMenuLevel : Level;
   
   var IM : IM;
-  var InventoryMenuSpace : Space;
-  //var MenuOpen : Boolean = false;
+  var InventoryMenuSpace : Space
+  {
+    get { return this.GameSession.CustomGameSetup.InventoryMenuSpace; }
+    set { this.GameSession.CustomGameSetup.InventoryMenuSpace = value; }
+  }
+  
+  var ItemList : Array[ItemBase]
+  {
+    get
+    {
+      var list = Array[ItemBase]();
+      
+      foreach (var child in this.InventoryRoot.Cog.Children)
+      {
+        var itemBase = child.ItemBase;
+        
+        if (itemBase != null)
+          list.Add(itemBase);
+      }
+      
+      return list;
+    }
+  }
   
   
   function Initialize(init : CogInitializer)
@@ -16,12 +37,10 @@ class InventoryInterface : ZilchComponent
     
     this.InventoryMenuSpace = this.GameSession.CreateNamedSpace("InventoryMenu", Archetype.DefaultSpace);
     this.InventoryMenuSpace.LoadLevel(this.InventoryMenuLevel);
-    var ime = InventoryMenuEvent();
-    ime.GameSpace = this.Space;
-    this.InventoryMenuSpace.DispatchEvent(Events.InventorySpaceSetup, ime);
     
-    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
-    Zero.Connect(this.Space, Events.InventoryMenuClosed, this.OnInventoryMenuClosed);
+    Zero.Connect(this.GameSession, Events.InventoryMenuStartedOpening, this.OnInventoryMenuStartedOpening);
+    Zero.Connect(this.GameSession, Events.InventoryMenuFinishedClosing, this.OnInventoryMenuFinishedClosing);
+    
     Zero.Connect(this.Owner, Events.DidEquip, this.OnDidEquip);
     Zero.Connect(this.Owner, Events.DidUnequip, this.OnDidUnequip);
     Zero.Connect(this.Owner, Events.DidCollect, this.OnDidCollect);
@@ -29,62 +48,41 @@ class InventoryInterface : ZilchComponent
   }
   
   
-  function OnPlayerUpdate(event : UpdateEvent)
+  function OnInventoryMenuStartedOpening(event : InventoryMenuEvent)
   {
-    if (this.IM.Triggered(GameAction.Menu))
-    {
-      //if (this.MenuOpen)
-      //  this.CloseMenu();
-      //else
-        this.OpenMenu();
-    }
+    // TODO:
+    // 
+    // perhaps eventually i should make some kind of PauseMaster that receives pause requests
+    // from any of various sources and can only unpause when no more sources need the space
+    // to be paused
+    
+    this.Space.TimeSpace.Paused = true;
+    this.UpdateList();
   }
   
   
-  function OnInventoryMenuClosed(event : InventoryMenuEvent)
+  function OnInventoryMenuFinishedClosing(event : InventoryMenuEvent)
   {
-    //this.Space.TimeSpace.Paused = false;
+    this.Space.TimeSpace.Paused = false;
   }
   
   
   function OnDidEquip(event : EquipmentEvent)
   {
     this.RemoveFromInventory(event.Equipment.IB);
-    this.UpdateList();
   }
   
   
   function OnDidUnequip(event : EquipmentEvent)
   {
     this.AddToInventory(event.Equipment.IB);
-    this.UpdateList();
   }
   
   
   function OnDidCollect(event : CollectionEvent)
   {
     this.AddToInventory(event.Collectee.IB);
-    this.UpdateList();
   }
-  
-  
-  function OpenMenu()
-  {
-    //this.MenuOpen = true;
-    var ime = InventoryMenuEvent();
-    ime.InventoryRoot = this.InventoryRoot.Cog;
-    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuOpenRequest, ime);
-    
-    this.Space.TimeSpace.Paused = true;
-  }
-  
-  
-  //function CloseMenu()
-  //{
-  //  this.MenuOpen = false;
-  //  var ime = InventoryMenuEvent();
-  //  this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuCloseRequest, ime);
-  //}
   
   
   function AddToInventory(item : ItemBase)
@@ -107,7 +105,7 @@ class InventoryInterface : ZilchComponent
   function UpdateList()
   {
     var ime = InventoryMenuEvent();
-    ime.InventoryRoot = this.InventoryRoot.Cog;
+    ime.ItemList = this.ItemList;
     this.InventoryMenuSpace.DispatchEvent(Events.InventoryUpdated, ime);
   }
   

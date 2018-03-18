@@ -8,6 +8,8 @@ class InventoryMenuWindowController : ZilchComponent
   var ListRoot : CogPath = CogPath(".");
   [Property]
   var ItemCardArchetype : Archetype = Archetype.ItemCard;
+  [Property]
+  var CursorPath : CogPath = CogPath("../Cursor");
   
   var WindowHiddenFlexSizeX : Real = 0;
   var WindowShownFlexSizeX : Real = 1;
@@ -15,10 +17,14 @@ class InventoryMenuWindowController : ZilchComponent
   var SpacerShownFlexSizeX : Real = 1;
   var Duration : Real = 10 / 60.0;
   var Shown : Boolean = false;
+  var Transitioning : Boolean = false;
   var Sequence : ActionSet;
   
   var IM : IM;
-  var GameSpace : Space;
+  
+  var CanShow : Boolean { get { return !this.Transitioning; }}
+  var CanHide : Boolean { get { return !this.Transitioning; }}
+  var ZerothCard : UiWidget { get { return this.ListRoot.Cog.Children.Current.UiWidget; }}
   
   
   function Initialize(init : CogInitializer)
@@ -29,48 +35,23 @@ class InventoryMenuWindowController : ZilchComponent
     
     this.UiWidget.FlexSize = Real2(this.WindowHiddenFlexSizeX, 1);
     this.UiWidget.Visible = false;
+    this.SnapHideCursor();
     
-    Zero.Connect(this.Space, Events.InventorySpaceSetup, this.OnInventorySpaceSetup);
-    Zero.Connect(this.Space, Events.InventoryMenuOpenRequest, this.OnInventoryMenuOpenRequest);
-    //Zero.Connect(this.Space, Events.InventoryMenuCloseRequest, this.OnInventoryMenuCloseRequest);
+    Zero.Connect(this.GameSession, Events.GUIUpdate, this.OnGUIUpdate);
     Zero.Connect(this.Space, Events.InventoryUpdated, this.OnInventoryUpdated);
   }
   
   
-  function OnInventorySpaceSetup(event : InventoryMenuEvent)
+  function OnGUIUpdate(event : UpdateEvent)
   {
-    this.GameSpace = event.GameSpace;
-  }
-  
-  
-  function OnLogicUpdate(event : UpdateEvent)
-  {
-    // TODO:
-    // 
-    // this all seems a little wonky
-    // 
-    // almost nothing in this game is using the LogicUpdate event, because
-    // we have our own update events instead. this controller works in a
-    // separate menu space, which doesn't have a Main, so it won't have
-    // access to custom update events. so i basically just don't know for
-    // sure whether it's a good idea to use LogicUpdate here when it will
-    // end up being one of the few things that do use it
-    
     if (this.IM.Triggered(GameAction.Menu))
-      this.Hide();
+    {
+      if (this.Shown)
+        this.AttemptHide();
+      else
+        this.AttemptShow();
+    }
   }
-  
-  
-  function OnInventoryMenuOpenRequest(event : InventoryMenuEvent)
-  {
-    this.Show();
-  }
-  
-  
-  //function OnInventoryMenuCloseRequest(event : InventoryMenuEvent)
-  //{
-  //  this.Hide();
-  //}
   
   
   function OnInventoryUpdated(event : InventoryMenuEvent)
@@ -80,52 +61,90 @@ class InventoryMenuWindowController : ZilchComponent
       child.Destroy();
     }
     
-    var root = event.InventoryRoot;
+    var list = event.ItemList;
     
-    foreach (var child in root.Children)
+    foreach (var itemBase in list)
     {
       var card = this.Space.Create(this.ItemCardArchetype);
       card.AttachToPreserveLocal(this.ListRoot.Cog);
-      event.ItemBase = child.ItemBase;
+      event.ItemBase = itemBase;
       card.DispatchEvent(Events.InventoryListItemSetup, event);
     }
   }
   
   
+  function AttemptShow()
+  {
+    if (this.CanShow) this.Show();
+  }
+  
+  
+  function AttemptHide()
+  {
+    if (this.CanHide) this.Hide();
+  }
+  
+  
   function Show()
   {
+    this.Transitioning = true;
+    
+    this.GameSession.DispatchEvent(Events.InventoryMenuStartedOpening, InventoryMenuEvent());
+    
+    this.ShowCursor();
+    
     this.Sequence.Cancel();
     this.Sequence = Action.Sequence(this.Owner.Actions);
       
-      Action.Call(this.Sequence, this.BeginShowing);
       Action.Property(this.Sequence, @this.UiWidget.Visible, true, 0, Ease.Linear);
       Action.Property(this.Sequence, @this.UiWidget.FlexSize,
         Real2(this.WindowShownFlexSizeX, 1), this.Duration, Ease.QuadInOut);
+      Action.Event(this.Sequence, this.GameSession, Events.InventoryMenuFinishedOpening, InventoryMenuEvent());
+      Action.Property(this.Sequence, @this.Transitioning, false, 0, Ease.Linear);
+      Action.Property(this.Sequence, @this.Shown, true, 0, Ease.Linear);
   }
   
   
   function Hide()
   {
+    this.Transitioning = true;
+    
+    this.GameSession.DispatchEvent(Events.InventoryMenuStartedClosing, InventoryMenuEvent());
+    
+    this.HideCursor();
+    
     this.Sequence.Cancel();
     this.Sequence = Action.Sequence(this.Owner.Actions);
       
       Action.Property(this.Sequence, @this.UiWidget.FlexSize,
         Real2(this.WindowHiddenFlexSizeX, 1), this.Duration, Ease.QuadInOut);
       Action.Property(this.Sequence, @this.UiWidget.Visible, false, 0, Ease.Linear);
-      Action.Call(this.Sequence, this.EndHiding);
+      Action.Property(this.Sequence, @this.Transitioning, false, 0, Ease.Linear);
+      Action.Property(this.Sequence, @this.Shown, false, 0, Ease.Linear);
+      Action.Event(this.Sequence, this.GameSession, Events.InventoryMenuFinishedClosing, InventoryMenuEvent());
   }
   
   
-  function BeginShowing()
+  function SnapShowCursor()
   {
-    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    this.CursorPath.Transform.LocalScale = Real3.One;
   }
   
   
-  function EndHiding()
+  function SnapHideCursor()
   {
-    Zero.Disconnect(this.Space, Events.LogicUpdate, this);
-    
-    this.GameSpace.DispatchEvent(Events.InventoryMenuClosed, InventoryMenuEvent());
+    this.CursorPath.Transform.LocalScale = Real3.Zero;
+  }
+  
+  
+  function ShowCursor()
+  {
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.One, 1, Ease.ElasticOut);
+  }
+  
+  
+  function HideCursor()
+  {
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.Zero, 0.25, Ease.BackIn);
   }
 }

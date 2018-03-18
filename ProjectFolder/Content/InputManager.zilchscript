@@ -129,6 +129,12 @@ class IM : ZilchComponent
   }
   
   
+  function GetStickPrev(stick : GameStick) : Real2
+  {
+    return this.Previous.Sticks[stick];
+  }
+  
+  
   function GetReplayCurrent() : InputData
   {
     return this.History[this.HistoryIndex];
@@ -174,6 +180,7 @@ enum GameStick
   Move,
   Camera,
   Zoom,
+  MenuNav,
   
   COUNT_
 }
@@ -186,6 +193,10 @@ enum GameAction
   Attack,
   Interact,
   Menu,
+  NavRight,
+  NavUp,
+  NavLeft,
+  NavDown,
   
   COUNT_
 }

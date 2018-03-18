@@ -1,0 +1,20 @@
+[Version:1]
+ImageContent 
+{
+	SpriteSourceBuilder 
+	{
+		var Name = "CoolCursor"
+		var ResourceId = 0x5a458c5b4a58e9d6
+		var FrameSizeX = 64
+		var FrameSizeY = 64
+		var FrameCount = 1
+		var FrameDelay = 0.0833333358
+		var OriginX = 32
+		var OriginY = 32
+		var PixelsPerUnit = 1
+		var Sampling = SpriteSampling.Linear
+		var Looping = true
+		var Slices = Real4{0, 0, 0, 0}
+		var Fill = SpriteFill.Stretch
+	}
+}

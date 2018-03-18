@@ -11,6 +11,8 @@ class CustomGameSetup : ZilchComponent
   [Property][Group("Archetypes")]
   var MenuSpaceArchetype : Archetype = Archetype.DefaultSpace;
   [Property][Group("Archetypes")]
+  var InventoryMenuSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
   var DialogueSpaceArchetype : Archetype = Archetype.DefaultSpace;
   [Property][Group("Archetypes")]
   // The MainSpace is where the game takes place
@@ -32,7 +34,8 @@ class CustomGameSetup : ZilchComponent
   
   var ConsoleSpace : Space;       // the cool custom console goes here!
   var DataSpace : Space;          // persistent data goes here. no level needed, just make the objects
-  var MenuSpace : Space;          // menus go here
+  var MenuSpace : Space;          // title menus, etc., go here
+  var InventoryMenuSpace : Space; // the inventory menu goes here
   var DialogueSpace : Space;      // all dialogue boxes go here
   var MainSpace : Space;          // the game takes place here
   var HudSpace : Space;           // if the game currently needs a hud, it's loaded here, and null otherwise
@@ -78,6 +81,10 @@ class CustomGameSetup : ZilchComponent
     // should this be created here? or should it be like how i'm doing the hud, created and
     // destroyed dynamically as needed? the world may never know
     this.MenuSpace = this.GameSession.CreateNamedSpace("MenuSpace", this.MenuSpaceArchetype);
+    
+    // the InventoryMenuSpace is explicitly left out of being created here, because it
+    // is managed by the InventoryInterface. it's a member here only so that there's a
+    // globally-accessible reference to it
     
     this.DialogueSpace = this.GameSession.CreateNamedSpace("DialogueSpace", this.DialogueSpaceArchetype);
     this.DialogueSpace.LoadLevel(this.DialogueLevel);

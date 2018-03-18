@@ -252,14 +252,18 @@ class CollectionEvent : ZilchEvent
 
 class InventoryMenuEvent : ZilchEvent
 {
-  sends InventorySpaceSetup : InventoryMenuEvent;
-  sends InventoryMenuOpenRequest : InventoryMenuEvent;
-  sends InventoryMenuCloseRequest : InventoryMenuEvent;
-  sends InventoryMenuClosed : InventoryMenuEvent;
+  sends InventoryMenuStartedOpening : InventoryMenuEvent;
+  sends InventoryMenuFinishedOpening : InventoryMenuEvent;
+  sends InventoryMenuStartedClosing : InventoryMenuEvent;
+  sends InventoryMenuFinishedClosing : InventoryMenuEvent;
+  
+  // 
+  // 
+  // dispatched to an item card with the information that
+  // should be displayed on it
   sends InventoryListItemSetup : InventoryMenuEvent;
   sends InventoryUpdated : InventoryMenuEvent;
   
-  var InventoryRoot : Cog;
+  var ItemList : Array[ItemBase];
   var ItemBase : ItemBase;
-  var GameSpace : Space;
 }
