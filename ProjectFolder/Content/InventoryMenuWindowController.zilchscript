@@ -18,7 +18,7 @@ class InventoryMenuWindowController : ZilchComponent
   var Duration : Real = 10 / 60.0;
   var Shown : Boolean = false;
   var Transitioning : Boolean = false;
-  var Sequence : ActionSet;
+  var WindowSequence : ActionSet;
   
   var IM : IM;
   
@@ -31,7 +31,7 @@ class InventoryMenuWindowController : ZilchComponent
   {
     this.IM = this.GameSession.IM;
     
-    this.Sequence = Action.Sequence(this.Owner.Actions);
+    this.WindowSequence = Action.Sequence(this.Owner.Actions);
     
     this.UiWidget.FlexSize = Real2(this.WindowHiddenFlexSizeX, 1);
     this.UiWidget.Visible = false;
@@ -93,15 +93,15 @@ class InventoryMenuWindowController : ZilchComponent
     
     this.ShowCursor();
     
-    this.Sequence.Cancel();
-    this.Sequence = Action.Sequence(this.Owner.Actions);
+    this.WindowSequence.Cancel();
+    this.WindowSequence = Action.Sequence(this.Owner.Actions);
       
-      Action.Property(this.Sequence, @this.UiWidget.Visible, true, 0, Ease.Linear);
-      Action.Property(this.Sequence, @this.UiWidget.FlexSize,
+      Action.Property(this.WindowSequence, @this.UiWidget.Visible, true, 0, Ease.Linear);
+      Action.Property(this.WindowSequence, @this.UiWidget.FlexSize,
         Real2(this.WindowShownFlexSizeX, 1), this.Duration, Ease.QuadInOut);
-      Action.Event(this.Sequence, this.GameSession, Events.InventoryMenuFinishedOpening, InventoryMenuEvent());
-      Action.Property(this.Sequence, @this.Transitioning, false, 0, Ease.Linear);
-      Action.Property(this.Sequence, @this.Shown, true, 0, Ease.Linear);
+      Action.Event(this.WindowSequence, this.GameSession, Events.InventoryMenuFinishedOpening, InventoryMenuEvent());
+      Action.Property(this.WindowSequence, @this.Transitioning, false, 0, Ease.Linear);
+      Action.Property(this.WindowSequence, @this.Shown, true, 0, Ease.Linear);
   }
   
   
@@ -113,15 +113,15 @@ class InventoryMenuWindowController : ZilchComponent
     
     this.HideCursor();
     
-    this.Sequence.Cancel();
-    this.Sequence = Action.Sequence(this.Owner.Actions);
+    this.WindowSequence.Cancel();
+    this.WindowSequence = Action.Sequence(this.Owner.Actions);
       
-      Action.Property(this.Sequence, @this.UiWidget.FlexSize,
+      Action.Property(this.WindowSequence, @this.UiWidget.FlexSize,
         Real2(this.WindowHiddenFlexSizeX, 1), this.Duration, Ease.QuadInOut);
-      Action.Property(this.Sequence, @this.UiWidget.Visible, false, 0, Ease.Linear);
-      Action.Property(this.Sequence, @this.Transitioning, false, 0, Ease.Linear);
-      Action.Property(this.Sequence, @this.Shown, false, 0, Ease.Linear);
-      Action.Event(this.Sequence, this.GameSession, Events.InventoryMenuFinishedClosing, InventoryMenuEvent());
+      Action.Property(this.WindowSequence, @this.UiWidget.Visible, false, 0, Ease.Linear);
+      Action.Property(this.WindowSequence, @this.Transitioning, false, 0, Ease.Linear);
+      Action.Property(this.WindowSequence, @this.Shown, false, 0, Ease.Linear);
+      Action.Event(this.WindowSequence, this.GameSession, Events.InventoryMenuFinishedClosing, InventoryMenuEvent());
   }
   
   
@@ -139,12 +139,14 @@ class InventoryMenuWindowController : ZilchComponent
   
   function ShowCursor()
   {
+    this.CursorPath.Cog.Actions.Cancel();
     Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.One, 1, Ease.ElasticOut);
   }
   
   
   function HideCursor()
   {
+    this.CursorPath.Cog.Actions.Cancel();
     Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.Zero, 0.25, Ease.BackIn);
   }
 }

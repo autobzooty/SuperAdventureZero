@@ -1165,11 +1165,32 @@ Level
 					var MarginBottom = 0
 					var DockMode = UiDockMode.Left
 				}
+				LissajousMovement 
+				{
+					var WandererPath = CogPath
+					{
+						var Path = "LissajousNode"
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 18
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var Period = Real2{1.57079637, 1.71828187}
+					var Min = Real2{-8, -2}
+					var Max = Real2{8, 2}
+				}
 				Hierarchy 
 				{
 					Cog [Id:0x5a458d706079d78e][ContextId:18]
 					{
-						var Name = "WanderNode"
+						var Name = "LissajousNode"
 						Transform 
 						{
 							var Translation = Real3{0, 0, 0}

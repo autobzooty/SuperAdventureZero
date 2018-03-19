@@ -1,0 +1,44 @@
+class LissajousMovement : ZilchComponent
+{
+  [Property]
+  var WandererPath : CogPath = CogPath();
+  [Property]
+  var Period : Real2 = Real2(2.3, 4.7);
+  [Property]
+  var Min : Real2 = Real2(-8, -8);
+  [Property]
+  var Max : Real2 = Real2(8, 8);
+  
+  var T : Real2 = Real2.Zero;
+  var Wanderer : UiWidget;
+  
+  var X : Real
+  {
+    get
+    {
+      return (this.Max.X - this.Min.X) * (1 - Math.Cos(HM[Real].Tau * this.T.X / this.Period.X)) / 2 + this.Min.X;
+    }
+  }
+  
+  var Y : Real
+  {
+    get
+    {
+      return (this.Max.Y - this.Min.Y) * (1 - Math.Sin(HM[Real].Tau * this.T.Y / this.Period.Y)) / 2 + this.Min.Y;
+    }
+  }
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.Wanderer = this.WandererPath.UiWidget;
+    Zero.Connect(this.GameSession, Events.GUIUpdate, this.OnGUIUpdate);
+  }
+  
+  
+  function OnGUIUpdate(event : UpdateEvent)
+  {
+    this.T = Math.FMod(this.T + event.Dt.XX, this.Period);
+    this.Wanderer.LocalTranslation = Real2(this.X, this.Y);
+  }
+}
