@@ -9,8 +9,13 @@ class BasicSpringArm : ZilchComponent
   [Property]
   var ZoomSpeed : Real = 20;
   
+  var InitialZoom : Real;
   var MinZoom : Real = 1;
   var MaxZoom : Real = 100;
+  var ZoomBase : Real = 60;
+  var ZoomPower : Real = 0;
+  var MinZoomPower : Real;
+  var MaxZoomPower : Real;
   
   var SegmentLength : Real;
   var CastFilter : CastFilter;
@@ -23,6 +28,7 @@ class BasicSpringArm : ZilchComponent
     var difference = moverPosition - pivotPosition;
     var distance = Math.Length(difference);
     this.SegmentLength = distance;
+    this.InitialZoom = distance;
     
     this.CastFilter = CastFilter();
     this.CastFilter.IgnoreCog = this.MoverPath.Cog;
@@ -30,17 +36,25 @@ class BasicSpringArm : ZilchComponent
     this.CastFilter.IgnoreKinematic = true;
     this.CastFilter.IgnoreStatic = false;
     
+    var logBaseConversion = 1 / Math.Log(this.ZoomBase);
+    this.MinZoomPower = Math.Floor(this.ZoomBase * Math.Log(this.MinZoom / distance) * logBaseConversion) / this.ZoomBase;
+    this.MaxZoomPower = Math.Ceil(this.ZoomBase * Math.Log(this.MaxZoom / distance) * logBaseConversion) / this.ZoomBase;
+    
     Zero.Connect(this.Space, Events.CameraUpdate, this.OnCameraUpdate);
     // TODO:
     // 
     // use the IM for zooming
+    //Zero.Connect(this.Space, Events.MouseScroll, this.OnMouseScroll);
     Zero.Connect(this.Space, Events.MouseScroll, this.OnMouseScroll);
   }
   
   
   function OnMouseScroll(event : ViewportMouseEvent)
   {
-    this.SegmentLength -= event.Scroll.Y * this.ZoomSpeed * this.Space.TimeSpace.Dt;
+    this.ZoomPower -= event.Scroll.Y * this.Space.TimeSpace.DtOrZero;
+    this.ZoomPower = Math.Clamp(this.ZoomPower, this.MinZoomPower, this.MaxZoomPower);
+    this.SegmentLength = this.InitialZoom * (this.ZoomBase ^ this.ZoomPower);
+    //this.SegmentLength -= event.Scroll.Y * this.ZoomSpeed * this.Space.TimeSpace.Dt;
     this.SegmentLength = Math.Clamp(this.SegmentLength, this.MinZoom, this.MaxZoom);
   }
   

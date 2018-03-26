@@ -44,9 +44,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{124.711342, 126.135025, 20.0000057}
+			var Translation = Real3{0, 0.5, 10}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -106,7 +106,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{124.711342, 126.135025, 5.45128978e-06}
+			var LookTarget = Real3{0, 0, 10}
 			var MoveSensitivity = 1
 		}
 	}
@@ -165,7 +165,7 @@ Level
 			}
 			var ResolutionOrAspect = Integer2{1280, 720}
 			var RenderToViewport = true
-			var ForwardViewportEvents = false
+			var ForwardViewportEvents = true
 			var ViewportScaling = ViewportScaling.Letterbox
 			var MarginColor = Real4{0, 0, 0, 1}
 			var NormalizedSize = Real2{1, 1}
@@ -1165,9 +1165,9 @@ Level
 					var MarginBottom = 0
 					var DockMode = UiDockMode.Left
 				}
-				LissajousMovement 
+				UiLissajousMovement 
 				{
-					var WandererPath = CogPath
+					var MoverPath = CogPath
 					{
 						var Path = "LissajousNode"
 						var ErrorOnResolveToNull = false
@@ -1182,9 +1182,10 @@ Level
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
 					}
-					var Period = Real2{1.57079637, 1.71828187}
+					var Period = Real2{1.70000005, 1.70000005}
 					var Min = Real2{-8, -2}
 					var Max = Real2{8, 2}
+					var InitialT = Real2{0, 0}
 				}
 				Hierarchy 
 				{

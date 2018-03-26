@@ -1,16 +1,76 @@
 class LissajousMovement : ZilchComponent
 {
   [Property]
-  var WandererPath : CogPath = CogPath();
+  var MoverPath : CogPath = CogPath();
   [Property]
-  var Period : Real2 = Real2(2.3, 4.7);
+  var Period : Real3 = Real3(1.618034, 2.718282, 3.141593);
+  [Property]
+  var Min : Real3 = Real3(-1, -1, -1);
+  [Property]
+  var Max : Real3 = Real3(1, 1, 1);
+  [Property]
+  var InitialT : Real3 = Real3.Zero;
+  
+  var T : Real3;
+  var Mover : Transform;
+  
+  var X : Real
+  {
+    get
+    {
+      return (this.Max.X - this.Min.X) * (1 - Math.Cos(HM[Real].Tau * this.T.X / this.Period.X)) / 2 + this.Min.X;
+    }
+  }
+  
+  var Y : Real
+  {
+    get
+    {
+      return (this.Max.Y - this.Min.Y) * (1 - Math.Sin(HM[Real].Tau * this.T.Y / this.Period.Y)) / 2 + this.Min.Y;
+    }
+  }
+  
+  var Z : Real
+  {
+    get
+    {
+      return (this.Max.Z - this.Min.Z) * (1 - Math.Cos(HM[Real].Tau * this.T.Z / this.Period.Z)) / 2 + this.Min.Z;
+    }
+  }
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.T = this.InitialT;
+    
+    this.Mover = this.MoverPath.Transform;
+    Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
+  }
+  
+  
+  function OnStandardUpdate(event : UpdateEvent)
+  {
+    this.T = Math.FMod(this.T + event.Dt.XXX, this.Period);
+    this.Mover.LocalTranslation = Real3(this.X, this.Y, this.Z);
+  }
+}
+
+
+class UiLissajousMovement : ZilchComponent
+{
+  [Property]
+  var MoverPath : CogPath = CogPath();
+  [Property]
+  var Period : Real2 = Real2(1.618034, 2.718282);
   [Property]
   var Min : Real2 = Real2(-8, -8);
   [Property]
   var Max : Real2 = Real2(8, 8);
+  [Property]
+  var InitialT : Real2 = Real2.Zero;
   
   var T : Real2 = Real2.Zero;
-  var Wanderer : UiWidget;
+  var Mover : UiWidget;
   
   var X : Real
   {
@@ -31,7 +91,9 @@ class LissajousMovement : ZilchComponent
   
   function Initialize(init : CogInitializer)
   {
-    this.Wanderer = this.WandererPath.UiWidget;
+    this.T = this.InitialT;
+    
+    this.Mover = this.MoverPath.UiWidget;
     Zero.Connect(this.GameSession, Events.GUIUpdate, this.OnGUIUpdate);
   }
   
@@ -39,6 +101,6 @@ class LissajousMovement : ZilchComponent
   function OnGUIUpdate(event : UpdateEvent)
   {
     this.T = Math.FMod(this.T + event.Dt.XX, this.Period);
-    this.Wanderer.LocalTranslation = Real2(this.X, this.Y);
+    this.Mover.LocalTranslation = Real2(this.X, this.Y);
   }
 }

@@ -98,7 +98,12 @@ class InventoryInterface : ZilchComponent
   
   function RemoveFromInventory(item : ItemBase)
   {
+    // TODO:
+    // 
+    // write this
     
+    item.Owner.DetachPreserveLocal();
+    //item.Owner.Transform.WorldTranslation = 
   }
   
   

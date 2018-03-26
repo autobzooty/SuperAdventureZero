@@ -27,9 +27,9 @@ Cog
 		var Tags = ""
 		var ExperimentalBranchName = ""
 		var MajorVersion = 1
-		var MinorVersion = 3
+		var MinorVersion = 4
 		var PatchVersion = 0
-		var RevisionId = 852
-		var ShortChangeSet = "9dd22804d964"
+		var RevisionId = 863
+		var ShortChangeSet = "4fd31ae824b2"
 	}
 }

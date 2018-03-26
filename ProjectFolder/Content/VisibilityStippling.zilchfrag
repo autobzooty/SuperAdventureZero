@@ -5,6 +5,8 @@ struct VisibilityStippling
   [BuiltInInput] var ViewToPerspective : Real4x4;
   
   [PropertyInput][Slider(0, 1, 0.015625)] var StippleDensity : Real = 0.5;
+  //[PropertyInput][Slider(0, 1, 0.04347826086956521739130434782609)] var StippleDensity : Real = 0.47826086956521739130434782608696;
+  //[PropertyInput][Slider(0, 1, 0.00390625)] var StippleDensity : Real = 0.5;
   [PropertyInput][Slider(1, 16, 1)] var StippleScale : Real = 1;
   
   [FragmentInput][StageInput] var ViewPosition : Real3;
@@ -20,6 +22,9 @@ struct VisibilityStippling
     var pixel = pixelPos as Integer2;
     var index = (pixel / this.StippleScale) as Integer2 % 8;
     var matrixValue = StipplingUtilities.IndexMatrix8x8[index.X + index.Y * 8] as Real / 64.0;
+    //var matrixValue = StipplingUtilities.SpiralMatrix8x8[index.X + index.Y * 8] as Real / 64.0;
+    //var matrixValue = StipplingUtilities.CircleMatrix16x16_23[index.X + index.Y * 16] as Real / 23.0;
+    //var matrixValue = StipplingUtilities.RandomMatrix16x16[index.X + index.Y * 16] as Real / 256.0;
     
     if (this.StippleDensity <= matrixValue)
       Shader.Discard();

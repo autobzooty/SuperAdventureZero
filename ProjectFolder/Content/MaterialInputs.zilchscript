@@ -6,6 +6,8 @@ class MaterialInputs : ZilchComponent
   [Property][Slider(0, 1, 0.05)][ShaderInput] var RoughnessValue : Real  = 0.5;
   [Property][Slider(0, 1, 0.05)][ShaderInput] var SpecularValue  : Real  = 0.5;
   [Property][Slider(0, 1, 0.015625)][ShaderInput] var StippleDensity : Real = 0.5;
+  //[Property][Slider(0, 1, 0.04347826086956521739130434782609)][ShaderInput] var StippleDensity : Real = 0.47826086956521739130434782608696;
+  //[Property][Slider(0, 1, 0.00390625)][ShaderInput] var StippleDensity : Real = 0.5;
   [Property][Slider(1, 16, 1)][ShaderInput] var StippleScale : Real = 2;
   [Property][ShaderInput] var NearDistance : Real = 20;
   [Property][ShaderInput] var FarDistance : Real = 30;

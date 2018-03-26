@@ -24,6 +24,9 @@ struct DistanceVisibilityStippling
     var pixel = pixelPos as Integer2;
     var index = (pixel / this.StippleScale) as Integer2 % 8;
     var matrixValue = StipplingUtilities.IndexMatrix8x8[index.X + index.Y * 8] as Real / 64.0;
+    //var matrixValue = StipplingUtilities.SpiralMatrix8x8[index.X + index.Y * 8] as Real / 64.0;
+    //var matrixValue = StipplingUtilities.CircleMatrix16x16_23[index.X + index.Y * 16] as Real / 23.0;
+    //var matrixValue = StipplingUtilities.RandomMatrix16x16[index.X + index.Y * 16] as Real / 256.0;
     var pixelDifferenceFromPlayer = this.ViewPosition - this.PlayerViewPosition;
     var pixelDistanceFromPlayer = Math.Length(pixelDifferenceFromPlayer);
     

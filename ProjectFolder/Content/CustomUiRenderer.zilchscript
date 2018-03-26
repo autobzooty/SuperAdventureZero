@@ -81,7 +81,8 @@ class CustomUiRenderer : ZilchComponent
     else
     {
       var firstRender = (this.PreviousResolutionY == 0);
-      var zoomOneToOneHotkey = Zero.Keyboard.KeyIsDown(Keys.Zero) && Zero.Keyboard.KeyIsDown(Keys.Control);
+      var zoomOneToOneHotkey = (Zero.Keyboard.KeyIsDown(Keys.Zero) || Zero.Keyboard.KeyIsDown(Keys.One)) &&
+        Zero.Keyboard.KeyIsDown(Keys.Control);
       var zoomTwoToOneHotkey = Zero.Keyboard.KeyIsDown(Keys.Two) && Zero.Keyboard.KeyIsDown(Keys.Control);
       var zoomThreeToOneHotkey = Zero.Keyboard.KeyIsDown(Keys.Three) && Zero.Keyboard.KeyIsDown(Keys.Control);
       

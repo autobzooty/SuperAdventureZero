@@ -3,55 +3,55 @@ class EquipmentInterface : ZilchComponent
   [Property]
   var EquipmentRoot = CogPath(".");
   
-  var IM : IM;
+  //var IM : IM;
   
   
   function Initialize(init : CogInitializer)
   {
-    this.IM = this.GameSession.IM;
-    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    //this.IM = this.GameSession.IM;
+    //Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
   }
   
   
-  function OnPlayerUpdate(event : UpdateEvent)
-  {
-    if (this.IM.Triggered(GameAction.Attack))
-    {
-      var head : EquipmentSlot = null;
+  //function OnPlayerUpdate(event : UpdateEvent)
+  //{
+  //  if (this.IM.Triggered(GameAction.Attack))
+  //  {
+  //    var head : EquipmentSlot = null;
       
-      foreach (var child in this.EquipmentRoot.Cog.Children)
-      {
-        var slot = child.EquipmentSlot;
+  //    foreach (var child in this.EquipmentRoot.Cog.Children)
+  //    {
+  //      var slot = child.EquipmentSlot;
         
-        if (slot.SlotType == EquipmentType.Head)
-        {
-          head = slot;
-          break;
-        }
-      }
+  //      if (slot.SlotType == EquipmentType.Head)
+  //      {
+  //        head = slot;
+  //        break;
+  //      }
+  //    }
       
-      if (head.Empty)
-      {
-        var ii = this.Owner.InventoryInterface;
-        var helmet : EquipmentBase = null;
+  //    if (head.Empty)
+  //    {
+  //      var ii = this.Owner.InventoryInterface;
+  //      var helmet : EquipmentBase = null;
         
-        foreach (var item in ii.InventoryRoot.Cog.Children)
-        {
-          var eb = item.EquipmentBase;
+  //      foreach (var item in ii.InventoryRoot.Cog.Children)
+  //      {
+  //        var eb = item.EquipmentBase;
           
-          if (eb.SlotType == EquipmentType.Head)
-            helmet = eb;
-        }
+  //        if (eb.SlotType == EquipmentType.Head)
+  //          helmet = eb;
+  //      }
         
-        if (helmet != null)
-          this.AttemptEquip(helmet);
-      }
-      else
-      {
-        this.AttemptUnequip(head);
-      }
-    }
-  }
+  //      if (helmet != null)
+  //        this.AttemptEquip(helmet);
+  //    }
+  //    else
+  //    {
+  //      this.AttemptUnequip(head);
+  //    }
+  //  }
+  //}
   
   
   function AttemptEquip(equipment : EquipmentBase)
