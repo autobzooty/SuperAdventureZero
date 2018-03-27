@@ -17,8 +17,8 @@ TextContent
 	{
 		var DisplayName = "Component"
 		var Description = "Use this for standard components"
-		var SortWeight = 4294966296
+		var SortWeight = 0
 		var Category = "Super Adventure 3D"
-		var CategorySortWeight = 4294966296
+		var CategorySortWeight = 0
 	}
 }

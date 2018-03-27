@@ -14,7 +14,7 @@ TextContent
 		var Description = "Use this for components of items"
 		var SortWeight = 0
 		var Category = "Super Adventure 3D"
-		var CategorySortWeight = 4294966296
+		var CategorySortWeight = 0
 	}
 	ZilchScriptBuilder 
 	{
