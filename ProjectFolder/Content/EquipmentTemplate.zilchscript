@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | 
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class RESOURCE_NAME_ : ZilchComponent
 {
 	[Dependency]
@@ -6,6 +13,7 @@ class RESOURCE_NAME_ : ZilchComponent
 	var EB : EquipmentBase;
 	
 	
+	//***************************************************************************
 	function Initialize(init : CogInitializer)
 	{
 		

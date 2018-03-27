@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class IM : ZilchComponent
 {
   var Mode : InputMode = InputMode.Default;
@@ -16,6 +23,21 @@ class IM : ZilchComponent
   
   function Initialize(init : CogInitializer)
   {
+    // MAJOR TODO:
+    // 
+    // according to josh claeys, we really don't need to do any polling at all in this
+    // input manager. instead, i could make it so that each input mapping has the code
+    // necessary to check its own action / stick. notably, this would probably be
+    // incompatible with any kind of replay system. this is a perfectly fine sacrifice
+    // to make for the sake of a cleaner and more portable system, in a game like this
+    // one where we're unlikely to get much use out of a replay system in the first
+    // place.
+    // 
+    // HOWEVER, i do think that if i were to move away from polling for everything,
+    // and set up a system where i record input values here in the input manager and
+    // dispatch events for each action, i would need to poll anyway, so that effort
+    // might be unnecessary. i'll have to talk it over with josh a bit more.
+    
     Zero.Connect(this.GameSession, Events.InputMappingSetup, this.OnInputMappingSetup);
     Zero.Connect(this.GameSession, Events.IMUpdate, this.OnIMUpdate);
     Zero.Connect(this.GameSession, Events.IMCleanup, this.OnIMCleanup);
@@ -31,18 +53,6 @@ class IM : ZilchComponent
   
   function OnIMUpdate(event : UpdateEvent)
   {
-    // TODO:
-    // 
-    // if the IM is updated by a space, then if that space is paused, the IM will
-    // also be paused. this is bad because any other space that wants to get input,
-    // like, say, a menu, is outta luck.
-    // 
-    // however, if i want to, say,  pause the game and step a frame at a time while
-    // providing input, it's very difficult to carefully get my input to happen
-    // exactly the way i want it just right while i'm frame-stepping. i need to
-    // come up with a good way to be able to provide proper input while i'm frame
-    // stepping and yet still have the input manager be unpaused for other spaces
-    
     if (this.Mode == InputMode.Replay)
     {
       this.Current = this.GetReplayCurrent();
