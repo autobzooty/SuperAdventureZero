@@ -53,11 +53,19 @@ class InventoryMenuWindowController : ZilchComponent
   
   function OnGUIUpdate(event : UpdateEvent)
   {
-    if (this.IM.Triggered(GameAction.Menu))
+    if (this.Shown)
     {
-      if (this.Shown)
+      if (this.IM.Triggered(GameAction.Menu))
         this.AttemptHide();
-      else
+      
+      if (this.IM.Triggered(GameAction.NavUp))
+        this.NavUp();
+      else if (this.IM.Triggered(GameAction.NavDown))
+        this.NavDown();
+    }
+    else
+    {
+      if (this.IM.Triggered(GameAction.Menu))
         this.AttemptShow();
     }
   }
@@ -93,6 +101,20 @@ class InventoryMenuWindowController : ZilchComponent
   function AttemptHide()
   {
     if (this.CanHide) this.Hide();
+  }
+  
+  
+  function NavUp()
+  {
+    this.CursorIndex = HM[Integer].ZMod(this.CursorIndex - 1, this.ItemCount);
+    Print(this.CursorIndex);
+  }
+  
+  
+  function NavDown()
+  {
+    this.CursorIndex = HM[Integer].ZMod(this.CursorIndex + 1, this.ItemCount);
+    Print(this.CursorIndex);
   }
   
   

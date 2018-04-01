@@ -8,7 +8,7 @@ Cog
 		var ProjectOwner = ""
 		var DefaultLevel = "Level"
 		var ProjectSpace = "Space"
-		var AutoTakeProjectScreenshot = true
+		var AutoTakeProjectScreenshot = false
 		var Guid = 0x7367156449672124
 	}
 	WindowLaunchSettings 
