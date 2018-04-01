@@ -1,0 +1,36 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class DigitalSum
+{
+  [Extension(typeid(Math))][Static]
+  function DigitalSum(value : Integer) : Integer
+  {
+    if (value < 0)
+      value = 0 - value;
+    
+    var sum = 0;
+    
+    while (value > 0)
+    {
+      var tenth = value / 10;
+      sum += value - (10 * tenth);
+      value = tenth;
+    }
+    
+    return sum;
+  }
+  
+  [Extension(typeid(Math))][Static]
+  function DigitalRoot(value : Integer) : Integer
+  {
+    if (value / 10 == 0)
+      return value;
+    else
+      return Math.DigitalRoot(Math.DigitalSum(value));
+  }
+}

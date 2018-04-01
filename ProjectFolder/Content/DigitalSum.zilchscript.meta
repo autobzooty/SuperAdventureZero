@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "DigitalSum"
+		var ResourceId = 0x5a296825db8c2fbc
+	}
+}
