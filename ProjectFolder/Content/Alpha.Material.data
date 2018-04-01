@@ -1,0 +1,13 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"580269d9a1d6b870:ShadowCasters"
+		"56dc0b2bbc86c4cb:AlphaBlend"
+	}
+	ColorValue 
+	{
+		var Color = Real4{1, 1, 1, 1}
+	}
+}

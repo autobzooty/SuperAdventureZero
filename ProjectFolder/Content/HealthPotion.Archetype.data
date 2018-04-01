@@ -1,0 +1,282 @@
+[Version:1]
+Cog 
+{
+	var Name = "HealthPotion"
+	Transform 
+	{
+		var Translation = Real3{-0.500000477, 2.12697411, 3.49429703}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	RigidBody 
+	{
+		var Velocity = Real3{0, 0, 0}
+		var AngularVelocity = Real3{0, 0, 0}
+		var DynamicState = RigidBodyDynamicState.Dynamic
+		var AllowSleep = true
+		var Asleep = false
+		var RotationLocked = false
+		var Mode2D = Mode2DStates.InheritFromSpace
+	}
+	CylinderCollider 
+	{
+		var Ghost = true
+		var SendsEvents = true
+		var Material = "5a2935c7a1ba7d2d:Ghost"
+		var CollisionGroup = "4e740859314e5515:DefaultGroup"
+		var Offset = Real3{0, 0.25, 0}
+		var Radius = 0.75
+		var Height = 2
+		var Direction = AxisDirection.Y
+	}
+	ItemBase 
+	{
+		var Name = "Life Potion"
+		var Description = "Restores HP"
+		var Type = ItemType.Consumable
+	}
+	Collectable 
+	{
+		var CollectOnCollide = true
+	}
+	Hierarchy 
+	{
+		Cog [Id:0x5a290e162213a6cb]
+		{
+			var Name = "Parts"
+			Transform 
+			{
+				var Translation = Real3{0, 0, 0}
+				var Scale = Real3{1, 1, 1}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+			Hierarchy 
+			{
+				Cog [Id:0x5a290fb46a34c870]
+				{
+					var Name = "Lip"
+					Transform 
+					{
+						var Translation = Real3{0, 0.8125, 0}
+						var Scale = Real3{0.625, 0.125, 0.625}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5a29080a1fe56a4f:Alpha"
+						var Mesh = "4de0354322b3572e:Cylinder"
+					}
+					MaterialInputs 
+					{
+						var Color = Real4{1, 1, 1, 0.180000007}
+						var AlbedoValue = Real4{1, 1, 1, 1}
+						var MetallicValue = 0
+						var RoughnessValue = 0
+						var SpecularValue = 1
+						var StippleDensity = 0.0625
+						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
+					}
+					CylinderCollider 
+					{
+						var Ghost = false
+						var SendsEvents = true
+						var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+						var CollisionGroup = "4e740859314e5515:DefaultGroup"
+						var Offset = Real3{0, 0, 0}
+						var Radius = 0.5
+						var Height = 1
+						var Direction = AxisDirection.Y
+					}
+				}
+				Cog [Id:0x5a290e1e231f7263]
+				{
+					var Name = "Neck"
+					Transform 
+					{
+						var Translation = Real3{0, 0.625, 0}
+						var Scale = Real3{0.5, 0.25, 0.5}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5a29080a1fe56a4f:Alpha"
+						var Mesh = "4de0354322b3572e:Cylinder"
+					}
+					MaterialInputs 
+					{
+						var Color = Real4{1, 1, 1, 0.180000007}
+						var AlbedoValue = Real4{1, 1, 1, 1}
+						var MetallicValue = 0
+						var RoughnessValue = 0
+						var SpecularValue = 1
+						var StippleDensity = 0.0625
+						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
+					}
+					CylinderCollider 
+					{
+						var Ghost = false
+						var SendsEvents = true
+						var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+						var CollisionGroup = "4e740859314e5515:DefaultGroup"
+						var Offset = Real3{0, 0, 0}
+						var Radius = 0.5
+						var Height = 1
+						var Direction = AxisDirection.Y
+					}
+				}
+				Cog [Id:0x5a290f3f7aba9768]
+				{
+					var Name = "Body"
+					Transform 
+					{
+						var Translation = Real3{0, 0, 0}
+						var Scale = Real3{1, 1, 1}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5a29080a1fe56a4f:Alpha"
+						var Mesh = "4de0354322b3572e:Cylinder"
+					}
+					MaterialInputs 
+					{
+						var Color = Real4{1, 1, 1, 0.180000007}
+						var AlbedoValue = Real4{1, 1, 1, 1}
+						var MetallicValue = 0
+						var RoughnessValue = 0
+						var SpecularValue = 1
+						var StippleDensity = 0.0625
+						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
+					}
+					CylinderCollider 
+					{
+						var Ghost = false
+						var SendsEvents = true
+						var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+						var CollisionGroup = "4e740859314e5515:DefaultGroup"
+						var Offset = Real3{0, 0, 0}
+						var Radius = 0.5
+						var Height = 1
+						var Direction = AxisDirection.Y
+					}
+				}
+				Cog [Id:0x5a2909543915c6ff]
+				{
+					var Name = "Cork"
+					Transform 
+					{
+						var Translation = Real3{0, 0.875, 0}
+						var Scale = Real3{0.375, 0.200000003, 0.375}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5828b036bd65b5d8:OpaqueFlat"
+						var Mesh = "4de0354322b3572e:Cylinder"
+					}
+					MaterialInputs 
+					{
+						var Color = Real4{1, 0, 0.216666698, 0.5}
+						var AlbedoValue = Real4{0.574999988, 0.497116268, 0.393875003, 1}
+						var MetallicValue = 0
+						var RoughnessValue = 0.800000012
+						var SpecularValue = 0.5
+						var StippleDensity = 0.5
+						var StippleScale = 2
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
+					}
+					CylinderCollider 
+					{
+						var Ghost = false
+						var SendsEvents = true
+						var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+						var CollisionGroup = "4e740859314e5515:DefaultGroup"
+						var Offset = Real3{0, 0, 0}
+						var Radius = 0.5
+						var Height = 1
+						var Direction = AxisDirection.Y
+					}
+				}
+				Cog [Id:0x5a290c00651d7f8d]
+				{
+					var Name = "JuicyGoodStuff"
+					Transform 
+					{
+						var Translation = Real3{0, -0.0612500012, 0}
+						var Scale = Real3{0.875, 0.75, 0.875}
+						var Rotation = Quaternion{0, 0, 0, 1}
+					}
+					Model 
+					{
+						var Visible = true
+						var ViewCulling = true
+						var VisibilityEvents = true
+						var OverrideBoundingBox = false
+						var LocalAabbCenter = Real3{0, 0, 0}
+						var LocalAabbHalfExtents = Real3{1, 1, 1}
+						var GroupSortValue = 0
+						var Material = "5a29080a1fe56a4f:Alpha"
+						var Mesh = "4de0354322b3572e:Cylinder"
+					}
+					MaterialInputs 
+					{
+						var Color = Real4{1, 0, 0.216666698, 0.5}
+						var AlbedoValue = Real4{1, 0, 0, 1}
+						var MetallicValue = 0
+						var RoughnessValue = 0
+						var SpecularValue = 1
+						var StippleDensity = 0.5
+						var StippleScale = 2
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
+					}
+				}
+			}
+		}
+	}
+}

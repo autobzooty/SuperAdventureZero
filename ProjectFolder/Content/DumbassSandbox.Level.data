@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-8.47693348, 2.31668663, 2.89026928}
+			var Translation = Real3{-3.15907717, 6.38397074, 9.30222797}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.167178422, 0.229967669, 0.0401356928, 0.957891107}
+			var Rotation = Quaternion{-0.270129651, -0.204726517, -0.0588977635, 0.938961148}
 		}
 		CameraViewport 
 		{
@@ -228,16 +228,16 @@ Level
 			var FarPlane = 200
 			var PerspectiveMode = PerspectiveMode.Perspective
 			var FieldOfView = 60
-			var Size = 20
+			var Size = 2.64202309
 		}
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 0.560057998
-			var VerticalAngle = 0.345574468
-			var HorizontalAngle = -0.471235693
-			var LookTarget = Real3{-8.71616173, 2.12697411, 2.42075443}
+			var LookDistance = 7.54047632
+			var VerticalAngle = 0.560250461
+			var HorizontalAngle = 0.429350734
+			var LookTarget = Real3{-0.500000477, 2.37697411, 3.49429703}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1875,6 +1875,7 @@ Level
 			var Period = Real3{1.61803401, 2.71828198, 3.14159298}
 			var Min = Real3{-1, -1, -1}
 			var Max = Real3{1, 1, 1}
+			var PhaseShift = Real3{0, 90, 0}
 			var InitialT = Real3{0, 0, 0}
 		}
 		Hierarchy 
@@ -1915,6 +1916,43 @@ Level
 					var MaxVisibility = 1
 				}
 			}
+		}
+	}
+	Cog [InheritId:"5a2901660aa72e08:HealthPotion"][ContextId:62]
+	{
+		Transform 
+		{
+			var Translation = Real3{-0.500000477, 2.12697411, 3.49429703}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
+		}
+	}
+	Cog [InheritId:"5a2901660aa72e08:HealthPotion"][ContextId:63]
+	{
+		Transform 
+		{
+			var Translation = Real3{-3.59786725, 2.15862107, 4.08514071}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
+		}
+		RigidBody 
+		{
+			var Velocity = Real3{2, 8, 1}
+			var AngularVelocity = Real3{3, 2, 1}
+		}
+	}
+	Cog [InheritId:"5a2901660aa72e08:HealthPotion"][ContextId:64]
+	{
+		Transform 
+		{
+			var Translation = Real3{-0.0978672504, 2.90862107, 5.3681612}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
+		}
+		RigidBody 
+		{
+			var Velocity = Real3{1, 4, -2}
+			var AngularVelocity = Real3{2, 1, 3}
 		}
 	}
 }
