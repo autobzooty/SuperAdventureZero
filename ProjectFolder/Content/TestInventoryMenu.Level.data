@@ -44,9 +44,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{0, 0.5, 10}
+			var Translation = Real3{0, 0, 30}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, 0, 0, 1}
+			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -1182,9 +1182,10 @@ Level
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
 					}
-					var Period = Real2{1.70000005, 1.70000005}
+					var Period = Real2{1.70000005, 2.29999995}
 					var Min = Real2{-8, -2}
 					var Max = Real2{8, 2}
+					var PhaseShift = Real2{0, 90}
 					var InitialT = Real2{0, 0}
 				}
 				Hierarchy 

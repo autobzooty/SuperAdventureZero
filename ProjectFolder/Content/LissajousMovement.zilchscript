@@ -16,34 +16,12 @@ class LissajousMovement : ZilchComponent
   [Property]
   var Max : Real3 = Real3(1, 1, 1);
   [Property]
+  var PhaseShift : Real3 = Real3(0, 90, 0); // in degrees
+  [Property]
   var InitialT : Real3 = Real3.Zero;
   
   var T : Real3;
   var Mover : Transform;
-  
-  var X : Real
-  {
-    get
-    {
-      return (this.Max.X - this.Min.X) * (1 - Math.Cos(HM[Real].Tau * this.T.X / this.Period.X)) / 2 + this.Min.X;
-    }
-  }
-  
-  var Y : Real
-  {
-    get
-    {
-      return (this.Max.Y - this.Min.Y) * (1 - Math.Sin(HM[Real].Tau * this.T.Y / this.Period.Y)) / 2 + this.Min.Y;
-    }
-  }
-  
-  var Z : Real
-  {
-    get
-    {
-      return (this.Max.Z - this.Min.Z) * (1 - Math.Cos(HM[Real].Tau * this.T.Z / this.Period.Z)) / 2 + this.Min.Z;
-    }
-  }
   
   
   function Initialize(init : CogInitializer)
@@ -58,7 +36,9 @@ class LissajousMovement : ZilchComponent
   function OnStandardUpdate(event : UpdateEvent)
   {
     this.T = Math.FMod(this.T + event.Dt.XXX, this.Period);
-    this.Mover.LocalTranslation = Real3(this.X, this.Y, this.Z);
+    var trigInterior = HM[Real].Tau * this.T / this.Period - Math.ToRadians(this.PhaseShift);
+    var trigExterior = (Real3.One - Math.Cos(trigInterior)) / 2;
+    this.Mover.LocalTranslation = (this.Max - this.Min) * trigExterior + this.Min;
   }
 }
 
@@ -74,26 +54,12 @@ class UiLissajousMovement : ZilchComponent
   [Property]
   var Max : Real2 = Real2(8, 8);
   [Property]
+  var PhaseShift : Real2 = Real2(0, 90);  // in degrees
+  [Property]
   var InitialT : Real2 = Real2.Zero;
   
   var T : Real2 = Real2.Zero;
   var Mover : UiWidget;
-  
-  var X : Real
-  {
-    get
-    {
-      return (this.Max.X - this.Min.X) * (1 - Math.Cos(HM[Real].Tau * this.T.X / this.Period.X)) / 2 + this.Min.X;
-    }
-  }
-  
-  var Y : Real
-  {
-    get
-    {
-      return (this.Max.Y - this.Min.Y) * (1 - Math.Sin(HM[Real].Tau * this.T.Y / this.Period.Y)) / 2 + this.Min.Y;
-    }
-  }
   
   
   function Initialize(init : CogInitializer)
@@ -108,6 +74,8 @@ class UiLissajousMovement : ZilchComponent
   function OnGUIUpdate(event : UpdateEvent)
   {
     this.T = Math.FMod(this.T + event.Dt.XX, this.Period);
-    this.Mover.LocalTranslation = Real2(this.X, this.Y);
+    var trigInterior = HM[Real].Tau * this.T / this.Period - Math.ToRadians(this.PhaseShift);
+    var trigExterior = (Real2.One - Math.Cos(trigInterior)) / 2;
+    this.Mover.LocalTranslation = (this.Max - this.Min) * trigExterior + this.Min;
   }
 }
