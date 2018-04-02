@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// 
-/// Authors: Joshua Claeys
+/// Authors: Joshua Claeys, modifications by Doug Zwick
 /// Copyright 2017, DigiPen Institute of Technology
 ///
 ///////////////////////////////////////////////////////////////////////////////
@@ -213,21 +213,9 @@ class UiScrollArea : ZilchComponent
   }
   
   //***************************************************************************
-  function OnMouseScroll(event : ViewportMouseEvent)
+  function Scroll(scroll : Real2)
   {
-    if(event.HandledEvent)
-      return;
-    event.HandledEvent = true;
-    var scroll = event.Scroll * this.ScrollSpeed;
-    scroll *= Real2(-1, 1);
-    
-    if(event.ShiftPressed)
-    {
-      scroll.X = scroll.Y;
-      scroll.Y = 0;
-    }
-    
-    if(this.ScrollAnimateTime <= 0.016)
+    if (this.ScrollAnimateTime <= 0.016)
     {
       this.ContentOffset -= scroll;
     }
@@ -252,6 +240,24 @@ class UiScrollArea : ZilchComponent
         Action.Property(this.TranslateSequence, @this.ContentOffsetInternal, newOffset, this.ScrollAnimateTime, Ease.Linear);
       }
     }
+  }
+  
+  //***************************************************************************
+  function OnMouseScroll(event : ViewportMouseEvent)
+  {
+    if(event.HandledEvent)
+      return;
+    event.HandledEvent = true;
+    var scroll = event.Scroll * this.ScrollSpeed;
+    scroll *= Real2(-1, 1);
+    
+    if(event.ShiftPressed)
+    {
+      scroll.X = scroll.Y;
+      scroll.Y = 0;
+    }
+    
+    this.Scroll(scroll);
   }
   
   //***************************************************************************

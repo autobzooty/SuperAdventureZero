@@ -207,6 +207,8 @@ enum GameAction
   NavUp,
   NavLeft,
   NavDown,
+  NavConfirm,
+  NavCancel,
   
   COUNT_
 }

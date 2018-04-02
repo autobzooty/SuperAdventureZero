@@ -98,6 +98,8 @@ class InventoryInterface : ZilchComponent
     // 
     // some cool events and feedback and ish!
     
+    Print("Added `item.Name` to Inventory");
+    
     item.Owner.AttachToPreserveLocal(this.InventoryRoot.Cog);
     item.Owner.Transform.LocalTranslation = Real3.Zero;
   }

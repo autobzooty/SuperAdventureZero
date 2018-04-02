@@ -10,7 +10,7 @@ Cog
 	}
 	Area 
 	{
-		var Size = Real2{372, 58}
+		var Size = Real2{418, 58}
 		var Origin = Location.TopLeft
 	}
 	UiWidget 
@@ -215,7 +215,7 @@ Cog
 			}
 			Area 
 			{
-				var Size = Real2{310, 54}
+				var Size = Real2{356, 54}
 				var Origin = Location.TopLeft
 			}
 			UiWidget 
@@ -263,7 +263,7 @@ Cog
 					}
 					Area 
 					{
-						var Size = Real2{310, 22}
+						var Size = Real2{356, 22}
 						var Origin = Location.TopLeft
 					}
 					UiWidget 
@@ -322,7 +322,7 @@ Cog
 					}
 					Area 
 					{
-						var Size = Real2{310, 32}
+						var Size = Real2{356, 32}
 						var Origin = Location.TopLeft
 					}
 					UiWidget 
@@ -370,7 +370,7 @@ Cog
 							}
 							Area 
 							{
-								var Size = Real2{204, 32}
+								var Size = Real2{235, 32}
 								var Origin = Location.TopLeft
 							}
 							UiWidget 
@@ -423,7 +423,7 @@ Cog
 							var Name = "Spacer"
 							Transform 
 							{
-								var Translation = Real3{206, 0, 0}
+								var Translation = Real3{237, 0, 0}
 								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, 0, 1}
 							}
@@ -464,13 +464,13 @@ Cog
 							var Name = "Type"
 							Transform 
 							{
-								var Translation = Real3{216, 0, 0}
+								var Translation = Real3{247, 0, 0}
 								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, 0, 1}
 							}
 							Area 
 							{
-								var Size = Real2{60, 32}
+								var Size = Real2{75, 32}
 								var Origin = Location.TopLeft
 							}
 							UiWidget 
@@ -508,7 +508,7 @@ Cog
 								var Material = "582c575af53d18c9:AlphaSprite"
 								var VertexColor = Real4{1, 1, 1, 0.400000006}
 								var GeometryMode = SpriteGeometryMode.ZPlane
-								var Text = "Item Type"
+								var Text = "Consumable"
 								var Font = "587b2f7646ba23d5:NotoSans-Bold"
 								var FontSize = 12
 								var PixelsPerUnit = 1
@@ -523,7 +523,7 @@ Cog
 							var Name = "TypeIcon"
 							Transform 
 							{
-								var Translation = Real3{278, 0, 0}
+								var Translation = Real3{324, 0, 0}
 								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, 0, 1}
 							}

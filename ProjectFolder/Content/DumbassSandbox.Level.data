@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-2.3079567, 6.4071393, 16.3290024}
+			var Translation = Real3{-0.872223616, 3.8359735, 18.4960232}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.140204996, -0.0983287618, -0.0139943017, 0.985128582}
+			var Rotation = Quaternion{-0.049717702, -0.013073409, -0.000650840753, 0.998677611}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 11.6437702
-			var VerticalAngle = 0.282744229
-			var HorizontalAngle = 0.198967233
-			var LookTarget = Real3{-0.0978672504, 3.15862083, 5.3681612}
+			var LookDistance = 19.1973133
+			var VerticalAngle = 0.099484928
+			var HorizontalAngle = 0.0261799321
+			var LookTarget = Real3{-0.372181445, 1.92927897, -0.599820912}
 			var MoveSensitivity = 1
 		}
 	}
@@ -677,9 +677,9 @@ Level
 								var Name = "Sphere"
 								Transform 
 								{
-									var Translation = Real3{0, 0, 0}
+									var Translation = Real3{2.98023224e-08, -2.38418579e-07, 0}
 									var Scale = Real3{1, 1, 1}
-									var Rotation = Quaternion{0, 0, 0, 1}
+									var Rotation = Quaternion{0, 0, -3.7252903e-08, 1}
 								}
 								Model 
 								{
@@ -713,9 +713,9 @@ Level
 								var Name = "Face"
 								Transform 
 								{
-									var Translation = Real3{0, 0, 0}
+									var Translation = Real3{2.98023224e-08, -2.38418579e-07, 0}
 									var Scale = Real3{1, 1, 1}
-									var Rotation = Quaternion{0, 0, 0, 1}
+									var Rotation = Quaternion{0, 0, -3.7252903e-08, 1}
 								}
 								Hierarchy 
 								{
@@ -1960,7 +1960,7 @@ Level
 			var DestroyWhenExhausted = false
 			var UseLifetime = false
 			var BurstCount = 0
-			var EmitCount = 10
+			var EmitCount = 5
 			var EmitRate = 5
 			var Lifetime = 1
 			var LifetimeVariance = 0.5

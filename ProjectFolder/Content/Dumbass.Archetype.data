@@ -63,6 +63,25 @@ Cog
 	Stats 
 	{
 	}
+	InventoryInterface 
+	{
+		var InventoryRoot = CogPath
+		{
+			var Path = "Inventory"
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+		var InventoryMenuLevel = "5a92d30b630e764d:TestInventoryMenu"
+	}
 	EquipmentInterface 
 	{
 		var EquipmentRoot = CogPath
@@ -161,8 +180,21 @@ Cog
 		}
 		var Snappiness = 0.100000001
 	}
+	Collector 
+	{
+	}
 	Hierarchy 
 	{
+		Cog [Id:0x5a9fe3d5412be544]
+		{
+			var Name = "Inventory"
+			Transform 
+			{
+				var Translation = Real3{0, 0, 0}
+				var Scale = Real3{1, 1, 1}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+		}
 		Cog [Id:0x5ab2c1b28b2635b7]
 		{
 			var Name = "EquipmentSlots"
@@ -185,7 +217,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.OneHand
+						var SlotType = EquipmentType.OneHand
 					}
 				}
 				Cog [Id:0x5ab357e2a9fd6c52]
@@ -199,7 +231,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.OneHand
+						var SlotType = EquipmentType.OneHand
 					}
 				}
 				Cog [Id:0x5ab2ce34bce39642]
@@ -213,19 +245,10 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Head
+						var SlotType = EquipmentType.Head
 					}
 					Hierarchy 
 					{
-						Cog [Id:0x5a860333c3e8fa8f][InheritId:"5a86688cccbefab5:HornedHelmet"]
-						{
-							Transform 
-							{
-								var Translation = Real3{0, 0, 0}
-								var Rotation = Quaternion{0, 0, 0, 1}
-								var Scale = Real3{1, 1, 1}
-							}
-						}
 					}
 				}
 				Cog [Id:0x5ab2ce31bc0beb80]
@@ -239,93 +262,10 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Body
+						var SlotType = EquipmentType.Body
 					}
 					Hierarchy 
 					{
-						Cog [Id:0x5ab2fc7d1c8034d0]
-						{
-							var Name = "Armor"
-							Transform 
-							{
-								var Translation = Real3{0, 0, 0}
-								var Scale = Real3{1, 1, 1}
-								var Rotation = Quaternion{0, 0, 0, 1}
-							}
-							EquipmentBase 
-							{
-								var SlotType = EquipmentSlotType.OneHand
-								var StatBlock = StatBlock
-								{
-									var HP = StatMod
-									{
-										var Addend = 0
-										var Bonus = 0
-									}
-									var Evasion = StatMod
-									{
-										var Addend = 0
-										var Bonus = 0
-									}
-									var TypeAddends = TypeMultiplierBlock
-									{
-										var Heat = 0
-										var Cold = 0
-										var Electricity = 0
-										var Psychic = 0
-										var Biological = 0
-										var Poison = 0
-										var Holy = 0
-										var Dark = 0
-									}
-									var TypeBonuses = TypeMultiplierBlock
-									{
-										var Heat = 0
-										var Cold = 0
-										var Electricity = 0
-										var Psychic = 0
-										var Biological = 0
-										var Poison = 0
-										var Holy = 0
-										var Dark = 0
-									}
-								}
-							}
-							Hierarchy 
-							{
-								Cog [Id:0x5ab2cbed4e10d339]
-								{
-									var Name = "Cylinder"
-									Transform 
-									{
-										var Translation = Real3{0, 0, 0}
-										var Scale = Real3{1.10000002, 0.800000012, 1.10000002}
-										var Rotation = Quaternion{0, 0, 0, 1}
-									}
-									Model 
-									{
-										var Visible = true
-										var ViewCulling = true
-										var VisibilityEvents = true
-										var OverrideBoundingBox = false
-										var LocalAabbCenter = Real3{0, 0, 0}
-										var LocalAabbHalfExtents = Real3{1, 1, 1}
-										var GroupSortValue = 0
-										var Material = "5828b036bd65b5d8:OpaqueFlat"
-										var Mesh = "4de0354322b3572e:Cylinder"
-									}
-									MaterialInputs 
-									{
-										var Color = Real4{0.5, 0.5, 0.5, 1}
-										var AlbedoValue = Real4{0.545098066, 0.564705908, 0.600000024, 1}
-										var MetallicValue = 1
-										var RoughnessValue = 0.100000001
-										var SpecularValue = 1
-										var StippleScale = 1
-									}
-								}
-							}
-						}
 					}
 				}
 				Cog [Id:0x5ab2a9c670ad3d65]
@@ -339,7 +279,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Glove
+						var SlotType = EquipmentType.Glove
 					}
 				}
 				Cog [Id:0x5ab2a9f676371c2f]
@@ -353,7 +293,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Glove
+						var SlotType = EquipmentType.Glove
 					}
 				}
 				Cog [Id:0x5ab2a2aae636baff]
@@ -367,7 +307,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Foot
+						var SlotType = EquipmentType.Foot
 					}
 				}
 				Cog [Id:0x5ab2a2bb18c0a102]
@@ -381,7 +321,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Foot
+						var SlotType = EquipmentType.Foot
 					}
 				}
 				Cog [Id:0x5ab2ce39bd6d7757]
@@ -395,7 +335,7 @@ Cog
 					}
 					EquipmentSlot 
 					{
-						var SlotType = EquipmentSlotType.Accessory
+						var SlotType = EquipmentType.Accessory
 					}
 				}
 			}
@@ -427,9 +367,9 @@ Cog
 							var Name = "Sphere"
 							Transform 
 							{
-								var Translation = Real3{0, 0, 0}
+								var Translation = Real3{2.98023224e-08, -2.38418579e-07, 0}
 								var Scale = Real3{1, 1, 1}
-								var Rotation = Quaternion{0, 0, 0, 1}
+								var Rotation = Quaternion{0, 0, -3.7252903e-08, 1}
 							}
 							Model 
 							{
@@ -450,7 +390,12 @@ Cog
 								var MetallicValue = 0
 								var RoughnessValue = 0.75
 								var SpecularValue = 0.5
+								var StippleDensity = 0.5
 								var StippleScale = 1
+								var NearDistance = 20
+								var FarDistance = 20
+								var MinVisibility = 0
+								var MaxVisibility = 1
 							}
 						}
 						Cog [Id:0x5ab2c409ca875506]
@@ -458,9 +403,9 @@ Cog
 							var Name = "Face"
 							Transform 
 							{
-								var Translation = Real3{0, 0, 0}
+								var Translation = Real3{2.98023224e-08, -2.38418579e-07, 0}
 								var Scale = Real3{1, 1, 1}
-								var Rotation = Quaternion{0, 0, 0, 1}
+								var Rotation = Quaternion{0, 0, -3.7252903e-08, 1}
 							}
 							Hierarchy 
 							{
@@ -514,7 +459,12 @@ Cog
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.5
+														var StippleDensity = 0.5
 														var StippleScale = 1
+														var NearDistance = 20
+														var FarDistance = 20
+														var MinVisibility = 0
+														var MaxVisibility = 1
 													}
 												}
 												Cog [Id:0x5ab2c771b46edb2f]
@@ -545,7 +495,12 @@ Cog
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.300000012
+														var StippleDensity = 0.5
 														var StippleScale = 1
+														var NearDistance = 20
+														var FarDistance = 20
+														var MinVisibility = 0
+														var MaxVisibility = 1
 													}
 												}
 												Cog [Id:0x5ab2c782a75051cf]
@@ -576,7 +531,12 @@ Cog
 														var MetallicValue = 0
 														var RoughnessValue = 1
 														var SpecularValue = 0
+														var StippleDensity = 0.5
 														var StippleScale = 1
+														var NearDistance = 20
+														var FarDistance = 20
+														var MinVisibility = 0
+														var MaxVisibility = 1
 													}
 												}
 											}
@@ -620,7 +580,12 @@ Cog
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.5
+														var StippleDensity = 0.5
 														var StippleScale = 1
+														var NearDistance = 20
+														var FarDistance = 20
+														var MinVisibility = 0
+														var MaxVisibility = 1
 													}
 												}
 												Cog [Id:0x5ab2c770b5b071fc]
@@ -651,7 +616,12 @@ Cog
 														var MetallicValue = 0
 														var RoughnessValue = 0
 														var SpecularValue = 0.300000012
+														var StippleDensity = 0.5
 														var StippleScale = 1
+														var NearDistance = 20
+														var FarDistance = 20
+														var MinVisibility = 0
+														var MaxVisibility = 1
 													}
 												}
 												Cog [Id:0x5ab2c78fd8e88e95]
@@ -682,7 +652,12 @@ Cog
 														var MetallicValue = 0
 														var RoughnessValue = 1
 														var SpecularValue = 0
+														var StippleDensity = 0.5
 														var StippleScale = 1
+														var NearDistance = 20
+														var FarDistance = 20
+														var MinVisibility = 0
+														var MaxVisibility = 1
 													}
 												}
 											}
@@ -728,7 +703,12 @@ Cog
 												var MetallicValue = 0
 												var RoughnessValue = 1
 												var SpecularValue = 0
+												var StippleDensity = 0.5
 												var StippleScale = 1
+												var NearDistance = 20
+												var FarDistance = 20
+												var MinVisibility = 0
+												var MaxVisibility = 1
 											}
 										}
 									}
@@ -776,7 +756,12 @@ Cog
 								var MetallicValue = 0
 								var RoughnessValue = 0.75
 								var SpecularValue = 0.450000018
+								var StippleDensity = 0.5
 								var StippleScale = 1
+								var NearDistance = 20
+								var FarDistance = 20
+								var MinVisibility = 0
+								var MaxVisibility = 1
 							}
 						}
 					}
@@ -842,7 +827,12 @@ Cog
 												var MetallicValue = 0
 												var RoughnessValue = 0.75
 												var SpecularValue = 0.5
+												var StippleDensity = 0.5
 												var StippleScale = 1
+												var NearDistance = 20
+												var FarDistance = 20
+												var MinVisibility = 0
+												var MaxVisibility = 1
 											}
 										}
 									}
@@ -899,7 +889,12 @@ Cog
 												var MetallicValue = 0
 												var RoughnessValue = 0.75
 												var SpecularValue = 0.5
+												var StippleDensity = 0.5
 												var StippleScale = 1
+												var NearDistance = 20
+												var FarDistance = 20
+												var MinVisibility = 0
+												var MaxVisibility = 1
 											}
 										}
 									}
@@ -958,7 +953,12 @@ Cog
 										var MetallicValue = 0
 										var RoughnessValue = 0.5
 										var SpecularValue = 0.5
+										var StippleDensity = 0.5
 										var StippleScale = 1
+										var NearDistance = 20
+										var FarDistance = 20
+										var MinVisibility = 0
+										var MaxVisibility = 1
 									}
 								}
 							}
@@ -1002,7 +1002,12 @@ Cog
 										var MetallicValue = 0
 										var RoughnessValue = 0.5
 										var SpecularValue = 0.5
+										var StippleDensity = 0.5
 										var StippleScale = 1
+										var NearDistance = 20
+										var FarDistance = 20
+										var MinVisibility = 0
+										var MaxVisibility = 1
 									}
 								}
 							}

@@ -44,9 +44,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{0, 0, 30}
+			var Translation = Real3{0, 0.5, 10}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -97,7 +97,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 755
+			var Size = 535
 		}
 		EditorCameraController 
 		{
@@ -394,10 +394,9 @@ Level
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
 					}
-					var ItemCardArchetype = "5a68b0e01f5f0e24:ItemCard"
-					var CursorPath = CogPath
+					var ScrollAreaPath = CogPath
 					{
-						var Path = "../Cursor"
+						var Path = "InventoryList"
 						var ErrorOnResolveToNull = false
 						var ErrorOnPathCantCompute = false
 						var ErrorOnDirectLinkFail = false
@@ -410,10 +409,26 @@ Level
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
 					}
+					var CursorPath = CogPath
+					{
+						var Path = "../Cursor"
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 9
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var ItemCardArchetype = "5a68b0e01f5f0e24:ItemCard"
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5a92cd3469900678][ContextId:9]
+					Cog [Id:0x5a92cd3469900678][ContextId:10]
 					{
 						var Name = "TitleBar"
 						Transform 
@@ -478,7 +493,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5a92cdf5612adc9d][ContextId:10]
+							Cog [Id:0x5a92cdf5612adc9d][ContextId:11]
 							{
 								var Name = "TitleText"
 								Transform 
@@ -539,7 +554,7 @@ Level
 							}
 						}
 					}
-					Cog [Id:0x5a4d955aaabe3c83][ContextId:11]
+					Cog [Id:0x5a4d955aaabe3c83][ContextId:8]
 					{
 						var Name = "InventoryList"
 						Transform 
@@ -696,9 +711,9 @@ Level
 									var Interactive = true
 									var InLayout = true
 									var OnTop = false
-									var ClipChildren = false
+									var ClipChildren = true
 									var CanTakeFocus = false
-									var LocalColor = Real4{1, 1, 1, 1}
+									var LocalColor = Real4{1, 1, 1, 0}
 									var HierarchyColor = Real4{1, 1, 1, 1}
 									var SizePolicyX = UiSizePolicy.Flex
 									var SizePolicyY = UiSizePolicy.Flex
@@ -720,6 +735,25 @@ Level
 									var PaddingBottom = 0
 									var StackDirection = UiStackLayoutDirection.LeftToRight
 									var Spacing = Real2{0, 0}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{1, 1, 1, 0}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
 								}
 								Hierarchy 
 								{
@@ -1128,7 +1162,7 @@ Level
 					}
 				}
 			}
-			Cog [Id:0x5a459b628f1e4238][ContextId:8]
+			Cog [Id:0x5a459b628f1e4238][ContextId:9]
 			{
 				var Name = "Cursor"
 				Transform 

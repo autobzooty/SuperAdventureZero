@@ -14,9 +14,11 @@ class InventoryMenuWindowController : ZilchComponent
   [Property]
   var ListRoot : CogPath = CogPath(".");
   [Property]
-  var ItemCardArchetype : Archetype = Archetype.ItemCard;
+  var ScrollAreaPath : CogPath = CogPath("InventoryList");
   [Property]
   var CursorPath : CogPath = CogPath("../Cursor");
+  [Property]
+  var ItemCardArchetype : Archetype = Archetype.ItemCard;
   
   var WindowHiddenFlexSizeX : Real = 0;
   var WindowShownFlexSizeX : Real = 1;
@@ -27,15 +29,65 @@ class InventoryMenuWindowController : ZilchComponent
   var Transitioning : Boolean = false;
   var WindowSequence : ActionSet;
   var CursorIndex : Integer = 0;
+  var ItemCount : Integer;
+  var CursorMovementActions : ActionSet;
   
   var IM : IM;
   
   var CanShow : Boolean { get { return !this.Transitioning; }}
   var CanHide : Boolean { get { return !this.Transitioning; }}
   var ZerothCard : UiWidget { get { return this.ListRoot.Cog.Children.Current.UiWidget; }}
-  var ItemCount : Integer;
+  var CurrentCard : UiWidget
+  {
+    get
+    {
+      var root = this.ListRoot.Cog;
+      
+      var childRange = root.Children;
+      
+      for (var i = 0; i < this.CursorIndex; ++i)
+        childRange.MoveNext();
+      
+      return childRange.Current.UiWidget;
+    }
+  }
+  var CurrentItem : ItemBase
+  {
+    get
+    {
+      if (this.ItemCount > 0)
+        return this.CurrentCard.Owner.InventoryItemCard.ItemBase;
+      else
+        return null;
+    }
+  }
+  var CurrentCardOnscreenPosition : Real2
+  {
+    get
+    {
+      if (this.ItemCount > 0)
+        return this.CurrentCard.WorldCenterLeft;
+      else
+        return this.ListRoot.UiWidget.WorldTopLeft;
+    }
+  }
+  var CurrentCardOffscreenPosition : Real2
+  {
+    get
+    {
+      var windowWidth = this.ListRoot.UiWidget.Size.X;
+      var cursorWidth = this.CursorPath.UiWidget.Size.X;
+      var extraPadding = 20;
+      
+      if (this.ItemCount > 0)
+        return this.CurrentCard.WorldCenterLeft + Real2.XAxis * (windowWidth + cursorWidth + extraPadding);
+      else
+        return this.ListRoot.UiWidget.WorldTopLeft + Real2.XAxis * (windowWidth + cursorWidth + extraPadding);
+    }
+  }
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.IM = this.GameSession.IM;
@@ -46,22 +98,27 @@ class InventoryMenuWindowController : ZilchComponent
     this.UiWidget.Visible = false;
     this.SnapHideCursor();
     
+    this.CursorMovementActions = Action.Group(this.CursorPath.Cog.Actions);
+    
     Zero.Connect(this.GameSession, Events.GUIUpdate, this.OnGUIUpdate);
     Zero.Connect(this.Space, Events.InventoryUpdated, this.OnInventoryUpdated);
   }
   
   
+  //****************************************************************************
   function OnGUIUpdate(event : UpdateEvent)
   {
     if (this.Shown)
     {
-      if (this.IM.Triggered(GameAction.Menu))
+      if (this.IM.Triggered(GameAction.Menu) || this.IM.Triggered(GameAction.NavCancel))
         this.AttemptHide();
       
       if (this.IM.Triggered(GameAction.NavUp))
         this.NavUp();
       else if (this.IM.Triggered(GameAction.NavDown))
         this.NavDown();
+      
+      //if (this.IM.Triggered(GameAction.NavConfirm))
     }
     else
     {
@@ -71,8 +128,11 @@ class InventoryMenuWindowController : ZilchComponent
   }
   
   
+  //****************************************************************************
   function OnInventoryUpdated(event : InventoryMenuEvent)
   {
+    var oldCurrentItem = this.CurrentItem;
+    
     foreach (var child in this.ListRoot.Cog.Children)
     {
       child.Destroy();
@@ -89,35 +149,67 @@ class InventoryMenuWindowController : ZilchComponent
     }
     
     this.ItemCount = event.ItemList.Count;
+    
+    var indexOfOldCurrentItem = this.FindItemIndex(oldCurrentItem);
+    
+    if (indexOfOldCurrentItem >= 0)
+    {
+      this.CursorIndex = indexOfOldCurrentItem;
+    }
+    else
+    {
+      if (this.CursorIndex >= this.ItemCount)
+        this.CursorIndex = this.ItemCount - 1;
+    }
   }
   
   
+  //****************************************************************************
   function AttemptShow()
   {
     if (this.CanShow) this.Show();
   }
   
   
+  //****************************************************************************
   function AttemptHide()
   {
     if (this.CanHide) this.Hide();
   }
   
   
+  //****************************************************************************
   function NavUp()
   {
     this.CursorIndex = HM[Integer].ZMod(this.CursorIndex - 1, this.ItemCount);
-    Print(this.CursorIndex);
+    this.NavToCard(this.CurrentCard);
   }
   
   
+  //****************************************************************************
   function NavDown()
   {
     this.CursorIndex = HM[Integer].ZMod(this.CursorIndex + 1, this.ItemCount);
-    Print(this.CursorIndex);
+    this.NavToCard(this.CurrentCard);
   }
   
   
+  //****************************************************************************
+  function NavToCard(card : UiWidget)
+  {
+    Print(card.Owner.InventoryItemCard.ItemBase.Name);
+    
+    this.ScrollAreaPath.UiScrollArea.ScrollToWidget(card, 0.1);
+    
+    var cursorDestination = card.WorldCenterLeft;
+    this.CursorMovementActions.Cancel();
+    this.CursorMovementActions = Action.Group(this.CursorPath.Cog.Actions);
+      
+      Action.Property(this.CursorMovementActions, @this.CursorPath.UiWidget.WorldTranslation, cursorDestination, 0.1, Ease.QuadInOut);
+  }
+  
+  
+  //****************************************************************************
   function Show()
   {
     this.Transitioning = true;
@@ -125,7 +217,8 @@ class InventoryMenuWindowController : ZilchComponent
     
     this.GameSession.DispatchEvent(Events.InventoryMenuStartedOpening, InventoryMenuEvent());
     
-    this.ShowCursor();
+    if (this.ItemCount > 0)
+      this.ShowCursor();
     
     this.WindowSequence.Cancel();
     this.WindowSequence = Action.Sequence(this.Owner.Actions);
@@ -136,6 +229,7 @@ class InventoryMenuWindowController : ZilchComponent
   }
   
   
+  //****************************************************************************
   function EndShowing()
   {
     this.GameSession.DispatchEvent(Events.InventoryMenuFinishedOpening, InventoryMenuEvent());
@@ -144,13 +238,15 @@ class InventoryMenuWindowController : ZilchComponent
   }
   
   
+  //****************************************************************************
   function Hide()
   {
     this.Transitioning = true;
     
     this.GameSession.DispatchEvent(Events.InventoryMenuStartedClosing, InventoryMenuEvent());
     
-    this.HideCursor();
+    if (this.ItemCount > 0)
+      this.HideCursor();
     
     this.WindowSequence.Cancel();
     this.WindowSequence = Action.Sequence(this.Owner.Actions);
@@ -161,6 +257,7 @@ class InventoryMenuWindowController : ZilchComponent
   }
   
   
+  //****************************************************************************
   function EndHiding()
   {
     this.UiWidget.Visible = false;
@@ -170,28 +267,72 @@ class InventoryMenuWindowController : ZilchComponent
   }
   
   
+  //****************************************************************************
   function SnapShowCursor()
   {
     this.CursorPath.Transform.LocalScale = Real3.One;
+    this.CursorPath.UiWidget.WorldTranslation = this.CurrentCardOnscreenPosition;
   }
   
   
+  //****************************************************************************
   function SnapHideCursor()
   {
     this.CursorPath.Transform.LocalScale = Real3.Zero;
   }
   
   
+  //****************************************************************************
   function ShowCursor()
   {
+    this.CursorPath.UiWidget.WorldTranslation = this.CurrentCardOffscreenPosition;
     this.CursorPath.Cog.Actions.Cancel();
     Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.One, 1, Ease.ElasticOut);
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.UiWidget.WorldTranslation,
+      this.CurrentCardOnscreenPosition, 0.3, Ease.BackOut);
   }
   
   
+  //****************************************************************************
   function HideCursor()
   {
     this.CursorPath.Cog.Actions.Cancel();
     Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.Zero, 0.25, Ease.BackIn);
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.UiWidget.WorldTranslation,
+      this.CurrentCardOffscreenPosition, 0.25, Ease.QuadInOut);
+  }
+  
+  
+  //****************************************************************************
+  function FindCardIndex(card : UiWidget) : Integer
+  {
+    var index = 0;
+    
+    foreach (var child in this.ListRoot.Cog.Children)
+    {
+      if (child.UiWidget == card)
+        return index;
+      
+      ++index;
+    }
+    
+    return -1;
+  }
+  
+  
+  //****************************************************************************
+  function FindItemIndex(item : ItemBase) : Integer
+  {
+    var index = 0;
+    
+    foreach (var child in this.ListRoot.Cog.Children)
+    {
+      if (child.InventoryItemCard.ItemBase == item)
+        return index;
+      
+      ++index;
+    }
+    
+    return -1;
   }
 }
