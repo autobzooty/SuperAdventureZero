@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{7.87935162, 1.83101583, 4.60734749}
+			var Translation = Real3{-2.3079567, 6.4071393, 16.3290024}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.114927486, -0.0130029162, -0.00150449097, 0.993287683}
+			var Rotation = Quaternion{-0.140204996, -0.0983287618, -0.0139943017, 0.985128582}
 		}
 		CameraViewport 
 		{
@@ -234,10 +234,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 4.73400497
-			var VerticalAngle = 0.230383843
-			var HorizontalAngle = 0.0261800811
-			var LookTarget = Real3{8, 0.75000006, 2.38418579e-07}
+			var LookDistance = 11.6437702
+			var VerticalAngle = 0.282744229
+			var HorizontalAngle = 0.198967233
+			var LookTarget = Real3{-0.0978672504, 3.15862083, 5.3681612}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1341,7 +1341,7 @@ Level
 	{
 		Transform 
 		{
-			var Translation = Real3{3.44845009, 2.53140926, 0}
+			var Translation = Real3{-6, 2, 0}
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
 		}
@@ -1918,49 +1918,12 @@ Level
 			}
 		}
 	}
-	Cog [InheritId:"5a2901660aa72e08:HealthPotion"][ContextId:62]
-	{
-		Transform 
-		{
-			var Translation = Real3{-0.500000477, 2.12697411, 3.49429703}
-			var Rotation = Quaternion{0, 0, 0, 1}
-			var Scale = Real3{1, 1, 1}
-		}
-	}
-	Cog [InheritId:"5a2901660aa72e08:HealthPotion"][ContextId:63]
-	{
-		Transform 
-		{
-			var Translation = Real3{-3.59786725, 2.15862107, 4.08514071}
-			var Rotation = Quaternion{0, 0, 0, 1}
-			var Scale = Real3{1, 1, 1}
-		}
-		RigidBody 
-		{
-			var Velocity = Real3{2, 8, 1}
-			var AngularVelocity = Real3{3, 2, 1}
-		}
-	}
-	Cog [InheritId:"5a2901660aa72e08:HealthPotion"][ContextId:64]
-	{
-		Transform 
-		{
-			var Translation = Real3{-0.0978672504, 2.90862107, 5.3681612}
-			var Rotation = Quaternion{0, 0, 0, 1}
-			var Scale = Real3{1, 1, 1}
-		}
-		RigidBody 
-		{
-			var Velocity = Real3{1, 4, -2}
-			var AngularVelocity = Real3{2, 1, 3}
-		}
-	}
-	Cog [ContextId:65]
+	Cog [ContextId:62]
 	{
 		var Name = "Cylinder"
 		Transform 
 		{
-			var Translation = Real3{8, 1, 0}
+			var Translation = Real3{15, 1, 0}
 			var Scale = Real3{2, 1, 2}
 			var Rotation = Quaternion{0, 0, 0.382683426, 0.923879504}
 		}
@@ -1998,7 +1961,7 @@ Level
 			var UseLifetime = false
 			var BurstCount = 0
 			var EmitCount = 10
-			var EmitRate = 3
+			var EmitRate = 5
 			var Lifetime = 1
 			var LifetimeVariance = 0.5
 			var LVelocity = Real3{-10, 10, 0}

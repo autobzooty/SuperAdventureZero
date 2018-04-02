@@ -261,6 +261,7 @@ class ObjectEmitter : ZilchComponent
   }
   
   
+  [Display]
   function ResetCount()
   {
     this.TotalEmitted = 0;
