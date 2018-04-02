@@ -39,6 +39,12 @@ Cog
 	{
 		var CollectOnCollide = true
 	}
+	Orientation 
+	{
+		var GlobalUp = Real3{0, 1, 0}
+		var LocalOrientationBasis = Quaternion{0.707106769, 0, 0, 0.707106769}
+		var DefaultBases = OrientationBases.ForwardYUpZ
+	}
 	Hierarchy 
 	{
 		Cog [Id:0x5a290e162213a6cb]
