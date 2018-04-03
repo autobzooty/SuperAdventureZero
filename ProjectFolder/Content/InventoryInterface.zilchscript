@@ -27,6 +27,9 @@ class InventoryInterface : ZilchComponent
       
       foreach (var child in this.InventoryRoot.Cog.Children)
       {
+        if (child.MarkedForDestruction)
+          continue;
+        
         var itemBase = child.ItemBase;
         
         if (itemBase != null)
@@ -38,16 +41,21 @@ class InventoryInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.IM = this.GameSession.IM;
     
     this.InventoryMenuSpace = this.GameSession.CreateNamedSpace("InventoryMenu", Archetype.DefaultSpace);
     this.InventoryMenuSpace.LoadLevel(this.InventoryMenuLevel);
+    var ime = InventoryMenuEvent();
+    ime.InventoryInterface = this;
+    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuSetup, ime);
     
     Zero.Connect(this.GameSession, Events.InventoryMenuStartedOpening, this.OnInventoryMenuStartedOpening);
     Zero.Connect(this.GameSession, Events.InventoryMenuFinishedClosing, this.OnInventoryMenuFinishedClosing);
     
+    Zero.Connect(this.Owner, Events.RequestUse, this.OnRequestUse);
     Zero.Connect(this.Owner, Events.DidEquip, this.OnDidEquip);
     Zero.Connect(this.Owner, Events.DidUnequip, this.OnDidUnequip);
     Zero.Connect(this.Owner, Events.DidCollect, this.OnDidCollect);
@@ -55,6 +63,20 @@ class InventoryInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
+  function OnRequestUse(event : ItemEvent)
+  {
+    // TODO:
+    // 
+    // check to see if you can actually use the item. if you can, then use it.
+    // otherwise, fail with feedback. set some kind of status data on the event
+    // saying what happened
+    
+    this.Use(event);
+  }
+  
+  
+  //****************************************************************************
   function OnInventoryMenuStartedOpening(event : InventoryMenuEvent)
   {
     // TODO:
@@ -68,30 +90,35 @@ class InventoryInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function OnInventoryMenuFinishedClosing(event : InventoryMenuEvent)
   {
     this.Space.TimeSpace.Paused = false;
   }
   
   
+  //****************************************************************************
   function OnDidEquip(event : EquipmentEvent)
   {
     this.RemoveFromInventory(event.Equipment.IB);
   }
   
   
+  //****************************************************************************
   function OnDidUnequip(event : EquipmentEvent)
   {
     this.AddToInventory(event.Equipment.IB);
   }
   
   
+  //****************************************************************************
   function OnDidCollect(event : CollectionEvent)
   {
     this.AddToInventory(event.Collectee.IB);
   }
   
   
+  //****************************************************************************
   function AddToInventory(item : ItemBase)
   {
     // TODO:
@@ -105,6 +132,7 @@ class InventoryInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function RemoveFromInventory(item : ItemBase)
   {
     // TODO:
@@ -116,6 +144,18 @@ class InventoryInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
+  function Use(event : ItemEvent)
+  {
+    event.User = this;
+    this.Owner.DispatchEvent(Events.DidUse, event);
+    event.Item.Owner.DispatchEvent(Events.WasUsed, event);
+    
+    this.UpdateList();
+  }
+  
+  
+  //****************************************************************************
   function UpdateList()
   {
     var ime = InventoryMenuEvent();
@@ -124,6 +164,7 @@ class InventoryInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function OnCogDestroy(event : ObjectEvent)
   {
     this.InventoryMenuSpace.Destroy();

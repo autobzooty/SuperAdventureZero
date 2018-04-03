@@ -13,10 +13,19 @@ class EquipmentInterface : ZilchComponent
   //var IM : IM;
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     //this.IM = this.GameSession.IM;
     //Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    Zero.Connect(this.Owner, Events.RequestEquip, this.OnRequestEquip);
+  }
+  
+  
+  //****************************************************************************
+  function OnRequestEquip(event : EquipmentEvent)
+  {
+    
   }
   
   
@@ -61,6 +70,7 @@ class EquipmentInterface : ZilchComponent
   //}
   
   
+  //****************************************************************************
   function AttemptEquip(equipment : EquipmentBase)
   {
     var type = equipment.SlotType;
@@ -73,6 +83,7 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function Equip(equipment : EquipmentBase, slot : EquipmentSlot)
   {
     Print("Equipping `equipment.IB.Name`....");
@@ -88,6 +99,7 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function AttemptUnequip(slot : EquipmentSlot)
   {
     if (!slot.Empty)
@@ -97,12 +109,14 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function AttemptUnequip(equipment : EquipmentBase)
   {
     this.AttemptUnequip(equipment.EquippedSlot);
   }
   
   
+  //****************************************************************************
   function Unequip(slot : EquipmentSlot)
   {
     var equipment = slot.Equipment;
@@ -120,12 +134,14 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function FailToEquip(equipment : EquipmentBase)
   {
     
   }
   
   
+  //****************************************************************************
   function FindEmptySlot(type : EquipmentType) : EquipmentSlot
   {
     // TODO:

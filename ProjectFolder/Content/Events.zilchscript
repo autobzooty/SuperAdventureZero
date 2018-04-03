@@ -240,6 +240,16 @@ class EquipmentEvent : MWEvent
   var Slot : EquipmentSlot;
 }
 
+class ItemEvent : MWEvent
+{
+  sends RequestUse : ItemEvent;
+  sends WasUsed : ItemEvent;
+  sends DidUse : ItemEvent;
+  
+  var Item : ItemBase;
+  var User : InventoryInterface;
+}
+
 class StatsEvent : MWEvent
 {
   sends StatsCalculationRequest : StatsEvent;
@@ -259,6 +269,7 @@ class CollectionEvent : ZilchEvent
 
 class InventoryMenuEvent : ZilchEvent
 {
+  sends InventoryMenuSetup : InventoryMenuEvent;
   sends InventoryMenuStartedOpening : InventoryMenuEvent;
   sends InventoryMenuFinishedOpening : InventoryMenuEvent;
   sends InventoryMenuStartedClosing : InventoryMenuEvent;
@@ -273,4 +284,5 @@ class InventoryMenuEvent : ZilchEvent
   
   var ItemList : Array[ItemBase];
   var ItemBase : ItemBase;
+  var InventoryInterface : InventoryInterface;
 }

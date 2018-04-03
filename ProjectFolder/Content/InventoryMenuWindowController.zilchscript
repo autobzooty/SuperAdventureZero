@@ -20,6 +20,7 @@ class InventoryMenuWindowController : ZilchComponent
   [Property]
   var ItemCardArchetype : Archetype = Archetype.ItemCard;
   
+  var InventoryInterface : InventoryInterface;
   var WindowHiddenFlexSizeX : Real = 0;
   var WindowShownFlexSizeX : Real = 1;
   var SpacerHiddenFlexSizeX : Real = 100;
@@ -100,8 +101,16 @@ class InventoryMenuWindowController : ZilchComponent
     
     this.CursorMovementActions = Action.Group(this.CursorPath.Cog.Actions);
     
+    Zero.Connect(this.Space, Events.InventoryMenuSetup, this.OnInventoryMenuSetup);
     Zero.Connect(this.GameSession, Events.GUIUpdate, this.OnGUIUpdate);
     Zero.Connect(this.Space, Events.InventoryUpdated, this.OnInventoryUpdated);
+  }
+  
+  
+  //****************************************************************************
+  function OnInventoryMenuSetup(event : InventoryMenuEvent)
+  {
+    this.InventoryInterface = event.InventoryInterface;
   }
   
   
@@ -114,11 +123,12 @@ class InventoryMenuWindowController : ZilchComponent
         this.AttemptHide();
       
       if (this.IM.Triggered(GameAction.NavUp))
-        this.NavUp();
+        this.AttemptNavUp();
       else if (this.IM.Triggered(GameAction.NavDown))
-        this.NavDown();
+        this.AttemptNavDown();
       
-      //if (this.IM.Triggered(GameAction.NavConfirm))
+      if (this.IM.Triggered(GameAction.NavConfirm))
+        this.AttemptUse();
     }
     else
     {
@@ -132,6 +142,7 @@ class InventoryMenuWindowController : ZilchComponent
   function OnInventoryUpdated(event : InventoryMenuEvent)
   {
     var oldCurrentItem = this.CurrentItem;
+    var oldItemCount = this.ItemCount;
     
     foreach (var child in this.ListRoot.Cog.Children)
     {
@@ -150,16 +161,31 @@ class InventoryMenuWindowController : ZilchComponent
     
     this.ItemCount = event.ItemList.Count;
     
-    var indexOfOldCurrentItem = this.FindItemIndex(oldCurrentItem);
-    
-    if (indexOfOldCurrentItem >= 0)
+    if (this.ItemCount > 0)
     {
-      this.CursorIndex = indexOfOldCurrentItem;
+      var indexOfOldCurrentItem = event.ItemList.FindFirstIndex(oldCurrentItem);
+      
+      if (indexOfOldCurrentItem >= 0)
+      {
+        if (indexOfOldCurrentItem != this.CursorIndex)
+        {
+          this.CursorIndex = indexOfOldCurrentItem;
+          this.MoveCursorToCurrentCard();
+        }
+      }
+      else
+      {
+        if (this.CursorIndex >= this.ItemCount)
+        {
+          this.CursorIndex = this.ItemCount - 1;
+          this.MoveCursorToCurrentCard();
+        }
+      }
     }
     else
     {
-      if (this.CursorIndex >= this.ItemCount)
-        this.CursorIndex = this.ItemCount - 1;
+      if (oldItemCount > 0)
+        this.HideCursor();
     }
   }
   
@@ -175,6 +201,65 @@ class InventoryMenuWindowController : ZilchComponent
   function AttemptHide()
   {
     if (this.CanHide) this.Hide();
+  }
+  
+  
+  //****************************************************************************
+  function AttemptUse()
+  {
+    var currentItem = this.CurrentItem;
+    var itemType = currentItem.Type;
+    
+    if (itemType == ItemType.Consumable)
+      this.Use(currentItem);
+    else if (itemType == ItemType.Equipment)
+      this.Equip(currentItem.EquipmentBase);
+    else
+      Print("*** ERROR *** | Attempted to use `currentItem.Name` of type `currentItem.TypeString` (invalid type)");
+  }
+  
+  
+  //****************************************************************************
+  function Use(item : ItemBase)
+  {
+    // TODO:
+    // 
+    // this is probably a somewhat poorly named function, since it just
+    // dispatches an attempt event rather than actually using the item
+    
+    var ie = ItemEvent();
+    ie.Item = item;
+    this.InventoryInterface.Owner.DispatchEvent(Events.RequestUse, ie);
+  }
+  
+  
+  //****************************************************************************
+  function Equip(equipment : EquipmentBase)
+  {
+    // TODO:
+    // 
+    // this is probably a somewhat poorly named function, since it just
+    // dispatches an attempt event rather than actually equipping the item
+    
+    var ee = EquipmentEvent();
+    ee.Equipment = equipment;
+    this.InventoryInterface.Owner.DispatchEvent(Events.RequestEquip, ee);
+  }
+  
+  
+  //****************************************************************************
+  function AttemptNavUp()
+  {
+    if (this.ItemCount > 0)
+      this.NavUp();
+  }
+  
+  
+  //****************************************************************************
+  function AttemptNavDown()
+  {
+    if (this.ItemCount > 0)
+      this.NavDown();
   }
   
   
@@ -197,15 +282,23 @@ class InventoryMenuWindowController : ZilchComponent
   //****************************************************************************
   function NavToCard(card : UiWidget)
   {
-    Print(card.Owner.InventoryItemCard.ItemBase.Name);
-    
+    // TODO:
+    // 
+    // make a proper member variable for animateTime
     this.ScrollAreaPath.UiScrollArea.ScrollToWidget(card, 0.1);
-    
-    var cursorDestination = card.WorldCenterLeft;
+    this.MoveCursorToCurrentCard();
+  }
+  
+  
+  //****************************************************************************
+  function MoveCursorToCurrentCard()
+  {
+    var cursorDestination = this.CurrentCard.WorldCenterLeft;
     this.CursorMovementActions.Cancel();
     this.CursorMovementActions = Action.Group(this.CursorPath.Cog.Actions);
       
-      Action.Property(this.CursorMovementActions, @this.CursorPath.UiWidget.WorldTranslation, cursorDestination, 0.1, Ease.QuadInOut);
+      Action.Property(this.CursorMovementActions, @this.CursorPath.UiWidget.WorldTranslation,
+        cursorDestination, 0.1, Ease.QuadInOut);
   }
   
   

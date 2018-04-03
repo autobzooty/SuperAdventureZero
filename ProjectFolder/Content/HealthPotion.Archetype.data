@@ -4,7 +4,7 @@ Cog
 	var Name = "HealthPotion"
 	Transform 
 	{
-		var Translation = Real3{-0.500000477, 2.12697411, 3.49429703}
+		var Translation = Real3{0, -0.25, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -34,6 +34,8 @@ Cog
 		var Name = "Life Potion"
 		var Description = "Restores HP"
 		var Type = ItemType.Consumable
+		var Stackable = true
+		var Uses = 1
 	}
 	Collectable 
 	{
