@@ -139,7 +139,14 @@ class InventoryInterface : ZilchComponent
     // 
     // write this
     
+    if (item.Owner.Parent != this.InventoryRoot.Cog)
+    {
+      Print("*** ERROR *** | InventoryInterface tried to remove `item.Name`, but it's attached to `item.Owner.Parent.Name`");
+      return;
+    }
+    
     item.Owner.DetachPreserveLocal();
+    this.UpdateList();
     //item.Owner.Transform.WorldTranslation = 
   }
   

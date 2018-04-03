@@ -25,7 +25,13 @@ class EquipmentInterface : ZilchComponent
   //****************************************************************************
   function OnRequestEquip(event : EquipmentEvent)
   {
+    // TODO:
+    // 
+    // if you fail to equip something, you get a reason for why. i need to put a
+    // place for that reason on the EquipmentEvent so that i can set it before
+    // returning from this function
     
+    this.AttemptEquip(event.Equipment);
   }
   
   
@@ -88,14 +94,19 @@ class EquipmentInterface : ZilchComponent
   {
     Print("Equipping `equipment.IB.Name`....");
     
-    slot.Equip(equipment);
-    
     var ee = EquipmentEvent();
     ee.Equipment = equipment;
     ee.Equipper = this;
     ee.Slot = slot;
     equipment.Owner.DispatchEvent(Events.WasEquipped, ee);
     this.Owner.DispatchEvent(Events.DidEquip, ee);
+    
+    slot.Equip(equipment);
+    
+    // TODO:
+    // 
+    // i think right here is where i'll need to dispatch out some kind of
+    // EquipmentWasChanged event or something like that
   }
   
   
