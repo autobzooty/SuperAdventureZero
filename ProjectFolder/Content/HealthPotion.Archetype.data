@@ -4,7 +4,7 @@ Cog
 	var Name = "HealthPotion"
 	Transform 
 	{
-		var Translation = Real3{0, -0.25, 0}
+		var Translation = Real3{0, 1.5, 12}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -130,7 +130,7 @@ Cog
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{1, 1, 1, 0.180000007}
+						var Color = Real4{1, 1, 1, 0.100000001}
 						var AlbedoValue = Real4{1, 1, 1, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -177,7 +177,7 @@ Cog
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{1, 1, 1, 0.180000007}
+						var Color = Real4{1, 1, 1, 0.100000001}
 						var AlbedoValue = Real4{1, 1, 1, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -253,8 +253,8 @@ Cog
 					var Name = "JuicyGoodStuff"
 					Transform 
 					{
-						var Translation = Real3{0, -0.0612500012, 0}
-						var Scale = Real3{0.875, 0.75, 0.875}
+						var Translation = Real3{0, 0, 0}
+						var Scale = Real3{0.875, 0.875, 0.875}
 						var Rotation = Quaternion{0, 0, 0, 1}
 					}
 					Model 
@@ -266,12 +266,12 @@ Cog
 						var LocalAabbCenter = Real3{0, 0, 0}
 						var LocalAabbHalfExtents = Real3{1, 1, 1}
 						var GroupSortValue = 0
-						var Material = "5a29080a1fe56a4f:Alpha"
+						var Material = "5a2c63d433d17a9d:ContainedLiquid"
 						var Mesh = "4de0354322b3572e:Cylinder"
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{1, 0, 0.216666698, 0.5}
+						var Color = Real4{0.800000012, 0.0559999943, 0.180000231, 0.800000012}
 						var AlbedoValue = Real4{1, 0, 0, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -282,6 +282,12 @@ Cog
 						var FarDistance = 30
 						var MinVisibility = 0
 						var MaxVisibility = 1
+					}
+					ContainedLiquidInputs 
+					{
+						var Fullth = 0.75
+						var YMin = -0.5
+						var YMax = 0.5
 					}
 				}
 			}

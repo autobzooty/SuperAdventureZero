@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-0.872223616, 3.8359735, 18.4960232}
+			var Translation = Real3{-0.468239188, 2.30740309, 13.5508881}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.049717702, -0.013073409, -0.000650840753, 0.998677611}
+			var Rotation = Quaternion{-0.241001517, -0.141681418, -0.0355879031, 0.959467649}
 		}
 		CameraViewport 
 		{
@@ -228,16 +228,16 @@ Level
 			var FarPlane = 200
 			var PerspectiveMode = PerspectiveMode.Perspective
 			var FieldOfView = 60
-			var Size = 2.64202309
+			var Size = 2.98867726
 		}
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 19.1973133
-			var VerticalAngle = 0.099484928
-			var HorizontalAngle = 0.0261799321
-			var LookTarget = Real3{-0.372181445, 1.92927897, -0.599820912}
+			var LookDistance = 1.83822203
+			var VerticalAngle = 0.492182642
+			var HorizontalAngle = 0.293214381
+			var LookTarget = Real3{2.98023224e-08, 1.43875027, 12}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1920,7 +1920,7 @@ Level
 	}
 	Cog [ContextId:62]
 	{
-		var Name = "Cylinder"
+		var Name = "PotionShooter"
 		Transform 
 		{
 			var Translation = Real3{15, 1, 0}
@@ -1967,7 +1967,7 @@ Level
 			var LVelocity = Real3{-10, 10, 0}
 			var RandomLVelocity = Real3{0, 0, 0}
 			var AVelocity = Real3{0, 0, 0}
-			var RandomAVelocity = Real3{0, 0, 0}
+			var RandomAVelocity = Real3{360, 360, 360}
 			var Facing = ObjectEmitterFacing.FaceVelocity
 			var EmitterLVelocityInheritance = 0
 			var EmitterAVelocityInheritance = 0
