@@ -351,23 +351,23 @@ Cog
 			}
 			Hierarchy 
 			{
-				Cog [Id:0x5ab2db153f7c7dca]
+				Cog [Id:0x5a2c0a094f06b25f]
 				{
 					var Name = "Head"
 					Transform 
 					{
-						var Translation = Real3{0, 0, 0}
+						var Translation = Real3{0, -0.399999976, 0}
 						var Scale = Real3{1, 1, 1}
 						var Rotation = Quaternion{0, 0, 0, 1}
 					}
 					Hierarchy 
 					{
-						Cog [Id:0x5ab2dbdd29ecdad8]
+						Cog [Id:0x5a2c0a0c4fd44ff1]
 						{
 							var Name = "Sphere"
 							Transform 
 							{
-								var Translation = Real3{2.98023224e-08, -2.38418579e-07, 0}
+								var Translation = Real3{2.98023224e-08, 0.399999738, 0}
 								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, -3.7252903e-08, 1}
 							}
@@ -398,12 +398,12 @@ Cog
 								var MaxVisibility = 1
 							}
 						}
-						Cog [Id:0x5ab2c409ca875506]
+						Cog [Id:0x5a2c0a0c4fd4507f]
 						{
 							var Name = "Face"
 							Transform 
 							{
-								var Translation = Real3{2.98023224e-08, -2.38418579e-07, 0}
+								var Translation = Real3{2.98023224e-08, 0.399999738, 0}
 								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, -3.7252903e-08, 1}
 							}
@@ -914,100 +914,126 @@ Cog
 					}
 					Hierarchy 
 					{
-						Cog [Id:0x5ab2b9d65f98cbb7]
+						Cog [Id:0x5a2c0ac978ffd251]
 						{
-							var Name = "Right"
+							var Name = "RightBase"
 							Transform 
 							{
-								var Translation = Real3{-0.25, 0, 0}
+								var Translation = Real3{0, 0.5, 0}
 								var Scale = Real3{1, 1, 1}
-								var Rotation = Quaternion{0, -0.087155737, 0, 0.99619472}
+								var Rotation = Quaternion{0, 0, 0, 1}
 							}
 							Hierarchy 
 							{
-								Cog [Id:0x5ab2a66d432ea029]
+								Cog [Id:0x5a2c0b56697c7426]
 								{
-									var Name = "Wedge"
+									var Name = "Right"
 									Transform 
 									{
-										var Translation = Real3{0, 0.100000001, 0.349999994}
-										var Scale = Real3{0.200000003, 0.200000003, 1.10000002}
-										var Rotation = Quaternion{0, 0, 0, 1}
+										var Translation = Real3{-0.25, -0.5, 0}
+										var Scale = Real3{0.999999881, 1, 0.999999881}
+										var Rotation = Quaternion{0, -0.0871557668, 0, 0.99619478}
 									}
-									Model 
+									Hierarchy 
 									{
-										var Visible = true
-										var ViewCulling = true
-										var VisibilityEvents = true
-										var OverrideBoundingBox = false
-										var LocalAabbCenter = Real3{0, 0, 0}
-										var LocalAabbHalfExtents = Real3{1, 1, 1}
-										var GroupSortValue = 0
-										var Material = "5828b036bd65b5d8:OpaqueFlat"
-										var Mesh = "57b24459d8122a05:Wedge"
-									}
-									MaterialInputs 
-									{
-										var Color = Real4{0.5, 0.5, 0.5, 1}
-										var AlbedoValue = Real4{0.200000003, 0.13439998, 0.119999997, 1}
-										var MetallicValue = 0
-										var RoughnessValue = 0.5
-										var SpecularValue = 0.5
-										var StippleDensity = 0.5
-										var StippleScale = 1
-										var NearDistance = 20
-										var FarDistance = 20
-										var MinVisibility = 0
-										var MaxVisibility = 1
+										Cog [Id:0x5ab2a66d432ea029]
+										{
+											var Name = "Wedge"
+											Transform 
+											{
+												var Translation = Real3{0, 0.100000001, 0.349999994}
+												var Scale = Real3{0.200000003, 0.200000003, 1.10000002}
+												var Rotation = Quaternion{0, 0, 0, 1}
+											}
+											Model 
+											{
+												var Visible = true
+												var ViewCulling = true
+												var VisibilityEvents = true
+												var OverrideBoundingBox = false
+												var LocalAabbCenter = Real3{0, 0, 0}
+												var LocalAabbHalfExtents = Real3{1, 1, 1}
+												var GroupSortValue = 0
+												var Material = "5828b036bd65b5d8:OpaqueFlat"
+												var Mesh = "57b24459d8122a05:Wedge"
+											}
+											MaterialInputs 
+											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
+												var AlbedoValue = Real4{0.200000003, 0.13439998, 0.119999997, 1}
+												var MetallicValue = 0
+												var RoughnessValue = 0.5
+												var SpecularValue = 0.5
+												var StippleDensity = 0.5
+												var StippleScale = 1
+												var NearDistance = 20
+												var FarDistance = 20
+												var MinVisibility = 0
+												var MaxVisibility = 1
+											}
+										}
 									}
 								}
 							}
 						}
-						Cog [Id:0x5ab2a4ccb459215e]
+						Cog [Id:0x5a2c0b3167f0885f]
 						{
-							var Name = "Left"
+							var Name = "LeftBase"
 							Transform 
 							{
-								var Translation = Real3{0.25, 0, 0}
+								var Translation = Real3{0, 0.5, 0}
 								var Scale = Real3{1, 1, 1}
-								var Rotation = Quaternion{0, 0.087155737, 0, 0.99619472}
+								var Rotation = Quaternion{0, 0, 0, 1}
 							}
 							Hierarchy 
 							{
-								Cog [Id:0x5ab2a66d432ea029]
+								Cog [Id:0x5a2c0bc6987adff3]
 								{
-									var Name = "Wedge"
+									var Name = "Left"
 									Transform 
 									{
-										var Translation = Real3{0, 0.100000001, 0.349999994}
-										var Scale = Real3{0.200000003, 0.200000003, 1.10000002}
-										var Rotation = Quaternion{0, 0, 0, 1}
+										var Translation = Real3{0.25, -0.5, 0}
+										var Scale = Real3{0.999999881, 1, 0.999999881}
+										var Rotation = Quaternion{0, 0.0871557668, 0, 0.99619478}
 									}
-									Model 
+									Hierarchy 
 									{
-										var Visible = true
-										var ViewCulling = true
-										var VisibilityEvents = true
-										var OverrideBoundingBox = false
-										var LocalAabbCenter = Real3{0, 0, 0}
-										var LocalAabbHalfExtents = Real3{1, 1, 1}
-										var GroupSortValue = 0
-										var Material = "5828b036bd65b5d8:OpaqueFlat"
-										var Mesh = "57b24459d8122a05:Wedge"
-									}
-									MaterialInputs 
-									{
-										var Color = Real4{0.5, 0.5, 0.5, 1}
-										var AlbedoValue = Real4{0.200000003, 0.13439998, 0.119999997, 1}
-										var MetallicValue = 0
-										var RoughnessValue = 0.5
-										var SpecularValue = 0.5
-										var StippleDensity = 0.5
-										var StippleScale = 1
-										var NearDistance = 20
-										var FarDistance = 20
-										var MinVisibility = 0
-										var MaxVisibility = 1
+										Cog [Id:0x5ab2a66d432ea029]
+										{
+											var Name = "Wedge"
+											Transform 
+											{
+												var Translation = Real3{0, 0.100000001, 0.349999994}
+												var Scale = Real3{0.200000003, 0.200000003, 1.10000002}
+												var Rotation = Quaternion{0, 0, 0, 1}
+											}
+											Model 
+											{
+												var Visible = true
+												var ViewCulling = true
+												var VisibilityEvents = true
+												var OverrideBoundingBox = false
+												var LocalAabbCenter = Real3{0, 0, 0}
+												var LocalAabbHalfExtents = Real3{1, 1, 1}
+												var GroupSortValue = 0
+												var Material = "5828b036bd65b5d8:OpaqueFlat"
+												var Mesh = "57b24459d8122a05:Wedge"
+											}
+											MaterialInputs 
+											{
+												var Color = Real4{0.5, 0.5, 0.5, 1}
+												var AlbedoValue = Real4{0.200000003, 0.13439998, 0.119999997, 1}
+												var MetallicValue = 0
+												var RoughnessValue = 0.5
+												var SpecularValue = 0.5
+												var StippleDensity = 0.5
+												var StippleScale = 1
+												var NearDistance = 20
+												var FarDistance = 20
+												var MinVisibility = 0
+												var MaxVisibility = 1
+											}
+										}
 									}
 								}
 							}
