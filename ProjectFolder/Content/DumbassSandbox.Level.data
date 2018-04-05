@@ -42,7 +42,7 @@ Level
 	Cog [ContextId:2]
 	{
 		var Name = "Renderer"
-		DeferredRenderer 
+		CustomDeferredRenderer 
 		{
 			var GeometryDebug = GeometryValue.None
 			var EditorDebugDraw = true

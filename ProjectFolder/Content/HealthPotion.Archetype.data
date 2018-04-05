@@ -83,7 +83,7 @@ Cog
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{1, 1, 1, 0.180000007}
+						var Color = Real4{1, 1, 1, 0.5}
 						var AlbedoValue = Real4{1, 1, 1, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -130,7 +130,7 @@ Cog
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{1, 1, 1, 0.100000001}
+						var Color = Real4{1, 1, 1, 0.245000005}
 						var AlbedoValue = Real4{1, 1, 1, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -177,7 +177,7 @@ Cog
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{1, 1, 1, 0.100000001}
+						var Color = Real4{1, 1, 1, 0.245000005}
 						var AlbedoValue = Real4{1, 1, 1, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -271,7 +271,7 @@ Cog
 					}
 					MaterialInputs 
 					{
-						var Color = Real4{0.800000012, 0.0559999943, 0.180000231, 0.800000012}
+						var Color = Real4{0.800000012, 0.0559999943, 0.192400038, 0.649999976}
 						var AlbedoValue = Real4{1, 0, 0, 1}
 						var MetallicValue = 0
 						var RoughnessValue = 0
@@ -285,16 +285,13 @@ Cog
 					}
 					ContainedLiquidInputs 
 					{
-						var Fullth = 0.5
+						var Fullth = 0.649999976
 						var YMin = -0.5
 						var YMax = 0.5
 					}
-					ContainedLiquidMeshYRangeFinder 
-					{
-					}
 					LiquidSurfaceNormalInput 
 					{
-						var Damping = 0.5
+						var Damping = 0.25
 						var Up = Real3{0, 1, 0}
 						var UseLocalUp = false
 						var OrientationPath = CogPath
