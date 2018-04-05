@@ -1,0 +1,62 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+// sung to the tune of the Teenage Mutant Ninja Turtles theme song
+[RunInEditor]
+class LiquidSurfaceNormalInput : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  
+  [Property][Slider(0, 1, 0.01)]
+  var Damping : Real = 0.5;
+  [Property]
+  var Up : Real3 = Real3.YAxis;
+  [Property]
+  var UseLocalUp : Boolean = false;
+  [Property]
+  var OrientationPath : CogPath = CogPath(".");
+  
+  [ShaderInput] var SurfaceNormal : Real3 = Real3.YAxis;
+  var Accumulator : Real3 = Real3.Zero;
+  var PreviousWorldTranslation : Real3;
+  var Orientation : Orientation;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    if (this.OrientationPath.Cog != null)
+      this.Orientation = this.OrientationPath.Orientation;
+    
+    this.Up = Math.Normalize(this.Up);
+    this.PreviousWorldTranslation = this.Transform.WorldTranslation;
+    
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    var currentWorldTranslation = this.Transform.WorldTranslation;
+    var delta = currentWorldTranslation - this.PreviousWorldTranslation;
+    this.Accumulator += delta;
+    this.Accumulator *= (1 - this.Damping);
+    
+    var up = this.Up;
+    if (this.UseLocalUp) up = this.Orientation.LocalUp;
+    
+    this.SurfaceNormal = Math.Normalize(up + this.Accumulator);
+    
+    this.PreviousWorldTranslation = currentWorldTranslation;
+  }
+}
+
+// OPTIMIZATION:
+// 
+// combine this with ContainedLiquidMeshYRangeFinder

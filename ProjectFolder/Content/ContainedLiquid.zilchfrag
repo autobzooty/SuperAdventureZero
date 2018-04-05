@@ -4,6 +4,7 @@ struct ContainedLiquidPixel
  [Input][Slider(0, 1, 0.01)] var Fullth = 0.5;
  [Input] var YMin : Real = -0.5;
  [Input] var YMax : Real = 0.5;
+ [Input] var SurfaceNormal : Real3 = Real3.YAxis;
  
  [BuiltInInput] var ViewToWorld : Real4x4;
  
@@ -15,9 +16,11 @@ struct ContainedLiquidPixel
  
  function Main()
  {
+   var normal = Math.Normalize(this.SurfaceNormal);
+   
    var worldPos = Math.MultiplyPoint(this.ViewToWorld, this.ViewPosition);
    var offset = worldPos - this.ObjectWorldPosition;
-   var interpolant = ((offset.Y - this.YMin) / (this.YMax - this.YMin) > this.Fullth) as Real;
+   var interpolant = ((Math.Dot(offset, normal) - this.YMin) / (this.YMax - this.YMin) > this.Fullth) as Real;
    this.Color.W = Math.Lerp(this.Color.W, 0.0, interpolant);
  }
 }

@@ -4,7 +4,7 @@ Cog
 	var Name = "HealthPotion"
 	Transform 
 	{
-		var Translation = Real3{0, 1.5, 12}
+		var Translation = Real3{0, 0, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -285,9 +285,33 @@ Cog
 					}
 					ContainedLiquidInputs 
 					{
-						var Fullth = 0.75
+						var Fullth = 0.5
 						var YMin = -0.5
 						var YMax = 0.5
+					}
+					ContainedLiquidMeshYRangeFinder 
+					{
+					}
+					LiquidSurfaceNormalInput 
+					{
+						var Damping = 0.5
+						var Up = Real3{0, 1, 0}
+						var UseLocalUp = false
+						var OrientationPath = CogPath
+						{
+							var Path = "."
+							var ErrorOnResolveToNull = false
+							var ErrorOnPathCantCompute = false
+							var ErrorOnDirectLinkFail = false
+							var UpdateCogOnPathChange = true
+							var UpdatePathOnCogChange = true
+							var UpdateCogOnInitialize = true
+							var ResolvedNullErrorOccurred = false
+							var Cog = 4294967293
+							var PathPreference0 = CogPathPreference.CogRelative
+							var PathPreference1 = CogPathPreference.SpaceRelative
+							var PathPreference2 = CogPathPreference.Absolute
+						}
 					}
 				}
 			}
