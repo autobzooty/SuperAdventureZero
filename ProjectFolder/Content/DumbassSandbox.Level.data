@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-0.802811265, 4.64784527, 8.13186264}
+			var Translation = Real3{14.3711052, 5.2500391, 4.23716068}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0650088042, -0.293359846, -0.0199993495, 0.953579605}
+			var Rotation = Quaternion{-0.129661128, 0.113953859, 0.0150023019, 0.984874308}
 		}
 		CameraViewport 
 		{
@@ -228,16 +228,16 @@ Level
 			var FarPlane = 200
 			var PerspectiveMode = PerspectiveMode.Perspective
 			var FieldOfView = 60
-			var Size = 2.98867726
+			var Size = 2.44691372
 		}
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 2.93145275
-			var VerticalAngle = 0.136136234
-			var HorizontalAngle = 0.596903503
-			var LookTarget = Real3{0.829666615, 4.25, 5.7297492}
+			var LookDistance = 16.4170322
+			var VerticalAngle = 0.261799306
+			var HorizontalAngle = -0.230383471
+			var LookTarget = Real3{10.75, 1.00100005, -11.2014999}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1997,6 +1997,1663 @@ Level
 			var Facing = ObjectEmitterFacing.FaceVelocity
 			var EmitterLVelocityInheritance = 0
 			var EmitterAVelocityInheritance = 0
+		}
+	}
+	Cog [ContextId:65]
+	{
+		var Name = "Pux"
+		Transform 
+		{
+			var Translation = Real3{2.50000024, 0.500999987, -12.5}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5a2eb0f22fc49f71][ContextId:66]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{0, 0.5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:67]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:68]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 0.199999988, 0.199999988, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 68
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb0f22fc49fab][ContextId:69]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{1.5, 0.5, 2.59699988}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:70]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:71]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 0.600000024, 0.199999988, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 71
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb0fc2082a826][ContextId:72]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{3, 0.5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:73]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:74]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 0.199999988, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 74
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb0fc2082b7d4][ContextId:75]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{4.5, 0.5, 2.59699988}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:76]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:77]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.600000024, 1, 0.199999988, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 77
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb08421810457][ContextId:78]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{6, 0.5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:79]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:80]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.199999988, 1, 0.199999988, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 80
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb084218113f5][ContextId:81]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{7.5, 0.5, 2.59699988}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:82]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:83]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.199999988, 1, 0.600000024, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 83
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb0842180e5df][ContextId:84]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{9, 0.5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:85]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:86]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.199999988, 1, 1, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 86
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb0842180f458][ContextId:87]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{10.5, 0.5, 2.59699988}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:88]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:89]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.199999988, 0.600000024, 1, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 89
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb08a2227cebc][ContextId:90]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{12, 0.5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:91]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:92]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.199999988, 0.199999988, 1, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 92
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb08a2227de7e][ContextId:93]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{13.5, 0.5, 2.59699988}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:94]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:95]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.600000024, 0.199999988, 1, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 95
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb08a2227c04a][ContextId:96]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{15, 0.5, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:97]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:98]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 0.199999988, 1, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 98
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a2eb08a2227ecfe][ContextId:99]
+			{
+				var Name = "Puck"
+				Transform 
+				{
+					var Translation = Real3{16.5, 0.5, 2.59699988}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				RigidBody 
+				{
+					var Velocity = Real3{0, 0, 0}
+					var AngularVelocity = Real3{0, 0, 0}
+					var DynamicState = RigidBodyDynamicState.Dynamic
+					var AllowSleep = true
+					var Asleep = false
+					var RotationLocked = false
+					var Mode2D = Mode2DStates.InheritFromSpace
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a2eb7f895085c20][ContextId:100]
+					{
+						var Name = "Glass"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{3, 1, 3}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a29080a1fe56a4f:Alpha"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						CylinderCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var Radius = 0.5
+							var Height = 1
+							var Direction = AxisDirection.Y
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 1, 1, 0.25}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+					}
+					Cog [Id:0x5a2eb471850115a5][ContextId:101]
+					{
+						var Name = "Liquid"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{2.79999995, 0.800000012, 2.79999995}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a2c63d433d17a9d:ContainedLiquid"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{1, 0.199999988, 0.600000024, 0.669999957}
+							var AlbedoValue = Real4{0.5, 0.5, 0.5, 1}
+							var MetallicValue = 0.5
+							var RoughnessValue = 0.5
+							var SpecularValue = 0.5
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+						}
+						ContainedLiquidInputs 
+						{
+							var Fullth = 0.5
+							var YMin = -0.5
+							var YMax = 0.5
+						}
+						ContainedLiquidMeshYRangeFinder 
+						{
+						}
+						LiquidSurfaceNormalInput 
+						{
+							var Viscosity = 0.359999985
+							var AccelerationScalar = 8
+							var Up = Real3{0, 1, 0}
+							var UseLocalUp = false
+							var OrientationPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 101
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

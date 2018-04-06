@@ -291,7 +291,8 @@ Cog
 					}
 					LiquidSurfaceNormalInput 
 					{
-						var Damping = 0.25
+						var Viscosity = 0.359999985
+						var AccelerationScalar = 8
 						var Up = Real3{0, 1, 0}
 						var UseLocalUp = false
 						var OrientationPath = CogPath
