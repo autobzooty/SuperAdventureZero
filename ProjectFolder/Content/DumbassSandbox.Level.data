@@ -42,7 +42,17 @@ Level
 	Cog [ContextId:2]
 	{
 		var Name = "Renderer"
-		CustomDeferredRenderer 
+		RenderScheduler 
+		{
+			var UseViewportScaling = false
+			var ViewportScale_ = 8
+			var ViewportScale = 8
+			var PixelWidth_ = 1
+			var PixelWidth = 1
+			var PixelHeight_ = 2
+			var PixelHeight = 2
+		}
+		ScheduledDeferredRenderer 
 		{
 			var GeometryDebug = GeometryValue.None
 			var EditorDebugDraw = true
@@ -175,9 +185,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{14.3711052, 5.2500391, 4.23716068}
+			var Translation = Real3{-0.614811897, 2.54414558, 6.71824265}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.129661128, 0.113953859, 0.0150023019, 0.984874308}
+			var Rotation = Quaternion{-0.078381151, -0.0443551242, -0.00349081401, 0.995930135}
 		}
 		CameraViewport 
 		{
@@ -234,10 +244,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 16.4170322
-			var VerticalAngle = 0.261799306
-			var HorizontalAngle = -0.230383471
-			var LookTarget = Real3{10.75, 1.00100005, -11.2014999}
+			var LookDistance = 6.67467308
+			var VerticalAngle = 0.157079116
+			var HorizontalAngle = 0.0890138969
+			var LookTarget = Real3{-0.0287626386, 1.5, 0.151845843}
 			var MoveSensitivity = 1
 		}
 	}
