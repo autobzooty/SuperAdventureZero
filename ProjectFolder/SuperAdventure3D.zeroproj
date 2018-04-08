@@ -8,7 +8,7 @@ Cog
 		var ProjectOwner = ""
 		var DefaultLevel = "Level"
 		var ProjectSpace = "Space"
-		var AutoTakeProjectScreenshot = true
+		var AutoTakeProjectScreenshot = false
 		var Guid = 0x7367156449672124
 	}
 	WindowLaunchSettings 
@@ -27,9 +27,14 @@ Cog
 		var Tags = ""
 		var ExperimentalBranchName = ""
 		var MajorVersion = 1
-		var MinorVersion = 3
+		var MinorVersion = 4
 		var PatchVersion = 0
+<<<<<<< HEAD
 		var RevisionId = 643
 		var ShortChangeSet = "d97d87b14c9d"
+=======
+		var RevisionId = 881
+		var ShortChangeSet = "dd05d1b438cd"
+>>>>>>> master
 	}
 }

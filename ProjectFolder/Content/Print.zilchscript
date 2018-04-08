@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class Print
 {
   [Static] var PrintToZeroConsole : Boolean = true;
@@ -14,6 +21,6 @@ class Print
   
   [Static] function Helper(str : String)
   {
-    Console.WriteLine(String.FormatC("%8d | `str`", Main.Frame));
+    Console.WriteLine(String.FormatC("%8d | `str`", GameFlowController.Frame));
   }
 }

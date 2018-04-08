@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "PlayerMover"
+		var ResourceId = 0x5ac2d2d58f44d72c
+	}
+}

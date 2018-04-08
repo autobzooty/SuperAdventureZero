@@ -1,0 +1,321 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class ObjectEmitter : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  
+  
+  [Property]
+  var Archetype : Archetype;                      // archetype to emit
+  [Property]
+  var StartActive : Boolean = true;               // whether this emitter should be active on Initialize
+  [Property]
+  var DestroyWhenExhausted : Boolean = true;      // whether this emitter should destroy itself when it's done emitting
+  [Property]
+  var UseLifetime : Boolean = true;               // whether this emitter should control the lifetime of its objects
+  [Property]
+  var BurstCount : Integer = 0;                   // number emitted on Initialize (0 for none)
+  [Property]
+  var EmitCount : Integer = 0;                    // number to emit over time (0 for infinite)
+  [Property]
+  var EmitRate : Real = 120;                      // number emitted per second (0 for none)
+  //[Property]
+  //var Size : Real = 1;                          // i'll add this eventually, maybe
+  //[Property]
+  //var SizeVariance : Real = 0;                  // i'll add this eventually, maybe
+  [Property]
+  var Lifetime : Real = 1;                        // how long will each object live?
+  [Property]
+  var LifetimeVariance : Real = 0.5;              // random variance from Lifetime
+  [Property]
+  var LVelocity : Real3 = Real3(0, 5, 0);         // starting velocity for each object
+  [Property]
+  var RandomLVelocity : Real3 = Real3(5, 3, 5);   // random variance from LVelocity
+  [Property]
+  var AVelocity : Real3 = Real3.Zero;             // starting angular velocity for each object (deg/sec)
+  [Property]
+  var RandomAVelocity : Real3 = Real3(0, 0, 360); // random variance from AVelocity
+  [Property]
+  var Facing : ObjectEmitterFacing;               // how should these objects be oriented initially?
+  //[Property]
+  //var EmitterSize : Real3 = Real3.Zero;         // i'll add this eventually, maybe
+  //[Property]
+  //var Fill : Real = 1;                          // i'll add this eventually, maybe
+  [Property]
+  var EmitterLVelocityInheritance : Real = 0;     // how much of the emitter's velocity should the objects inherit?
+  [Property]
+  var EmitterAVelocityInheritance : Real = 0;     // how much of the emitter's angular velocity should the objects inherit?
+  //[Property]
+  //var FastMovingEmitter : Boolean = false;      // i'll add this eventually, maybe
+  // if i do add this, i should also add a function that can be called to disable
+  // this for one frame for the sake of making teleporting emitters look better
+  
+  // also add stuff for controlling object color
+  
+  var TotalEmitted = 0;
+  var ReserveAmount = 0.0;
+  
+  var Exhausted : Boolean
+  {
+    get
+    {
+      return (this.TotalEmitted >= this.BurstCount + this.EmitCount) && (this.EmitRate == 0 || this.EmitCount != 0);
+    }
+  }
+  
+  var Active_ : Boolean = false;
+  var Active : Boolean
+  {
+    get { return this.Active_; }
+    
+    set
+    {
+      if (value && !this.Active_ && !this.Exhausted)
+      {
+        if (this.BurstCount > 0)
+        {
+          this.Active_ = true;
+          this.Emit(this.BurstCount);
+        }
+        if (this.EmitRate > 0)
+        {
+          this.Active_ = true;
+          Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
+        }
+      }
+      else if (!value && this.Active)
+      {
+        this.Active_ = false;
+        Zero.Disconnect(this.Space, Events.StandardUpdate, this);
+      }
+    }
+  }
+  
+  var RigidBody_ : RigidBody;
+  var CheckedForRigidBody = false;
+  var RigidBody : RigidBody
+  {
+    get
+    {
+      if (!this.CheckedForRigidBody)
+      {
+        this.CheckedForRigidBody = true;
+        
+        this.RigidBody_ = RigidBody.Find(this.Owner);
+      }
+      
+      return this.RigidBody_;
+    }
+  }
+  
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.Active = this.StartActive;
+  }
+  
+  
+  function OnStandardUpdate(event : UpdateEvent)
+  {
+    // TODO: (very low priority)
+    // 
+    // sometimes this is one frame off when it emits
+    
+    var ratePerFrame = this.EmitRate * event.Dt;
+    this.ReserveAmount += ratePerFrame;
+    
+    var count = this.ReserveAmount as Integer;
+    
+    if (count > 0)
+      this.Emit(count);
+    
+    this.ReserveAmount -= count;
+  }
+  
+  
+  function Emit(count : Integer)
+  {
+    this.TotalEmitted += count;
+    // TODO:
+    // 
+    // fix this so that count can't make TotalEmitted exceed the total number of
+    // objects that this emitter should be able to make
+    
+    for (var i = 0; i < count; ++i)
+    {
+      var pos = this.Transform.WorldTranslation;
+      var object = this.Space.CreateAtPosition(this.Archetype, pos);
+      
+      var xLVel = PRNG.RNG.Variance(this.LVelocity.X, this.RandomLVelocity.X);
+      var yLVel = PRNG.RNG.Variance(this.LVelocity.Y, this.RandomLVelocity.Y);
+      var zLVel = PRNG.RNG.Variance(this.LVelocity.Z, this.RandomLVelocity.Z);
+      var lVel = Real3(xLVel, yLVel, zLVel);
+      
+      var rb = object.RigidBody;
+      if (rb != null)
+      {
+        var xAVel = PRNG.RNG.Variance(this.AVelocity.X, this.RandomAVelocity.X);
+        var yAVel = PRNG.RNG.Variance(this.AVelocity.Y, this.RandomAVelocity.Y);
+        var zAVel = PRNG.RNG.Variance(this.AVelocity.Z, this.RandomAVelocity.Z);
+        var aVel = Math.ToRadians(Real3(xAVel, yAVel, zAVel));
+        
+        var thisRigidBody = this.RigidBody;
+        
+        if (thisRigidBody != null)
+        {
+          lVel += this.EmitterLVelocityInheritance * thisRigidBody.Velocity;
+          aVel += this.EmitterAVelocityInheritance * thisRigidBody.AngularVelocity;
+        }
+        
+        rb.Velocity        = lVel;
+        rb.AngularVelocity = aVel;
+      }
+      
+      var tf = object.Transform;
+      var orientation = object.Orientation;
+      
+      if (this.Facing == ObjectEmitterFacing.Random)
+      {
+        tf.WorldRotation = PRNG.RNG.Rotation();
+      }
+      else if (orientation != null)
+      {
+        var direction = Math.Normalize(lVel);
+        
+        if      (this.Facing == ObjectEmitterFacing.FaceVelocity)
+        {
+          orientation.LookAtDirection(direction);
+        }
+        else if (this.Facing == ObjectEmitterFacing.FaceVelocityRandomUp)
+        {
+          var angle = PRNG.RNG.Variance(0, Math.Pi);
+          
+          var other = Real3.XAxis;
+          
+          if (direction == other)
+            other = Real3.YAxis;
+          
+          var perpendicular = Math.Normalize(Math.Cross(direction, other));
+          var up = Math.RotateVector(perpendicular, direction, angle);
+          
+          orientation.LookAtDirectionWithUp(direction, up);
+        }
+        else if (this.Facing == ObjectEmitterFacing.FaceAway)
+        {
+          orientation.LookAtDirection(-direction);
+        }
+        else if (this.Facing == ObjectEmitterFacing.FaceAwayRandomUp)
+        {
+          var angle = PRNG.RNG.Variance(0, Math.Pi);
+          
+          var other = Real3.XAxis;
+          
+          if (direction == other)
+            other = Real3.YAxis;
+          
+          var perpendicular = Math.Normalize(Math.Cross(direction, other));
+          var up = Math.RotateVector(perpendicular, direction, angle);
+          
+          orientation.LookAtDirectionWithUp(-direction, up);
+        }
+      }
+      
+      if (this.UseLifetime)
+      {
+        var lifetime = PRNG.RNG.Variance(this.Lifetime, this.LifetimeVariance);
+        
+        var killSeq = Action.Sequence(object.Actions);
+          
+          Action.Delay(killSeq, lifetime);
+          Action.Call(killSeq, object.Destroy);
+      }
+    }
+    
+    if (this.Exhausted)
+    {
+      this.Active = false;
+      
+      if (this.DestroyWhenExhausted)
+      {
+        this.Owner.Destroy();
+      }
+    }
+  }
+  
+  
+  function Activate()
+  {
+    this.Active = true;
+  }
+  
+  
+  function Deactivate()
+  {
+    this.Active = false;
+  }
+  
+  
+  [Display]
+  function ResetCount()
+  {
+    this.TotalEmitted = 0;
+  }
+}
+
+
+enum ObjectEmitterFacing
+{
+  // no facing difference from archetype
+  Default,
+  // random facing for each object
+  Random,
+  // face the direction of velocity with default up
+  FaceVelocity,
+  // face the direction of velocity with random up
+  FaceVelocityRandomUp,
+  // face away from the direction of velocity with default up
+  FaceAway,
+  // face away from the direction of velocity with random up
+  FaceAwayRandomUp,
+}
+
+
+class RigidBodyExtensions
+{
+  [Extension(typeid(RigidBody))][Static]
+  function Find(cog : Cog) : RigidBody
+  {
+    var rb = cog.RigidBody;
+    
+    if (rb != null)
+      return rb;
+    
+    var stack = Array[Cog]();
+    stack.Add(cog.FindRoot());
+    
+    for (var i = 0; i < stack.Count; ++i)
+    {
+      var node = stack[i];
+      
+      rb = node.RigidBody;
+      
+      if (rb == null)
+      {
+        foreach (var child in node.Children)
+          stack.Add(child);
+      }
+      else
+      {
+        return rb;
+      }
+    }
+    
+    return null;
+  }
+}

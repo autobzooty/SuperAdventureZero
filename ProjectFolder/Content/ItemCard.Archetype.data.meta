@@ -1,14 +1,6 @@
 [Version:1]
 DataContent 
 {
-	ContentTags 
-	{
-		var Tags = Array
-		{
-			"Archetype"
-			"Cog"
-		}
-	}
 	DataBuilder 
 	{
 		var Name = "ItemCard"
@@ -16,5 +8,14 @@ DataContent
 		var LoaderType = "Cog"
 		var Version = 0
 		var ShowInEditor = true
+	}
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"Archetype"
+			"Ui"
+			"Cog"
+		}
 	}
 }

@@ -8,9 +8,15 @@ Cog
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
+	ItemBase 
+	{
+		var Name = "Horned Helmet"
+		var Description = "It's got horns, it's a helmet, there's a pool in the back"
+		var Type = ItemType.Equipment
+	}
 	EquipmentBase 
 	{
-		var SlotType = EquipmentSlotType.Head
+		var SlotType = EquipmentType.Head
 		var StatBlock = StatBlock
 		{
 			var HP = StatMod
@@ -46,6 +52,7 @@ Cog
 				var Dark = 0
 			}
 		}
+		var VisibleOnEquip = true
 	}
 	Hierarchy 
 	{
@@ -88,7 +95,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab5616a23f064be]
@@ -130,7 +142,12 @@ Cog
 								var MetallicValue = 1
 								var RoughnessValue = 0.200000003
 								var SpecularValue = 1
+								var StippleDensity = 0.5
 								var StippleScale = 1
+								var NearDistance = 20
+								var FarDistance = 30
+								var MinVisibility = 0
+								var MaxVisibility = 1
 							}
 						}
 					}
@@ -174,7 +191,12 @@ Cog
 								var MetallicValue = 1
 								var RoughnessValue = 0.200000003
 								var SpecularValue = 1
+								var StippleDensity = 0.5
 								var StippleScale = 1
+								var NearDistance = 20
+								var FarDistance = 30
+								var MinVisibility = 0
+								var MaxVisibility = 1
 							}
 						}
 					}
@@ -220,7 +242,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.150000006
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aef9c0]
@@ -251,7 +278,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aef9eb]
@@ -282,7 +314,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefa13]
@@ -313,7 +350,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefa3f]
@@ -344,7 +386,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefa69]
@@ -375,7 +422,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefa91]
@@ -406,7 +458,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefab8]
@@ -437,7 +494,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefae1]
@@ -468,7 +530,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefb0d]
@@ -499,7 +566,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 				Cog [Id:0x5ab572e6d9aefb35]
@@ -530,7 +602,12 @@ Cog
 						var MetallicValue = 1
 						var RoughnessValue = 0.100000001
 						var SpecularValue = 1
+						var StippleDensity = 0.5
 						var StippleScale = 1
+						var NearDistance = 20
+						var FarDistance = 30
+						var MinVisibility = 0
+						var MaxVisibility = 1
 					}
 				}
 			}

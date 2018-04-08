@@ -4,12 +4,18 @@ GameSession
 	var Name = ""
 	CustomGameSetup 
 	{
-		var MainSpaceArchetype = "576f215c0825de61:Space"
+		var ConsoleSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
 		var SetupSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
-		var StartingLevel = "576f215c0825c3a8:Level"
-		var ChosenLevel = "576f215c0825c3a8:Level"
+		var DataSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
+		var MenuSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
+		var DialogueSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
+		var MainSpaceArchetype = "576f215c0825de61:Space"
+		var StartingLevel = "5a8bbaedbdb20449:DumbassSandbox"
+		var ChosenLevel = "5a8bbaedbdb20449:DumbassSandbox"
+		var ConsoleLevel = "null"
 		var SetupLevel = "5ab90cdb31e5b884:SetupLevel"
-		var LevelChoice = EditorStartingLevelChoice.EditorLevel
+		var DialogueLevel = "null"
+		var LevelChoice = EditorStartingLevelChoice.ChosenLevel
 	}
 	IM 
 	{
@@ -41,6 +47,9 @@ GameSession
 		var ExtraHostInfoTimeout = 4
 	}
 	PRNG 
+	{
+	}
+	GameFlowController 
 	{
 	}
 }

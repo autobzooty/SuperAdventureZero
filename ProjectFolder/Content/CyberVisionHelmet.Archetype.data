@@ -11,16 +11,17 @@ Cog
 	ItemBase 
 	{
 		var Name = "Cyber Vision Helmet"
+		var Description = "Shows things as they really are."
 		var Type = ItemType.Equipment
 	}
 	EquipmentBase 
 	{
-		var SlotType = EquipmentSlotType.Head
+		var SlotType = EquipmentType.Head
 		var StatBlock = StatBlock
 		{
 			var HP = StatMod
 			{
-				var Addend = 0
+				var Addend = 10
 				var Bonus = 0
 			}
 			var Evasion = StatMod
@@ -43,8 +44,8 @@ Cog
 			{
 				var Heat = 0
 				var Cold = 0
-				var Electricity = 0
-				var Psychic = 0
+				var Electricity = -0.5
+				var Psychic = 0.5
 				var Biological = 0
 				var Poison = 0
 				var Holy = 0

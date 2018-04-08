@@ -1,0 +1,50 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class ContainedLiquidMeshYRangeFinder : ZilchComponent
+{
+  [Dependency] var Transform : Transform;
+  [Dependency] var Model : Model;
+  
+  
+  [ShaderInput] var YMin : Real;
+  [ShaderInput] var YMax : Real;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    var ymin = Real.PositiveMax;
+    var ymax = Real.NegativeMin;
+    
+    var vertices = this.Model.Mesh.Vertices;
+    var count = vertices.VertexCount;
+    
+    for (var i = 0; i < count; ++i)
+    {
+      var localPosition = vertices.GetVertexData(i, VertexSemantic.Position).XYZ;
+      var worldPosition = this.Transform.TransformPoint(localPosition);
+      var y = worldPosition.Y;
+      
+      if (y < ymin)
+        ymin = y;
+      if (y > ymax)
+        ymax = y;
+    }
+    
+    this.YMin = ymin - this.Transform.WorldTranslation.Y;
+    this.YMax = ymax - this.Transform.WorldTranslation.Y;
+  }
+}

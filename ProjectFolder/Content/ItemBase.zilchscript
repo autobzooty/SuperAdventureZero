@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class ItemBase : ZilchComponent
 {
   [Property]
@@ -6,11 +13,25 @@ class ItemBase : ZilchComponent
   var Description = "Dunno but probably cool";
   [Property]
   var Type : ItemType = ItemType.Consumable;
+  [Property]
+  var Stackable : Boolean = true; // whether this item can be stacked in menus (if consumable; meaningless otherwise)
+  [Property]
+  var Uses : Integer = 0; // how many times this item can be used (0 for infinite)
   
   var InitialGhosts = HashMap[Collider, Boolean]();
   var InitialSendsEventses = HashMap[Collider, Boolean]();
   var InitialDynamicStates = HashMap[RigidBody, RigidBodyDynamicState]();
   var InitialVisibles = HashMap[Graphical, Boolean]();
+  
+  var EquipmentBase_ : EquipmentBase;
+  var EquipmentBase : EquipmentBase
+  {
+    get
+    {
+      if (this.EquipmentBase_ == null) this.EquipmentBase_ = this.Owner.EquipmentBase;
+      return this.EquipmentBase_;
+    }
+  }
   
   var TypeString : String
   {
@@ -22,36 +43,79 @@ class ItemBase : ZilchComponent
       if (this.Type == ItemType.Consumable)
         return "Consumable";
       if (this.Type == ItemType.Equipment)
-        return "Equipment (ERROR)";
+        return "Equipment: `this.EquipmentBase.TypeString`";
       
       return "Unknown (ERROR)";
     }
   }
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.PrepareValuesRecursively(this.Owner);
     
     Zero.Connect(this.Owner, Events.WasCollected, this.OnWasCollected);
+    // TODO: WasDropped
+    Zero.Connect(this.Owner, Events.WasUsed, this.OnWasUsed);
   }
   
   
+  //****************************************************************************
   function OnWasCollected(event : CollectionEvent)
   {
     this.ClearValuesRecursively(this.Owner);
   }
   
   
-  // TODO:
-  // 
-  // make this
+  //****************************************************************************
   function OnWasDropped(/* some event that i need to make later */)
   {
+    // TODO:
+    // 
+    // make this
+    
     this.RetrieveValuesRecursively(this.Owner);
   }
   
   
+  //****************************************************************************
+  function OnWasUsed(event : ItemEvent)
+  {
+    // TODO:
+    // 
+    // any messages / feedback / effects / debug text / etc. that occurs as a
+    // result of using this item should be done on the user's side on the DidUse
+    // event rather than right here
+    
+    Print("Used `this.Name`!");
+    
+    if (this.Uses > 0)
+    {
+      --this.Uses;
+      
+      if (this.Uses <= 0)
+        this.UseUp(event);
+    }
+  }
+  
+  
+  //****************************************************************************
+  function UseUp(event : ItemEvent)
+  {
+    // TODO:
+    // 
+    // ultimately i'm sure i'll want more feedback and stuff here. what i'll
+    // want to do is dispatch an event to this item that says it's about to
+    // be destroyed because it was used up, and if the event is not handled,
+    // then i can destroy it here
+    
+    Print("`this.Name` was used up!");
+    this.Owner.Destroy();
+  }
+  
+  
+  //****************************************************************************
   function PrepareValuesRecursively(root : Cog)
   {
     var collider = root.Collider;
@@ -79,6 +143,7 @@ class ItemBase : ZilchComponent
   }
   
   
+  //****************************************************************************
   function RetrieveValuesRecursively(root : Cog)
   {
     var collider = root.Collider;
@@ -106,6 +171,7 @@ class ItemBase : ZilchComponent
   }
   
   
+  //****************************************************************************
   function ClearValuesRecursively(root : Cog)
   {
     var collider = root.Collider;
@@ -133,6 +199,7 @@ class ItemBase : ZilchComponent
   }
   
   
+  //****************************************************************************
   function ShowRecursively(root : Cog)
   {
     var graphical = root.Graphical;
@@ -145,6 +212,7 @@ class ItemBase : ZilchComponent
   }
   
   
+  //****************************************************************************
   function HideRecursively(root : Cog)
   {
     var graphical = root.Graphical;

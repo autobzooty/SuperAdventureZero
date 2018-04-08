@@ -1,24 +1,51 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class CustomGameSetup : ZilchComponent
 {
-  [Property]
-  // The MainSpace is where the game takes place
-  var MainSpaceArchetype : Archetype = Archetype.Space;
-  [Property]
+  [Property][Group("Archetypes")]
+  var ConsoleSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
   // This space exists to be initialized and then destroyed immediately. It's useful
   // for setting things up, like the input manager, for instance
   var SetupSpaceArchetype : Archetype = Archetype.DefaultSpace;
-  [Property]
+  [Property][Group("Archetypes")]
+  var DataSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
+  var MenuSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
+  var InventoryMenuSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
+  var DialogueSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property][Group("Archetypes")]
+  // The MainSpace is where the game takes place
+  var MainSpaceArchetype : Archetype = Archetype.Space;
+  [Property][Group("Levels")]
   var StartingLevel : Level = Level.Level;
-  [Property]
+  [Property][Group("Levels")]
   var ChosenLevel : Level = Level.Level;
-  [Property]
+  [Property][Group("Levels")]
+  var ConsoleLevel : Level;
+  [Property][Group("Levels")]
   // This level will only be loaded once into the SetupSpace at the very beginning
   // of the game, and then that space will be destroyed
   var SetupLevel : Level = Level.SetupLevel;
+  [Property][Group("Levels")]
+  var DialogueLevel : Level;
   [Property]
   var LevelChoice : EditorStartingLevelChoice = EditorStartingLevelChoice.EditorLevel;
   
-  var MainSpace : Space;
+  var ConsoleSpace : Space;       // the cool custom console goes here!
+  var DataSpace : Space;          // persistent data goes here. no level needed, just make the objects
+  var MenuSpace : Space;          // title menus, etc., go here
+  var InventoryMenuSpace : Space; // the inventory menu goes here
+  var DialogueSpace : Space;      // all dialogue boxes go here
+  var MainSpace : Space;          // the game takes place here
+  var HudSpace : Space;           // if the game currently needs a hud, it's loaded here, and null otherwise
   
   var LevelToLoad : Level
   {
@@ -42,6 +69,9 @@ class CustomGameSetup : ZilchComponent
   
   function OnGameSetup(event : GameEvent)
   {
+    this.ConsoleSpace = this.GameSession.CreateNamedSpace("ConsoleSpace", this.ConsoleSpaceArchetype);
+    this.ConsoleSpace.LoadLevel(this.ConsoleLevel);
+    
     var setupSpace = this.GameSession.CreateNamedSpace("SetupSpace", this.SetupSpaceArchetype);
     setupSpace.LoadLevel(this.SetupLevel);
     
@@ -49,6 +79,22 @@ class CustomGameSetup : ZilchComponent
     
     // but this one must be destroyed, for it is only for setup
     setupSpace.Destroy();
+    
+    // no level needed
+    this.DataSpace = this.GameSession.CreateNamedSpace("DataSpace", this.DataSpaceArchetype);
+    
+    // TODO:
+    // 
+    // should this be created here? or should it be like how i'm doing the hud, created and
+    // destroyed dynamically as needed? the world may never know
+    this.MenuSpace = this.GameSession.CreateNamedSpace("MenuSpace", this.MenuSpaceArchetype);
+    
+    // the InventoryMenuSpace is explicitly left out of being created here, because it
+    // is managed by the InventoryInterface. it's a member here only so that there's a
+    // globally-accessible reference to it
+    
+    this.DialogueSpace = this.GameSession.CreateNamedSpace("DialogueSpace", this.DialogueSpaceArchetype);
+    this.DialogueSpace.LoadLevel(this.DialogueLevel);
     
     this.MainSpace = this.GameSession.CreateNamedSpace("MainSpace", this.MainSpaceArchetype);
     this.MainSpace.LoadLevel(this.LevelToLoad);

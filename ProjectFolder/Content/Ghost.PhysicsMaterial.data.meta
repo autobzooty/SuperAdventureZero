@@ -3,9 +3,9 @@ DataContent
 {
 	DataBuilder 
 	{
-		var Name = "TranslucentFlat"
-		var ResourceId = 0x5a86122c8cf069bc
-		var LoaderType = "Material"
+		var Name = "Ghost"
+		var ResourceId = 0x5a2935c7a1ba7d2d
+		var LoaderType = "PhysicsMaterial"
 		var Version = 0
 		var ShowInEditor = true
 	}
@@ -13,7 +13,7 @@ DataContent
 	{
 		var Tags = Array
 		{
-			"Material"
+			"PhysicsMaterial"
 		}
 	}
 }

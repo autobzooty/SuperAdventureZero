@@ -1,0 +1,85 @@
+class PlayerMover : ZilchComponent
+{
+  var IM_ : IM;
+  var IM : IM
+  {
+    get
+    {
+      if (this.IM_ == null) this.IM_ = this.GameSession.IM;
+      return this.IM_;
+    }
+  }
+  
+  [Property]
+  var CameraPath : CogPath = CogPath();
+  var Camera : Cog { get { return this.CameraPath.Cog; }}
+  
+  [Property]
+  var GravityAcceleration : Real = 10.0;
+  
+  [Property]
+  var Acceleration : Real = 10.0;
+  
+  [Property]
+  var TurnSpeed : Real = 12;
+  
+  var Velocity : Real3;
+  
+  var OnGround : Boolean = true;
+  
+  function Initialize(init : CogInitializer)
+  {
+    this.Velocity = Real3.Zero;
+    Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+  }
+
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    if(this.Owner.CapsuleCollider.ContactCount == 0)
+    {
+      this.OnGround = false;
+    }
+    var requestedMoveDirection = Real3(this.IM.GetStick(GameStick.Move).X, 0, -this.IM.GetStick(GameStick.Move).Y);
+    requestedMoveDirection = this.Camera.Transform.TransformNormal(requestedMoveDirection);
+    requestedMoveDirection.Y = 0;
+    requestedMoveDirection = Math.Normalize(requestedMoveDirection);
+    
+    if(Math.Length(requestedMoveDirection) > 0)
+    {
+      var forwardAcceleration = this.Owner.Transform.TransformNormal(Real3.ZAxis) * this.Acceleration * Math.Length(this.IM.GetStick(GameStick.Move)) * event.Dt;
+      this.Velocity += forwardAcceleration;
+      
+      if(this.OnGround)
+      {
+        var newRot : Real3 = Math.RotateTowards(this.Owner.Transform.TransformNormal(Real3.ZAxis), requestedMoveDirection, this.TurnSpeed * event.Dt);
+        this.Owner.Orientation.LookAtDirection(newRot);
+      }
+      else
+      {
+        this.Velocity += Real3.YAxis * -this.GravityAcceleration * event.Dt;
+      }
+    }
+    
+    //Temporary drag/friction. Will make this better later.
+    if(this.OnGround)
+      this.Velocity *= 0.95;
+    else
+      this.Velocity *= 0.99;
+    this.Owner.RigidBody.Velocity = this.Velocity;
+  }
+  
+  function OnCollisionPersisted(event : CollisionEvent)
+  {
+    var contacts : ContactPointRange = event.ContactPoints;
+    
+    foreach(var contact : ContactPoint in contacts)
+    {
+      Console.WriteLine(contact.LocalPoint);
+      if(contact.LocalPoint.Y <= -0.4)
+      {
+        this.OnGround = true;
+      }
+    }
+  }
+}

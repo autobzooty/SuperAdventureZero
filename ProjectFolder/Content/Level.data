@@ -288,24 +288,20 @@ Level
 				{
 					Cog [Id:0x5ab2ce31bc0beb80][ContextId:8]
 					{
-						Hierarchy 
+						Hierarchy [ChildOrderOverride]
 						{
-							Cog [Id:0x5ab2fc7d1c8034d0][ChildOrderOverride][ContextId:9]
+							Cog [Id:0x5a4dfe9d28beef0d][InheritId:"5a4dfe9d28bf569e:TinCanArmor"][LocallyAdded][ContextId:9]
 							{
+								var Name = "TinCanArmor"
 								Transform 
 								{
+									var Translation = Real3{0, 0, 0}
+									var Rotation = Quaternion{0, 0, 0, 1}
+									var Scale = Real3{1, 1, 1}
 								}
-								ItemBase [LocallyAdded]
-								{
-									var Name = "Unknown Item"
-									var Type = ItemType.Consumable
-								}
-								EquipmentBase 
-								{
-								}
-								Hierarchy 
-								{
-								}
+							}
+							Cog [Id:0x5ab2fc7d1c8034d0][LocallyRemoved]
+							{
 							}
 						}
 					}

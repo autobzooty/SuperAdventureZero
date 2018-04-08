@@ -1,0 +1,24 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "ComponentTemplate"
+		var ResourceId = 0x5a51821722e14b02
+	}
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"ZilchScript"
+		}
+	}
+	ResourceTemplate 
+	{
+		var DisplayName = "Component"
+		var Description = "Use this for standard components"
+		var SortWeight = 0
+		var Category = "Super Adventure 3D"
+		var CategorySortWeight = 0
+	}
+}

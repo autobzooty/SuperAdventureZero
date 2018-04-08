@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class InventoryInterface : ZilchComponent
 {
   [Property]
@@ -6,18 +13,49 @@ class InventoryInterface : ZilchComponent
   var InventoryMenuLevel : Level;
   
   var IM : IM;
-  var InventoryMenuSpace : Space;
-  var MenuOpen : Boolean = false;
+  var InventoryMenuSpace : Space
+  {
+    get { return this.GameSession.CustomGameSetup.InventoryMenuSpace; }
+    set { this.GameSession.CustomGameSetup.InventoryMenuSpace = value; }
+  }
+  
+  var ItemList : Array[ItemBase]
+  {
+    get
+    {
+      var list = Array[ItemBase]();
+      
+      foreach (var child in this.InventoryRoot.Cog.Children)
+      {
+        if (child.MarkedForDestruction)
+          continue;
+        
+        var itemBase = child.ItemBase;
+        
+        if (itemBase != null)
+          list.Add(itemBase);
+      }
+      
+      return list;
+    }
+  }
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.IM = this.GameSession.IM;
     
     this.InventoryMenuSpace = this.GameSession.CreateNamedSpace("InventoryMenu", Archetype.DefaultSpace);
     this.InventoryMenuSpace.LoadLevel(this.InventoryMenuLevel);
+    var ime = InventoryMenuEvent();
+    ime.InventoryInterface = this;
+    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuSetup, ime);
     
-    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    Zero.Connect(this.GameSession, Events.InventoryMenuStartedOpening, this.OnInventoryMenuStartedOpening);
+    Zero.Connect(this.GameSession, Events.InventoryMenuFinishedClosing, this.OnInventoryMenuFinishedClosing);
+    
+    Zero.Connect(this.Owner, Events.RequestUse, this.OnRequestUse);
     Zero.Connect(this.Owner, Events.DidEquip, this.OnDidEquip);
     Zero.Connect(this.Owner, Events.DidUnequip, this.OnDidUnequip);
     Zero.Connect(this.Owner, Events.DidCollect, this.OnDidCollect);
@@ -25,81 +63,115 @@ class InventoryInterface : ZilchComponent
   }
   
   
-  function OnPlayerUpdate(event : UpdateEvent)
+  //****************************************************************************
+  function OnRequestUse(event : ItemEvent)
   {
-    if (this.IM.Triggered(GameAction.Menu))
-    {
-      if (this.MenuOpen)
-        this.CloseMenu();
-      else
-        this.OpenMenu();
-    }
+    // TODO:
+    // 
+    // check to see if you can actually use the item. if you can, then use it.
+    // otherwise, fail with feedback. set some kind of status data on the event
+    // saying what happened
+    
+    this.Use(event);
   }
   
   
+  //****************************************************************************
+  function OnInventoryMenuStartedOpening(event : InventoryMenuEvent)
+  {
+    // TODO:
+    // 
+    // perhaps eventually i should make some kind of PauseMaster that receives pause requests
+    // from any of various sources and can only unpause when no more sources need the space
+    // to be paused
+    
+    this.Space.TimeSpace.Paused = true;
+    this.UpdateList();
+  }
+  
+  
+  //****************************************************************************
+  function OnInventoryMenuFinishedClosing(event : InventoryMenuEvent)
+  {
+    this.Space.TimeSpace.Paused = false;
+  }
+  
+  
+  //****************************************************************************
   function OnDidEquip(event : EquipmentEvent)
   {
     this.RemoveFromInventory(event.Equipment.IB);
-    this.UpdateList();
   }
   
   
+  //****************************************************************************
   function OnDidUnequip(event : EquipmentEvent)
   {
     this.AddToInventory(event.Equipment.IB);
-    this.UpdateList();
   }
   
   
+  //****************************************************************************
   function OnDidCollect(event : CollectionEvent)
   {
     this.AddToInventory(event.Collectee.IB);
-    this.UpdateList();
   }
   
   
-  function OpenMenu()
-  {
-    this.MenuOpen = true;
-    var ime = InventoryMenuEvent();
-    ime.InventoryRoot = this.InventoryRoot.Cog;
-    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuOpenRequest, ime);
-  }
-  
-  
-  function CloseMenu()
-  {
-    this.MenuOpen = false;
-    var ime = InventoryMenuEvent();
-    this.InventoryMenuSpace.DispatchEvent(Events.InventoryMenuCloseRequest, ime);
-  }
-  
-  
+  //****************************************************************************
   function AddToInventory(item : ItemBase)
   {
     // TODO:
     // 
     // some cool events and feedback and ish!
     
+    Print("Added `item.Name` to Inventory");
+    
     item.Owner.AttachToPreserveLocal(this.InventoryRoot.Cog);
     item.Owner.Transform.LocalTranslation = Real3.Zero;
   }
   
   
+  //****************************************************************************
   function RemoveFromInventory(item : ItemBase)
   {
+    // TODO:
+    // 
+    // write this
     
+    if (item.Owner.Parent != this.InventoryRoot.Cog)
+    {
+      Print("*** ERROR *** | InventoryInterface tried to remove `item.Name`, but it's attached to `item.Owner.Parent.Name`");
+      return;
+    }
+    
+    item.Owner.DetachPreserveLocal();
+    this.UpdateList();
+    //item.Owner.Transform.WorldTranslation = 
   }
   
   
+  //****************************************************************************
+  function Use(event : ItemEvent)
+  {
+    event.User = this;
+    this.Owner.DispatchEvent(Events.DidUse, event);
+    event.Item.Owner.DispatchEvent(Events.WasUsed, event);
+    
+    this.UpdateList();
+  }
+  
+  
+  //****************************************************************************
   function UpdateList()
   {
     var ime = InventoryMenuEvent();
-    ime.InventoryRoot = this.InventoryRoot.Cog;
+    ime.ItemList = this.ItemList;
     this.InventoryMenuSpace.DispatchEvent(Events.InventoryUpdated, ime);
   }
   
   
+  //****************************************************************************
   function OnCogDestroy(event : ObjectEvent)
   {
     this.InventoryMenuSpace.Destroy();

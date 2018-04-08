@@ -1,59 +1,82 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class EquipmentInterface : ZilchComponent
 {
   [Property]
   var EquipmentRoot = CogPath(".");
   
-  var IM : IM;
+  //var IM : IM;
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
-    this.IM = this.GameSession.IM;
-    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    //this.IM = this.GameSession.IM;
+    //Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+    Zero.Connect(this.Owner, Events.RequestEquip, this.OnRequestEquip);
   }
   
   
-  function OnPlayerUpdate(event : UpdateEvent)
+  //****************************************************************************
+  function OnRequestEquip(event : EquipmentEvent)
   {
-    if (this.IM.Triggered(GameAction.Attack))
-    {
-      var head : EquipmentSlot = null;
-      
-      foreach (var child in this.EquipmentRoot.Cog.Children)
-      {
-        var slot = child.EquipmentSlot;
-        
-        if (slot.SlotType == EquipmentType.Head)
-        {
-          head = slot;
-          break;
-        }
-      }
-      
-      if (head.Empty)
-      {
-        var ii = this.Owner.InventoryInterface;
-        var helmet : EquipmentBase = null;
-        
-        foreach (var item in ii.InventoryRoot.Cog.Children)
-        {
-          var eb = item.EquipmentBase;
-          
-          if (eb.SlotType == EquipmentType.Head)
-            helmet = eb;
-        }
-        
-        if (helmet != null)
-          this.AttemptEquip(helmet);
-      }
-      else
-      {
-        this.AttemptUnequip(head);
-      }
-    }
+    // TODO:
+    // 
+    // if you fail to equip something, you get a reason for why. i need to put a
+    // place for that reason on the EquipmentEvent so that i can set it before
+    // returning from this function
+    
+    this.AttemptEquip(event.Equipment);
   }
   
   
+  //function OnPlayerUpdate(event : UpdateEvent)
+  //{
+  //  if (this.IM.Triggered(GameAction.Attack))
+  //  {
+  //    var head : EquipmentSlot = null;
+      
+  //    foreach (var child in this.EquipmentRoot.Cog.Children)
+  //    {
+  //      var slot = child.EquipmentSlot;
+        
+  //      if (slot.SlotType == EquipmentType.Head)
+  //      {
+  //        head = slot;
+  //        break;
+  //      }
+  //    }
+      
+  //    if (head.Empty)
+  //    {
+  //      var ii = this.Owner.InventoryInterface;
+  //      var helmet : EquipmentBase = null;
+        
+  //      foreach (var item in ii.InventoryRoot.Cog.Children)
+  //      {
+  //        var eb = item.EquipmentBase;
+          
+  //        if (eb.SlotType == EquipmentType.Head)
+  //          helmet = eb;
+  //      }
+        
+  //      if (helmet != null)
+  //        this.AttemptEquip(helmet);
+  //    }
+  //    else
+  //    {
+  //      this.AttemptUnequip(head);
+  //    }
+  //  }
+  //}
+  
+  
+  //****************************************************************************
   function AttemptEquip(equipment : EquipmentBase)
   {
     var type = equipment.SlotType;
@@ -66,11 +89,10 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function Equip(equipment : EquipmentBase, slot : EquipmentSlot)
   {
     Print("Equipping `equipment.IB.Name`....");
-    
-    slot.Equip(equipment);
     
     var ee = EquipmentEvent();
     ee.Equipment = equipment;
@@ -78,9 +100,17 @@ class EquipmentInterface : ZilchComponent
     ee.Slot = slot;
     equipment.Owner.DispatchEvent(Events.WasEquipped, ee);
     this.Owner.DispatchEvent(Events.DidEquip, ee);
+    
+    slot.Equip(equipment);
+    
+    // TODO:
+    // 
+    // i think right here is where i'll need to dispatch out some kind of
+    // EquipmentWasChanged event or something like that
   }
   
   
+  //****************************************************************************
   function AttemptUnequip(slot : EquipmentSlot)
   {
     if (!slot.Empty)
@@ -90,12 +120,14 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function AttemptUnequip(equipment : EquipmentBase)
   {
     this.AttemptUnequip(equipment.EquippedSlot);
   }
   
   
+  //****************************************************************************
   function Unequip(slot : EquipmentSlot)
   {
     var equipment = slot.Equipment;
@@ -113,12 +145,14 @@ class EquipmentInterface : ZilchComponent
   }
   
   
+  //****************************************************************************
   function FailToEquip(equipment : EquipmentBase)
   {
     
   }
   
   
+  //****************************************************************************
   function FindEmptySlot(type : EquipmentType) : EquipmentSlot
   {
     // TODO:

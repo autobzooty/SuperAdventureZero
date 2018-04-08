@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class IM : ZilchComponent
 {
   var Mode : InputMode = InputMode.Default;
@@ -16,6 +23,21 @@ class IM : ZilchComponent
   
   function Initialize(init : CogInitializer)
   {
+    // MAJOR TODO:
+    // 
+    // according to josh claeys, we really don't need to do any polling at all in this
+    // input manager. instead, i could make it so that each input mapping has the code
+    // necessary to check its own action / stick. notably, this would probably be
+    // incompatible with any kind of replay system. this is a perfectly fine sacrifice
+    // to make for the sake of a cleaner and more portable system, in a game like this
+    // one where we're unlikely to get much use out of a replay system in the first
+    // place.
+    // 
+    // HOWEVER, i do think that if i were to move away from polling for everything,
+    // and set up a system where i record input values here in the input manager and
+    // dispatch events for each action, i would need to poll anyway, so that effort
+    // might be unnecessary. i'll have to talk it over with josh a bit more.
+    
     Zero.Connect(this.GameSession, Events.InputMappingSetup, this.OnInputMappingSetup);
     Zero.Connect(this.GameSession, Events.IMUpdate, this.OnIMUpdate);
     Zero.Connect(this.GameSession, Events.IMCleanup, this.OnIMCleanup);
@@ -117,6 +139,12 @@ class IM : ZilchComponent
   }
   
   
+  function GetStickPrev(stick : GameStick) : Real2
+  {
+    return this.Previous.Sticks[stick];
+  }
+  
+  
   function GetReplayCurrent() : InputData
   {
     return this.History[this.HistoryIndex];
@@ -162,6 +190,7 @@ enum GameStick
   Move,
   Camera,
   Zoom,
+  MenuNav,
   
   COUNT_
 }
@@ -174,6 +203,12 @@ enum GameAction
   Attack,
   Interact,
   Menu,
+  NavRight,
+  NavUp,
+  NavLeft,
+  NavDown,
+  NavConfirm,
+  NavCancel,
   
   COUNT_
 }

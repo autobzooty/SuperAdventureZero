@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class InventoryMenuWindowController : ZilchComponent
 {
   [Dependency]
@@ -7,79 +14,418 @@ class InventoryMenuWindowController : ZilchComponent
   [Property]
   var ListRoot : CogPath = CogPath(".");
   [Property]
+  var ScrollAreaPath : CogPath = CogPath("InventoryList");
+  [Property]
+  var CursorPath : CogPath = CogPath("../Cursor");
+  [Property]
   var ItemCardArchetype : Archetype = Archetype.ItemCard;
   
+  var InventoryInterface : InventoryInterface;
   var WindowHiddenFlexSizeX : Real = 0;
   var WindowShownFlexSizeX : Real = 1;
   var SpacerHiddenFlexSizeX : Real = 100;
   var SpacerShownFlexSizeX : Real = 1;
   var Duration : Real = 10 / 60.0;
+  var Shown : Boolean = false;
+  var Transitioning : Boolean = false;
+  var WindowSequence : ActionSet;
+  var CursorIndex : Integer = 0;
+  var ItemCount : Integer;
+  var CursorMovementActions : ActionSet;
   
-  var Sequence : ActionSet;
+  var IM : IM;
+  
+  var CanShow : Boolean { get { return !this.Transitioning; }}
+  var CanHide : Boolean { get { return !this.Transitioning; }}
+  var ZerothCard : UiWidget { get { return this.ListRoot.Cog.Children.Current.UiWidget; }}
+  var CurrentCard : UiWidget
+  {
+    get
+    {
+      var root = this.ListRoot.Cog;
+      
+      var childRange = root.Children;
+      
+      for (var i = 0; i < this.CursorIndex; ++i)
+        childRange.MoveNext();
+      
+      return childRange.Current.UiWidget;
+    }
+  }
+  var CurrentItem : ItemBase
+  {
+    get
+    {
+      if (this.ItemCount > 0)
+        return this.CurrentCard.Owner.InventoryItemCard.ItemBase;
+      else
+        return null;
+    }
+  }
+  var CurrentCardOnscreenPosition : Real2
+  {
+    get
+    {
+      if (this.ItemCount > 0)
+        return this.CurrentCard.WorldCenterLeft;
+      else
+        return this.ListRoot.UiWidget.WorldTopLeft;
+    }
+  }
+  var CurrentCardOffscreenPosition : Real2
+  {
+    get
+    {
+      var windowWidth = this.ListRoot.UiWidget.Size.X;
+      var cursorWidth = this.CursorPath.UiWidget.Size.X;
+      var extraPadding = 20;
+      
+      if (this.ItemCount > 0)
+        return this.CurrentCard.WorldCenterLeft + Real2.XAxis * (windowWidth + cursorWidth + extraPadding);
+      else
+        return this.ListRoot.UiWidget.WorldTopLeft + Real2.XAxis * (windowWidth + cursorWidth + extraPadding);
+    }
+  }
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
-    this.Sequence = Action.Sequence(this.Owner.Actions);
+    this.IM = this.GameSession.IM;
+    
+    this.WindowSequence = Action.Sequence(this.Owner.Actions);
     
     this.UiWidget.FlexSize = Real2(this.WindowHiddenFlexSizeX, 1);
     this.UiWidget.Visible = false;
+    this.SnapHideCursor();
     
-    Zero.Connect(this.Space, Events.InventoryMenuOpenRequest, this.OnInventoryMenuOpenRequest);
-    Zero.Connect(this.Space, Events.InventoryMenuCloseRequest, this.OnInventoryMenuCloseRequest);
+    this.CursorMovementActions = Action.Group(this.CursorPath.Cog.Actions);
+    
+    Zero.Connect(this.Space, Events.InventoryMenuSetup, this.OnInventoryMenuSetup);
+    Zero.Connect(this.GameSession, Events.GUIUpdate, this.OnGUIUpdate);
     Zero.Connect(this.Space, Events.InventoryUpdated, this.OnInventoryUpdated);
   }
   
   
-  function OnInventoryMenuOpenRequest(event : InventoryMenuEvent)
+  //****************************************************************************
+  function OnInventoryMenuSetup(event : InventoryMenuEvent)
   {
-    this.Show();
+    this.InventoryInterface = event.InventoryInterface;
   }
   
   
-  function OnInventoryMenuCloseRequest(event : InventoryMenuEvent)
+  //****************************************************************************
+  function OnGUIUpdate(event : UpdateEvent)
   {
-    this.Hide();
+    if (this.Shown)
+    {
+      if (this.IM.Triggered(GameAction.Menu) || this.IM.Triggered(GameAction.NavCancel))
+        this.AttemptHide();
+      
+      if (this.IM.Triggered(GameAction.NavUp))
+        this.AttemptNavUp();
+      else if (this.IM.Triggered(GameAction.NavDown))
+        this.AttemptNavDown();
+      
+      if (this.IM.Triggered(GameAction.NavConfirm))
+        this.AttemptUse();
+    }
+    else
+    {
+      if (this.IM.Triggered(GameAction.Menu))
+        this.AttemptShow();
+    }
   }
   
   
+  //****************************************************************************
   function OnInventoryUpdated(event : InventoryMenuEvent)
   {
+    var oldCurrentItem = this.CurrentItem;
+    var oldItemCount = this.ItemCount;
+    
     foreach (var child in this.ListRoot.Cog.Children)
     {
       child.Destroy();
     }
     
-    var root = event.InventoryRoot;
+    var list = event.ItemList;
     
-    foreach (var child in root.Children)
+    foreach (var itemBase in list)
     {
       var card = this.Space.Create(this.ItemCardArchetype);
       card.AttachToPreserveLocal(this.ListRoot.Cog);
-      event.ItemBase = child.ItemBase;
+      event.ItemBase = itemBase;
       card.DispatchEvent(Events.InventoryListItemSetup, event);
+    }
+    
+    this.ItemCount = event.ItemList.Count;
+    
+    if (this.ItemCount > 0)
+    {
+      var indexOfOldCurrentItem = event.ItemList.FindFirstIndex(oldCurrentItem);
+      
+      if (indexOfOldCurrentItem >= 0)
+      {
+        if (indexOfOldCurrentItem != this.CursorIndex)
+        {
+          this.CursorIndex = indexOfOldCurrentItem;
+          this.MoveCursorToCurrentCard();
+        }
+      }
+      else
+      {
+        if (this.CursorIndex >= this.ItemCount)
+        {
+          this.CursorIndex = this.ItemCount - 1;
+          this.MoveCursorToCurrentCard();
+        }
+      }
+    }
+    else
+    {
+      if (oldItemCount > 0)
+        this.HideCursor();
     }
   }
   
   
-  function Show()
+  //****************************************************************************
+  function AttemptShow()
   {
-    this.Sequence.Cancel();
-    this.Sequence = Action.Sequence(this.Owner.Actions);
-      
-      Action.Property(this.Sequence, @this.UiWidget.Visible, true, 0, Ease.Linear);
-      Action.Property(this.Sequence, @this.UiWidget.FlexSize,
-        Real2(this.WindowShownFlexSizeX, 1), this.Duration, Ease.QuadInOut);
+    if (this.CanShow) this.Show();
   }
   
   
+  //****************************************************************************
+  function AttemptHide()
+  {
+    if (this.CanHide) this.Hide();
+  }
+  
+  
+  //****************************************************************************
+  function AttemptUse()
+  {
+    var currentItem = this.CurrentItem;
+    var itemType = currentItem.Type;
+    
+    if (itemType == ItemType.Consumable)
+      this.Use(currentItem);
+    else if (itemType == ItemType.Equipment)
+      this.Equip(currentItem.EquipmentBase);
+    else
+      Print("*** ERROR *** | Attempted to use `currentItem.Name` of type `currentItem.TypeString` (invalid type)");
+  }
+  
+  
+  //****************************************************************************
+  function Use(item : ItemBase)
+  {
+    // TODO:
+    // 
+    // this is probably a somewhat poorly named function, since it just
+    // dispatches an attempt event rather than actually using the item
+    
+    var ie = ItemEvent();
+    ie.Item = item;
+    this.InventoryInterface.Owner.DispatchEvent(Events.RequestUse, ie);
+  }
+  
+  
+  //****************************************************************************
+  function Equip(equipment : EquipmentBase)
+  {
+    // TODO:
+    // 
+    // this is probably a somewhat poorly named function, since it just
+    // dispatches an attempt event rather than actually equipping the item
+    
+    var ee = EquipmentEvent();
+    ee.Equipment = equipment;
+    this.InventoryInterface.Owner.DispatchEvent(Events.RequestEquip, ee);
+  }
+  
+  
+  //****************************************************************************
+  function AttemptNavUp()
+  {
+    if (this.ItemCount > 0)
+      this.NavUp();
+  }
+  
+  
+  //****************************************************************************
+  function AttemptNavDown()
+  {
+    if (this.ItemCount > 0)
+      this.NavDown();
+  }
+  
+  
+  //****************************************************************************
+  function NavUp()
+  {
+    this.CursorIndex = HM[Integer].ZMod(this.CursorIndex - 1, this.ItemCount);
+    this.NavToCard(this.CurrentCard);
+  }
+  
+  
+  //****************************************************************************
+  function NavDown()
+  {
+    this.CursorIndex = HM[Integer].ZMod(this.CursorIndex + 1, this.ItemCount);
+    this.NavToCard(this.CurrentCard);
+  }
+  
+  
+  //****************************************************************************
+  function NavToCard(card : UiWidget)
+  {
+    // TODO:
+    // 
+    // make a proper member variable for animateTime
+    this.ScrollAreaPath.UiScrollArea.ScrollToWidget(card, 0.1);
+    this.MoveCursorToCurrentCard();
+  }
+  
+  
+  //****************************************************************************
+  function MoveCursorToCurrentCard()
+  {
+    var cursorDestination = this.CurrentCard.WorldCenterLeft;
+    this.CursorMovementActions.Cancel();
+    this.CursorMovementActions = Action.Group(this.CursorPath.Cog.Actions);
+      
+      Action.Property(this.CursorMovementActions, @this.CursorPath.UiWidget.WorldTranslation,
+        cursorDestination, 0.1, Ease.QuadInOut);
+  }
+  
+  
+  //****************************************************************************
+  function Show()
+  {
+    this.Transitioning = true;
+    this.UiWidget.Visible = true;
+    
+    this.GameSession.DispatchEvent(Events.InventoryMenuStartedOpening, InventoryMenuEvent());
+    
+    if (this.ItemCount > 0)
+      this.ShowCursor();
+    
+    this.WindowSequence.Cancel();
+    this.WindowSequence = Action.Sequence(this.Owner.Actions);
+      
+      Action.Property(this.WindowSequence, @this.UiWidget.FlexSize,
+        Real2(this.WindowShownFlexSizeX, 1), this.Duration, Ease.QuadInOut);
+      Action.Call(this.WindowSequence, this.EndShowing);
+  }
+  
+  
+  //****************************************************************************
+  function EndShowing()
+  {
+    this.GameSession.DispatchEvent(Events.InventoryMenuFinishedOpening, InventoryMenuEvent());
+    this.Transitioning = false;
+    this.Shown = true;
+  }
+  
+  
+  //****************************************************************************
   function Hide()
   {
-    this.Sequence.Cancel();
-    this.Sequence = Action.Sequence(this.Owner.Actions);
+    this.Transitioning = true;
+    
+    this.GameSession.DispatchEvent(Events.InventoryMenuStartedClosing, InventoryMenuEvent());
+    
+    if (this.ItemCount > 0)
+      this.HideCursor();
+    
+    this.WindowSequence.Cancel();
+    this.WindowSequence = Action.Sequence(this.Owner.Actions);
       
-      Action.Property(this.Sequence, @this.UiWidget.FlexSize,
+      Action.Property(this.WindowSequence, @this.UiWidget.FlexSize,
         Real2(this.WindowHiddenFlexSizeX, 1), this.Duration, Ease.QuadInOut);
-      Action.Property(this.Sequence, @this.UiWidget.Visible, false, 0, Ease.Linear);
+      Action.Call(this.WindowSequence, this.EndHiding);
+  }
+  
+  
+  //****************************************************************************
+  function EndHiding()
+  {
+    this.UiWidget.Visible = false;
+    this.Transitioning = false;
+    this.Shown = false;
+    this.GameSession.DispatchEvent(Events.InventoryMenuFinishedClosing, InventoryMenuEvent());
+  }
+  
+  
+  //****************************************************************************
+  function SnapShowCursor()
+  {
+    this.CursorPath.Transform.LocalScale = Real3.One;
+    this.CursorPath.UiWidget.WorldTranslation = this.CurrentCardOnscreenPosition;
+  }
+  
+  
+  //****************************************************************************
+  function SnapHideCursor()
+  {
+    this.CursorPath.Transform.LocalScale = Real3.Zero;
+  }
+  
+  
+  //****************************************************************************
+  function ShowCursor()
+  {
+    this.CursorPath.UiWidget.WorldTranslation = this.CurrentCardOffscreenPosition;
+    this.CursorPath.Cog.Actions.Cancel();
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.One, 1, Ease.ElasticOut);
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.UiWidget.WorldTranslation,
+      this.CurrentCardOnscreenPosition, 0.3, Ease.BackOut);
+  }
+  
+  
+  //****************************************************************************
+  function HideCursor()
+  {
+    this.CursorPath.Cog.Actions.Cancel();
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.Transform.LocalScale, Real3.Zero, 0.25, Ease.BackIn);
+    Action.Property(this.CursorPath.Cog.Actions, @this.CursorPath.UiWidget.WorldTranslation,
+      this.CurrentCardOffscreenPosition, 0.25, Ease.QuadInOut);
+  }
+  
+  
+  //****************************************************************************
+  function FindCardIndex(card : UiWidget) : Integer
+  {
+    var index = 0;
+    
+    foreach (var child in this.ListRoot.Cog.Children)
+    {
+      if (child.UiWidget == card)
+        return index;
+      
+      ++index;
+    }
+    
+    return -1;
+  }
+  
+  
+  //****************************************************************************
+  function FindItemIndex(item : ItemBase) : Integer
+  {
+    var index = 0;
+    
+    foreach (var child in this.ListRoot.Cog.Children)
+    {
+      if (child.InventoryItemCard.ItemBase == item)
+        return index;
+      
+      ++index;
+    }
+    
+    return -1;
   }
 }

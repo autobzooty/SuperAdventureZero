@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class Health : ZilchComponent
 {
   [Dependency] var Faction : Faction;
@@ -88,7 +95,7 @@ class Health : ZilchComponent
     // 
     // come up with a defense formula
     
-    
+    // actually i might have it? no defense, just HP? HP -= damage the end?
     
     // TODO:
     // 

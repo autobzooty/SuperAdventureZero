@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2015 - 2018 Doug Zwick
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class HM[T]
 {
   [Static] var Tau      : Real { get { return 2.0 * Math.Pi; }}
@@ -46,7 +53,7 @@ class HM[T]
   // Oscillates between min and max
   [Static] function CosineMagic(t : Real, period : Real, min : T, max : T) : T
   {
-    return (max - min) * (1.0 - Math.Cos(HM[T].Tau * t / period)) / 2.0 + min;
+    return ((max - min) * (1.0 - Math.Cos(HM[T].Tau * t / period)) / 2.0 + min) as T;
   }
   
   // Modulo the way it SHOULD be

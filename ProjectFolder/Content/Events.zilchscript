@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class GameSetupEvent : ZilchEvent
 {
   sends CustomGameSetup : GameSetupEvent;
@@ -19,20 +26,73 @@ class RelationshipSetupEvent : ZilchEvent
 
 class UpdateEventSends
 {
+  //
+  //
+  // for IM use only. this is where the Current data is set.
+  // it has to happen before everything else so that any
+  // polling done in later updates will be accurate
   sends IMUpdate : UpdateEvent;
   
+  //
+  //
+  // the console needs to clear its HasPrintedThisFrame flag
+  // before anything has a chance to print to it
   sends ConsoleUpkeep : UpdateEvent;
+  //
+  //
+  // sent to the gamesession. never paused. useful for stuff
+  // that should happen before space-specific updates,
+  // regardless of what's paused or not
   sends Upkeep : UpdateEvent;
   
+  //
+  //
+  // sent to the main space if it is not paused. used for
+  // player input
   sends PlayerUpdate : UpdateEvent;
+  //
+  //
+  // sent to every space if it is not paused. general-purpose
+  // update event. use this instead of LogicUpdate, because
+  // the relative timing of this event is carefully controlled
   sends StandardUpdate : UpdateEvent;
-  
-  sends CameraUpdate : UpdateEvent;
-  sends GUIUpdate : UpdateEvent;
+  //
+  //
+  // sent to the main space if it is not paused. this is for
+  // applying movement vectors and things like that
   sends PhysicsUpdate : UpdateEvent;
+  //
+  //
+  // sent to the main space. comes last of the space updates
+  // so that camera movements can be as up-to-date as possible
+  sends CameraUpdate : UpdateEvent;
+  //
+  //
+  // sent to the hud space, if it exists. use this for hud
+  // stuff that should be pausable. (hud stuff that should
+  // not be pausable should be done in GUIUpdate on the
+  // gamesession)
+  sends HudUpdate : UpdateEvent;
   
+  //
+  //
+  // sent to the gamesession. never paused. any GUI / hud /
+  // menu related behavior that should not be paused can go
+  // here. (hud stuff that should be pausable should be done
+  // in HudUpdate on the hud space, if it exists)
+  sends GUIUpdate : UpdateEvent;
+  //
+  //
+  // sent to the gamesession. never paused. useful for
+  // anything that should happen after all the space-specific
+  // updates have been dispatched
   sends Cleanup : UpdateEvent;
   
+  //
+  //
+  // for IM use only. this is where the Current data becomes
+  // the Previous data. must happen at the very end of the
+  // frame for the IM to function correctly
   sends IMCleanup : UpdateEvent;
 }
 
@@ -180,6 +240,16 @@ class EquipmentEvent : MWEvent
   var Slot : EquipmentSlot;
 }
 
+class ItemEvent : MWEvent
+{
+  sends RequestUse : ItemEvent;
+  sends WasUsed : ItemEvent;
+  sends DidUse : ItemEvent;
+  
+  var Item : ItemBase;
+  var User : InventoryInterface;
+}
+
 class StatsEvent : MWEvent
 {
   sends StatsCalculationRequest : StatsEvent;
@@ -199,11 +269,20 @@ class CollectionEvent : ZilchEvent
 
 class InventoryMenuEvent : ZilchEvent
 {
-  sends InventoryMenuOpenRequest : InventoryMenuEvent;
-  sends InventoryMenuCloseRequest : InventoryMenuEvent;
+  sends InventoryMenuSetup : InventoryMenuEvent;
+  sends InventoryMenuStartedOpening : InventoryMenuEvent;
+  sends InventoryMenuFinishedOpening : InventoryMenuEvent;
+  sends InventoryMenuStartedClosing : InventoryMenuEvent;
+  sends InventoryMenuFinishedClosing : InventoryMenuEvent;
+  
+  // 
+  // 
+  // dispatched to an item card with the information that
+  // should be displayed on it
   sends InventoryListItemSetup : InventoryMenuEvent;
   sends InventoryUpdated : InventoryMenuEvent;
   
-  var InventoryRoot : Cog;
+  var ItemList : Array[ItemBase];
   var ItemBase : ItemBase;
+  var InventoryInterface : InventoryInterface;
 }

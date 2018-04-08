@@ -106,7 +106,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{0, 0, 0}
+			var LookTarget = Real3{0, 0, 10}
 			var MoveSensitivity = 1
 		}
 	}
@@ -165,7 +165,7 @@ Level
 			}
 			var ResolutionOrAspect = Integer2{1280, 720}
 			var RenderToViewport = true
-			var ForwardViewportEvents = false
+			var ForwardViewportEvents = true
 			var ViewportScaling = ViewportScaling.Letterbox
 			var MarginColor = Real4{0, 0, 0, 1}
 			var NormalizedSize = Real2{1, 1}
@@ -182,6 +182,7 @@ Level
 		SoundListener 
 		{
 			var Active = true
+			var AttenuationScale = 1
 		}
 	}
 	Cog [ContextId:3]
@@ -249,7 +250,7 @@ Level
 			var DepthSeparation = 0.00999999978
 			var DebugMouseInteraction = false
 		}
-		UiRenderer 
+		CustomUiRenderer 
 		{
 			var ClearColor = Real4{0, 0, 0, 0}
 			var EditorDebugDraw = true
@@ -261,10 +262,10 @@ Level
 		}
 		UiStackLayout 
 		{
-			var PaddingLeft = 64
-			var PaddingTop = 64
-			var PaddingRight = 64
-			var PaddingBottom = 64
+			var PaddingLeft = 20
+			var PaddingTop = 20
+			var PaddingRight = 20
+			var PaddingBottom = 20
 			var StackDirection = UiStackLayoutDirection.LeftToRight
 			var Spacing = Real2{64, 64}
 		}
@@ -275,13 +276,13 @@ Level
 				var Name = "Spacer"
 				Transform 
 				{
-					var Translation = Real3{-416, 2, 0}
+					var Translation = Real3{-460, 2, 0}
 					var Scale = Real3{1, 1, 1}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
 				Area 
 				{
-					var Size = Real2{384, 4}
+					var Size = Real2{428, 4}
 					var Origin = Location.TopLeft
 				}
 				UiWidget 
@@ -316,7 +317,7 @@ Level
 				var Name = "Window"
 				Transform 
 				{
-					var Translation = Real3{224, 0, 0}
+					var Translation = Real3{246, 0, 0}
 					var Scale = Real3{1, 1, 1}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
@@ -341,7 +342,7 @@ Level
 				}
 				Area 
 				{
-					var Size = Real2{384, 412}
+					var Size = Real2{428, 500}
 					var Origin = Location.Center
 				}
 				UiWidget 
@@ -380,7 +381,7 @@ Level
 				{
 					var ListRoot = CogPath
 					{
-						var Path = "InventoryList"
+						var Path = "InventoryList/ContentHolder/Content"
 						var ErrorOnResolveToNull = false
 						var ErrorOnPathCantCompute = false
 						var ErrorOnDirectLinkFail = false
@@ -393,16 +394,46 @@ Level
 						var PathPreference1 = CogPathPreference.SpaceRelative
 						var PathPreference2 = CogPathPreference.Absolute
 					}
+					var ScrollAreaPath = CogPath
+					{
+						var Path = "InventoryList"
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 8
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var CursorPath = CogPath
+					{
+						var Path = "../Cursor"
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 9
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
 					var ItemCardArchetype = "5a68b0e01f5f0e24:ItemCard"
 				}
 				Hierarchy 
 				{
-					Cog [Id:0x5a92cd3469900678][ContextId:8]
+					Cog [Id:0x5a92cd3469900678][ContextId:10]
 					{
 						var Name = "TitleBar"
 						Transform 
 						{
-							var Translation = Real3{-190, 204, 0}
+							var Translation = Real3{-212, 248, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
 						}
@@ -427,7 +458,7 @@ Level
 						}
 						Area 
 						{
-							var Size = Real2{380, 48}
+							var Size = Real2{424, 48}
 							var Origin = Location.TopLeft
 						}
 						UiWidget 
@@ -462,7 +493,7 @@ Level
 						}
 						Hierarchy 
 						{
-							Cog [Id:0x5a92cdf5612adc9d][ContextId:9]
+							Cog [Id:0x5a92cdf5612adc9d][ContextId:11]
 							{
 								var Name = "TitleText"
 								Transform 
@@ -473,7 +504,7 @@ Level
 								}
 								Area 
 								{
-									var Size = Real2{380, 30}
+									var Size = Real2{424, 30}
 									var Origin = Location.TopLeft
 								}
 								UiWidget 
@@ -523,14 +554,19 @@ Level
 							}
 						}
 					}
-					Cog [Id:0x5a963383741966f5][ContextId:7]
+					Cog [Id:0x5a4d955aaabe3c83][ContextId:8]
 					{
 						var Name = "InventoryList"
 						Transform 
 						{
-							var Translation = Real3{-190, 154, 0}
+							var Translation = Real3{-212, 198, 0}
 							var Scale = Real3{1, 1, 1}
 							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Area 
+						{
+							var Size = Real2{424, 446}
+							var Origin = Location.TopLeft
 						}
 						Sprite 
 						{
@@ -551,11 +587,6 @@ Level
 							var AnimationSpeed = 1
 							var StartFrame = 0
 						}
-						Area 
-						{
-							var Size = Real2{380, 358}
-							var Origin = Location.TopLeft
-						}
 						UiWidget 
 						{
 							var Active = true
@@ -563,7 +594,7 @@ Level
 							var Interactive = true
 							var InLayout = true
 							var OnTop = false
-							var ClipChildren = true
+							var ClipChildren = false
 							var CanTakeFocus = false
 							var LocalColor = Real4{1, 1, 1, 0.150000006}
 							var HierarchyColor = Real4{1, 1, 1, 1}
@@ -581,15 +612,714 @@ Level
 						}
 						UiStackLayout 
 						{
-							var PaddingLeft = 2
-							var PaddingTop = 2
-							var PaddingRight = 2
-							var PaddingBottom = 2
-							var StackDirection = UiStackLayoutDirection.TopToBottom
-							var Spacing = Real2{2, 2}
+							var PaddingLeft = 0
+							var PaddingTop = 0
+							var PaddingRight = 0
+							var PaddingBottom = 0
+							var StackDirection = UiStackLayoutDirection.LeftToRight
+							var Spacing = Real2{2, 0}
+						}
+						UiScrollArea 
+						{
+							var ScrollSpeed = 35
+							var ScrollAnimateTime = 0.200000003
+							var OverScrollTop = 0
+							var OverScrollBottom = 0
+							var OverScrollLeft = 0
+							var OverScrollRight = 0
+							var ContentCog = CogPath
+							{
+								var Path = "ContentHolder/Content"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 7
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ContentHolderCog = CogPath
+							{
+								var Path = "ContentHolder"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 12
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ScrollBarXCog = CogPath
+							{
+								var Path = "ScrollBarX"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 13
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var ScrollBarYCog = CogPath
+							{
+								var Path = "ScrollBarY"
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 14
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
 						}
 						Hierarchy 
 						{
+							Cog [Id:0x5a4d9359ee3b0799][ContextId:12]
+							{
+								var Name = "ContentHolder"
+								Transform 
+								{
+									var Translation = Real3{0, 0, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Area 
+								{
+									var Size = Real2{418, 446}
+									var Origin = Location.TopLeft
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var OnTop = false
+									var ClipChildren = true
+									var CanTakeFocus = false
+									var LocalColor = Real4{1, 1, 1, 0}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Flex
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								UiStackLayout 
+								{
+									var PaddingLeft = 0
+									var PaddingTop = 0
+									var PaddingRight = 0
+									var PaddingBottom = 0
+									var StackDirection = UiStackLayoutDirection.LeftToRight
+									var Spacing = Real2{0, 0}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{1, 1, 1, 0}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5a4d932b184355d8][ContextId:7]
+									{
+										var Name = "Content"
+										Transform 
+										{
+											var Translation = Real3{0, 0, 0}
+											var Scale = Real3{1, 1, 1}
+											var Rotation = Quaternion{0, 0, 0, 1}
+										}
+										Area 
+										{
+											var Size = Real2{418, 58}
+											var Origin = Location.TopLeft
+										}
+										UiWidget 
+										{
+											var Active = true
+											var Visible = true
+											var Interactive = true
+											var InLayout = false
+											var OnTop = false
+											var ClipChildren = false
+											var CanTakeFocus = false
+											var LocalColor = Real4{1, 1, 1, 1}
+											var HierarchyColor = Real4{1, 1, 1, 1}
+											var SizePolicyX = UiSizePolicy.Flex
+											var SizePolicyY = UiSizePolicy.Auto
+											var FlexSize = Real2{1, 1}
+											var AbsoluteMinSize = Real2{1, 1}
+											var VerticalAlignment = UiVerticalAlignment.Top
+											var HorizontalAlignment = UiHorizontalAlignment.Left
+											var MarginLeft = 0
+											var MarginTop = 0
+											var MarginRight = 0
+											var MarginBottom = 0
+											var DockMode = UiDockMode.Top
+										}
+										UiStackLayout 
+										{
+											var PaddingLeft = 0
+											var PaddingTop = 0
+											var PaddingRight = 0
+											var PaddingBottom = 0
+											var StackDirection = UiStackLayoutDirection.TopToBottom
+											var Spacing = Real2{0, 1}
+										}
+										Hierarchy 
+										{
+											Cog [Id:0x5a45cb5b359c2036][InheritId:"5a68b0e01f5f0e24:ItemCard"][ContextId:15]
+											{
+												Transform 
+												{
+													var Translation = Real3{0, 0, 0}
+													var Rotation = Quaternion{0, 0, 0, 1}
+													var Scale = Real3{1, 1, 1}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5a4de8ef012db069][ContextId:13]
+							{
+								var Name = "ScrollBarX"
+								Transform 
+								{
+									var Translation = Real3{2, -349, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Area 
+								{
+									var Size = Real2{367, 7}
+									var Origin = Location.TopLeft
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{1, 1, 1, 0.349999994}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								UiWidget 
+								{
+									var Active = false
+									var Visible = true
+									var Interactive = true
+									var InLayout = false
+									var OnTop = false
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{1, 1, 1, 0.349999994}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Flex
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Bottom
+									var HorizontalAlignment = UiHorizontalAlignment.Right
+									var MarginLeft = 2
+									var MarginTop = 0
+									var MarginRight = 11
+									var MarginBottom = 2
+									var DockMode = UiDockMode.Top
+								}
+								MouseCapture 
+								{
+								}
+								UiScrollBar 
+								{
+									var Axis = 0
+								}
+								UiFillLayout 
+								{
+									var PaddingLeft = 0
+									var PaddingTop = 0
+									var PaddingRight = 0
+									var PaddingBottom = 0
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5a4d96214d8c2a0e][ContextId:16]
+									{
+										var Name = "Handle"
+										Transform 
+										{
+											var Translation = Real3{0, 0, 0}
+											var Scale = Real3{1, 1, 1}
+											var Rotation = Quaternion{0, 0, 0, 1}
+										}
+										Area 
+										{
+											var Size = Real2{50, 7}
+											var Origin = Location.TopLeft
+										}
+										UiWidget 
+										{
+											var Active = true
+											var Visible = true
+											var Interactive = true
+											var InLayout = true
+											var OnTop = false
+											var ClipChildren = false
+											var CanTakeFocus = false
+											var LocalColor = Real4{1, 1, 1, 0.400000006}
+											var HierarchyColor = Real4{1, 1, 1, 1}
+											var SizePolicyX = UiSizePolicy.Fixed
+											var SizePolicyY = UiSizePolicy.Flex
+											var FlexSize = Real2{1, 1}
+											var AbsoluteMinSize = Real2{1, 1}
+											var VerticalAlignment = UiVerticalAlignment.Top
+											var HorizontalAlignment = UiHorizontalAlignment.Left
+											var MarginLeft = 0
+											var MarginTop = 0
+											var MarginRight = 0
+											var MarginBottom = 0
+											var DockMode = UiDockMode.Top
+										}
+										Sprite 
+										{
+											var Visible = true
+											var ViewCulling = true
+											var VisibilityEvents = true
+											var OverrideBoundingBox = false
+											var LocalAabbCenter = Real3{0, 0, 0}
+											var LocalAabbHalfExtents = Real3{1, 1, 1}
+											var GroupSortValue = 0
+											var Material = "582c575af53d18c9:AlphaSprite"
+											var VertexColor = Real4{1, 1, 1, 0.400000006}
+											var GeometryMode = SpriteGeometryMode.ZPlane
+											var SpriteSource = "5275aa4d802dd6dc:Square"
+											var FlipX = false
+											var FlipY = false
+											var AnimationActive = true
+											var AnimationSpeed = 1
+											var StartFrame = 0
+										}
+										UiHighlight 
+										{
+											var Active = true
+											var MouseMode = UiHighlightMouseMode.EnterHierarchy
+											var MouseOverCog = CogPath
+											{
+												var Path = "."
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 16
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var HighlightCog = CogPath
+											{
+												var Path = "."
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 16
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var ColorMode = UiHighlightColorMode.Local
+											var MouseHoverColor = Real4{1, 1, 1, 0.5}
+											var MouseDownColor = Real4{1, 1, 1, 0.349999994}
+											var AnimateTime = 0.200000003
+										}
+									}
+								}
+							}
+							Cog [Id:0x5a4d97e36702bfc5][ContextId:14]
+							{
+								var Name = "ScrollBarY"
+								Transform 
+								{
+									var Translation = Real3{420, 0, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Area 
+								{
+									var Size = Real2{2, 446}
+									var Origin = Location.TopLeft
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0, 0, 0, 0.25}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var OnTop = false
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0, 0, 0, 0.25}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Fixed
+									var SizePolicyY = UiSizePolicy.Flex
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Right
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 2
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Top
+								}
+								MouseCapture 
+								{
+								}
+								UiScrollBar 
+								{
+									var Axis = 1
+								}
+								UiFillLayout 
+								{
+									var PaddingLeft = 0
+									var PaddingTop = 0
+									var PaddingRight = 0
+									var PaddingBottom = 0
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5a4d96214d8c2a0e][ContextId:17]
+									{
+										var Name = "Handle"
+										Transform 
+										{
+											var Translation = Real3{0, 0, 0}
+											var Scale = Real3{1, 1, 1}
+											var Rotation = Quaternion{0, 0, 0, 1}
+										}
+										Area 
+										{
+											var Size = Real2{2, 50}
+											var Origin = Location.TopLeft
+										}
+										UiWidget 
+										{
+											var Active = true
+											var Visible = true
+											var Interactive = true
+											var InLayout = true
+											var OnTop = false
+											var ClipChildren = false
+											var CanTakeFocus = false
+											var LocalColor = Real4{1, 1, 1, 0.25}
+											var HierarchyColor = Real4{1, 1, 1, 1}
+											var SizePolicyX = UiSizePolicy.Flex
+											var SizePolicyY = UiSizePolicy.Fixed
+											var FlexSize = Real2{1, 1}
+											var AbsoluteMinSize = Real2{1, 1}
+											var VerticalAlignment = UiVerticalAlignment.Top
+											var HorizontalAlignment = UiHorizontalAlignment.Left
+											var MarginLeft = 0
+											var MarginTop = 0
+											var MarginRight = 0
+											var MarginBottom = 0
+											var DockMode = UiDockMode.Top
+										}
+										Sprite 
+										{
+											var Visible = true
+											var ViewCulling = true
+											var VisibilityEvents = true
+											var OverrideBoundingBox = false
+											var LocalAabbCenter = Real3{0, 0, 0}
+											var LocalAabbHalfExtents = Real3{1, 1, 1}
+											var GroupSortValue = 0
+											var Material = "582c575af53d18c9:AlphaSprite"
+											var VertexColor = Real4{1, 1, 1, 0.25}
+											var GeometryMode = SpriteGeometryMode.ZPlane
+											var SpriteSource = "5275aa4d802dd6dc:Square"
+											var FlipX = false
+											var FlipY = false
+											var AnimationActive = true
+											var AnimationSpeed = 1
+											var StartFrame = 0
+										}
+										UiHighlight 
+										{
+											var Active = true
+											var MouseMode = UiHighlightMouseMode.EnterHierarchy
+											var MouseOverCog = CogPath
+											{
+												var Path = "."
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 17
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var HighlightCog = CogPath
+											{
+												var Path = "."
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 17
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var ColorMode = UiHighlightColorMode.Local
+											var MouseHoverColor = Real4{1, 1, 1, 0.5}
+											var MouseDownColor = Real4{1, 1, 1, 0.349999994}
+											var AnimateTime = 0.200000003
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a459b628f1e4238][ContextId:9]
+			{
+				var Name = "Cursor"
+				Transform 
+				{
+					var Translation = Real3{37, 170, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Area 
+				{
+					var Size = Real2{1, 1}
+					var Origin = Location.Center
+				}
+				UiWidget 
+				{
+					var Active = true
+					var Visible = true
+					var Interactive = true
+					var InLayout = false
+					var OnTop = false
+					var ClipChildren = false
+					var CanTakeFocus = false
+					var LocalColor = Real4{1, 1, 1, 1}
+					var HierarchyColor = Real4{1, 1, 1, 1}
+					var SizePolicyX = UiSizePolicy.Auto
+					var SizePolicyY = UiSizePolicy.Auto
+					var FlexSize = Real2{1, 1}
+					var AbsoluteMinSize = Real2{1, 1}
+					var VerticalAlignment = UiVerticalAlignment.Top
+					var HorizontalAlignment = UiHorizontalAlignment.Left
+					var MarginLeft = 0
+					var MarginTop = 0
+					var MarginRight = 0
+					var MarginBottom = 0
+					var DockMode = UiDockMode.Left
+				}
+				UiLissajousMovement 
+				{
+					var MoverPath = CogPath
+					{
+						var Path = "LissajousNode"
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 18
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var Period = Real2{1.70000005, 2.29999995}
+					var Min = Real2{-8, -2}
+					var Max = Real2{8, 2}
+					var PhaseShift = Real2{0, 90}
+					var InitialT = Real2{0, 0}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a458d706079d78e][ContextId:18]
+					{
+						var Name = "LissajousNode"
+						Transform 
+						{
+							var Translation = Real3{0, 0, 0}
+							var Scale = Real3{1, 1, 1}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Area 
+						{
+							var Size = Real2{1, 1}
+							var Origin = Location.Center
+						}
+						UiWidget 
+						{
+							var Active = true
+							var Visible = true
+							var Interactive = true
+							var InLayout = false
+							var OnTop = false
+							var ClipChildren = false
+							var CanTakeFocus = false
+							var LocalColor = Real4{1, 1, 1, 1}
+							var HierarchyColor = Real4{1, 1, 1, 1}
+							var SizePolicyX = UiSizePolicy.Fixed
+							var SizePolicyY = UiSizePolicy.Fixed
+							var FlexSize = Real2{1, 1}
+							var AbsoluteMinSize = Real2{1, 1}
+							var VerticalAlignment = UiVerticalAlignment.Top
+							var HorizontalAlignment = UiHorizontalAlignment.Left
+							var MarginLeft = 0
+							var MarginTop = 0
+							var MarginRight = 0
+							var MarginBottom = 0
+							var DockMode = UiDockMode.Left
+						}
+						Hierarchy 
+						{
+							Cog [Id:0x5a458d1764ac22ad][ContextId:19]
+							{
+								var Name = "Sprite"
+								Transform 
+								{
+									var Translation = Real3{8, 0, 0}
+									var Scale = Real3{1, 1, 1}
+									var Rotation = Quaternion{0, 0, 0, 1}
+								}
+								Area 
+								{
+									var Size = Real2{64, 64}
+									var Origin = Location.CenterRight
+								}
+								UiWidget 
+								{
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var OnTop = false
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{1, 1, 1, 1}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Fixed
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Top
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{1, 1, 1, 1}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5a458c5b4a58e9d6:CoolCursor"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
+								}
+							}
 						}
 					}
 				}

@@ -1,0 +1,82 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+// sung to the tune of the Teenage Mutant Ninja Turtles theme song
+[RunInEditor]
+class LiquidSurfaceNormalInput : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  
+  [Property][Slider(0, 1, 0.01)]
+  var Viscosity : Real = 0.5;
+  [Property]
+  var AccelerationScalar : Real = 10;
+  [Property]
+  var Up : Real3 = Real3.YAxis;
+  [Property]
+  var UseLocalUp : Boolean = false;
+  [Property]
+  var OrientationPath : CogPath = CogPath(".");
+  
+  [ShaderInput] var SurfaceNormal : Real3 = Real3.YAxis;
+  var Accumulator : Real3 = Real3.Zero;
+  var AccumulatorVelocity : Real3 = Real3.Zero;
+  var PreviousWorldTranslation : Real3;
+  var PreviousVelocity : Real3 = Real3.Zero;
+  var Orientation : Orientation;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    if (this.OrientationPath.Cog != null)
+      this.Orientation = this.OrientationPath.Orientation;
+    
+    this.Up = Math.Normalize(this.Up);
+    this.PreviousWorldTranslation = this.Transform.WorldTranslation;
+    
+    if (this.Space.IsEditorMode)
+      Zero.Connect(this.Space, Events.FrameUpdate, this.OnUpdate);
+    else
+      Zero.Connect(this.Space, Events.LogicUpdate, this.OnUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnUpdate(event : UpdateEvent)
+  {
+    var currentWorldTranslation = this.Transform.TransformPoint(Real3(2, 2, 2));
+    var velocity = currentWorldTranslation - this.PreviousWorldTranslation;
+    var acceleration = velocity - this.PreviousVelocity;
+    
+    // Accumulate based on acceleration
+    this.AccumulatorVelocity += acceleration * this.AccelerationScalar;
+    
+    // Apply force to move accumulator back to 0
+    this.AccumulatorVelocity += -this.Accumulator;
+    
+    // Integrate
+    this.Accumulator += this.AccumulatorVelocity * event.Dt;
+    
+    var damping = this.Viscosity;
+    damping = damping * damping * damping * damping;
+    this.AccumulatorVelocity *= (1 - damping);
+    
+    var up = this.Up;
+    if (this.UseLocalUp) up = this.Orientation.LocalUp;
+    
+    this.SurfaceNormal = Math.Normalize(up + this.Accumulator);
+    
+    this.PreviousWorldTranslation = currentWorldTranslation;
+    this.PreviousVelocity = velocity;
+  }
+}
+
+// OPTIMIZATION:
+// 
+// combine this with ContainedLiquidMeshYRangeFinder

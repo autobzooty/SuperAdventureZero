@@ -1,0 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class ContainedLiquidInputs : ZilchComponent
+{
+  [Property][Slider(0, 1, 0.01)][ShaderInput] var Fullth : Real = 0.75;
+  [Property][ShaderInput] var YMin : Real = -0.5;
+  [Property][ShaderInput] var YMax : Real = 0.5;
+}

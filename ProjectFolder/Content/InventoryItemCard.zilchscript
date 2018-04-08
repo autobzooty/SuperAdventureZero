@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
 class InventoryItemCard : ZilchComponent
 {
   [Property]
@@ -11,6 +18,8 @@ class InventoryItemCard : ZilchComponent
   [Property]
   var TypeIconPath : CogPath = CogPath("Body/InfoBlock/TypeIcon");
   
+  var ItemBase : ItemBase;
+  
   
   function Initialize(init : CogInitializer)
   {
@@ -21,6 +30,7 @@ class InventoryItemCard : ZilchComponent
   function OnInventoryListItemSetup(event : InventoryMenuEvent)
   {
     var itemBase = event.ItemBase;
+    this.ItemBase = itemBase;
     
     this.NamePath.SpriteText.Text = itemBase.Name;
     this.DescriptionPath.SpriteText.Text = itemBase.Description;

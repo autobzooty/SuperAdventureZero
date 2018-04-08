@@ -1,0 +1,127 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class GameFlowController : ZilchComponent
+{
+  [Dependency]
+  var CustomGameSetup : CustomGameSetup;
+  
+  
+  [Static]
+  var Instance : GameFlowController;  // just so that static Print has a static Main it can access
+  [Static]
+  var AbsoluteFrame = 0;
+  [Static]
+  var Frame : Integer                 // static Print accesses this
+  {
+    get
+    {
+      return GameFlowController.Instance.MainSpace.TimeSpace.Frame;
+    }
+  }
+  
+  var DataSpace     : Space { get { return this.CustomGameSetup.DataSpace; }}
+  var MenuSpace     : Space { get { return this.CustomGameSetup.MenuSpace; }}
+  var DialogueSpace : Space { get { return this.CustomGameSetup.DialogueSpace; }}
+  var MainSpace     : Space { get { return this.CustomGameSetup.MainSpace; }}
+  var HudSpace      : Space { get { return this.CustomGameSetup.HudSpace; }}
+  
+  var GameFlowSpace : Space;
+  
+  
+  //****************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    GameFlowController.AbsoluteFrame = 0;
+    
+    if (GameFlowController.Instance == null)
+      GameFlowController.Instance = this;
+    
+    this.GameFlowSpace = this.GameSession.CreateNamedSpace("GameFlowSpace", Archetype.DefaultSpace);
+    
+    Zero.Connect(this.GameFlowSpace, Events.LogicUpdate, this.OnLogicUpdate);
+  }
+  
+  
+  //****************************************************************************
+  function OnLogicUpdate(event : UpdateEvent)
+  {
+    this.DispatchUpdates(event);
+    
+    ++GameFlowController.AbsoluteFrame;
+  }
+  
+  
+  //****************************************************************************
+  function DispatchUpdates(event : UpdateEvent)
+  {
+    // EARLY UPDATES //
+    // these are all dispatched to the gamesession. they can never be paused
+    
+    // first, the input manager needs to be updated. it will be cleaned up
+    // at the end of the update loop
+    this.Owner.DispatchEvent(Events.IMUpdate, event);
+    
+    // when i get my sick-ass console up and running, it'll use this one
+    this.Owner.DispatchEvent(Events.ConsoleUpkeep, event);
+    // anything that should happen before Update time goes here
+    this.Owner.DispatchEvent(Events.Upkeep, event);
+    
+    // MAIN UPDATES //
+    // these are all dispatched directly to individual spaces, and only when
+    // that space is not paused
+    
+    var mainShouldBeUpdated = !this.MainSpace.TimeSpace.Paused;
+    var hudShouldBeUpdated = this.HudSpace != null && !this.HudSpace.TimeSpace.Paused;
+    
+    // the player goes first, until i change my mind
+    if (mainShouldBeUpdated)
+      this.MainSpace.DispatchEvent(Events.PlayerUpdate, event);
+    // all the other spaces get their standard updates next
+    this.DispatchStandardUpdate(event, mainShouldBeUpdated, hudShouldBeUpdated);
+    // physics comes next, after PlayerUpdate and StandardUpdate, so that it can
+    // have the latest information about what should be happening this frame
+    if (mainShouldBeUpdated)
+      this.MainSpace.DispatchEvent(Events.PhysicsUpdate, event);
+    // hud comes after physics, in case physics moves something and causes it
+    // to take damage or anything else that should be reflected in the hud
+    if (hudShouldBeUpdated)
+      this.HudSpace.DispatchEvent(Events.HudUpdate, event);
+    // the camera comes after physics, in case something moved and the camera
+    // should keep up with it
+    if (mainShouldBeUpdated)
+      this.MainSpace.DispatchEvent(Events.CameraUpdate, event);
+    
+    // LATE UPDATES //
+    // these are are dispatched to the gamesession. they can never be paused
+    
+    // GUIUpdate is for any GUI stuff that shouldn't be paused
+    this.GameSession.DispatchEvent(Events.GUIUpdate, event);
+    // anything that should happen after Update time goes here
+    this.GameSession.DispatchEvent(Events.Cleanup, event);
+    
+    // finally, the input manager gets cleaned up
+    this.GameSession.DispatchEvent(Events.IMCleanup, event);
+  }
+  
+  
+  //****************************************************************************
+  function DispatchStandardUpdate(event : UpdateEvent, mainShouldBeUpdated : Boolean, hudShouldBeUpdated : Boolean)
+  {
+    var dialogueShouldBeUpdated = !this.DialogueSpace.TimeSpace.Paused;
+    var menuShouldBeUpdated = !this.MenuSpace.TimeSpace.Paused;
+    
+    if (mainShouldBeUpdated)
+      this.MainSpace.DispatchEvent(Events.StandardUpdate, event);
+    if (dialogueShouldBeUpdated)
+      this.DialogueSpace.DispatchEvent(Events.StandardUpdate, event);
+    if (menuShouldBeUpdated)
+      this.MenuSpace.DispatchEvent(Events.StandardUpdate, event);
+    if (hudShouldBeUpdated)
+      this.HudSpace.DispatchEvent(Events.StandardUpdate, event);
+  }
+}

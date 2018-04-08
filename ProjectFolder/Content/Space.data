@@ -37,6 +37,24 @@ Space
 	}
 	ReactiveSpace 
 	{
+		var Raycaster = Object
+		{
+			PhysicsRaycastProvider 
+			{
+				var Active = true
+				var DynamicColliders = true
+				var SelectGhosts = true
+				var StaticColliders = true
+				var MultiSelectStatic = false
+				var MultiSelectKinematic = false
+			}
+			GraphicsRaycastProvider 
+			{
+				var Active = true
+				var MultiSelectGraphical = true
+				var VisibleOnly = true
+			}
+		}
 	}
 	NetSpace 
 	{
@@ -50,8 +68,5 @@ Space
 		var NetPropertyInfos = Array
 		{
 		}
-	}
-	Main 
-	{
 	}
 }

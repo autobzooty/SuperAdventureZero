@@ -1,0 +1,96 @@
+[Version:1]
+Cog 
+{
+	var Name = "CylinderVest"
+	Transform 
+	{
+		var Translation = Real3{0, 1.14999998, 0}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	ItemBase 
+	{
+		var Name = "Cylinder Vest"
+		var Description = "Dunno but probably cool"
+		var Type = ItemType.Equipment
+	}
+	EquipmentBase 
+	{
+		var SlotType = EquipmentType.Body
+		var StatBlock = StatBlock
+		{
+			var HP = StatMod
+			{
+				var Addend = 0
+				var Bonus = 0
+			}
+			var Evasion = StatMod
+			{
+				var Addend = 0
+				var Bonus = 0
+			}
+			var TypeAddends = TypeMultiplierBlock
+			{
+				var Heat = 0
+				var Cold = 0
+				var Electricity = 0
+				var Psychic = 0
+				var Biological = 0
+				var Poison = 0
+				var Holy = 0
+				var Dark = 0
+			}
+			var TypeBonuses = TypeMultiplierBlock
+			{
+				var Heat = 0
+				var Cold = 0
+				var Electricity = 0
+				var Psychic = 0
+				var Biological = 0
+				var Poison = 0
+				var Holy = 0
+				var Dark = 0
+			}
+		}
+		var VisibleOnEquip = true
+	}
+	Hierarchy 
+	{
+		Cog [Id:0x5ab2cbed4e10d339]
+		{
+			var Name = "Cylinder"
+			Transform 
+			{
+				var Translation = Real3{0, 0, 0}
+				var Scale = Real3{1.10000002, 0.800000012, 1.10000002}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+			Model 
+			{
+				var Visible = true
+				var ViewCulling = true
+				var VisibilityEvents = true
+				var OverrideBoundingBox = false
+				var LocalAabbCenter = Real3{0, 0, 0}
+				var LocalAabbHalfExtents = Real3{1, 1, 1}
+				var GroupSortValue = 0
+				var Material = "5828b036bd65b5d8:OpaqueFlat"
+				var Mesh = "4de0354322b3572e:Cylinder"
+			}
+			MaterialInputs 
+			{
+				var Color = Real4{0.5, 0.5, 0.5, 1}
+				var AlbedoValue = Real4{0.545098066, 0.564705908, 0.600000024, 1}
+				var MetallicValue = 1
+				var RoughnessValue = 0.100000001
+				var SpecularValue = 1
+				var StippleDensity = 0.5
+				var StippleScale = 1
+				var NearDistance = 20
+				var FarDistance = 20
+				var MinVisibility = 0
+				var MaxVisibility = 1
+			}
+		}
+	}
+}
