@@ -259,7 +259,7 @@ class ScheduledDeferredRenderer : ZilchComponent
   {
     var viewportSize = event.ViewportSize;
     var final = event.FinalTarget;
-    var depthStencil = event.Event.GetRenderTarget(viewportSize, TextureFormat.Depth24Stencil8);
+    var depthStencil = event.DepthStencil;
     
     this.DrawDebugObjects(event.Event, final, depthStencil);
   }
