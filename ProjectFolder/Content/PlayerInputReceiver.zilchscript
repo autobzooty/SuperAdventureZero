@@ -1,0 +1,34 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Alek Hiebert
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class PlayerInputReceiver : ZilchComponent
+{
+  var IM : IM;
+  var MoveStickThreshold : Real = 0.1;
+  [Property]
+  var CameraPath : CogPath = CogPath();
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.IM = this.GameSession.IM;
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    var ie = InputEvent();
+    var moveStick = this.IM.GetStick(GameStick.Move);
+    ie.Direction = this.CameraPath.Transform.TransformNormal(Real3(moveStick.X, 0, -moveStick.Y));
+    ie.Dt = event.Dt;
+    //OPTIMIZATION: Use lengthsquared instead
+    if(Math.Length(moveStick) > this.MoveStickThreshold)
+    {
+      this.Owner.DispatchEvent(Events.MovementRequest, ie);
+    }
+  }
+}

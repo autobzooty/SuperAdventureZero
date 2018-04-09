@@ -175,9 +175,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-3.69269371, 42.8938065, -21.0791168}
+			var Translation = Real3{-22.2051411, 18.1822872, 1.31895041}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0.00753367366, 0.910891652, 0.412240922, -0.0166464224}
+			var Rotation = Quaternion{-0.238537908, -0.651707888, -0.227586716, 0.683067203}
 		}
 		CameraViewport 
 		{
@@ -234,16 +234,16 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 40.5519867
-			var VerticalAngle = 0.849975824
-			var HorizontalAngle = -15.7445087
-			var LookTarget = Real3{-2.71479487, 12.4285431, 5.66737986}
+			var LookDistance = 28.4046021
+			var VerticalAngle = 0.671952069
+			var HorizontalAngle = -17.3257389
+			var LookTarget = Real3{0, 0.5, 0.274999976}
 			var MoveSensitivity = 1
 		}
 	}
 	Cog [ContextId:5]
 	{
-		var Name = "GameCamera"
+		var Name = "PlayerCamera"
 		Transform 
 		{
 			var Translation = Real3{0, 2, 10}
@@ -313,6 +313,7 @@ Level
 		SoundListener 
 		{
 			var Active = true
+			var AttenuationScale = 1
 		}
 	}
 	Cog [ContextId:6]
@@ -911,6 +912,35 @@ Level
 			var Asleep = false
 			var RotationLocked = true
 			var Mode2D = Mode2DStates.InheritFromSpace
+		}
+		PlayerInputReceiver 
+		{
+			var CameraPath = CogPath
+			{
+				var Path = ":/PlayerCamera"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 5
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+		}
+		StandardMover 
+		{
+			var Acceleration = 50
+			var TurnSpeed = 10
+		}
+		Orientation 
+		{
+			var GlobalUp = Real3{0, 1, 0}
+			var LocalOrientationBasis = Quaternion{0, 1, 0, 0}
+			var DefaultBases = OrientationBases.ForwardZUpY
 		}
 		Hierarchy 
 		{

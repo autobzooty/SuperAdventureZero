@@ -1,0 +1,51 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Alek Hiebert
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class StandardMover : ZilchComponent
+{
+  [Dependency]
+  var RigidBody : RigidBody;
+  [Dependency]
+  var Transform : Transform;
+  [Dependency]
+  var Orientation : Orientation;
+  var IM : IM;
+  var MoverVelocity : Real3;
+  [Property]
+  var Acceleration : Real = 1;
+  [Property]
+  var TurnSpeed : Real = 10;
+  var RequestedMoveDirection : Real3;
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.IM = this.GameSession.IM;
+    Zero.Connect(this.Space, Events.PhysicsUpdate, this.OnPhysicsUpdate);
+    Zero.Connect(this.Owner, Events.MovementRequest, this.OnMovementRequest);
+  }
+
+  //***************************************************************************
+  function OnPhysicsUpdate(event : UpdateEvent)
+  {
+    var newVelocity = this.MoverVelocity * event.Dt;
+    newVelocity = this.Transform.TransformNormalInverse(newVelocity);
+    newVelocity.X = 0;
+    newVelocity = this.Transform.TransformNormal(newVelocity);
+    this.RigidBody.Velocity = newVelocity;
+    
+    var newRot : Real3 = Math.RotateTowards(this.Orientation.WorldForward, this.RequestedMoveDirection, this.TurnSpeed * event.Dt);
+    this.Owner.Orientation.LookAtDirection(newRot);
+  }
+  
+  //***************************************************************************
+  function OnMovementRequest(event : InputEvent)
+  {
+    this.MoverVelocity += this.Owner.Orientation.WorldForward * this.Acceleration * event.Dt;
+    this.RequestedMoveDirection = event.Direction;
+  }
+}
