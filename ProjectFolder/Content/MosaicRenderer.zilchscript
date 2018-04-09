@@ -1,0 +1,49 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | 
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class MosaicRenderer : ZilchComponent
+{
+  [Dependency] var RenderScheduler : RenderScheduler;
+  
+  
+  [Property] var Active : Boolean = true;
+  [Property] var Scale : Real = 1.0;
+  [Property] var TileWidth : Real = 1.0;
+  [Property] var TileHeight : Real = 1.0;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PostProcessRenderUpdate, this.OnPostProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    if (!this.Active || this.Scale == 0.0) return;
+    
+    var viewportSize = event.ViewportSize;
+    
+    var final = event.Event.GetFinalTarget(viewportSize, TextureFormat.RGBA8, event.SamplerSettings);
+    var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
+    
+    var mosaic = Mosaic();
+    mosaic.Texture = final.Texture;
+    mosaic.Scale = this.Scale;
+    mosaic.Width = this.TileWidth;
+    mosaic.Height = this.TileHeight;
+    event.Event.AddRenderTaskPostProcess(sceneTarget, mosaic);
+    
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = sceneTarget.Texture;
+    
+    event.Event.AddRenderTaskPostProcess(final, copyTarget);
+  }
+}

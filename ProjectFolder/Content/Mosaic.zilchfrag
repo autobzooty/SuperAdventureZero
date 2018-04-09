@@ -1,0 +1,32 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[Pixel][PostProcess]
+struct Mosaic
+{
+  [StageInput] var Uv : Real2;
+  [Input] var Texture : Sampler2d;
+  [Input] var Scale : Real;
+  [Input] var Width : Real;
+  [Input] var Height : Real;
+  
+  [Output] var Target0 : Real4;
+  
+  
+  function Main()
+  {
+    var uv = this.Uv;
+    
+    var size = this.Texture.SampleSize(0);
+    var pixel = (uv * size) as Integer2;
+    uv = (pixel / (this.Scale * Real2(this.Width, this.Height))) as Integer2 *
+      (this.Scale * Real2(this.Width, this.Height)) + ((this.Scale * Real2(this.Width, this.Height)) / 2.0);
+    uv /= size as Real2;
+    
+    this.Target0 = this.Texture.Sample(uv);
+  }
+}
