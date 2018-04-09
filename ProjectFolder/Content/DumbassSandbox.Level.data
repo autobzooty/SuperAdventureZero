@@ -185,9 +185,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{9.78183746, 11.6329269, 26.5319309}
+			var Translation = Real3{-3.98863459, 2.32640266, 2.15365934}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.169211924, 0.174446762, 0.0304458383, 0.969540417}
+			var Rotation = Quaternion{-0.0409146287, -0.212843746, -0.00892084185, 0.97618854}
 		}
 		CameraViewport 
 		{
@@ -244,10 +244,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 29.9137592
-			var VerticalAngle = 0.345575273
-			var HorizontalAngle = -0.356045008
-			var LookTarget = Real3{-0.0287626386, 1.5, 0.151845843}
+			var LookDistance = 2.38327813
+			var VerticalAngle = 0.0837762207
+			var HorizontalAngle = 0.429351419
+			var LookTarget = Real3{-3.00000048, 2.12697411, -0.00570294261}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1381,6 +1381,9 @@ Level
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
 		}
+		EquipmentBase 
+		{
+		}
 		RigidBody [LocallyAdded]
 		{
 			var Velocity = Real3{0, 0, 0}
@@ -1922,7 +1925,7 @@ Level
 				Transform 
 				{
 					var Translation = Real3{0, 0, 0}
-					var Scale = Real3{0.25, 0.25, 0.25}
+					var Scale = Real3{1, 1, 1}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
 				Model 
@@ -1934,7 +1937,7 @@ Level
 					var LocalAabbCenter = Real3{0, 0, 0}
 					var LocalAabbHalfExtents = Real3{1, 1, 1}
 					var GroupSortValue = 0
-					var Material = "5a8c40c024c76419:StippledFlat"
+					var Material = "5828b036bd65b5d8:OpaqueFlat"
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 				MaterialInputs 

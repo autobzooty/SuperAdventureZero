@@ -103,10 +103,11 @@ class EquipmentInterface : ZilchComponent
     
     slot.Equip(equipment);
     
-    // TODO:
-    // 
-    // i think right here is where i'll need to dispatch out some kind of
-    // EquipmentWasChanged event or something like that
+    // the StatsCalculationRequest gets sent down from the EquipmentRoot and not
+    // from this.Owner, so that stuff in the inventory doesn't get it
+    var se = StatsEvent();
+    this.EquipmentRoot.Cog.DispatchDown(Events.StatsCalculationRequest, se);
+    this.Owner.DispatchEvent(Events.StatsWereCalculated, se);
   }
   
   

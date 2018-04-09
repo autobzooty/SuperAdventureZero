@@ -43,13 +43,16 @@ class EquipmentBase : ZilchComponent
   }
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Owner, Events.WasEquipped, this.OnWasEquipped);
     Zero.Connect(this.Owner, Events.WasUnequipped, this.OnWasUnequipped);
+    Zero.Connect(this.Owner, Events.StatsCalculationRequest, this.OnStatsCalculationRequest);
   }
   
   
+  //****************************************************************************
   function OnWasEquipped(event : EquipmentEvent)
   {
     this.EquippedSlot = event.Slot;
@@ -60,6 +63,7 @@ class EquipmentBase : ZilchComponent
   }
   
   
+  //****************************************************************************
   function OnWasUnequipped(event : EquipmentEvent)
   {
     this.EquippedSlot = null;
@@ -70,6 +74,14 @@ class EquipmentBase : ZilchComponent
   }
   
   
+  //****************************************************************************
+  function OnStatsCalculationRequest(event : StatsEvent)
+  {
+    event.StatBlock.Add(this.StatBlock);
+  }
+  
+  
+  //****************************************************************************
   function Unequip()
   {
     
@@ -83,6 +95,12 @@ class StatMod : ZilchObject
   var Addend : Real = 0;
   [Property]
   var Bonus : Real = 0;
+  
+  function Add(rhs : StatMod)
+  {
+    this.Addend += rhs.Addend;
+    this.Bonus  += rhs.Bonus;
+  }
 }
 
 
@@ -92,18 +110,18 @@ class StatBlock : ZilchObject
   var HP : StatMod = StatMod();
   [Property]
   var Evasion : StatMod = StatMod();
-  [Property]
-  var TypeAddends : TypeMultiplierBlock = TypeMultiplierBlock()
-  {
-    Heat = 0,
-    Cold = 0,
-    Electricity = 0,
-    Psychic = 0,
-    Biological = 0,
-    Poison = 0,
-    Holy = 0,
-    Dark = 0,
-  };
+  //[Property]
+  //var TypeAddends : TypeMultiplierBlock = TypeMultiplierBlock()
+  //{
+  //  Heat = 0,
+  //  Cold = 0,
+  //  Electricity = 0,
+  //  Psychic = 0,
+  //  Biological = 0,
+  //  Poison = 0,
+  //  Holy = 0,
+  //  Dark = 0,
+  //};
   [Property]
   var TypeBonuses : TypeMultiplierBlock = TypeMultiplierBlock()
   {
@@ -116,4 +134,12 @@ class StatBlock : ZilchObject
     Holy = 0,
     Dark = 0,
   };
+  
+  function Add(rhs : StatBlock)
+  {
+    this.HP.Add(rhs.HP);
+    this.Evasion.Add(rhs.Evasion);
+    //this.TypeAddends.Add(rhs.TypeAddends);
+    this.TypeBonuses.Add(rhs.TypeBonuses);
+  }
 }

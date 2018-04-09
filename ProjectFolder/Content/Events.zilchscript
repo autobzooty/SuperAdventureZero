@@ -253,8 +253,9 @@ class ItemEvent : MWEvent
 class StatsEvent : MWEvent
 {
   sends StatsCalculationRequest : StatsEvent;
+  sends StatsWereCalculated : StatsEvent;
   
-  var StatBlock : StatBlock;
+  var StatBlock : StatBlock = StatBlock();
 }
 
 class CollectionEvent : ZilchEvent
