@@ -1,0 +1,13 @@
+// PostProcess fragments are intended to be constructed in script
+// and passed directly to the AddRenderTaskPostProcess method.
+[Pixel][PostProcess]
+struct PostSolidColorOnly
+{
+  [PropertyInput] var Hsva : Real4 = Real4(0, 1, 1, 1);
+  [Output] var Target0 : Real4;
+
+  function Main()
+  {
+    this.Target0 = Math.HsvaToRgba(this.Hsva);
+  }
+}

@@ -1,0 +1,50 @@
+struct MWMathExtensions
+{
+  [Static][Extension(typeid(Math))]
+  function HsvaToRgba(hsva : Real4) : Real4
+  {
+    var c = hsva.XYZ;
+    
+    var k = Real4(1.0, 2.0 / 3, 1.0 / 3, 3);
+    var p = Math.Abs(Math.Frac(c.XXX + k.XYZ) * 6 - k.WWW);
+    var o = c.Z * Math.Lerp(k.XXX, Math.Clamp(p - k.XXX, 0.0.XXX, 1.0.XXX), c.Y);
+    
+    return Real4(o, hsva.W);
+  }
+  
+  [Static][Extension(typeid(Math))]
+  function HsvaToRgba(h : Real, s : Real, v : Real, a : Real) : Real4
+  {
+    var c = Real3(h, s, v);
+    
+    var k = Real4(1.0, 2.0 / 3, 1.0 / 3, 3);
+    var p = Math.Abs(Math.Frac(c.XXX + k.XYZ) * 6 - k.WWW);
+    var o = c.Z * Math.Lerp(k.XXX, Math.Clamp(p - k.XXX, 0.0.XXX, 1.0.XXX), c.Y);
+    
+    return Real4(o, a);
+  }
+  
+  [Static][Extension(typeid(Math))]
+  function Select(condition : Boolean, valueIfTrue : Real, valueIfFalse : Real) : Real
+  {
+    return Math.Lerp(valueIfFalse, valueIfTrue, condition as Real);
+  }
+  
+  [Static][Extension(typeid(Math))]
+  function Select(condition : Boolean, valueIfTrue : Real2, valueIfFalse : Real2) : Real2
+  {
+    return Math.Lerp(valueIfFalse, valueIfTrue, condition as Real);
+  }
+  
+  [Static][Extension(typeid(Math))]
+  function Select(condition : Boolean, valueIfTrue : Real3, valueIfFalse : Real3) : Real3
+  {
+    return Math.Lerp(valueIfFalse, valueIfTrue, condition as Real);
+  }
+  
+  [Static][Extension(typeid(Math))]
+  function Select(condition : Boolean, valueIfTrue : Real4, valueIfFalse : Real4) : Real4
+  {
+    return Math.Lerp(valueIfFalse, valueIfTrue, condition as Real);
+  }
+}

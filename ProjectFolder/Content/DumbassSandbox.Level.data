@@ -45,12 +45,12 @@ Level
 		RenderScheduler 
 		{
 			var UseViewportScaling = false
-			var ViewportScale_ = 8
-			var ViewportScale = 8
+			var ViewportScale_ = 4
+			var ViewportScale = 4
 			var PixelWidth_ = 1
 			var PixelWidth = 1
-			var PixelHeight_ = 2
-			var PixelHeight = 2
+			var PixelHeight_ = 1
+			var PixelHeight = 1
 		}
 		ScheduledDeferredRenderer 
 		{
@@ -100,12 +100,12 @@ Level
 		{
 			var Active = true
 			var AtmosphereColor = Real4{0.400000006, 0.5, 1, 1}
-			var Power = 0.5
+			var Power = 1
 		}
 		ChannelSwapRenderer 
 		{
-			var Active = true
-			var Blend = 0.5
+			var Active = false
+			var Blend = 0.75
 			var RFrom = ColorChannel.G
 			var GFrom = ColorChannel.G
 			var BFrom = ColorChannel.G
@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-9.54700756, 5.23979759, 4.93586683}
+			var Translation = Real3{-5.91705561, 4.42690611, 3.94844484}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.145899504, -0.452425063, -0.0753042921, 0.876558125}
+			var Rotation = Quaternion{-0.174223289, -0.361603677, -0.0689798072, 0.913307607}
 		}
 		CameraViewport 
 		{
@@ -270,9 +270,9 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 10.5357122
-			var VerticalAngle = 0.329867721
-			var HorizontalAngle = 0.952949166
+			var LookDistance = 7.06230259
+			var VerticalAngle = 0.376992255
+			var HorizontalAngle = 0.753981531
 			var LookTarget = Real3{-1.42207623, 1.82709169, -0.838228703}
 			var MoveSensitivity = 1
 		}
