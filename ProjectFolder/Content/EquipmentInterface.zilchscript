@@ -79,13 +79,30 @@ class EquipmentInterface : ZilchComponent
   //****************************************************************************
   function AttemptEquip(equipment : EquipmentBase)
   {
+    //var type = equipment.SlotType;
+    //var slot = this.FindEmptySlot(type);
+    
+    //if (slot == null)
+    //  this.FailToEquip(equipment);
+    //else
+    //  this.Equip(equipment, slot);
+    
     var type = equipment.SlotType;
-    var slot = this.FindEmptySlot(type);
+    var slot = this.FindSlotEmptyOrNot(type);
     
     if (slot == null)
+    {
+      // TODO:
+      // 
+      // i'm definitely going to need to factor in failure reasons here
+      
       this.FailToEquip(equipment);
+    }
     else
+    {
+      this.AttemptUnequip(slot);
       this.Equip(equipment, slot);
+    }
   }
   
   
@@ -191,6 +208,38 @@ class EquipmentInterface : ZilchComponent
             
             slotThatWasFound = slot;
           }
+        }
+      }
+    }
+    
+    return slotThatWasFound;
+  }
+  
+  
+  //****************************************************************************
+  function FindSlotEmptyOrNot(type : EquipmentType) : EquipmentSlot
+  {
+    var childrenWereFound = false;
+    var slotsWereFound = false;
+    var matchingSlotsWereFound = false;
+    
+    var slotThatWasFound : EquipmentSlot = null;
+    
+    foreach (var child in this.EquipmentRoot.Cog.Children)
+    {
+      childrenWereFound = true;
+      
+      var slot = child.EquipmentSlot;
+      
+      if (slot != null)
+      {
+        slotsWereFound = true;
+        
+        if (slot.SlotType == type)
+        {
+          matchingSlotsWereFound = true;
+          
+          slotThatWasFound = slot;
         }
       }
     }

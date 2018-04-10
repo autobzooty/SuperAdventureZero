@@ -4,7 +4,7 @@ Cog
 	var Name = "HornedHelmet"
 	Transform 
 	{
-		var Translation = Real3{0, 0, 0}
+		var Translation = Real3{3, 2, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -13,6 +13,8 @@ Cog
 		var Name = "Horned Helmet"
 		var Description = "It's got horns, it's a helmet, there's a pool in the back"
 		var Type = ItemType.Equipment
+		var Stackable = false
+		var Uses = 0
 	}
 	EquipmentBase 
 	{
@@ -21,7 +23,7 @@ Cog
 		{
 			var HP = StatMod
 			{
-				var Addend = 0
+				var Addend = 15
 				var Bonus = 0
 			}
 			var Evasion = StatMod
@@ -29,21 +31,10 @@ Cog
 				var Addend = 0
 				var Bonus = 0
 			}
-			var TypeAddends = TypeMultiplierBlock
-			{
-				var Heat = 0
-				var Cold = 0
-				var Electricity = 0
-				var Psychic = 0
-				var Biological = 0
-				var Poison = 0
-				var Holy = 0
-				var Dark = 0
-			}
 			var TypeBonuses = TypeMultiplierBlock
 			{
 				var Heat = 0
-				var Cold = 0
+				var Cold = -0.5
 				var Electricity = 0
 				var Psychic = 0
 				var Biological = 0
@@ -53,6 +44,29 @@ Cog
 			}
 		}
 		var VisibleOnEquip = true
+	}
+	RigidBody 
+	{
+		var Velocity = Real3{0, 0, 0}
+		var AngularVelocity = Real3{0, 0, 0}
+		var DynamicState = RigidBodyDynamicState.Dynamic
+		var AllowSleep = true
+		var Asleep = false
+		var RotationLocked = false
+		var Mode2D = Mode2DStates.InheritFromSpace
+	}
+	SphereCollider 
+	{
+		var Ghost = false
+		var SendsEvents = true
+		var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+		var CollisionGroup = "4e740859314e5515:DefaultGroup"
+		var Offset = Real3{0, 0.130934998, -0.0558357984}
+		var Radius = 0.524999976
+	}
+	Collectable 
+	{
+		var CollectOnCollide = true
 	}
 	Hierarchy 
 	{

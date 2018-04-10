@@ -208,6 +208,13 @@ class InventoryMenuWindowController : ZilchComponent
   function AttemptUse()
   {
     var currentItem = this.CurrentItem;
+    
+    // TODO:
+    // 
+    // failure feedback
+    if (currentItem == null)
+      return;
+    
     var itemType = currentItem.Type;
     
     if (itemType == ItemType.Consumable)

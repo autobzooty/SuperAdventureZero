@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-5.91705561, 4.42690611, 3.94844484}
+			var Translation = Real3{1.64567268, 3.52773166, 1.8930527}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.174223289, -0.361603677, -0.0689798072, 0.913307607}
+			var Rotation = Quaternion{-0.246976078, -0.288851053, -0.0773975849, 0.921725333}
 		}
 		CameraViewport 
 		{
@@ -270,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 7.06230259
-			var VerticalAngle = 0.376992255
-			var HorizontalAngle = 0.753981531
-			var LookTarget = Real3{-1.42207623, 1.82709169, -0.838228703}
+			var LookDistance = 2.74015617
+			var VerticalAngle = 0.523599863
+			var HorizontalAngle = 0.607374251
+			var LookTarget = Real3{3, 2.15765095, -0.0555704832}
 			var MoveSensitivity = 1
 		}
 	}
@@ -3690,6 +3690,15 @@ Level
 					}
 				}
 			}
+		}
+	}
+	Cog [InheritId:"5a86688cccbefab5:HornedHelmet"][ContextId:102]
+	{
+		Transform 
+		{
+			var Translation = Real3{3, 2, 0}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
 		}
 	}
 }
