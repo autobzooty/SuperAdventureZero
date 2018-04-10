@@ -87,6 +87,30 @@ Level
 			var Bloom5 = true
 			var DebugBuffer = false
 		}
+		SmaaRenderer 
+		{
+			var EnableSmaa = true
+			var EnableDiagonals = true
+			var DepthBasedEdges = true
+			var EdgeDetection = DetectionChance.Medium
+			var TargetTexture = SmaaRenderTargets.FinalBlend
+			var ClearColor = Real4{0, 0, 0, 1}
+		}
+		AtmosphericAttenuationRenderer 
+		{
+			var Active = true
+			var AtmosphereColor = Real4{0.400000006, 0.5, 1, 1}
+			var Power = 0.5
+		}
+		ChannelSwapRenderer 
+		{
+			var Active = true
+			var Blend = 0.5
+			var RFrom = ColorChannel.G
+			var GFrom = ColorChannel.G
+			var BFrom = ColorChannel.G
+			var AFrom = ColorChannel.A
+		}
 	}
 	Cog [ContextId:3]
 	{
@@ -174,8 +198,10 @@ Level
 			var FieldOfView = 45
 			var Size = 64
 		}
-		ShadowRenderer 
+		CustomDirectionalShadowRenderer 
 		{
+			var ShadowStippling = true
+			var ShadowDistanceStippling = false
 			var ResolutionValue = ShadowResolution.High
 			var NormalOffsetBias = 0.100000001
 		}
@@ -185,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-3.98863459, 2.32640266, 2.15365934}
+			var Translation = Real3{-9.54700756, 5.23979759, 4.93586683}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0409146287, -0.212843746, -0.00892084185, 0.97618854}
+			var Rotation = Quaternion{-0.145899504, -0.452425063, -0.0753042921, 0.876558125}
 		}
 		CameraViewport 
 		{
@@ -244,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 2.38327813
-			var VerticalAngle = 0.0837762207
-			var HorizontalAngle = 0.429351419
-			var LookTarget = Real3{-3.00000048, 2.12697411, -0.00570294261}
+			var LookDistance = 10.5357122
+			var VerticalAngle = 0.329867721
+			var HorizontalAngle = 0.952949166
+			var LookTarget = Real3{-1.42207623, 1.82709169, -0.838228703}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1381,9 +1407,6 @@ Level
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
 		}
-		EquipmentBase 
-		{
-		}
 		RigidBody [LocallyAdded]
 		{
 			var Velocity = Real3{0, 0, 0}
@@ -1925,7 +1948,7 @@ Level
 				Transform 
 				{
 					var Translation = Real3{0, 0, 0}
-					var Scale = Real3{1, 1, 1}
+					var Scale = Real3{0.5, 0.5, 0.5}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
 				Model 
@@ -1943,9 +1966,9 @@ Level
 				MaterialInputs 
 				{
 					var Color = Real4{0.5, 0.5, 0.5, 1}
-					var AlbedoValue = Real4{0.595000029, 0.595000029, 0.595000029, 1}
-					var MetallicValue = 0
-					var RoughnessValue = 1
+					var AlbedoValue = Real4{0.930000007, 0.735862494, 0.153450012, 1}
+					var MetallicValue = 1
+					var RoughnessValue = 0.25
 					var SpecularValue = 1
 					var StippleDensity = 0.5
 					var StippleScale = 2

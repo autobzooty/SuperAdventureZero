@@ -1,8 +1,8 @@
 [Pixel][PostProcess]
 struct PostNeighborhoodBlend
 {
-  [BuiltInInput] var ViewportSize : Real2;
-  [BuiltInInput] var InverseViewportSize : Real2;
+  //[BuiltInInput] var ViewportSize : Real2;
+  //[BuiltInInput] var InverseViewportSize : Real2;
   
   [StageInput] var Uv : Real2;
   
@@ -13,7 +13,9 @@ struct PostNeighborhoodBlend
 
   function Main()
   {
-    var pixelSize = this.InverseViewportSize;
+    var invTextureSize = Real2(1.0) / this.AreaTexture.SampleSize(0);
+    
+    var pixelSize = invTextureSize;
     // Blend Areas from last pass.
     var sampledAreas = this.AreaTexture.Sample(this.Uv);
     // Right, Top, Left, Bottom.

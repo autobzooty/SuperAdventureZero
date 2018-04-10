@@ -1,8 +1,8 @@
 [Pixel][PostProcess]
 struct PostBlendByArea
 {
-  [BuiltInInput] var ViewportSize : Real2;
-  [BuiltInInput] var InverseViewportSize : Real2;
+  //[BuiltInInput] var ViewportSize : Real2;
+  //[BuiltInInput] var InverseViewportSize : Real2;
   [FragmentInput][StageInput] var Uv : Real2;
   
   //This Shader specific inputs
@@ -14,6 +14,9 @@ struct PostBlendByArea
   [Input] var DiagEnabled : Boolean = false;
   [Input] var DebugMode : Boolean = false;
   [Output] var Target0 : Real4;
+  
+  var TextureSize : Real2;
+  var InvTextureSize : Real2;
   
   function AddLength(offset : Real, e : Real2) : Real
   {
@@ -40,9 +43,9 @@ struct PostBlendByArea
   function SearchXLeft() : Real
   {
     // Offset y coords to sample in-b/w pixels to fetch approximation of 4 pixels
-    var texcoord = (this.InverseViewportSize * Real2(-0.25, -0.125)) + this.Uv;
+    var texcoord = (this.InvTextureSize * Real2(-0.25, -0.125)) + this.Uv;
     // Store the left end of the search, also offsetted by the above value.
-    var end = (this.InverseViewportSize.X * -2.0 * this.SearchSamples) + texcoord.X;
+    var end = (this.InvTextureSize.X * -2.0 * this.SearchSamples) + texcoord.X;
     var e = Real2(0.0, 1.0);
     
    // Stop if end reached, no edgel on top, or found crossing edge.
@@ -52,7 +55,7 @@ struct PostBlendByArea
       // Note that e might not be [0-1] anymore.
       e = this.EdgesTexture.Sample(texcoord).XY;
       // Move left by 2 pixels for the next 4 samples.
-      texcoord = texcoord - Real2(2.0 * this.InverseViewportSize.X, 0.0);
+      texcoord = texcoord - Real2(2.0 * this.InvTextureSize.X, 0.0);
     }
     
     // Takes in the bilinearly interpolated e and returns a 0,1 or 2.
@@ -61,64 +64,64 @@ struct PostBlendByArea
     // We correct the previous (-0.25, -0.125) offset we applied above.
     // The searches are bias by 1.
     // Remove length added by the last iteration.
-    var offset = (-2.0 *  addedLength) + 3.25;
-    return (this.InverseViewportSize.X * offset) + texcoord.X;
+    var offset = (-(255.0/127.0) *  addedLength) + 3.25;
+    return (this.InvTextureSize.X * offset) + texcoord.X;
   }
   
   
   // Same guidelines as SearchXLeft().
   function SearchXRight() : Real
   {
-    var texcoord = (this.InverseViewportSize * Real2(1.25, -0.125)) + this.Uv;
-    var end = (this.InverseViewportSize.X * 2.0 * this.SearchSamples) + texcoord.X;
+    var texcoord = (this.InvTextureSize * Real2(1.25, -0.125)) + this.Uv;
+    var end = (this.InvTextureSize.X * 2.0 * this.SearchSamples) + texcoord.X;
     var e = Real2(0.0, 1.0);
      
     while(texcoord.X < end && e.Y > 0.8281 && e.X == 0.0)
     {
       e = this.EdgesTexture.Sample(texcoord).XY;
-      texcoord = texcoord + Real2(2.0 * this.InverseViewportSize.X, 0.0);
+      texcoord = texcoord + Real2(2.0 * this.InvTextureSize.X, 0.0);
     }
     
     var addedLength = this.AddLength(0.5, e);
-    var offset = (-2.0 *  addedLength) + 3.25;
-    return (-this.InverseViewportSize.X * offset) + texcoord.X;
+    var offset = (-(255.0/127.0) *  addedLength) + 3.25;
+    return (-this.InvTextureSize.X * offset) + texcoord.X;
   }
   
   
   // Vertical search functions. Same guidelines as SearchXLeft().
   function SearchYTop() : Real
   {
-    var texcoord = (this.InverseViewportSize * Real2(-0.125, -0.25)) + this.Uv;
-    var end = (this.InverseViewportSize.Y * -2.0 * this.SearchSamples) + texcoord.Y;
+    var texcoord = (this.InvTextureSize * Real2(-0.125, -0.25)) + this.Uv;
+    var end = (this.InvTextureSize.Y * -2.0 * this.SearchSamples) + texcoord.Y;
     var e = Real2(1.0, 0.0);
     
     while(texcoord.Y > end && e.X > 0.8281 && e.Y == 0.0)
     {
       e = this.EdgesTexture.Sample(texcoord).XY;
-      texcoord = -Real2(0.0, 2.0) * this.InverseViewportSize + texcoord;
+      texcoord = -Real2(0.0, 2.0) * this.InvTextureSize + texcoord;
     }
     
     var addedLength = this.AddLength(0.0, e.YX);
-    var offset = (-2.0 *  addedLength) + 3.25;
-    return (this.InverseViewportSize.Y * offset) + texcoord.Y;
+    var offset = (-(255.0/127.0) *  addedLength) + 3.25;
+    return (this.InvTextureSize.Y * offset) + texcoord.Y;
   }
   
   // Same guidelines as SearchXLeft().
   function SearchYBottom() : Real
   {
-    var texcoord = (this.InverseViewportSize * Real2(-0.125, 1.25)) + this.Uv;
-    var end = (this.InverseViewportSize.Y * 2.0 * this.SearchSamples) + texcoord.Y;
+    var texcoord = (this.InvTextureSize * Real2(-0.125, 1.25)) + this.Uv;
+    var end = (this.InvTextureSize.Y * 2.0 * this.SearchSamples) + texcoord.Y;
     var e = Real2(1.0, 0.0);
      
     while(texcoord.Y < end && e.X > 0.8281 && e.Y == 0.0)
     {
       e = this.EdgesTexture.Sample(texcoord).XY;
-      texcoord = Real2(0.0, 2.0) * this.InverseViewportSize + texcoord;
+      texcoord = Real2(0.0, 2.0) * this.InvTextureSize + texcoord;
     }
     
     var addedLength = this.AddLength(0.5, e.YX);
-    var offset = (-2.0 *  addedLength) + 3.25;
-    return (-this.InverseViewportSize.Y * offset) + texcoord.Y;
+    var offset = (-(255.0/127.0) *  addedLength) + 3.25;
+    return (-this.InvTextureSize.Y * offset) + texcoord.Y;
   }
   
   // We make a key observation that crossing
@@ -162,14 +165,15 @@ struct PostBlendByArea
     
     var factor = Real2(1.0, 1.0);
     // Left crossing edge pixels, reduce the factor(area scale) if they exist in the edge texture.
-    factor.X -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(0.0, this.InverseViewportSize.Y)).X;
-    factor.Y -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(0.0, -2.0 * this.InverseViewportSize.Y)).X;
+    factor.X -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(0.0, this.InvTextureSize.Y)).X;
+    factor.Y -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(0.0, -2.0 * this.InvTextureSize.Y)).X;
     // Right crossing edge pixels, reduce the factor(area scale) if they exist in the edge texture.
-    factor.X -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + this.InverseViewportSize.XY).X;
-    factor.Y -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + Real2(this.InverseViewportSize.X, -2.0 * this.InverseViewportSize.Y)).X;
+    factor.X -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + this.InvTextureSize.XY).X;
+    factor.Y -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + Real2(this.InvTextureSize.X, -2.0 * this.InvTextureSize.Y)).X;
     
     // Scale the revectorized area sampled from the area texture by the calculated factor.
     return area * Math.Saturate(factor);
+    //return area;
   }
   
   function VerticalSharpCorner(d : Real2, area : Real2, coords : Real4) : Real2
@@ -180,13 +184,14 @@ struct PostBlendByArea
     rounding /= (distanceUD.X + distanceUD.Y);
     
     var factor = Real2(1.0, 1.0);
-    factor.X -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(this.InverseViewportSize.X,0.0)).Y;
-    factor.X -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + this.InverseViewportSize.XY).Y;
-    factor.Y -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(-2.0 * this.InverseViewportSize.X, 0.0)).Y;
-    factor.Y -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + Real2(-2.0 * this.InverseViewportSize.X, this.InverseViewportSize.Y)).Y;
+    factor.X -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(this.InvTextureSize.X,0.0)).Y;
+    factor.X -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + this.InvTextureSize.XY).Y;
+    factor.Y -= rounding.X * this.EdgesTexture.Sample(coords.XY + Real2(-2.0 * this.InvTextureSize.X, 0.0)).Y;
+    factor.Y -= rounding.Y * this.EdgesTexture.Sample(coords.ZW + Real2(-2.0 * this.InvTextureSize.X, this.InvTextureSize.Y)).Y;
     
     // Scale the revectorized area sampled from the area texture by the calculated.
     return area * Math.Saturate(factor);
+    //return area;
   }
   
   // Sample into the area texture for blendWeights. This is a massive optimization removing the need for runtime revectorization for the 
@@ -204,11 +209,14 @@ struct PostBlendByArea
     // Decode the stored weigts from the 4D table using edges and distance as inputs.
     var texcoord = (areaTexMaxDistance.XX * Math.Round(4.0 * Real2(e1,e2))) + distance;
     
+    //texcoord.Y += subTexelAreaTexture;
+    
     // Do a scale and bias for mapping to texel space.
     texcoord = (texcoord * areaTexPixelSize) + (0.5 * areaTexPixelSize);
     
     // Sample the area.
     return this.AreaTexture.Sample(texcoord).XY;
+    //return texcoord;
   }
   
   // Like the function for horizontal area decoding above, this just samples into a 
@@ -233,6 +241,7 @@ struct PostBlendByArea
     
     // Get the area.
     return this.AreaTexture.Sample(texcoord).XY;
+    //return texcoord;
   }
   
     /*
@@ -250,7 +259,7 @@ struct PostBlendByArea
     // coord.w stores if the pixel is a crossing edge.
     var coord = Real4(this.Uv, -1.0, 1.0);
     // To move one pixel in diagnol.
-    var t = Real3(this.InverseViewportSize, 1.0);
+    var t = Real3(this.InvTextureSize, 1.0);
     
     // Search for crossing edge within searchsamples.
     while(coord.Z < this.DiagnolSearchSamples - 1.0 && coord.W > 0.9)
@@ -280,7 +289,7 @@ struct PostBlendByArea
      // coord.z maintains the number of steps in the current search.
      // coord.w stores if the pixel is a crossing edge.
      var coord = Real4(this.Uv, -1.0, 1.0);
-     var t = Real3(this.InverseViewportSize, 1.0);
+     var t = Real3(this.InvTextureSize, 1.0);
      
      // Search for crossing edge within searchsamples.
      while(coord.Z < this.DiagnolSearchSamples - 1.0 && coord.W > 0.9)
@@ -290,7 +299,7 @@ struct PostBlendByArea
        e.Y = this.EdgesTexture.Sample(coord.XY).Y;
        // Since we don't store right pixels in the edge texture, we sample the right adjacent 
        // pixel to the current pixel and sample it's left edge instead.
-       e.X = this.EdgesTexture.Sample(coord.XY + Real2(this.InverseViewportSize.X, 0.0)).X;
+       e.X = this.EdgesTexture.Sample(coord.XY + Real2(this.InvTextureSize.X, 0.0)).X;
        // If either the right or top edges don't exist break the loop.
        // If coord.w is < 1.0 then we have found a crossing edge this search.
        coord.W = Math.Dot(e, Real2(0.5, 0.5));
@@ -336,15 +345,15 @@ struct PostBlendByArea
      if(distance.X + distance.Y > 2.0)
      {
         // From the current pixel, store the potential crossing edges. coords.xy == bottom-left; coords.zw == top-right.
-        var coords = Real4(-distance.X, distance.X, distance.Y, -distance.Y) * this.InverseViewportSize.XYXY + this.Uv.XYXY;
+        var coords = Real4(-distance.X, distance.X, distance.Y, -distance.Y) * this.InvTextureSize.XYXY + this.Uv.XYXY;
         var crossingEdges = Real4();
         // Sample the top crossing edge for bottom-left search.
-        crossingEdges.X = this.EdgesTexture.Sample(coords.XY + Real2(-this.InverseViewportSize.X, 0.0)).Y;
+        crossingEdges.X = this.EdgesTexture.Sample(coords.XY + Real2(-this.InvTextureSize.X, 0.0)).Y;
         // Sample the left crossing edge for bottom-left search.
         crossingEdges.Y = this.EdgesTexture.Sample(coords.XY).X;
         // Rest for top-right search.
-        crossingEdges.Z = this.EdgesTexture.Sample(coords.ZW + Real2(this.InverseViewportSize.X, 0.0)).Y;
-        crossingEdges.W = this.EdgesTexture.Sample(coords.ZW + Real2(this.InverseViewportSize.X, -this.InverseViewportSize.Y)).X;
+        crossingEdges.Z = this.EdgesTexture.Sample(coords.ZW + Real2(this.InvTextureSize.X, 0.0)).Y;
+        crossingEdges.W = this.EdgesTexture.Sample(coords.ZW + Real2(this.InvTextureSize.X, -this.InvTextureSize.Y)).X;
         
         // Crossing edges stored on both sides stored into a single value each.
         var horiVertCrossingEdges = Real2(2.0.XX) * crossingEdges.XZ + crossingEdges.YW;
@@ -359,7 +368,7 @@ struct PostBlendByArea
      // Top-left search.
      distance.XZ = this.DiagnolSearch135Staircase(Real2(-1.0, -1.0), end).XY;
      // Since we don't store the right edge of the pixel, we query the left edge of the right adjacent.
-     var eRight = this.EdgesTexture.Sample(this.Uv + Real2(this.InverseViewportSize.X, 0.0));
+     var eRight = this.EdgesTexture.Sample(this.Uv + Real2(this.InvTextureSize.X, 0.0));
      
      // If the right edge exists.
      if(eRight.X > 0.0)
@@ -381,14 +390,14 @@ struct PostBlendByArea
      if(distance.X + distance.Y > 2.0)
      {
        // coords.xy == top-left search distances. coords.zw == bottom-right.
-       var coords = Real4(-distance.X, -distance.X, distance.Y, distance.Y) * this.InverseViewportSize.XYXY + this.Uv.XYXY;
+       var coords = Real4(-distance.X, -distance.X, distance.Y, distance.Y) * this.InvTextureSize.XYXY + this.Uv.XYXY;
        var crossingEdges = Real4();
        // Vertical top-left crossing edge.
-       crossingEdges.X = this.EdgesTexture.Sample(coords.XY + Real2(-this.InverseViewportSize.X, 0.0)).Y;
+       crossingEdges.X = this.EdgesTexture.Sample(coords.XY + Real2(-this.InvTextureSize.X, 0.0)).Y;
        // Horizontal top-left crossing edge.
-       crossingEdges.Y = this.EdgesTexture.Sample(coords.XY + Real2(0.0, -this.InverseViewportSize.Y)).X;
+       crossingEdges.Y = this.EdgesTexture.Sample(coords.XY + Real2(0.0, -this.InvTextureSize.Y)).X;
        // Vertical Horizontal bottom-right crossing edge.
-       crossingEdges.ZW = this.EdgesTexture.Sample(coords.ZW + Real2(this.InverseViewportSize.X, 0.0)).YX;
+       crossingEdges.ZW = this.EdgesTexture.Sample(coords.ZW + Real2(this.InvTextureSize.X, 0.0)).YX;
        
        // Crossing edges stored on both sides stored into a single value each.
        var horiVertCrossingEdges = Real2(2.0.XX) * crossingEdges.XZ + crossingEdges.YW;
@@ -405,79 +414,88 @@ struct PostBlendByArea
 
   function Main()
   {
-      // Y or Green is the top edge, X or Red is the left edge.
-      var edge = this.EdgesTexture.Sample(this.Uv).XY;
-      var area = Real4(0.0, 0.0, 0.0, 0.0);        
-      var pixelCoord = this.Uv * this.ViewportSize;
+    this.TextureSize = this.EdgesTexture.SampleSize(0);
+    this.InvTextureSize = Real2(1.0) / this.TextureSize;
+    
+    // Y or Green is the top edge, X or Red is the left edge.
+    var edge = this.EdgesTexture.Sample(this.Uv).XY;
+    var area = Real4(0.0, 0.0, 0.0, 0.0);        
+    var pixelCoord = this.Uv * this.TextureSize;
+    
+    // If there is a edge on the top, search horizontal/diagnol distances.
+    if(edge.Y > 0.0) 
+    {
+      // Check if this edge is a diagnol.
+      if(this.DiagEnabled)
+        area.XY = this.DiagnoalBlendWeights(edge, Real4(0.0));
       
-      // If there is a edge on the top, search horizontal/diagnol distances.
-      if(edge.Y > 0.0) 
-      {
-          // Check if this edge is a diagnol.
-          if(this.DiagEnabled)
-            area.XY = this.DiagnoalBlendWeights(edge, Real4(0.0));
-          
-          // No diagnols were detected, hence do horizontal/vertical searches.
-          if(area.X + area.Y == 0.0)
-          {
-            var distance = Real2();
-            var coords = Real3();
-            
-            // Find the distance to the left/right and offset y for bilinear interpolation.
-            coords.X = this.SearchXLeft();
-            coords.Y = this.Uv.Y - 0.25 * this.InverseViewportSize.Y;
-            coords.Z = this.SearchXRight();
-            distance.X = coords.X;
-            distance.Y = coords.Z;
-            
-            // Distance in number of pixels from the current pixel to the left and right.
-            distance = Math.Abs(Math.Round((this.ViewportSize.X * distance.XY) - pixelCoord.XX));
-                    
-            // Sample the left/right crossing edges, again, 4 pixel edges are fetched at once.
-            // That are used in the area function to get blend weights.
-            var e1 = this.EdgesTexture.Sample(coords.XY).X;
-            var e2 = this.EdgesTexture.Sample(coords.ZY + Real2(this.InverseViewportSize.X, 0.0)).X;
-            
-            coords.Y = this.Uv.Y;
-            // Need to prevent corner anti-aliasing. Area texture is compressed quadratically, so adjust the distance.
-            area.XY = this.HorizontalSharpCorner(distance, this.AddArea(Math.Sqrt(distance), e1, e2, 0.0), coords.XYZY);  
-        }
-        else
-        {
-          // If a diagnol is detected we want to skip the vertical search too.
-          edge.X = 0.0;
-        }
-      }
-      
-      // If there is a edge on the left, search the vertical distances
-      if(edge.X > 0.0) 
+      // No diagnols were detected, hence do horizontal/vertical searches.
+      if(area.X + area.Y == 0.0)
       {
         var distance = Real2();
         var coords = Real3();
         
-        // Find the distance to the top/bottom and offset x for bilinear interpolation.
-        coords.X = this.Uv.X - 0.25 * this.InverseViewportSize.X;
-        coords.Y = this.SearchYTop();
-        coords.Z = this.SearchYBottom();
-        distance.X = coords.Y;
+        // Find the distance to the left/right and offset y for bilinear interpolation.
+        coords.X = this.SearchXLeft();
+        coords.Y = this.Uv.Y - 0.25 * this.InvTextureSize.Y;
+        coords.Z = this.SearchXRight();
+        distance.X = coords.X;
         distance.Y = coords.Z;
         
         // Distance in number of pixels from the current pixel to the left and right.
-        distance = Math.Abs(Math.Round((this.ViewportSize.Y * distance) - pixelCoord.YY));
+        distance = Math.Abs(Math.Round((this.TextureSize.X * distance.XY) - pixelCoord.XX));
+                
+        // Sample the left/right crossing edges, again, 4 pixel edges are fetched at once.
+        // That are used in the area function to get blend weights.
+        var e1 = this.EdgesTexture.Sample(coords.XY).X;
+        var e2 = this.EdgesTexture.Sample(coords.ZY + Real2(this.InvTextureSize.X, 0.0)).X;
         
-        // Sample the top/bottom crossing edges
-        var e1 = this.EdgesTexture.Sample(coords.XY).Y;
-        var e2 = this.EdgesTexture.Sample(coords.XZ + Real2(0.0, this.InverseViewportSize.Y)).Y;
-        
-        coords.X = this.Uv.X;
-        // Need to prevent sharp corner anti-aliasing. Area texture is compressed quadratically, so adjust the distance.
-        area.ZW = this.VerticalSharpCorner(distance, this.AddArea(Math.Sqrt(distance), e1, e2, 0.0), coords.XYXZ);
+        coords.Y = this.Uv.Y;
+        // Need to prevent corner anti-aliasing. Area texture is compressed quadratically, so adjust the distance.
+        //area.XY = this.HorizontalSharpCorner(distance, this.AddArea(Math.Sqrt(distance), e1, e2, 0.0), coords.XYZY);
+        area.XY = this.AddArea(Math.Sqrt(distance), e1, e2, 0.0);
       }
+      else
+      {
+        // If a diagnol is detected we want to skip the vertical search too.
+        edge.X = 0.0;
+      }
+    }
+    
+    // If there is a edge on the left, search the vertical distances
+    if(edge.X > 0.0) 
+    {
+      var distance = Real2();
+      var coords = Real3();
       
-      // The below alpha is increased to debug the area texture properly.
-      if(this.DebugMode)
-        area.W = 1.0;
+      // Find the distance to the top/bottom and offset x for bilinear interpolation.
+      coords.X = this.Uv.X - 0.25 * this.InvTextureSize.X;
+      coords.Y = this.SearchYTop();
+      coords.Z = this.SearchYBottom();
+      distance.X = coords.Y;
+      distance.Y = coords.Z;
       
-      this.Target0 = area;
+      // Distance in number of pixels from the current pixel to the left and right.
+      distance = Math.Abs(Math.Round((this.TextureSize.Y * distance) - pixelCoord.YY));
+      
+      // Sample the top/bottom crossing edges
+      var e1 = this.EdgesTexture.Sample(coords.XY).Y;
+      var e2 = this.EdgesTexture.Sample(coords.XZ + Real2(0.0, this.InvTextureSize.Y)).Y;
+      
+      coords.X = this.Uv.X;
+      // Need to prevent sharp corner anti-aliasing. Area texture is compressed quadratically, so adjust the distance.
+      //area.ZW = this.VerticalSharpCorner(distance, this.AddArea(Math.Sqrt(distance), e1, e2, 0.0), coords.XYXZ);
+      area.ZW = this.AddArea(Math.Sqrt(distance), e1, e2, 0.0);
+    }
+    
+    // The below alpha is increased to debug the area texture properly.
+    if(this.DebugMode)
+      area.W = 1.0;
+    
+    this.Target0 = area;
+    //this.Target0 = Math.Pow(area, Real4(1.0 / 2.2));
+    //var xcoord = Math.Max(area.X, area.Z);
+    //xcoord = Math.Round(xcoord);
+    //this.Target0 = Real4(xcoord, 0, 0, 1);
   }
 }

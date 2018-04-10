@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "AtmosphericAttenuationRenderer"
+		var ResourceId = 0x5a2473c48e4ef14c
+	}
+}

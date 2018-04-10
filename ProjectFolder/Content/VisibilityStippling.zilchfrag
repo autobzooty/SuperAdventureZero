@@ -10,6 +10,7 @@ struct VisibilityStippling
   [PropertyInput][Slider(1, 16, 1)] var StippleScale : Real = 1;
   
   [FragmentInput][StageInput] var ViewPosition : Real3;
+  [PropertyInput] var DoTheThing : Boolean = true;
   
   
   function Main()
@@ -26,7 +27,7 @@ struct VisibilityStippling
     //var matrixValue = StipplingUtilities.CircleMatrix16x16_23[index.X + index.Y * 16] as Real / 23.0;
     //var matrixValue = StipplingUtilities.RandomMatrix16x16[index.X + index.Y * 16] as Real / 256.0;
     
-    if (this.StippleDensity <= matrixValue)
+    if (this.DoTheThing && this.StippleDensity <= matrixValue)
       Shader.Discard();
   }
 }

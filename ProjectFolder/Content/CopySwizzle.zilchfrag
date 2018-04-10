@@ -1,0 +1,25 @@
+[Pixel][PostProcess]
+struct CopySwizzle
+{
+  [StageInput] var Uv : Real2;
+  [Input] var Texture : Sampler2d;
+  [PropertyInput][Slider(0, 1, 0.05)] var Blend : Real = 1;
+  [PropertyInput] var RSourceIndex : Integer = 0;
+  [PropertyInput] var GSourceIndex : Integer = 1;
+  [PropertyInput] var BSourceIndex : Integer = 2;
+  [PropertyInput] var ASourceIndex : Integer = 3;
+  
+  [Output] var Target0 : Real4;
+  
+  function Main()
+  {
+    var inputColor = this.Texture.Sample(this.Uv);
+    //this.Target0 = this.Texture.Sample(this.Uv);
+    var outputColor = Real4();
+    outputColor.X = inputColor[this.RSourceIndex];
+    outputColor.Y = inputColor[this.GSourceIndex];
+    outputColor.Z = inputColor[this.BSourceIndex];
+    outputColor.W = inputColor[this.ASourceIndex];
+    this.Target0 = Math.Lerp(inputColor, outputColor, this.Blend);
+  }
+}

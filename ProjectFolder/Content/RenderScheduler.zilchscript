@@ -77,6 +77,8 @@ class RenderScheduler : ZilchComponent
     var rse = RenderScheduleEvent();
     rse.Event = event;
     rse.DepthStencil = event.GetRenderTarget(viewportSize, TextureFormat.Depth24Stencil8);
+    rse.GeoTarget0 = event.GetRenderTarget(viewportSize, TextureFormat.RGBA32f);
+    rse.GeoTarget1 = event.GetRenderTarget(viewportSize, TextureFormat.RGBA32f);
     rse.LightBuffer = event.GetRenderTarget(viewportSize, TextureFormat.RGBA16f);
     rse.FinalTarget = event.GetFinalTarget(viewportSize, TextureFormat.RGBA8);
     rse.ViewportSize = viewportSize;
@@ -108,6 +110,8 @@ class RenderScheduleEvent : ZilchEvent
 {
   var Event : RenderTasksEvent;
   var DepthStencil : RenderTarget;
+  var GeoTarget0 : RenderTarget;  // Normal, Depth, Roughness
+  var GeoTarget1 : RenderTarget;  // Albedo, Metallic, Specular
   var LightBuffer : RenderTarget;
   var FinalTarget : RenderTarget;
   var ViewportSize : Integer2;

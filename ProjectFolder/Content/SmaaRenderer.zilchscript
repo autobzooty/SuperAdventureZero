@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///           |
-/// AUTHORS   | Doug Zwick
-/// COPYRIGHT | (C) 2018 Milky Way Games
+/// AUTHORS   | Devansh Maheshwari and Nate Carlson, modifications by Doug Zwick
+/// COPYRIGHT | (C) 2017 DigiPen Institute of Technology, I think
 ///           |
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -53,9 +53,11 @@ class SmaaRenderer : ZilchComponent
   //***************************************************************************
   function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
   {
-    if (!this.EnableSmaa) return;
+    // Don't bother
+    if(!this.EnableSmaa)
+      return;
     
-    var lightBuffer = event.LightBuffer;
+    var lightBuffer = event.FinalTarget;
     var depth = event.DepthStencil;
     
     // Sampler settings for filtering edges texture.
@@ -63,35 +65,39 @@ class SmaaRenderer : ZilchComponent
     samplerSettings.AddressingX = TextureAddressing.Clamp;
     samplerSettings.AddressingY = TextureAddressing.Clamp;
     samplerSettings.Filtering = TextureFiltering.Bilinear;
-    samplerSettings.CompareFunc = TextureCompareFunc.Always;
-    samplerSettings.CompareMode = TextureCompareMode.Enabled;
+    //samplerSettings.CompareFunc = TextureCompareFunc.Always;
+    //samplerSettings.CompareMode = TextureCompareMode.Enabled;
     
-    var size = event.ViewportSize;
-    var colorCopy = event.Event.GetRenderTarget(size, TextureFormat.RGBA8, samplerSettings);
-    var edges = event.Event.GetRenderTarget(size, TextureFormat.RGBA8, samplerSettings);
+    var size = lightBuffer.Texture.Size;
+    var colorCopy = event.Event.GetRenderTarget(size, lightBuffer.Texture.Format, samplerSettings);
+    var edges = event.Event.GetRenderTarget(size, TextureFormat.RG8, samplerSettings);
     var areas = event.Event.GetRenderTarget(size, TextureFormat.RGBA8, samplerSettings);
-    var finalBlend = event.Event.GetRenderTarget(size, TextureFormat.RGBA8, samplerSettings);
+    var finalBlend = event.Event.GetRenderTarget(size, lightBuffer.Texture.Format, samplerSettings);
     
     var renderSettings = RenderSettings() {CullMode = CullMode.Disabled};
-    renderSettings.DepthTarget = depth;
-    renderSettings.CullMode = CullMode.Disabled;
-    renderSettings.DepthSettings.DepthMode = DepthMode.Disabled;
-    renderSettings.DepthSettings.DepthCompareFunc = TextureCompareFunc.LessEqual;
+    //renderSettings.DepthTarget = depth;
+    //renderSettings.CullMode = CullMode.Disabled;
+    //renderSettings.DepthSettings.DepthMode = DepthMode.Disabled;
+    //renderSettings.DepthSettings.DepthCompareFunc = TextureCompareFunc.LessEqual;
     
     //Pass uses gamma corrected values and textures. Need input in the same color space.
-    this.LinearToGamma(event.Event, lightBuffer, colorCopy);
+    //this.LinearToGamma(event, lightBuffer, colorCopy);
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = lightBuffer.Texture;
+    event.Event.AddRenderTaskPostProcess(colorCopy, copyTarget);
     
     // First pass, using predicated thresholding here.
     var postProcess = PostEdgeDetection();
       postProcess.DepthTexture = depth.Texture;
       postProcess.DepthBasedThresholding = this.DepthBasedEdges;
     if(this.EdgeDetection == DetectionChance.Medium)
-      postProcess.ComparisonThreshold = 0.07;
+      postProcess.ComparisonThreshold = 0.10;
     else
-      postProcess.ComparisonThreshold = 0.05;
+      postProcess.ComparisonThreshold = 0.01;
     postProcess.Texture = colorCopy.Texture;
     renderSettings.ColorTarget = edges;
-    event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    event.Event.AddRenderTaskClearTarget(edges, Real4(0.0));
     event.Event.AddRenderTaskPostProcess(renderSettings, postProcess);
     
     // Second pass.
@@ -102,9 +108,10 @@ class SmaaRenderer : ZilchComponent
     areasPostProcess.EdgesTexture = edges.Texture;
     areasPostProcess.SearchTexture = Texture.SearchTex;
     areasPostProcess.AreaTexture = Texture.AreaTex;
-    areasPostProcess.SearchSamples = 16.0;
+    areasPostProcess.SearchSamples = 8.0;
     renderSettings.ColorTarget = areas;
-    event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    event.Event.AddRenderTaskClearTarget(renderSettings, Real4(0.0));
     event.Event.AddRenderTaskPostProcess(renderSettings, areasPostProcess);
     
     // Final pass.
@@ -112,12 +119,12 @@ class SmaaRenderer : ZilchComponent
     blendPostProcess.AreaTexture = areas.Texture;
     blendPostProcess.ColorTexture = colorCopy.Texture;
     renderSettings.ColorTarget = finalBlend;
-    event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
     event.Event.AddRenderTaskPostProcess(renderSettings, blendPostProcess);
-    
+
     // Finally, copy to render output.
     var renderPass = CopyTarget();
-    
+
     // Debug options
     if (this.TargetTexture == SmaaRenderTargets.FinalBlend)
       renderPass.Texture = finalBlend.Texture;
@@ -126,15 +133,16 @@ class SmaaRenderer : ZilchComponent
     if (this.TargetTexture == SmaaRenderTargets.Edge)
       renderPass.Texture = edges.Texture;
       
-    renderSettings.ColorTarget = colorCopy;
-    event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    //renderSettings.ColorTarget = colorCopy;
+    renderSettings.ColorTarget = lightBuffer;
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
     event.Event.AddRenderTaskPostProcess(renderSettings, renderPass);
     
     // The renderer must be doing a final LinearToGamma pass in Deferred Renderer.
     // Set the values back to linear space for other operations that might come after smaa.
-    this.GammaToLinear(event.Event, colorCopy, lightBuffer);
-    
-    // Release the rendertargets used for SMAA.
+    //this.GammaToLinear(event, colorCopy, lightBuffer);
+
+    // Release the rendertargets used for Smaa.
     colorCopy.Release();
     edges.Release();
     areas.Release();

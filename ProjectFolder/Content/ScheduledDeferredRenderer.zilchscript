@@ -57,9 +57,9 @@ class ScheduledDeferredRenderer : ZilchComponent
     var final = event.FinalTarget;
     
     // Geometry pass
-    var geometryBuffer0 = event.Event.GetRenderTarget(viewportSize, TextureFormat.RGBA32f);
-    var geometryBuffer1 = event.Event.GetRenderTarget(viewportSize, TextureFormat.RGBA32f);
-    var depthStencil = event.Event.GetRenderTarget(viewportSize, TextureFormat.Depth24Stencil8);
+    var geometryBuffer0 = event.GeoTarget0;
+    var geometryBuffer1 = event.GeoTarget1;
+    var depthStencil = event.DepthStencil;
     
     var geometryPassSettings = RenderSettings();
     geometryPassSettings.MultiRenderTarget.ColorTarget0 = geometryBuffer0;

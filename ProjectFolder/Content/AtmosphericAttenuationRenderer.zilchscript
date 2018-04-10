@@ -6,15 +6,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 [RunInEditor]
-class MosaicRenderer : ZilchComponent
+class AtmosphericAttenuationRenderer : ZilchComponent
 {
   [Dependency] var RenderScheduler : RenderScheduler;
   
-  
-  [Property] var Active : Boolean = true;
-  [Property] var Scale : Real = 1.0;
-  [Property] var TileWidth : Real = 1.0;
-  [Property] var TileHeight : Real = 1.0;
+  [Property]
+  var Active : Boolean = true;
+  [Property]
+  var AtmosphereColor : Real4 = Real4(0.4, 0.5, 1, 1);
+  [Property]
+  var Power : Real = 1;
   
   
   //***************************************************************************
@@ -27,19 +28,17 @@ class MosaicRenderer : ZilchComponent
   //***************************************************************************
   function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
   {
-    if (!this.Active || this.Scale == 0.0) return;
-    
-    var viewportSize = event.ViewportSize;
+    if (!this.Active) return;
     
     var final = event.FinalTarget;
     var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
     
-    var mosaic = Mosaic();
-    mosaic.Texture = final.Texture;
-    mosaic.Scale = this.Scale;
-    mosaic.Width = this.TileWidth;
-    mosaic.Height = this.TileHeight;
-    event.Event.AddRenderTaskPostProcess(sceneTarget, mosaic);
+    var atmosphericAttenuation = AtmosphericAttenuation();
+    atmosphericAttenuation.AtmosphereColor = this.AtmosphereColor;
+    atmosphericAttenuation.Power = this.Power;
+    atmosphericAttenuation.SceneTexture = final.Texture;
+    atmosphericAttenuation.DepthTexture = event.GeoTarget0.Texture;
+    event.Event.AddRenderTaskPostProcess(sceneTarget, atmosphericAttenuation);
     
     var copyTarget = CopyTarget();
     copyTarget.Texture = sceneTarget.Texture;
