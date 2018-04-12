@@ -4,7 +4,7 @@ Cog
 	var Name = "CylinderVest"
 	Transform 
 	{
-		var Translation = Real3{0, 1.14999998, 0}
+		var Translation = Real3{-6, 2, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -13,6 +13,8 @@ Cog
 		var Name = "Cylinder Vest"
 		var Description = "Dunno but probably cool"
 		var Type = ItemType.Equipment
+		var Stackable = true
+		var Uses = 0
 	}
 	EquipmentBase 
 	{
@@ -29,17 +31,6 @@ Cog
 				var Addend = 0
 				var Bonus = 0
 			}
-			var TypeAddends = TypeMultiplierBlock
-			{
-				var Heat = 0
-				var Cold = 0
-				var Electricity = 0
-				var Psychic = 0
-				var Biological = 0
-				var Poison = 0
-				var Holy = 0
-				var Dark = 0
-			}
 			var TypeBonuses = TypeMultiplierBlock
 			{
 				var Heat = 0
@@ -53,6 +44,37 @@ Cog
 			}
 		}
 		var VisibleOnEquip = true
+	}
+	RigidBody 
+	{
+		var Velocity = Real3{0, 0, 0}
+		var AngularVelocity = Real3{0, 0, 0}
+		var DynamicState = RigidBodyDynamicState.Dynamic
+		var AllowSleep = true
+		var Asleep = false
+		var RotationLocked = false
+		var Mode2D = Mode2DStates.InheritFromSpace
+	}
+	CylinderCollider 
+	{
+		var Ghost = true
+		var SendsEvents = true
+		var Material = "5a2935c7a1ba7d2d:Ghost"
+		var CollisionGroup = "4e740859314e5515:DefaultGroup"
+		var Offset = Real3{0, 0, 0}
+		var Radius = 2
+		var Height = 4
+		var Direction = AxisDirection.Y
+	}
+	Collectable 
+	{
+		var CollectOnCollide = false
+	}
+	Interactive 
+	{
+	}
+	RequestCollectOnWasInteractedWith 
+	{
 	}
 	Hierarchy 
 	{
@@ -90,6 +112,17 @@ Cog
 				var FarDistance = 20
 				var MinVisibility = 0
 				var MaxVisibility = 1
+			}
+			CylinderCollider 
+			{
+				var Ghost = false
+				var SendsEvents = true
+				var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+				var CollisionGroup = "4e740859314e5515:DefaultGroup"
+				var Offset = Real3{0, 0, 0}
+				var Radius = 0.5
+				var Height = 1
+				var Direction = AxisDirection.Y
 			}
 		}
 	}

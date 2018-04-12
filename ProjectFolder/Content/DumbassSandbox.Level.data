@@ -104,11 +104,11 @@ Level
 		}
 		ChannelSwapRenderer 
 		{
-			var Active = false
-			var Blend = 0.75
-			var RFrom = ColorChannel.G
+			var Active = true
+			var Blend = 1
+			var RFrom = ColorChannel.R
 			var GFrom = ColorChannel.G
-			var BFrom = ColorChannel.G
+			var BFrom = ColorChannel.B
 			var AFrom = ColorChannel.A
 		}
 	}
@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{1.64567268, 3.52773166, 1.8930527}
+			var Translation = Real3{3.47488093, 2.66420817, 1.83474469}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.246976078, -0.288851053, -0.0773975849, 0.921725333}
+			var Rotation = Quaternion{-0.132115513, 0.121643081, 0.0163387898, 0.983606398}
 		}
 		CameraViewport 
 		{
@@ -270,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 2.74015617
-			var VerticalAngle = 0.523599863
-			var HorizontalAngle = 0.607374251
-			var LookTarget = Real3{3, 2.15765095, -0.0555704832}
+			var LookDistance = 2.0209372
+			var VerticalAngle = 0.267036676
+			var HorizontalAngle = -0.24609144
+			var LookTarget = Real3{3, 2.13093472, -0.0558357835}
 			var MoveSensitivity = 1
 		}
 	}
@@ -527,6 +527,42 @@ Level
 			var Snappiness = 0.100000001
 		}
 		Collector 
+		{
+		}
+		Interactor 
+		{
+			var ColliderPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 8
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+			var OrientationPath = CogPath
+			{
+				var Path = "."
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 8
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+		}
+		HumanInteractorInterface 
 		{
 		}
 		Hierarchy 
@@ -1406,31 +1442,6 @@ Level
 			var Translation = Real3{-6, 2, 0}
 			var Rotation = Quaternion{0, 0, 0, 1}
 			var Scale = Real3{1, 1, 1}
-		}
-		RigidBody [LocallyAdded]
-		{
-			var Velocity = Real3{0, 0, 0}
-			var AngularVelocity = Real3{0, 0, 0}
-			var DynamicState = RigidBodyDynamicState.Dynamic
-			var AllowSleep = true
-			var Asleep = false
-			var RotationLocked = false
-			var Mode2D = Mode2DStates.InheritFromSpace
-		}
-		CylinderCollider [LocallyAdded]
-		{
-			var Ghost = false
-			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
-			var CollisionGroup = "4e740859314e5515:DefaultGroup"
-			var Offset = Real3{0, 0, 0}
-			var Radius = 0.550000012
-			var Height = 0.800000012
-			var Direction = AxisDirection.Y
-		}
-		Collectable [LocallyAdded]
-		{
-			var CollectOnCollide = true
 		}
 	}
 	Cog [ContextId:11]

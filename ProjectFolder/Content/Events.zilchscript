@@ -99,6 +99,7 @@ class UpdateEventSends
 class InputEvent : ZilchEvent
 {
   sends MovementRequest : InputEvent;
+  sends InteractionInput : InputEvent;  // TODO: come up with a better name
   
   var Direction : Real3;
   var Magnitude : Real;
@@ -286,4 +287,16 @@ class InventoryMenuEvent : ZilchEvent
   var ItemList : Array[ItemBase];
   var ItemBase : ItemBase;
   var InventoryInterface : InventoryInterface;
+}
+
+class InteractionEvent : MWEvent
+{
+  sends InteractionQuery : InteractionEvent;
+  sends RequestInteraction : InteractionEvent;
+  sends WasInteractedWith : InteractionEvent;
+  sends DidInteract : InteractionEvent;
+  
+  var Interactor : Interactor;
+  var Interactee : Interactive;
+  var QueryGroup : Array[Interactive];
 }

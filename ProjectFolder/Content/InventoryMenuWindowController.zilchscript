@@ -126,6 +126,10 @@ class InventoryMenuWindowController : ZilchComponent
         this.AttemptNavUp();
       else if (this.IM.Triggered(GameAction.NavDown))
         this.AttemptNavDown();
+      else if (this.IM.Triggered(GameAction.NavLeft))
+        this.AttemptNavLeft();
+      else if (this.IM.Triggered(GameAction.NavRight))
+        this.AttemptNavRight();
       
       if (this.IM.Triggered(GameAction.NavConfirm))
         this.AttemptUse();
@@ -267,6 +271,20 @@ class InventoryMenuWindowController : ZilchComponent
   {
     if (this.ItemCount > 0)
       this.NavDown();
+  }
+  
+  
+  //****************************************************************************
+  function AttemptNavLeft()
+  {
+    
+  }
+  
+  
+  //****************************************************************************
+  function AttemptNavRight()
+  {
+    
   }
   
   

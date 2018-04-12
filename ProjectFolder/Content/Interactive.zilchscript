@@ -1,0 +1,51 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class Interactive : ZilchComponent
+{
+  var Active : Boolean = true;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.InteractionQuery, this.OnInteractionQuery);
+    Zero.Connect(this.Owner, Events.RequestInteraction, this.OnRequestInteraction);
+    
+    // TODO:
+    // 
+    // i think i should probably not toggle whether an object can be interacted
+    // with based on whether it was collected. i think it ideally should be
+    // something i filter out before i even dispatch the query (i mean, REALLY
+    // ideally, it wouldn't even be caught by the collider cast, buuuut...)
+    
+    Zero.Connect(this.Owner, Events.WasCollected, this.OnWasCollected);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasCollected(event : CollectionEvent)
+  {
+    Zero.Disconnect(this.Owner, Events.InteractionQuery, this);
+  }
+  
+  
+  //***************************************************************************
+  function OnInteractionQuery(event : InteractionEvent)
+  {
+    if (this.Active)
+      event.QueryGroup.Add(this);
+  }
+  
+  
+  //***************************************************************************
+  function OnRequestInteraction(event : InteractionEvent)
+  {
+    event.Instigator.DispatchEvent(Events.DidInteract, event);
+    this.Owner.DispatchEvent(Events.WasInteractedWith, event);
+  }
+}

@@ -57,16 +57,22 @@ Cog
 	}
 	SphereCollider 
 	{
-		var Ghost = false
+		var Ghost = true
 		var SendsEvents = true
-		var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+		var Material = "5a2935c7a1ba7d2d:Ghost"
 		var CollisionGroup = "4e740859314e5515:DefaultGroup"
 		var Offset = Real3{0, 0.130934998, -0.0558357984}
-		var Radius = 0.524999976
+		var Radius = 2
 	}
 	Collectable 
 	{
-		var CollectOnCollide = true
+		var CollectOnCollide = false
+	}
+	Interactive 
+	{
+	}
+	RequestCollectOnWasInteractedWith 
+	{
 	}
 	Hierarchy 
 	{
@@ -116,6 +122,15 @@ Cog
 						var MinVisibility = 0
 						var MaxVisibility = 1
 					}
+					SphereCollider 
+					{
+						var Ghost = false
+						var SendsEvents = true
+						var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+						var CollisionGroup = "4e740859314e5515:DefaultGroup"
+						var Offset = Real3{0, 0, 0}
+						var Radius = 0.5
+					}
 				}
 				Cog [Id:0x5ab5616a23f064be]
 				{
@@ -162,6 +177,15 @@ Cog
 								var FarDistance = 30
 								var MinVisibility = 0
 								var MaxVisibility = 1
+							}
+							EllipsoidCollider 
+							{
+								var Ghost = false
+								var SendsEvents = true
+								var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+								var CollisionGroup = "4e740859314e5515:DefaultGroup"
+								var Offset = Real3{0, 0, 0}
+								var Radii = Real3{0.5, 0.5, 0.5}
 							}
 						}
 					}
@@ -211,6 +235,15 @@ Cog
 								var FarDistance = 30
 								var MinVisibility = 0
 								var MaxVisibility = 1
+							}
+							EllipsoidCollider 
+							{
+								var Ghost = false
+								var SendsEvents = true
+								var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+								var CollisionGroup = "4e740859314e5515:DefaultGroup"
+								var Offset = Real3{0, 0, 0}
+								var Radii = Real3{0.5, 0.5, 0.5}
 							}
 						}
 					}
