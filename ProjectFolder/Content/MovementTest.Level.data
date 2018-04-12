@@ -194,9 +194,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-29.4319019, 10.981164, 6.55668783}
+			var Translation = Real3{-3.02270842, 1.23827207, -0.0749886334}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.127848655, -0.592745662, -0.09600389, 0.78936094}
+			var Rotation = Quaternion{-0.0856748298, -0.740446329, -0.096167177, 0.659659684}
 		}
 		CameraViewport 
 		{
@@ -253,10 +253,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 28.4046154
-			var VerticalAngle = 0.321140736
-			var HorizontalAngle = -17.5613785
-			var LookTarget = Real3{-3.54869199, 2.01526999, -0.95958662}
+			var LookDistance = 3.14732051
+			var VerticalAngle = 0.258308649
+			var HorizontalAngle = -17.1634865
+			var LookTarget = Real3{0, 0.434302628, 0.274999976}
 			var MoveSensitivity = 1
 		}
 	}
@@ -761,7 +761,7 @@ Level
 		var Name = "Player"
 		Transform 
 		{
-			var Translation = Real3{0, 0.5, 0}
+			var Translation = Real3{0, 0.434302628, 0}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -791,7 +791,7 @@ Level
 		{
 			var CameraPath = CogPath
 			{
-				var Path = ":/PlayerCamera"
+				var Path = ":/Dolly/PlayerCamera"
 				var ErrorOnResolveToNull = false
 				var ErrorOnPathCantCompute = false
 				var ErrorOnDirectLinkFail = false
@@ -812,6 +812,7 @@ Level
 			var TurnSpeed = 10
 			var MinimumStickThreshold = 0.400000006
 			var BaseMaxSpeed = 400
+			var GravityStrength = -500
 		}
 		Orientation 
 		{
@@ -963,32 +964,20 @@ Level
 			var ConvexMesh = "5ac2bf41c9fcad4f:wedge45"
 		}
 	}
-	Cog [ContextId:22]
+	Cog [ContextId:28]
 	{
-		var Name = "PlayerCamera"
+		var Name = "Dolly"
 		Transform 
 		{
-			var Translation = Real3{-15.7953978, 2, -0.327274323}
+			var Translation = Real3{0, 0.5, 0}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, -0.891816854, 0, 0.452396661}
+			var Rotation = Quaternion{0, 0, 0, 1}
 		}
-		SelectionIcon 
+		LockToCog 
 		{
-			var Visible = true
-			var VisibilityEvents = true
-			var Material = "56581e2bb81777be:DebugDrawOnTop"
-			var SpriteSource = "58f8e4be7360cf7c:CameraIcon"
-			var ViewScale = 1
-			var OverrideSelections = true
-		}
-		CameraViewport 
-		{
-			var RenderInEditor = false
-			var RenderInGame = true
-			var RenderOrder = 0
-			var CameraPath = CogPath
+			var Target = CogPath
 			{
-				var Path = "."
+				var Path = ":/Player"
 				var ErrorOnResolveToNull = false
 				var ErrorOnPathCantCompute = false
 				var ErrorOnDirectLinkFail = false
@@ -996,46 +985,94 @@ Level
 				var UpdatePathOnCogChange = true
 				var UpdateCogOnInitialize = true
 				var ResolvedNullErrorOccurred = false
-				var Cog = 22
+				var Cog = 21
 				var PathPreference0 = CogPathPreference.CogRelative
 				var PathPreference1 = CogPathPreference.SpaceRelative
 				var PathPreference2 = CogPathPreference.Absolute
 			}
-			var RendererPath = CogPath
+			var Offset = Real3{0, 0, 0}
+		}
+		RotateWithRightStick 
+		{
+			var TurnSpeed = 1
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5a9e423a8d1d8c52][ContextId:22]
 			{
-				var Path = ":/Renderer"
-				var ErrorOnResolveToNull = false
-				var ErrorOnPathCantCompute = false
-				var ErrorOnDirectLinkFail = false
-				var UpdateCogOnPathChange = true
-				var UpdatePathOnCogChange = true
-				var UpdateCogOnInitialize = true
-				var ResolvedNullErrorOccurred = false
-				var Cog = 2
-				var PathPreference0 = CogPathPreference.CogRelative
-				var PathPreference1 = CogPathPreference.SpaceRelative
-				var PathPreference2 = CogPathPreference.Absolute
+				var Name = "PlayerCamera"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 9.19272041}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				SelectionIcon 
+				{
+					var Visible = true
+					var VisibilityEvents = true
+					var Material = "56581e2bb81777be:DebugDrawOnTop"
+					var SpriteSource = "58f8e4be7360cf7c:CameraIcon"
+					var ViewScale = 1
+					var OverrideSelections = true
+				}
+				CameraViewport 
+				{
+					var RenderInEditor = false
+					var RenderInGame = true
+					var RenderOrder = 0
+					var CameraPath = CogPath
+					{
+						var Path = "."
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 22
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var RendererPath = CogPath
+					{
+						var Path = ":/Renderer"
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 2
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var ResolutionOrAspect = Integer2{1920, 1080}
+					var RenderToViewport = true
+					var ForwardViewportEvents = false
+					var ViewportScaling = ViewportScaling.Letterbox
+					var MarginColor = Real4{0, 0, 0, 1}
+					var NormalizedSize = Real2{1, 1}
+					var NormalizedOffset = Real2{0, 0}
+				}
+				Camera 
+				{
+					var NearPlane = 0.100000001
+					var FarPlane = 200
+					var PerspectiveMode = PerspectiveMode.Perspective
+					var FieldOfView = 60
+					var Size = 20
+				}
+				SoundListener 
+				{
+					var Active = true
+					var AttenuationScale = 1
+				}
 			}
-			var ResolutionOrAspect = Integer2{1920, 1080}
-			var RenderToViewport = true
-			var ForwardViewportEvents = false
-			var ViewportScaling = ViewportScaling.Letterbox
-			var MarginColor = Real4{0, 0, 0, 1}
-			var NormalizedSize = Real2{1, 1}
-			var NormalizedOffset = Real2{0, 0}
-		}
-		Camera 
-		{
-			var NearPlane = 0.100000001
-			var FarPlane = 200
-			var PerspectiveMode = PerspectiveMode.Perspective
-			var FieldOfView = 60
-			var Size = 20
-		}
-		SoundListener 
-		{
-			var Active = true
-			var AttenuationScale = 1
 		}
 	}
 }

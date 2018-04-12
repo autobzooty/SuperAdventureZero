@@ -1,0 +1,28 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Alek Hiebert
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class RotateWithRightStick : ZilchComponent
+{
+  var IM : IM;
+  [Property]
+  var TurnSpeed : Real = 10;
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.IM = this.GameSession.IM;
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+
+  //***************************************************************************
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    var rightStick = this.IM.GetStick(GameStick.Camera);
+    var rightStickMagnitude = Math.Length(rightStick);
+    this.Owner.Transform.RotateAnglesLocal(Real3(rightStick.Y * this.TurnSpeed * event.Dt * rightStickMagnitude, rightStick.X * this.TurnSpeed * event.Dt * rightStickMagnitude, 0));
+    //this.Owner.Transform.Rotation = Math.AxisAngle(Real3(0, 1, 0), this.TurnSpeed * event.Dt * rightStickMagnitude);
+  }
+}

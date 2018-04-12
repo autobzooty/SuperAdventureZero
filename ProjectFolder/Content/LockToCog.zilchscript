@@ -1,0 +1,28 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Alek Hiebert
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class LockToCog : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  [Property]
+  var Target : CogPath = CogPath();
+  [Property]
+  var Offset : Real3;
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.PhysicsUpdate, this.OnPhysicsUpdate);
+  }
+
+  //***************************************************************************
+  function OnPhysicsUpdate(event : UpdateEvent)
+  {
+    this.Owner.Transform.Translation = this.Target.Transform.Translation + this.Offset;
+  }
+}

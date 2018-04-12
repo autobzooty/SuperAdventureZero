@@ -25,7 +25,10 @@ class StandardMover : ZilchComponent
   [Property]
   var MinimumStickThreshold : Real = 0.2;
   [Property]
-  var BaseMaxSpeed : Real = 400;
+  var BaseMaxSpeed : Real = 1000;
+  var OnGround : Boolean = true;
+  [Property]
+  var GravityStrength : Real = -10;
   
   //***************************************************************************
   function Initialize(init : CogInitializer)
@@ -58,16 +61,48 @@ class StandardMover : ZilchComponent
     {
       this.MoverSpeed = this.BaseMaxSpeed;
     }
+    Print(this.MoverSpeed);
   }
 
   //***************************************************************************
   function OnPhysicsUpdate(event : UpdateEvent)
   {
     var newVelocity = this.Orientation.WorldForward * this.MoverSpeed * event.Dt;
+    
+    //Check collision on our feet to see if we're on the ground
+    this.OnGround = false;
+    var contacts = this.Owner.Collider.Contacts;
+    foreach(var contactPoint in contacts)
+    {
+      if(contactPoint.FirstPoint.LocalPoint.Y < -0.44)
+      {
+        this.OnGround = true;
+      }
+    }
+    //Apply gravity if we're not on the ground
+    if(!this.OnGround)
+    {
+      newVelocity.Y += this.GravityStrength * event.Dt;
+    }
+    else
+    {
+      newVelocity.Y = 0;
+    }
+    //Final application of velocity to the rigidbody. ONLY DO THIS ONCE PER FRAME
     this.RigidBody.Velocity = newVelocity;
+    this.UpdateOrientation();
     
     var newRot : Real3 = Math.RotateTowards(this.Orientation.WorldForward, this.RequestedMoveDirection, this.TurnSpeed * event.Dt);
+
     this.Owner.Orientation.LookAtDirection(newRot);
   }
   
+  //***************************************************************************
+  function UpdateOrientation()
+  {
+    var ray = Ray(this.Owner.Transform.Translation, Real3(0, -1, 0));
+    var result = this.Space.PhysicsSpace.CastRayFirst(ray);
+    this.Orientation.GlobalUp = result.Normal;
+    Print(this.Orientation.WorldForward);
+  }
 }

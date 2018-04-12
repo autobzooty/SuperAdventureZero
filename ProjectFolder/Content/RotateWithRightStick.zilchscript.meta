@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "RotateWithRightStick"
+		var ResourceId = 0x5a9e47a15f1edc92
+	}
+}
