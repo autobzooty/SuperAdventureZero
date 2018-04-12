@@ -23,12 +23,15 @@ class PlayerInputReceiver : ZilchComponent
   {
     var ie = InputEvent();
     var moveStick = this.IM.GetStick(GameStick.Move);
-    ie.Direction = this.CameraPath.Transform.TransformNormal(Real3(moveStick.X, 0, -moveStick.Y));
+    
+    //Set up requested move direction from camera's point of view
+    ie.RequestedMoveDirection = Real3(moveStick.X, 0, -moveStick.Y);
+    ie.RequestedMoveDirection = this.CameraPath.Transform.TransformNormal(ie.RequestedMoveDirection);
+    ie.RequestedMoveDirection.Y = 0;
+    ie.RequestedMoveDirection = Math.Normalize(ie.RequestedMoveDirection);
+    
     ie.Dt = event.Dt;
-    //OPTIMIZATION: Use lengthsquared instead
-    if(Math.Length(moveStick) > this.MoveStickThreshold)
-    {
-      this.Owner.DispatchEvent(Events.MovementRequest, ie);
-    }
+    
+    this.Owner.DispatchEvent(Events.MovementRequest, ie);
   }
 }

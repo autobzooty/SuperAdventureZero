@@ -100,7 +100,8 @@ class InputEvent : ZilchEvent
 {
   sends MovementRequest : InputEvent;
   
-  var Direction : Real3;
+  var RequestedMoveDirection : Real3;
+  var Direction : Real3; //Deprecated
   var Magnitude : Real;
   var JumpTriggered : Boolean;
   var JumpReleased : Boolean;

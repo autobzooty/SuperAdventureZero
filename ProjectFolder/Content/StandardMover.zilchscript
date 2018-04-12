@@ -36,7 +36,7 @@ class StandardMover : ZilchComponent
     newVelocity = this.Transform.TransformNormalInverse(newVelocity);
     newVelocity.X = 0;
     newVelocity = this.Transform.TransformNormal(newVelocity);
-    this.RigidBody.Velocity = newVelocity;
+    //this.RigidBody.Velocity = newVelocity;
     
     var newRot : Real3 = Math.RotateTowards(this.Orientation.WorldForward, this.RequestedMoveDirection, this.TurnSpeed * event.Dt);
     this.Owner.Orientation.LookAtDirection(newRot);
@@ -46,6 +46,7 @@ class StandardMover : ZilchComponent
   function OnMovementRequest(event : InputEvent)
   {
     this.MoverVelocity += this.Owner.Orientation.WorldForward * this.Acceleration * event.Dt;
-    this.RequestedMoveDirection = event.Direction;
+    this.RequestedMoveDirection = event.RequestedMoveDirection;
+    Print(this.RequestedMoveDirection);
   }
 }
