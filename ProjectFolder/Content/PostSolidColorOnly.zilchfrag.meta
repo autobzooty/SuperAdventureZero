@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchFragmentBuilder 
+	{
+		var Name = "PostSolidColorOnly"
+		var ResourceId = 0x5a246e3606f4106e
+	}
+}

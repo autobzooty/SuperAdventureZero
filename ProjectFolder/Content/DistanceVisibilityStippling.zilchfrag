@@ -10,6 +10,7 @@ struct DistanceVisibilityStippling
   [PropertyInput][Slider(0, 1, 0.05)] var MinVisibility : Real = 0;
   [PropertyInput][Slider(0, 1, 0.05)] var MaxVisibility : Real = 1;
   [PropertyInput] var PlayerViewPosition : Real3;
+  [PropertyInput] var DoTheThing : Boolean = true;
   
   [FragmentInput][StageInput] var ViewPosition : Real3;
   
@@ -40,7 +41,7 @@ struct DistanceVisibilityStippling
     var maxOutput = 1 - this.MinVisibility;
     var scaledDistance = (maxOutput - minOutput) * normalizedDistance + minOutput;
     
-    if (scaledDistance > matrixValue)
+    if (this.DoTheThing && scaledDistance > matrixValue)
       Shader.Discard();
   }
 }

@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "SmaaRenderer"
+		var ResourceId = 0x5a21c5e3ad7fff18
+	}
+}

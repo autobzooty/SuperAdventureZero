@@ -1,0 +1,50 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class SkyboxRenderer : ZilchComponent
+{
+  // If skybox should be used for the background, uses ClearColor for background if false.
+  [Property]
+  var RenderSkybox : Boolean = true;
+  // Cubemap Texture to use for indirect lighting and/or scene background. Undefined behavior if null or not a cubemap.
+  [Property]
+  var Skybox : Texture = Texture.SimpleSkybox;
+  // Color for the background if not using the skybox.
+  [Property]
+  var ClearColor : Real4 = Real4(0.2, 0.2, 0.2, 1.0);
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PreProcessRenderUpdate, this.OnPreProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPreProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    // REMOVE FOR RELEASE //
+    if (Zero.Keyboard.KeyIsPressed(Keys.B) && Zero.Keyboard.KeyIsDown(Keys.Control))
+      this.RenderSkybox = !this.RenderSkybox;
+    
+    if (this.RenderSkybox && this.Skybox != null && this.Skybox.Type == TextureType.TextureCube)
+    {
+      var skybox = Skybox();
+      skybox.Skybox = this.Skybox;
+    
+      event.Event.AddRenderTaskPostProcess(event.LightSettings, skybox);
+    }
+    else
+    {
+      var copyValue = CopyValue();
+      copyValue.Color = Math.Pow(this.ClearColor, Real4(2.2.XXX, 1.0));
+      event.Event.AddRenderTaskPostProcess(event.LightSettings, copyValue);
+    }
+  }
+}

@@ -42,7 +42,17 @@ Level
 	Cog [ContextId:2]
 	{
 		var Name = "Renderer"
-		CustomDeferredRenderer 
+		RenderScheduler 
+		{
+			var UseViewportScaling = false
+			var ViewportScale_ = 4
+			var ViewportScale = 4
+			var PixelWidth_ = 1
+			var PixelWidth = 1
+			var PixelHeight_ = 1
+			var PixelHeight = 1
+		}
+		ScheduledDeferredRenderer 
 		{
 			var GeometryDebug = GeometryValue.None
 			var EditorDebugDraw = true
@@ -76,6 +86,30 @@ Level
 			var Bloom4 = true
 			var Bloom5 = true
 			var DebugBuffer = false
+		}
+		SmaaRenderer 
+		{
+			var EnableSmaa = true
+			var EnableDiagonals = true
+			var DepthBasedEdges = true
+			var EdgeDetection = DetectionChance.Medium
+			var TargetTexture = SmaaRenderTargets.FinalBlend
+			var ClearColor = Real4{0, 0, 0, 1}
+		}
+		AtmosphericAttenuationRenderer 
+		{
+			var Active = true
+			var AtmosphereColor = Real4{0.400000006, 0.5, 1, 1}
+			var Power = 1
+		}
+		ChannelSwapRenderer 
+		{
+			var Active = false
+			var Blend = 0.75
+			var RFrom = ColorChannel.G
+			var GFrom = ColorChannel.G
+			var BFrom = ColorChannel.G
+			var AFrom = ColorChannel.A
 		}
 	}
 	Cog [ContextId:3]
@@ -164,8 +198,10 @@ Level
 			var FieldOfView = 45
 			var Size = 64
 		}
-		ShadowRenderer 
+		CustomDirectionalShadowRenderer 
 		{
+			var ShadowStippling = true
+			var ShadowDistanceStippling = false
 			var ResolutionValue = ShadowResolution.High
 			var NormalOffsetBias = 0.100000001
 		}
@@ -175,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{14.3711052, 5.2500391, 4.23716068}
+			var Translation = Real3{1.64567268, 3.52773166, 1.8930527}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.129661128, 0.113953859, 0.0150023019, 0.984874308}
+			var Rotation = Quaternion{-0.246976078, -0.288851053, -0.0773975849, 0.921725333}
 		}
 		CameraViewport 
 		{
@@ -234,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 16.4170322
-			var VerticalAngle = 0.261799306
-			var HorizontalAngle = -0.230383471
-			var LookTarget = Real3{10.75, 1.00100005, -11.2014999}
+			var LookDistance = 2.74015617
+			var VerticalAngle = 0.523599863
+			var HorizontalAngle = 0.607374251
+			var LookTarget = Real3{3, 2.15765095, -0.0555704832}
 			var MoveSensitivity = 1
 		}
 	}
@@ -1912,7 +1948,7 @@ Level
 				Transform 
 				{
 					var Translation = Real3{0, 0, 0}
-					var Scale = Real3{0.25, 0.25, 0.25}
+					var Scale = Real3{0.5, 0.5, 0.5}
 					var Rotation = Quaternion{0, 0, 0, 1}
 				}
 				Model 
@@ -1924,15 +1960,15 @@ Level
 					var LocalAabbCenter = Real3{0, 0, 0}
 					var LocalAabbHalfExtents = Real3{1, 1, 1}
 					var GroupSortValue = 0
-					var Material = "5a8c40c024c76419:StippledFlat"
+					var Material = "5828b036bd65b5d8:OpaqueFlat"
 					var Mesh = "4de0354322b376ae:Sphere"
 				}
 				MaterialInputs 
 				{
 					var Color = Real4{0.5, 0.5, 0.5, 1}
-					var AlbedoValue = Real4{0.595000029, 0.595000029, 0.595000029, 1}
-					var MetallicValue = 0
-					var RoughnessValue = 1
+					var AlbedoValue = Real4{0.930000007, 0.735862494, 0.153450012, 1}
+					var MetallicValue = 1
+					var RoughnessValue = 0.25
 					var SpecularValue = 1
 					var StippleDensity = 0.5
 					var StippleScale = 2
@@ -3654,6 +3690,15 @@ Level
 					}
 				}
 			}
+		}
+	}
+	Cog [InheritId:"5a86688cccbefab5:HornedHelmet"][ContextId:102]
+	{
+		Transform 
+		{
+			var Translation = Real3{3, 2, 0}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{1, 1, 1}
 		}
 	}
 }

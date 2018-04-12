@@ -44,10 +44,46 @@ class Health : ZilchComponent
     this.TypeMultiplierBlock.Apply(this);
     
     // connect for stat events
+    Zero.Connect(this.Owner, Events.StatsWereCalculated, this.OnStatsWereCalculated);
     
     // connect for HP change events
     Zero.Connect(this.Owner, Events.RequestDamage, this.OnRequestDamage);
     Zero.Connect(this.Owner, Events.RequestHeal, this.OnRequestHeal);
+    //Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
+  }
+
+  function OnStandardUpdate(event : UpdateEvent)
+  {
+    Print("-----------------");
+    for (var i = 0; i < DamageType.COUNT_; ++i)
+    {
+      var damageType = i as DamageType;
+      var damageMultiplier = this.TypeMultipliers[damageType] * 100;
+      var str = String.FormatC("%11s : %4.0f", damageType, damageMultiplier);
+      Print(str);
+    }
+  }
+  
+  
+  function OnStatsWereCalculated(event : StatsEvent)
+  {
+    var statBlock = event.StatBlock;
+    
+    // TODO:
+    // 
+    // look into this again. i might want to reverse the order of applying
+    // addends and bonuses
+    this.HPMultiplier = 1 + statBlock.HP.Bonus;
+    this.MaxHP = this.BaseHP + statBlock.HP.Addend;
+    this.MaxHP *= this.HPMultiplier;
+    
+    this.EvasionMultiplier = 1 + statBlock.Evasion.Bonus;
+    this.Evasion = this.BaseEvasion + statBlock.Evasion.Addend;
+    this.Evasion *= this.EvasionMultiplier;
+    
+    var block = this.TypeMultiplierBlock.Copy();
+    block.Add(statBlock.TypeBonuses);
+    block.Apply(this);
   }
   
   
@@ -285,5 +321,44 @@ class TypeMultiplierBlock : ZilchObject
     types[DamageType.Poison]      = this.Poison;
     types[DamageType.Holy]        = this.Holy;
     types[DamageType.Dark]        = this.Dark;
+  }
+  
+  function Add(rhs : TypeMultiplierBlock)
+  {
+    this.Heat        += rhs.Heat;
+    this.Cold        += rhs.Cold;
+    this.Electricity += rhs.Electricity;
+    this.Psychic     += rhs.Psychic;
+    this.Biological  += rhs.Biological;
+    this.Poison      += rhs.Poison;
+    this.Holy        += rhs.Holy;
+    this.Dark        += rhs.Dark;
+  }
+  
+  //function Multiply(rhs : TypeMultiplierBlock)
+  //{
+  //  this.Heat        *= rhs.Heat;
+  //  this.Cold        *= rhs.Cold;
+  //  this.Electricity *= rhs.Electricity;
+  //  this.Psychic     *= rhs.Psychic;
+  //  this.Biological  *= rhs.Biological;
+  //  this.Poison      *= rhs.Poison;
+  //  this.Holy        *= rhs.Holy;
+  //  this.Dark        *= rhs.Dark;
+  //}
+  
+  function Copy() : TypeMultiplierBlock
+  {
+    var output = TypeMultiplierBlock();
+    output.Heat        = this.Heat;
+    output.Cold        = this.Cold;
+    output.Electricity = this.Electricity;
+    output.Psychic     = this.Psychic;
+    output.Biological  = this.Biological;
+    output.Poison      = this.Poison;
+    output.Holy        = this.Holy;
+    output.Dark        = this.Dark;
+    
+    return output;
   }
 }

@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "ChannelSwapRenderer"
+		var ResourceId = 0x5a24780bdbd9a4ec
+	}
+}

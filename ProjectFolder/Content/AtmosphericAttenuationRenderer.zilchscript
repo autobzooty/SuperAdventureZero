@@ -1,0 +1,48 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class AtmosphericAttenuationRenderer : ZilchComponent
+{
+  [Dependency] var RenderScheduler : RenderScheduler;
+  
+  [Property]
+  var Active : Boolean = true;
+  [Property]
+  var AtmosphereColor : Real4 = Real4(0.4, 0.5, 1, 1);
+  [Property]
+  var Power : Real = 1;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PostProcessRenderUpdate, this.OnPostProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    if (!this.Active) return;
+    
+    var final = event.FinalTarget;
+    var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
+    
+    var atmosphericAttenuation = AtmosphericAttenuation();
+    atmosphericAttenuation.AtmosphereColor = this.AtmosphereColor;
+    atmosphericAttenuation.Power = this.Power;
+    atmosphericAttenuation.SceneTexture = final.Texture;
+    atmosphericAttenuation.DepthTexture = event.GeoTarget0.Texture;
+    event.Event.AddRenderTaskPostProcess(sceneTarget, atmosphericAttenuation);
+    
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = sceneTarget.Texture;
+    
+    event.Event.AddRenderTaskPostProcess(final, copyTarget);
+  }
+}

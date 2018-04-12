@@ -1,0 +1,77 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class ChannelSwapRenderer : ZilchComponent
+{
+  [Dependency] var RenderScheduler : RenderScheduler;
+  
+  
+  [Property]
+  var Active : Boolean = true;
+  [Property][Slider(0, 1, 0.05)]
+  var Blend : Real = 1;
+  [Property]
+  var RFrom : ColorChannel = ColorChannel.R;
+  [Property]
+  var GFrom : ColorChannel = ColorChannel.G;
+  [Property]
+  var BFrom : ColorChannel = ColorChannel.B;
+  [Property]
+  var AFrom : ColorChannel = ColorChannel.A;
+  
+  var AllNormal : Boolean
+  {
+    get
+    {
+      return this.RFrom == ColorChannel.R &&
+             this.GFrom == ColorChannel.G &&
+             this.BFrom == ColorChannel.B &&
+             this.AFrom == ColorChannel.A;
+    }
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PostProcessRenderUpdate, this.OnPostProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    if (!this.Active || this.AllNormal) return;
+    
+    var final = event.FinalTarget;
+    var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
+    
+    var copySwizzle = CopySwizzle();
+    copySwizzle.Texture = final.Texture;
+    copySwizzle.Blend = this.Blend;
+    copySwizzle.RSourceIndex = this.RFrom as Integer;
+    copySwizzle.GSourceIndex = this.GFrom as Integer;
+    copySwizzle.BSourceIndex = this.BFrom as Integer;
+    copySwizzle.ASourceIndex = this.AFrom as Integer;
+    event.Event.AddRenderTaskPostProcess(sceneTarget, copySwizzle);
+    
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = sceneTarget.Texture;
+    
+    event.Event.AddRenderTaskPostProcess(final, copyTarget);
+  }
+}
+
+
+enum ColorChannel
+{
+  R,
+  G,
+  B,
+  A,
+}

@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "CustomDirectionalShadowRenderer"
+		var ResourceId = 0x5a247114cc438d3e
+	}
+}

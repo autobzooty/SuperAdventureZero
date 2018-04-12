@@ -1,0 +1,33 @@
+[Version:1]
+ImageContent 
+{
+	TextureInfo 
+	{
+		var FileType = "png"
+		var LoadFormat = "RGBA8"
+		var Dimensions = "64 x 16"
+		var Size = "0.004 MB"
+	}
+	TextureBuilder 
+	{
+		var Name = "SearchTex"
+		var ResourceId = 0x5a21c0280df0b8e4
+		var Type = TextureType.Texture2D
+		var Compression = TextureCompression.None
+		var AddressingX = TextureAddressing.Clamp
+		var AddressingY = TextureAddressing.Clamp
+		var Filtering = TextureFiltering.Bilinear
+		var Anisotropy = TextureAnisotropy.x1
+		var MipMapping = TextureMipMapping.None
+		var HalfScaleCount = 0
+		var PremultipliedAlpha = false
+		var GammaCorrection = false
+	}
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"Smaa"
+		}
+	}
+}

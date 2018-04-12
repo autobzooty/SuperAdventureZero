@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchFragmentBuilder 
+	{
+		var Name = "PostBlendByArea"
+		var ResourceId = 0x5a21c50cb1575370
+	}
+}

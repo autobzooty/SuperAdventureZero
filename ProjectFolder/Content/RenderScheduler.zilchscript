@@ -1,0 +1,120 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class RenderScheduler : ZilchComponent
+{
+  sends PreProcessRenderUpdate  : RenderScheduleEvent;
+  sends MainRenderUpdate        : RenderScheduleEvent;
+  sends PostProcessRenderUpdate : RenderScheduleEvent;
+  sends DebugRenderUpdate       : RenderScheduleEvent;
+  
+  
+  [Property] var UseViewportScaling : Boolean = true;
+  [Serialize] var ViewportScale_ : Real = 1.0;
+  [Property] var ViewportScale : Real
+  {
+    get { return this.ViewportScale_; }
+    
+    set
+    {
+      this.ViewportScale_ = value;
+      
+      if (value < 1.0) this.ViewportScale_ = 1.0;
+    }
+  }
+  [Serialize] var PixelWidth_ : Real = 1.0;
+  [Property] var PixelWidth : Real
+  {
+    get { return this.PixelWidth_; }
+    
+    set
+    {
+      this.PixelWidth_ = value;
+      
+      if (value < 1.0) this.PixelWidth_ = 1.0;
+    }
+  }
+  [Serialize] var PixelHeight_ : Real = 1.0;
+  [Property] var PixelHeight : Real
+  {
+    get { return this.PixelHeight_; }
+    
+    set
+    {
+      this.PixelHeight_ = value;
+      
+      if (value < 1.0) this.PixelHeight_ = 1.0;
+    }
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.RenderTasksUpdate, this.OnRenderTasksUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnRenderTasksUpdate(event : RenderTasksEvent)
+  {
+    var samplerSettings = SamplerSettings();
+    var viewportSize = event.ViewportSize;
+    
+    if (this.UseViewportScaling)
+    {
+      samplerSettings.Filtering = TextureFiltering.Nearest;
+      var viewportScaleVector = Real2(this.ViewportScale_ * this.PixelWidth_,
+                                      this.ViewportScale_ * this.PixelHeight_);
+      viewportSize = (viewportSize / viewportScaleVector) as Integer2;
+    }
+    
+    var rse = RenderScheduleEvent();
+    rse.Event = event;
+    rse.DepthStencil = event.GetRenderTarget(viewportSize, TextureFormat.Depth24Stencil8);
+    rse.GeoTarget0 = event.GetRenderTarget(viewportSize, TextureFormat.RGBA32f);
+    rse.GeoTarget1 = event.GetRenderTarget(viewportSize, TextureFormat.RGBA32f);
+    rse.LightBuffer = event.GetRenderTarget(viewportSize, TextureFormat.RGBA16f);
+    rse.FinalTarget = event.GetFinalTarget(viewportSize, TextureFormat.RGBA8);
+    rse.ViewportSize = viewportSize;
+    rse.SamplerSettings = samplerSettings;
+    
+    //event.AddRenderTaskClearTarget(rse.LightBuffer, Real4(0.0, 0.0, 0.0, 1.0));
+    
+    //rse.LightSettings = RenderSettings();
+    //rse.LightSettings.ColorTarget = rse.LightBuffer;
+    //rse.LightSettings.DepthTarget = rse.DepthStencil;
+    
+    //// Only process background pixels
+    //rse.LightSettings.DepthSettings.StencilMode = StencilMode.Enabled;
+    //rse.LightSettings.DepthSettings.StencilCompareFunc = TextureCompareFunc.Equal;
+    //rse.LightSettings.DepthSettings.StencilFailOp = StencilOp.Keep;
+    //rse.LightSettings.DepthSettings.DepthFailOp = StencilOp.Keep;
+    //rse.LightSettings.DepthSettings.DepthPassOp = StencilOp.Keep;
+    //rse.LightSettings.DepthSettings.StencilTestValue = 0 as Byte;
+    
+    //this.Owner.DispatchEvent(Events.PreProcessRenderUpdate, rse);
+    this.Owner.DispatchEvent(Events.MainRenderUpdate, rse);
+    this.Owner.DispatchEvent(Events.PostProcessRenderUpdate, rse);
+    this.Owner.DispatchEvent(Events.DebugRenderUpdate, rse);
+  }
+}
+
+
+class RenderScheduleEvent : ZilchEvent
+{
+  var Event : RenderTasksEvent;
+  var DepthStencil : RenderTarget;
+  var GeoTarget0 : RenderTarget;  // Normal, Depth, Roughness
+  var GeoTarget1 : RenderTarget;  // Albedo, Metallic, Specular
+  var LightBuffer : RenderTarget;
+  var FinalTarget : RenderTarget;
+  var ViewportSize : Integer2;
+  var LightSettings : RenderSettings;
+  var SamplerSettings : SamplerSettings;
+}

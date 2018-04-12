@@ -1,0 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[Pixel][PostProcess]
+struct AtmosphericAttenuation
+{
+  [StageInput] var Uv : Real2;
+  [PropertyInput] var AtmosphereColor : Real4 = Real4(0.4, 0.5, 1, 1);
+  [PropertyInput] var Power : Real = 1;
+  [Input] var SceneTexture : Sampler2d;
+  [Input] var DepthTexture : Sampler2d;
+  
+  [Output] var Target0 : Real4;
+  
+  function Main()
+  {
+    var sceneColor = this.SceneTexture.Sample(this.Uv);
+    var depth = this.DepthTexture.Sample(this.Uv).Z;
+    var interpolant = Math.Pow(depth, this.Power);
+    
+    var pixelIsAtFarPlane = depth >= 1;
+    var colorToUse = Math.Lerp(this.AtmosphereColor, sceneColor, pixelIsAtFarPlane as Real);
+    
+    this.Target0 = Math.Lerp(sceneColor, colorToUse, interpolant);
+  }
+}

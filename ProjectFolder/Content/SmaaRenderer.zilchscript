@@ -1,0 +1,166 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Devansh Maheshwari and Nate Carlson, modifications by Doug Zwick
+/// COPYRIGHT | (C) 2017 DigiPen Institute of Technology, I think
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class SmaaRenderer : ZilchComponent
+{
+  [Property]
+  var EnableSmaa : Boolean = true;
+  [Property]
+  var EnableDiagonals : Boolean = true;
+  // Use depth info to reject possibly false edges.
+  [Property]
+  var DepthBasedEdges : Boolean = true;
+  // Detect more edges with high setting.
+  [Property]
+  var EdgeDetection : DetectionChance = DetectionChance.Medium;
+  // Switch to Edge and Blend Area to debug intermediate textures.
+  [Property]
+  var TargetTexture : SmaaRenderTargets = SmaaRenderTargets.FinalBlend;
+  [Property]
+  var ClearColor : Real4 = Real4(0, 0, 0, 1);
+  
+  
+  //***************************************************************************
+  function LinearToGamma(event : RenderTasksEvent, inputBuffer : RenderTarget, outputBuffer : RenderTarget)
+  {
+    var toGamma = LinearToGammaPass();
+    toGamma.Texture = inputBuffer.Texture;
+    event.AddRenderTaskPostProcess(outputBuffer, toGamma);
+  }
+  
+  
+  //***************************************************************************
+  function GammaToLinear(event : RenderTasksEvent, inputBuffer : RenderTarget, outputBuffer : RenderTarget)
+  {
+    var toLinear = GammaToLinearPass();
+    toLinear.Texture = inputBuffer.Texture;
+    event.AddRenderTaskPostProcess(outputBuffer, toLinear);
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PostProcessRenderUpdate, this.OnPostProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    // Don't bother
+    if(!this.EnableSmaa)
+      return;
+    
+    var lightBuffer = event.FinalTarget;
+    var depth = event.DepthStencil;
+    
+    // Sampler settings for filtering edges texture.
+    var samplerSettings = SamplerSettings();
+    samplerSettings.AddressingX = TextureAddressing.Clamp;
+    samplerSettings.AddressingY = TextureAddressing.Clamp;
+    samplerSettings.Filtering = TextureFiltering.Bilinear;
+    //samplerSettings.CompareFunc = TextureCompareFunc.Always;
+    //samplerSettings.CompareMode = TextureCompareMode.Enabled;
+    
+    var size = lightBuffer.Texture.Size;
+    var colorCopy = event.Event.GetRenderTarget(size, lightBuffer.Texture.Format, samplerSettings);
+    var edges = event.Event.GetRenderTarget(size, TextureFormat.RG8, samplerSettings);
+    var areas = event.Event.GetRenderTarget(size, TextureFormat.RGBA8, samplerSettings);
+    var finalBlend = event.Event.GetRenderTarget(size, lightBuffer.Texture.Format, samplerSettings);
+    
+    var renderSettings = RenderSettings() {CullMode = CullMode.Disabled};
+    //renderSettings.DepthTarget = depth;
+    //renderSettings.CullMode = CullMode.Disabled;
+    //renderSettings.DepthSettings.DepthMode = DepthMode.Disabled;
+    //renderSettings.DepthSettings.DepthCompareFunc = TextureCompareFunc.LessEqual;
+    
+    //Pass uses gamma corrected values and textures. Need input in the same color space.
+    //this.LinearToGamma(event, lightBuffer, colorCopy);
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = lightBuffer.Texture;
+    event.Event.AddRenderTaskPostProcess(colorCopy, copyTarget);
+    
+    // First pass, using predicated thresholding here.
+    var postProcess = PostEdgeDetection();
+      postProcess.DepthTexture = depth.Texture;
+      postProcess.DepthBasedThresholding = this.DepthBasedEdges;
+    if(this.EdgeDetection == DetectionChance.Medium)
+      postProcess.ComparisonThreshold = 0.10;
+    else
+      postProcess.ComparisonThreshold = 0.01;
+    postProcess.Texture = colorCopy.Texture;
+    renderSettings.ColorTarget = edges;
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    event.Event.AddRenderTaskClearTarget(edges, Real4(0.0));
+    event.Event.AddRenderTaskPostProcess(renderSettings, postProcess);
+    
+    // Second pass.
+    var areasPostProcess = PostBlendByArea();
+    areasPostProcess.DiagEnabled = this.EnableDiagonals;
+    if (this.TargetTexture == SmaaRenderTargets.Area)
+      areasPostProcess.DebugMode = true;
+    areasPostProcess.EdgesTexture = edges.Texture;
+    areasPostProcess.SearchTexture = Texture.SearchTex;
+    areasPostProcess.AreaTexture = Texture.AreaTex;
+    areasPostProcess.SearchSamples = 8.0;
+    renderSettings.ColorTarget = areas;
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    event.Event.AddRenderTaskClearTarget(renderSettings, Real4(0.0));
+    event.Event.AddRenderTaskPostProcess(renderSettings, areasPostProcess);
+    
+    // Final pass.
+    var blendPostProcess = PostNeighborhoodBlend();
+    blendPostProcess.AreaTexture = areas.Texture;
+    blendPostProcess.ColorTexture = colorCopy.Texture;
+    renderSettings.ColorTarget = finalBlend;
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    event.Event.AddRenderTaskPostProcess(renderSettings, blendPostProcess);
+
+    // Finally, copy to render output.
+    var renderPass = CopyTarget();
+
+    // Debug options
+    if (this.TargetTexture == SmaaRenderTargets.FinalBlend)
+      renderPass.Texture = finalBlend.Texture;
+    if (this.TargetTexture == SmaaRenderTargets.Area)
+      renderPass.Texture = areas.Texture;
+    if (this.TargetTexture == SmaaRenderTargets.Edge)
+      renderPass.Texture = edges.Texture;
+      
+    //renderSettings.ColorTarget = colorCopy;
+    renderSettings.ColorTarget = lightBuffer;
+    //event.Event.AddRenderTaskClearTarget(renderSettings, this.ClearColor, 1.0);
+    event.Event.AddRenderTaskPostProcess(renderSettings, renderPass);
+    
+    // The renderer must be doing a final LinearToGamma pass in Deferred Renderer.
+    // Set the values back to linear space for other operations that might come after smaa.
+    //this.GammaToLinear(event, colorCopy, lightBuffer);
+
+    // Release the rendertargets used for Smaa.
+    colorCopy.Release();
+    edges.Release();
+    areas.Release();
+    finalBlend.Release();
+  }
+}
+
+
+// Settings Enums
+enum SmaaRenderTargets
+{
+  Edge,
+  Area,
+  FinalBlend,
+}
+
+enum DetectionChance
+{
+  High,
+  Medium,
+}
