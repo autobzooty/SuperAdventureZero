@@ -30,6 +30,8 @@ class PlayerInputReceiver : ZilchComponent
     ie.RequestedMoveDirection.Y = 0;
     ie.RequestedMoveDirection = Math.Normalize(ie.RequestedMoveDirection);
     
+    ie.Magnitude = Math.Length(moveStick);
+    
     ie.Dt = event.Dt;
     
     this.Owner.DispatchEvent(Events.MovementRequest, ie);

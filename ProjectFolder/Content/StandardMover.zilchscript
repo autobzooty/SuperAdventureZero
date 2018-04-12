@@ -14,39 +14,60 @@ class StandardMover : ZilchComponent
   [Dependency]
   var Orientation : Orientation;
   var IM : IM;
-  var MoverVelocity : Real3;
+  var MoverSpeed : Real = 0;
   [Property]
-  var Acceleration : Real = 1;
+  var Acceleration : Real = 50;
+  [Property]
+  var Deceleration : Real = 100;
   [Property]
   var TurnSpeed : Real = 10;
   var RequestedMoveDirection : Real3;
+  [Property]
+  var MinimumStickThreshold : Real = 0.2;
+  [Property]
+  var BaseMaxSpeed : Real = 400;
   
   //***************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.IM = this.GameSession.IM;
-    Zero.Connect(this.Space, Events.PhysicsUpdate, this.OnPhysicsUpdate);
     Zero.Connect(this.Owner, Events.MovementRequest, this.OnMovementRequest);
-  }
-
-  //***************************************************************************
-  function OnPhysicsUpdate(event : UpdateEvent)
-  {
-    var newVelocity = this.MoverVelocity * event.Dt;
-    newVelocity = this.Transform.TransformNormalInverse(newVelocity);
-    newVelocity.X = 0;
-    newVelocity = this.Transform.TransformNormal(newVelocity);
-    //this.RigidBody.Velocity = newVelocity;
-    
-    var newRot : Real3 = Math.RotateTowards(this.Orientation.WorldForward, this.RequestedMoveDirection, this.TurnSpeed * event.Dt);
-    this.Owner.Orientation.LookAtDirection(newRot);
+    Zero.Connect(this.Space, Events.PhysicsUpdate, this.OnPhysicsUpdate);
   }
   
   //***************************************************************************
   function OnMovementRequest(event : InputEvent)
   {
-    this.MoverVelocity += this.Owner.Orientation.WorldForward * this.Acceleration * event.Dt;
-    this.RequestedMoveDirection = event.RequestedMoveDirection;
-    Print(this.RequestedMoveDirection);
+    this.MoverSpeed += this.Acceleration * event.Magnitude * event.Dt;
+    if(event.Magnitude >= this.MinimumStickThreshold)
+    {
+      this.RequestedMoveDirection = event.RequestedMoveDirection;
+    }
+    else
+    {
+      if(this.MoverSpeed >= this.Deceleration * event.Dt)
+      {
+        this.MoverSpeed -= this.Deceleration * event.Dt;
+      }
+      else
+      {
+        this.MoverSpeed = 0;
+      }
+    }
+    if(this.MoverSpeed > this.BaseMaxSpeed)
+    {
+      this.MoverSpeed = this.BaseMaxSpeed;
+    }
   }
+
+  //***************************************************************************
+  function OnPhysicsUpdate(event : UpdateEvent)
+  {
+    var newVelocity = this.Orientation.WorldForward * this.MoverSpeed * event.Dt;
+    this.RigidBody.Velocity = newVelocity;
+    
+    var newRot : Real3 = Math.RotateTowards(this.Orientation.WorldForward, this.RequestedMoveDirection, this.TurnSpeed * event.Dt);
+    this.Owner.Orientation.LookAtDirection(newRot);
+  }
+  
 }

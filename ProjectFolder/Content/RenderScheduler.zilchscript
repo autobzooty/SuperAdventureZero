@@ -100,8 +100,8 @@ class RenderScheduler : ZilchComponent
     
     //this.Owner.DispatchEvent(Events.PreProcessRenderUpdate, rse);
     this.Owner.DispatchEvent(Events.MainRenderUpdate, rse);
-    this.Owner.DispatchEvent(Events.PostProcessRenderUpdate, rse);
     this.Owner.DispatchEvent(Events.DebugRenderUpdate, rse);
+    this.Owner.DispatchEvent(Events.PostProcessRenderUpdate, rse);
   }
 }
 
