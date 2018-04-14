@@ -44,6 +44,7 @@ Cog
 			}
 		}
 		var VisibleOnEquip = true
+		var EquipAngles = Real3{0, 0, 0}
 	}
 	RigidBody 
 	{
@@ -121,6 +122,7 @@ Cog
 						var FarDistance = 20
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 					SphereCollider 
 					{
@@ -179,6 +181,7 @@ Cog
 						var FarDistance = 20
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 				}
 				Cog [Id:0x5a8616cc1750299d]
@@ -226,6 +229,7 @@ Cog
 								var FarDistance = 20
 								var MinVisibility = 0
 								var MaxVisibility = 1
+								var XrayColor = Real4{1, 0, 0, 1}
 							}
 							Hierarchy 
 							{
@@ -276,6 +280,7 @@ Cog
 										var FarDistance = 20
 										var MinVisibility = 0
 										var MaxVisibility = 1
+										var XrayColor = Real4{1, 0, 0, 1}
 									}
 								}
 							}
@@ -325,6 +330,7 @@ Cog
 										var FarDistance = 20
 										var MinVisibility = 0
 										var MaxVisibility = 1
+										var XrayColor = Real4{1, 0, 0, 1}
 									}
 								}
 								Cog [Id:0x5a86175e3a62575d]
@@ -372,6 +378,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 										Cog [Id:0x5a8617e42d8fb0a2]
@@ -408,6 +415,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 										Cog [Id:0x5a86140d5333ae70]
@@ -444,6 +452,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}

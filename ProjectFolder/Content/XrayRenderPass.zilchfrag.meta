@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchFragmentBuilder 
+	{
+		var Name = "XrayRenderPass"
+		var ResourceId = 0x5a3933f13a51c751
+	}
+}

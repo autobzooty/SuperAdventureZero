@@ -1,0 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[Pixel]
+struct XrayColorValue
+{
+  [PropertyInput][Output] var XrayColor : Real4 = Real4(1, 0, 0, 1);
+  
+  
+  function Main() {}
+}

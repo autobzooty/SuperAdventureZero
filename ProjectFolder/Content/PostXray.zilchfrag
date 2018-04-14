@@ -1,0 +1,24 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+// PostProcess fragments are intended to be constructed in script
+// and passed directly to the AddRenderTaskPostProcess method.
+[Pixel][PostProcess]
+struct PostXray
+{
+  [StageInput] var Uv : Real2;
+  [Input] var SceneTexture : Sampler2d;
+  [Input] var XrayBuffer : Sampler2d;
+  
+  [Output] var Target0 : Real4;
+  
+  
+  function Main()
+  {
+    this.Target0 = this.SceneTexture.Sample(this.Uv) + this.XrayBuffer.Sample(this.Uv);
+  }
+}

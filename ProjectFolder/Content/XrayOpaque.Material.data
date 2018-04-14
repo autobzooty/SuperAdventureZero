@@ -1,0 +1,31 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"581cffd64d449122:Opaque"
+		"580269d9a1d6b870:ShadowCasters"
+		"5a393597fab2a986:Xray"
+	}
+	AlbedoValue 
+	{
+		var AlbedoValue = Real4{1, 1, 1, 1}
+		var GammaCorrect = true
+	}
+	MetallicValue 
+	{
+		var MetallicValue = 0
+	}
+	RoughnessValue 
+	{
+		var RoughnessValue = 1
+	}
+	SpecularValue 
+	{
+		var SpecularValue = 0.5
+	}
+	XrayColorValue 
+	{
+		var XrayColor = Real4{1, 0, 0, 1}
+	}
+}

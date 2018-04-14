@@ -264,8 +264,8 @@ class EquipmentSlot : ZilchComponent
     this.Equipment = equipment;
     equipment.Owner.AttachToPreserveLocal(this.Owner);
     var tf = equipment.Owner.Transform;
-    tf.LocalTranslation = Real3.Zero;
-    tf.LocalRotation = Quaternion.Identity;
+    tf.LocalTranslation = equipment.EquipPosition;
+    tf.LocalRotation = Math.ToQuaternion(Math.ToRadians(equipment.EquipAngles));
   }
   
   
