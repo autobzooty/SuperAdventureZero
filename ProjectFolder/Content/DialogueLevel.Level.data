@@ -44,9 +44,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{0, 0, 30}
+			var Translation = Real3{0, 0.5, 10}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -132,7 +132,7 @@ Level
 		{
 			var RenderInEditor = false
 			var RenderInGame = true
-			var RenderOrder = 1
+			var RenderOrder = 3
 			var CameraPath = CogPath
 			{
 				var Path = "."
@@ -182,6 +182,7 @@ Level
 		SoundListener 
 		{
 			var Active = true
+			var AttenuationScale = 1
 		}
 	}
 	Cog [ContextId:3]
@@ -208,7 +209,7 @@ Level
 			var LocalAabbHalfExtents = Real3{1, 1, 1}
 			var GroupSortValue = 0
 			var Material = "582c575af53d18c9:AlphaSprite"
-			var VertexColor = Real4{0.454999983, 0.454999983, 0.454999983, 1}
+			var VertexColor = Real4{0, 0, 0, 0}
 			var GeometryMode = SpriteGeometryMode.ZPlane
 			var SpriteSource = "5275aa4d802dd6dc:Square"
 			var FlipX = false
@@ -230,7 +231,7 @@ Level
 			var OnTop = false
 			var ClipChildren = true
 			var CanTakeFocus = true
-			var LocalColor = Real4{0.454999983, 0.454999983, 0.454999983, 1}
+			var LocalColor = Real4{0, 0, 0, 0}
 			var HierarchyColor = Real4{1, 1, 1, 1}
 			var SizePolicyX = UiSizePolicy.Auto
 			var SizePolicyY = UiSizePolicy.Auto
@@ -259,17 +260,63 @@ Level
 		{
 			var HighlightColor = Real4{1, 0, 0, 1}
 		}
-		UiStackLayout 
+		UiFillLayout 
 		{
-			var PaddingLeft = 5
-			var PaddingTop = 5
-			var PaddingRight = 5
-			var PaddingBottom = 5
-			var StackDirection = UiStackLayoutDirection.TopToBottom
-			var Spacing = Real2{0, 5}
+			var PaddingLeft = 0
+			var PaddingTop = 0
+			var PaddingRight = 0
+			var PaddingBottom = 0
 		}
 		Hierarchy 
 		{
+			Cog [Id:0x5a386e2ffcf1b22b][ContextId:5]
+			{
+				var Name = "DialogueArea"
+				Transform 
+				{
+					var Translation = Real3{-250, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Area 
+				{
+					var Size = Real2{500, 250}
+					var Origin = Location.TopLeft
+				}
+				UiWidget 
+				{
+					var Active = true
+					var Visible = true
+					var Interactive = true
+					var InLayout = true
+					var OnTop = false
+					var ClipChildren = false
+					var CanTakeFocus = false
+					var LocalColor = Real4{1, 1, 1, 1}
+					var HierarchyColor = Real4{1, 1, 1, 1}
+					var SizePolicyX = UiSizePolicy.Flex
+					var SizePolicyY = UiSizePolicy.Fixed
+					var FlexSize = Real2{1, 1}
+					var AbsoluteMinSize = Real2{1, 1}
+					var VerticalAlignment = UiVerticalAlignment.Bottom
+					var HorizontalAlignment = UiHorizontalAlignment.Left
+					var MarginLeft = 0
+					var MarginTop = 0
+					var MarginRight = 0
+					var MarginBottom = 0
+					var DockMode = UiDockMode.Left
+				}
+				UiFillLayout 
+				{
+					var PaddingLeft = 0
+					var PaddingTop = 0
+					var PaddingRight = 0
+					var PaddingBottom = 0
+				}
+				Hierarchy 
+				{
+				}
+			}
 		}
 	}
 }
