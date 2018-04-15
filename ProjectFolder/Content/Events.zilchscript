@@ -156,6 +156,7 @@ class MWEvent : ZilchEvent
 
 class HealthEvent : MWEvent
 {
+  sends HealthSetup : HealthEvent;
   sends RequestDamage : HealthEvent;
   sends WasDamaged : HealthEvent;
   sends DidDamage : HealthEvent;
@@ -166,12 +167,26 @@ class HealthEvent : MWEvent
   sends DidDealCritical : HealthEvent;
   sends HPDepleted : HealthEvent;
   sends Death : HealthEvent;
+  sends EquipmentReducedCurrentHP : HealthEvent;
+  sends EquipmentChangedMaxHP : HealthEvent;
+  
+  // TODO:
+  // 
+  // change Receiver to Health
   
   // the amount of the HP change. the effects of whether it's a crit are
   // already factored in. this number should always be positive: a
   // positive value in a Damage event indicates a negative HP change,
   // and a positive value in a Heal event indicates a positive HP change
   var Amount : Real;
+  // the old current HP (before any change)
+  var OldHP : Real;
+  // the new current HP (after any change)
+  var NewHP : Real;
+  // the old max HP (before any change)
+  var OldMaxHP : Real;
+  // the current max HP (after any change)
+  var MaxHP : Real;
   // whether this is a crit
   var Critical : Boolean;
   // whether this attack can be evaded

@@ -35,6 +35,7 @@ class Health : ZilchComponent
   var PrintStatusMessages : Boolean = true;
   
   
+  //****************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.MaxHP = this.BaseHP;
@@ -43,30 +44,53 @@ class Health : ZilchComponent
     
     this.TypeMultiplierBlock.Apply(this);
     
+    Zero.Connect(this.Space, Events.CustomGameSetup, this.OnCustomGameSetup);
+    
     // connect for stat events
     Zero.Connect(this.Owner, Events.StatsWereCalculated, this.OnStatsWereCalculated);
     
     // connect for HP change events
     Zero.Connect(this.Owner, Events.RequestDamage, this.OnRequestDamage);
     Zero.Connect(this.Owner, Events.RequestHeal, this.OnRequestHeal);
-    //Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
+    Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
   }
-
+  
+  
+  //****************************************************************************
+  function OnCustomGameSetup(event : GameSetupEvent)
+  {
+    var he = HealthEvent();
+    he.OldHP = 0;
+    he.NewHP = this.HP;
+    he.MaxHP = this.MaxHP;
+    this.Owner.DispatchEvent(Events.HealthSetup, he);
+  }
+  
+  
+  //****************************************************************************
   function OnStandardUpdate(event : UpdateEvent)
   {
-    Print("-----------------");
-    for (var i = 0; i < DamageType.COUNT_; ++i)
+    if (Zero.Keyboard.KeyIsPressed(Keys.Comma))
     {
-      var damageType = i as DamageType;
-      var damageMultiplier = this.TypeMultipliers[damageType] * 100;
-      var str = String.FormatC("%11s : %4.0f", damageType, damageMultiplier);
-      Print(str);
+      var ctrlHeld = Zero.Keyboard.KeyIsDown(Keys.Control);
+      var he = HealthEvent();
+      he.Amount = this.MaxHP * 0.2;
+      if (ctrlHeld)
+        he.Amount = this.MaxHP * 0.7;
+      he.IgnoreFaction = true;
+      he.IgnoreInvincibility = true;
+      he.Receiver = this.Owner;
+      he.Critical = ctrlHeld;
+      this.Owner.DispatchEvent(Events.RequestDamage, he);
     }
   }
   
   
+  //****************************************************************************
   function OnStatsWereCalculated(event : StatsEvent)
   {
+    var initialMaxHP = this.MaxHP;
+    
     var statBlock = event.StatBlock;
     
     // TODO:
@@ -84,9 +108,29 @@ class Health : ZilchComponent
     var block = this.TypeMultiplierBlock.Copy();
     block.Add(statBlock.TypeBonuses);
     block.Apply(this);
+    
+    var finalMaxHP = this.MaxHP;
+    
+    if (finalMaxHP != initialMaxHP)
+    {
+      var he = HealthEvent();
+      he.OldMaxHP = initialMaxHP;
+      he.MaxHP = finalMaxHP;
+      he.OldHP = this.HP;
+      
+      if (this.HP > this.MaxHP)
+      {
+        this.HP = this.MaxHP;
+        this.Owner.DispatchEvent(Events.EquipmentReducedCurrentHP, he);
+      }
+      
+      he.NewHP = this.HP;
+      this.Owner.DispatchEvent(Events.EquipmentChangedMaxHP, he);
+    }
   }
   
   
+  //****************************************************************************
   function OnRequestDamage(event : HealthEvent)
   {
     if (this.Invincible && !event.IgnoreInvincibility)
@@ -106,6 +150,7 @@ class Health : ZilchComponent
   }
   
   
+  //****************************************************************************
   function OnRequestHeal(event : HealthEvent)
   {
     // can this ever fail? if so, check here. for now, just let it through
@@ -113,18 +158,21 @@ class Health : ZilchComponent
   }
   
   
+  //****************************************************************************
   function EvadeRoll() : Boolean
   {
     return PRNG.EvadeRoll(this.Evasion);
   }
   
   
+  //****************************************************************************
   function Evade(event : HealthEvent)
   {
     // dodge feedback
   }
   
   
+  //****************************************************************************
   function TakeDamage(event : HealthEvent)
   {
     // HUGE TODO:
@@ -151,11 +199,23 @@ class Health : ZilchComponent
     var typeMultiplier = this.TypeMultipliers[type];
     event.Amount *= typeMultiplier;
     
+    // TODO:
+    // 
+    // really, if the amount is negative, then it's because of type affinity,
+    // so this should be a heal
+    
     // first, we're going to make sure the damage isn't zero (or, for whatever
     // reason, negative), because we don't want to fire off WasDamaged events
     // etc. if there was not actually any damage
     if (event.Amount <= 0.0)
       return;
+    
+    event.OldHP = this.HP;
+    
+    this.HP -= event.Amount;
+    
+    event.NewHP = this.HP;
+    event.MaxHP = this.MaxHP;
     
     // we took damage! time to dispatch some events
     this.Owner.DispatchEvent(Events.WasDamaged, event);
@@ -167,6 +227,12 @@ class Health : ZilchComponent
     // 
     // we should have a DidDeliverDamage event that the deliverer gets
     // instead of DidDamage
+    
+    // TODO:
+    // 
+    // crits are currently just up to the attacker's crit roll. i should look
+    // into whether it might be worthwhile to bring the defender into whether
+    // a crit is scored
     
     // note: it may matter whether we dispatch the was/did damage events before
     // or after the was/did deal critical events, but for now, here's wonderwall
@@ -190,8 +256,6 @@ class Health : ZilchComponent
       
       Print(message);
     }
-    
-    this.HP -= event.Amount;
     
     // TODO:
     // 
@@ -219,11 +283,23 @@ class Health : ZilchComponent
   }
   
   
+  //****************************************************************************
   function Heal(event : HealthEvent)
   {
     // check if this amount <= 0, for the same reason as with damage
     if (event.Amount <= 0)
       return;
+    
+    event.Receiver = this.Owner;
+    event.OldHP = this.HP;
+    event.MaxHP = this.MaxHP;
+    
+    this.HP += event.Amount;
+    
+    if (this.HP >= this.MaxHP)
+      this.HPHitMax(event);
+    
+    event.NewHP = this.HP;
     
     this.Owner.DispatchEvent(Events.WasHealed, event);
     if (event.Instigator != null)
@@ -231,14 +307,10 @@ class Health : ZilchComponent
     // TODO:
     // 
     // do stuff with the deliverer
-    
-    this.HP += event.Amount;
-    
-    if (this.HP >= this.MaxHP)
-      this.HPHitMax(event);
   }
   
   
+  //****************************************************************************
   function Die(event : HealthEvent)
   {
     this.Owner.DispatchEvent(Events.Death, event);
@@ -260,6 +332,7 @@ class Health : ZilchComponent
   }
   
   
+  //****************************************************************************
   function HPHitMax(event : HealthEvent)
   {
     // TODO:

@@ -1,0 +1,40 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class HudMaster : ZilchComponent
+{
+  [Property]
+  var HudSpaceArchetype : Archetype = Archetype.DefaultSpace;
+  [Property]
+  var HudLevel : Level;
+  
+  var HudSpace : Space
+  {
+    get { return this.GameSession.CustomGameSetup.HudSpace; }
+    set { this.GameSession.CustomGameSetup.HudSpace = value; }
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.HudSpace = this.GameSession.CreateNamedSpace("HudSpace", this.HudSpaceArchetype);
+    this.HudSpace.LoadLevel(this.HudLevel);
+    
+    Zero.Connect(this.Owner, Events.HealthSetup, this.Forward);
+    Zero.Connect(this.Owner, Events.WasDamaged, this.Forward);
+    Zero.Connect(this.Owner, Events.WasHealed, this.Forward);
+    Zero.Connect(this.Owner, Events.EquipmentChangedMaxHP, this.Forward);
+  }
+  
+  
+  //***************************************************************************
+  function Forward(event : ZilchEvent)
+  {
+    this.HudSpace.DispatchEvent(event.EventId, event);
+  }
+}

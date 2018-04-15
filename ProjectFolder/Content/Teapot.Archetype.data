@@ -4,7 +4,7 @@ Cog
 	var Name = "Teapot"
 	Transform 
 	{
-		var Translation = Real3{0, 2, 2.5}
+		var Translation = Real3{0.75, 2, -2.75}
 		var Scale = Real3{1, 0.99999994, 0.99999994}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}

@@ -26,7 +26,15 @@ class ViewPositionTracker : ZilchComponent
   
   function OnFrameUpdate(event : UpdateEvent)
   {
-    var worldPosition = this.ToTrackPath.Transform.WorldTranslation + this.WorldOffset;
+    var target = this.ToTrackPath.Cog;
+    
+    if (target == null)
+    {
+      Zero.Disconnect(this.Space, Events.FrameUpdate, this);
+      return;
+    }
+    
+    var worldPosition = target.Transform.WorldTranslation + this.WorldOffset;
     var viewPosition = Math.MultiplyPoint(this.CameraViewport.WorldToView, worldPosition);
     Material.DistanceStippledFlat.DistanceVisibilityStippling.PlayerViewPosition = viewPosition;
   }

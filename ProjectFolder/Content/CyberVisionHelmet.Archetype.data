@@ -13,7 +13,7 @@ Cog
 		var Name = "Cyber Vision Helmet"
 		var Description = "Shows things as they really are."
 		var Type = ItemType.Equipment
-		var Stackable = true
+		var Stackable = false
 		var Uses = 0
 	}
 	EquipmentBase 
@@ -44,6 +44,7 @@ Cog
 			}
 		}
 		var VisibleOnEquip = true
+		var EquipPosition = Real3{0, 0, 0}
 		var EquipAngles = Real3{0, 0, 0}
 	}
 	RigidBody 

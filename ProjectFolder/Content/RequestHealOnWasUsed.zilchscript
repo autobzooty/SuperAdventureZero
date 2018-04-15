@@ -1,0 +1,34 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class RequestHealOnWasUsed : ZilchComponent
+{
+  [Property]
+  var Amount : Real = 10;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.WasUsed, this.OnWasUsed);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasUsed(event : ItemEvent)
+  {
+    var he = HealthEvent();
+    he.Amount = this.Amount;
+    he.Deliverer = this.Owner;
+    
+    // TODO:
+    // 
+    // should life potions have Types?
+    
+    event.User.Owner.DispatchEvent(Events.RequestHeal, he);
+  }
+}

@@ -11,9 +11,9 @@ Cog
 	ItemBase 
 	{
 		var Name = "Cylinder Vest"
-		var Description = "Dunno but probably cool"
+		var Description = "A good first best vest"
 		var Type = ItemType.Equipment
-		var Stackable = true
+		var Stackable = false
 		var Uses = 0
 	}
 	EquipmentBase 
@@ -23,7 +23,7 @@ Cog
 		{
 			var HP = StatMod
 			{
-				var Addend = 0
+				var Addend = 10
 				var Bonus = 0
 			}
 			var Evasion = StatMod
@@ -44,6 +44,8 @@ Cog
 			}
 		}
 		var VisibleOnEquip = true
+		var EquipPosition = Real3{0, 0, 0}
+		var EquipAngles = Real3{0, 0, 0}
 	}
 	RigidBody 
 	{
@@ -55,17 +57,6 @@ Cog
 		var RotationLocked = false
 		var Mode2D = Mode2DStates.InheritFromSpace
 	}
-	CylinderCollider 
-	{
-		var Ghost = true
-		var SendsEvents = true
-		var Material = "5a2935c7a1ba7d2d:Ghost"
-		var CollisionGroup = "4e740859314e5515:DefaultGroup"
-		var Offset = Real3{0, 0, 0}
-		var Radius = 2
-		var Height = 4
-		var Direction = AxisDirection.Y
-	}
 	Collectable 
 	{
 		var CollectOnCollide = false
@@ -75,6 +66,15 @@ Cog
 	}
 	RequestCollectOnWasInteractedWith 
 	{
+	}
+	SphereCollider 
+	{
+		var Ghost = true
+		var SendsEvents = true
+		var Material = "5a2935c7a1ba7d2d:Ghost"
+		var CollisionGroup = "4e740859314e5515:DefaultGroup"
+		var Offset = Real3{0, 0, 0}
+		var Radius = 2
 	}
 	Hierarchy 
 	{
@@ -112,6 +112,7 @@ Cog
 				var FarDistance = 20
 				var MinVisibility = 0
 				var MaxVisibility = 1
+				var XrayColor = Real4{1, 0, 0, 1}
 			}
 			CylinderCollider 
 			{

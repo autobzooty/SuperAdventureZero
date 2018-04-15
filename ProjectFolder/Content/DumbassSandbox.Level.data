@@ -59,7 +59,7 @@ Level
 			var GameDebugDraw = true
 			var RenderDiffuse = true
 			var RenderSpecular = true
-			var RenderSkybox = false
+			var RenderSkybox = true
 			var Skybox = "5822dec85e380cf1:SimpleSkybox"
 			var ClearColor = Real4{0, 0, 0, 1}
 			var DirectLighting = true
@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-1.96756315, 5.79700661, 6.21608257}
+			var Translation = Real3{-1.38241339, 9.64532661, 7.05114555}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.316766769, -0.227872297, -0.0786852613, 0.917355895}
+			var Rotation = Quaternion{-0.414329708, -0.0879401267, -0.0402622074, 0.904973149}
 		}
 		CameraViewport 
 		{
@@ -270,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 5.34329748
-			var VerticalAngle = 0.664970577
-			var HorizontalAngle = 0.486946613
-			var LookTarget = Real3{0, 2.5, 2.5}
+			var LookDistance = 10.7600679
+			var VerticalAngle = 0.858703256
+			var HorizontalAngle = -6.08944511
+			var LookTarget = Real3{-0.0287626386, 1.5, 0.151845843}
 			var MoveSensitivity = 1
 		}
 	}
@@ -565,6 +565,11 @@ Level
 		}
 		HumanInteractorInterface 
 		{
+		}
+		HudMaster 
+		{
+			var HudSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
+			var HudLevel = "5a3a70d6fd68fdcc:HudLevel"
 		}
 		Hierarchy 
 		{

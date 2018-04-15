@@ -24,6 +24,7 @@ class CustomGameSetup : ZilchComponent
   [Property][Group("Archetypes")]
   // The MainSpace is where the game takes place
   var MainSpaceArchetype : Archetype = Archetype.Space;
+  
   [Property][Group("Levels")]
   var StartingLevel : Level = Level.Level;
   [Property][Group("Levels")]
@@ -43,9 +44,9 @@ class CustomGameSetup : ZilchComponent
   var DataSpace : Space;          // persistent data goes here. no level needed, just make the objects
   var MenuSpace : Space;          // title menus, etc., go here
   var InventoryMenuSpace : Space; // the inventory menu goes here
+  var HudSpace : Space;           // if the game currently needs a hud, it's loaded here, and null otherwise
   var DialogueSpace : Space;      // all dialogue boxes go here
   var MainSpace : Space;          // the game takes place here
-  var HudSpace : Space;           // if the game currently needs a hud, it's loaded here, and null otherwise
   
   var LevelToLoad : Level
   {
@@ -98,6 +99,8 @@ class CustomGameSetup : ZilchComponent
     
     this.MainSpace = this.GameSession.CreateNamedSpace("MainSpace", this.MainSpaceArchetype);
     this.MainSpace.LoadLevel(this.LevelToLoad);
+    
+    this.MainSpace.DispatchEvent(Events.CustomGameSetup, GameSetupEvent());
   }
 }
 

@@ -4,7 +4,7 @@ Cog
 	var Name = "HealthPotion"
 	Transform 
 	{
-		var Translation = Real3{0, 0, 0}
+		var Translation = Real3{0, -0.25, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -53,6 +53,10 @@ Cog
 	RequestCollectOnWasInteractedWith 
 	{
 	}
+	RequestHealOnWasUsed 
+	{
+		var Amount = 10
+	}
 	Hierarchy 
 	{
 		Cog [Id:0x5a290e162213a6cb]
@@ -100,6 +104,7 @@ Cog
 						var FarDistance = 30
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 					CylinderCollider 
 					{
@@ -147,6 +152,7 @@ Cog
 						var FarDistance = 30
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 					CylinderCollider 
 					{
@@ -194,6 +200,7 @@ Cog
 						var FarDistance = 30
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 					CylinderCollider 
 					{
@@ -241,6 +248,7 @@ Cog
 						var FarDistance = 30
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 					CylinderCollider 
 					{
@@ -288,6 +296,7 @@ Cog
 						var FarDistance = 30
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 					ContainedLiquidInputs 
 					{
