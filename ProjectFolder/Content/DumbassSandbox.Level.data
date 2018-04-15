@@ -59,7 +59,7 @@ Level
 			var GameDebugDraw = true
 			var RenderDiffuse = true
 			var RenderSpecular = true
-			var RenderSkybox = true
+			var RenderSkybox = false
 			var Skybox = "5822dec85e380cf1:SimpleSkybox"
 			var ClearColor = Real4{0, 0, 0, 1}
 			var DirectLighting = true
@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-1.38241339, 9.64532661, 7.05114555}
+			var Translation = Real3{-0.282244265, 6.60880709, 14.8953571}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.414329708, -0.0879401267, -0.0402622074, 0.904973149}
+			var Rotation = Quaternion{-0.157785684, -0.0284309685, -0.00454484578, 0.987053633}
 		}
 		CameraViewport 
 		{
@@ -270,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 10.7600679
-			var VerticalAngle = 0.858703256
-			var HorizontalAngle = -6.08944511
-			var LookTarget = Real3{-0.0287626386, 1.5, 0.151845843}
+			var LookDistance = 5.16066313
+			var VerticalAngle = 0.317028195
+			var HorizontalAngle = -6.22559357
+			var LookTarget = Real3{0, 5, 10}
 			var MoveSensitivity = 1
 		}
 	}
@@ -366,7 +366,7 @@ Level
 			var Ghost = false
 			var SendsEvents = true
 			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
-			var CollisionGroup = "4e740859314e5515:DefaultGroup"
+			var CollisionGroup = "5a3ab749d62f95dd:Player"
 			var Offset = Real3{0, -0.5, 0}
 			var Radius = 0.5
 			var Height = 1

@@ -23,7 +23,7 @@ Cog
 		{
 			var HP = StatMod
 			{
-				var Addend = 10
+				var Addend = 20
 				var Bonus = 0
 			}
 			var Evasion = StatMod

@@ -152,6 +152,13 @@ class MWEvent : ZilchEvent
   {
     this.InstigatingFaction = instigatingFaction;
   }
+  
+  constructor(event : MWEvent) : base()
+  {
+    this.Instigator = event.Instigator;
+    this.InstigatingFaction = event.InstigatingFaction;
+    this.InstigatorName = event.InstigatorName;
+  }
 }
 
 class HealthEvent : MWEvent
@@ -314,4 +321,11 @@ class InteractionEvent : MWEvent
   var Interactor : Interactor;
   var Interactee : Interactive;
   var QueryGroup : Array[Interactive];
+}
+
+class DetonationEvent : MWEvent
+{
+  sends DetonationRequest : DetonationEvent;
+  sends WasDetonated : DetonationEvent;
+  sends DidDetonate : DetonationEvent;
 }

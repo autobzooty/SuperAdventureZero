@@ -1,0 +1,12 @@
+[Version:1]
+DataContent 
+{
+	DataBuilder 
+	{
+		var Name = "Debris"
+		var ResourceId = 0x5a3ab6b8d4075a93
+		var LoaderType = "CollisionGroup"
+		var Version = 0
+		var ShowInEditor = true
+	}
+}
