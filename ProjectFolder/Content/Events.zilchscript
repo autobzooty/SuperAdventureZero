@@ -329,3 +329,11 @@ class DetonationEvent : MWEvent
   sends WasDetonated : DetonationEvent;
   sends DidDetonate : DetonationEvent;
 }
+
+class PopupEvent : ZilchEvent
+{
+  sends ItemAddedToInventory : PopupEvent;
+  sends InventoryPopupSetup : PopupEvent;
+  
+  var ItemBase : ItemBase;
+}

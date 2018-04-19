@@ -1,0 +1,56 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class InventoryPopup : ZilchComponent
+{
+  [Dependency]
+  var UiWidget : UiWidget;
+  [Property]
+  var UiTextShadowPath : CogPath = CogPath("PopupText");
+  
+  var UiTextShadow : UiTextShadow;
+  var ShowDuration : Real = 0.5;
+  var HideDelay : Real = 3;
+  var HideDuration : Real = 3;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.UiTextShadow = this.UiTextShadowPath.UiTextShadow;
+    
+    Zero.Connect(this.Owner, Events.InventoryPopupSetup, this.OnInventoryPopupSetup);
+  }
+  
+  
+  //***************************************************************************
+  function OnInventoryPopupSetup(event : PopupEvent)
+  {
+    this.UiTextShadow.Text = event.ItemBase.Name;
+    
+    this.UiWidget.HierarchyColor = Colors.Clear;
+    this.UiWidget.MarginLeft = 50;
+    var initialSize = this.UiWidget.Size;
+    this.UiWidget.Size = Real2(initialSize.X, 0);
+    
+    var mainSeq = Action.Sequence(this.Owner.Actions);
+      
+      var showGrp = Action.Group(mainSeq);
+        
+        Action.Property(showGrp, @this.UiWidget.HierarchyColor, Colors.White, this.ShowDuration, Ease.QuadOut);
+        Action.Property(showGrp, @this.UiWidget.MarginLeft, 0, this.ShowDuration, Ease.QuadOut);
+        Action.Property(showGrp, @this.UiWidget.Size, initialSize, this.ShowDuration, Ease.QuadInOut);
+      
+      Action.Delay(mainSeq, this.HideDelay);
+      
+      var hideGrp = Action.Group(mainSeq);
+        
+        Action.Property(hideGrp, @this.UiWidget.HierarchyColor, Colors.Clear, this.HideDuration, Ease.QuadIn);
+      
+      Action.Call(mainSeq, this.Owner.Destroy);
+  }
+}

@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{3.78965235, 1.55557382, 4.52841377}
+			var Translation = Real3{3.94904256, 2.0680716, 4.3307519}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0.241361201, -0.131621316, 0.0330609903, 0.960899353}
+			var Rotation = Quaternion{-0.0314024575, -0.0235438161, -0.000739905168, 0.999229252}
 		}
 		CameraViewport 
 		{
@@ -270,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 0.887579262
-			var VerticalAngle = -0.492182791
-			var HorizontalAngle = -6.01092529
-			var LookTarget = Real3{4, 1.97500002, 3.7750001}
+			var LookDistance = 1.08409166
+			var VerticalAngle = 0.0628326759
+			var HorizontalAngle = -6.23607016
+			var LookTarget = Real3{4, 2, 3.25}
 			var MoveSensitivity = 1
 		}
 	}
@@ -4890,16 +4890,16 @@ Level
 							var LocalAabbCenter = Real3{0, 0, 0}
 							var LocalAabbHalfExtents = Real3{1, 1, 1}
 							var GroupSortValue = 0
-							var Material = "5a8c40c024c76419:StippledFlat"
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
 							var Mesh = "4de0354322b345ae:Cube"
 						}
 						MaterialInputs 
 						{
 							var Color = Real4{0, 0, 0, 0.600000024}
 							var AlbedoValue = Real4{0, 0, 0, 1}
-							var MetallicValue = 0.0500000007
-							var RoughnessValue = 0
-							var SpecularValue = 1
+							var MetallicValue = 0.100000001
+							var RoughnessValue = 0.0500000007
+							var SpecularValue = 0.900000036
 							var StippleDensity = 0.875
 							var StippleScale = 2
 							var NearDistance = 20
@@ -4927,16 +4927,16 @@ Level
 							var LocalAabbCenter = Real3{0, 0, 0}
 							var LocalAabbHalfExtents = Real3{1, 1, 1}
 							var GroupSortValue = 0
-							var Material = "5a8c40c024c76419:StippledFlat"
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
 							var Mesh = "4de0354322b345ae:Cube"
 						}
 						MaterialInputs 
 						{
 							var Color = Real4{0, 0, 0, 0.600000024}
 							var AlbedoValue = Real4{0, 0, 0, 1}
-							var MetallicValue = 0.0500000007
-							var RoughnessValue = 0
-							var SpecularValue = 1
+							var MetallicValue = 0.100000001
+							var RoughnessValue = 0.0500000007
+							var SpecularValue = 0.900000036
 							var StippleDensity = 0.875
 							var StippleScale = 2
 							var NearDistance = 20

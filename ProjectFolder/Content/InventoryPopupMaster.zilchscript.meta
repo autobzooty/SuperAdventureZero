@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "InventoryPopupMaster"
+		var ResourceId = 0x5a30405bc68a2326
+	}
+}

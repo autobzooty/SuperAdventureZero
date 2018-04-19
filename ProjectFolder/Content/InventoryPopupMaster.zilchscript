@@ -1,0 +1,42 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class InventoryPopupMaster : ZilchComponent
+{
+  [Property]
+  var PopupArchetype : Archetype = Archetype.InventoryPopup;
+  [Property]
+  var ListPath : CogPath = CogPath(".");
+  
+  var Cog : Cog;
+  var UiWidget : UiWidget;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.Cog = this.ListPath.Cog;
+    this.UiWidget = this.ListPath.UiWidget;
+    
+    Zero.Connect(this.GameSession, Events.ItemAddedToInventory, this.OnItemAddedToInventory);
+  }
+  
+  
+  //***************************************************************************
+  function OnItemAddedToInventory(event : PopupEvent)
+  {
+    var popup = this.Space.Create(this.PopupArchetype);
+    popup.AttachTo(this.UiWidget.Owner);
+    
+    var firstChild = this.Cog.Children.Current;
+    
+    if (firstChild != null && firstChild != popup)
+      popup.PlaceBeforeSibling(firstChild);
+    
+    popup.DispatchEvent(Events.InventoryPopupSetup, event);
+  }
+}
