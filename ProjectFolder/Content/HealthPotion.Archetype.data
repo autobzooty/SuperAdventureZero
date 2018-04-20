@@ -303,6 +303,8 @@ Cog
 						var Fullth = 0.649999976
 						var YMin = -0.5
 						var YMax = 0.5
+						var BottomColor = Real4{0, 0, 0, 1}
+						var HeadColor = Real4{0.935000002, 0.929390013, 0.794749975, 1}
 					}
 					LiquidSurfaceNormalInput 
 					{

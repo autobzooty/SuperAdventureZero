@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{3.94904256, 2.0680716, 4.3307519}
+			var Translation = Real3{-0.205800533, 5.02759886, -6.24727201}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0314024575, -0.0235438161, -0.000739905168, 0.999229252}
+			var Rotation = Quaternion{-0.283026695, -0.194132492, -0.0586121045, 0.93742907}
 		}
 		CameraViewport 
 		{
@@ -264,16 +264,16 @@ Level
 			var FarPlane = 200
 			var PerspectiveMode = PerspectiveMode.Perspective
 			var FieldOfView = 60
-			var Size = 1.48412907
+			var Size = 4.03428125
 		}
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 1.08409166
-			var VerticalAngle = 0.0628326759
-			var HorizontalAngle = -6.23607016
-			var LookTarget = Real3{4, 2, 3.25}
+			var LookDistance = 8.17973518
+			var VerticalAngle = 0.586430967
+			var HorizontalAngle = -5.87477779
+			var LookTarget = Real3{2.5, 0.501000226, -12.5}
 			var MoveSensitivity = 1
 		}
 	}
@@ -2214,6 +2214,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.300000012, 0.0300000012, 0.0300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -2353,6 +2355,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.300000012, 0.165000007, 0.0300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -2492,6 +2496,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.300000012, 0.300000012, 0.0300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -2631,6 +2637,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.165000007, 0.300000012, 0.0300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -2770,6 +2778,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.0300000012, 0.300000012, 0.0300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -2909,6 +2919,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.0300000012, 0.300000012, 0.165000007, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -3048,6 +3060,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.0300000012, 0.300000012, 0.300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -3187,6 +3201,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.0300000012, 0.164999947, 0.300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -3326,6 +3342,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.0300000012, 0.0300000012, 0.300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -3465,6 +3483,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.165000007, 0.0300000012, 0.300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -3604,6 +3624,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.300000012, 0.0300000012, 0.300000012, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{
@@ -3743,6 +3765,8 @@ Level
 							var Fullth = 0.5
 							var YMin = -0.5
 							var YMax = 0.5
+							var BottomColor = Real4{0.300000012, 0.0300000012, 0.165000007, 0.850000024}
+							var HeadColor = Real4{1, 1, 1, 0.666666687}
 						}
 						ContainedLiquidMeshYRangeFinder 
 						{

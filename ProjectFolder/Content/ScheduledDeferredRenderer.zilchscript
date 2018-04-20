@@ -243,6 +243,7 @@ class ScheduledDeferredRenderer : ZilchComponent
     // Alpha materials
     alphaSettings.ColorTarget = final;
     alphaSettings.BlendSettings.DestFactor = BlendFactor.InvSourceAlpha;
+    //alphaSettings.CullMode = CullMode.BackFace;
     event.Event.AddRenderTaskRenderPass(alphaSettings, RenderGroup.PreAlphaBlend, ColorOutput());
     event.Event.AddRenderTaskRenderPass(alphaSettings, RenderGroup.AlphaBlend, ColorOutput());
     event.Event.AddRenderTaskRenderPass(alphaSettings, RenderGroup.PostAlphaBlend, ColorOutput());

@@ -2,6 +2,7 @@
 struct ContainedLiquidPixel
 {
  [Input][Slider(0, 1, 0.01)] var Fullth = 0.5;
+ [Input][Slider(0, 1, 0.01)] var HeadThickness = 0.07;
  [Input] var YMin : Real = -0.5;
  [Input] var YMax : Real = 0.5;
  [Input] var SurfaceNormal : Real3 = Real3.YAxis;
@@ -13,6 +14,8 @@ struct ContainedLiquidPixel
  
  [FragmentInput][StageInput] var ViewPosition : Real3;
  [FragmentInput][StageInput][Output] var Color : Real4;
+ [PropertyInput] var BottomColor : Real4 = Colors.Black;
+ [PropertyInput] var HeadColor : Real4 = Colors.White;
  
  function Main()
  {
@@ -20,7 +23,18 @@ struct ContainedLiquidPixel
    
    var worldPos = Math.MultiplyPoint(this.ViewToWorld, this.ViewPosition);
    var offset = worldPos - this.ObjectWorldPosition;
-   var interpolant = ((Math.Dot(offset, normal) - this.YMin) / (this.YMax - this.YMin) > this.Fullth) as Real;
-   this.Color.W = Math.Lerp(this.Color.W, 0.0, interpolant);
+   var projection = Math.Dot(offset, normal);
+   var pixelLevel = (projection - this.YMin) / (this.YMax - this.YMin);
+   var heightFraction = pixelLevel / this.Fullth;
+   var visibilityInterpolant = (pixelLevel > this.Fullth) as Real;
+   var pixelIsBelowMin = (pixelLevel < this.YMin) as Real;
+   var color = this.Color;
+   //color = Math.Lerp(this.BottomColor, color, heightFraction);
+   //this.Color = Math.Lerp(this.BottomColor, this.Color, heightFraction);
+   //this.Color = Math.Lerp(this.BottomColor, this.Color, pixelIsBelowMin);
+   var headInterpolant = (heightFraction > 1 - this.HeadThickness) as Real;
+   //color = Math.Lerp(color, this.HeadColor, headInterpolant);
+   color.W = Math.Lerp(color.W, 0, visibilityInterpolant);
+   this.Color = color;
  }
 }
