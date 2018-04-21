@@ -13,7 +13,7 @@ class PlayerInputReceiver : ZilchComponent
   var CameraPath : CogPath = CogPath();
   
   //***************************************************************************
-  function Initialize(init : CogInitializer)
+  function Initialize(init : CogInitializer)  
   {
     this.IM = this.GameSession.IM;
     Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
@@ -25,10 +25,11 @@ class PlayerInputReceiver : ZilchComponent
     var moveStick = this.IM.GetStick(GameStick.Move);
     
     //Set up requested move direction from camera's point of view
-    ie.RequestedMoveDirection = Real3(moveStick.X, 0, -moveStick.Y);
+    ie.RequestedMoveDirection = Real3(-moveStick.X, 0, moveStick.Y);
     ie.RequestedMoveDirection = this.CameraPath.Transform.TransformNormal(ie.RequestedMoveDirection);
     ie.RequestedMoveDirection.Y = 0;
     ie.RequestedMoveDirection = Math.Normalize(ie.RequestedMoveDirection);
+    ie.StickX = moveStick.X;
     
     ie.Magnitude = Math.Length(moveStick);
     

@@ -29,6 +29,7 @@ class StandardMover : ZilchComponent
   var OnGround : Boolean = true;
   [Property]
   var GravityStrength : Real = -10;
+  var StickX : Real;
   
   //***************************************************************************
   function Initialize(init : CogInitializer)
@@ -61,7 +62,7 @@ class StandardMover : ZilchComponent
     {
       this.MoverSpeed = this.BaseMaxSpeed;
     }
-    Print(this.MoverSpeed);
+    this.StickX = event.StickX;
   }
 
   //***************************************************************************
@@ -80,29 +81,45 @@ class StandardMover : ZilchComponent
       }
     }
     //Apply gravity if we're not on the ground
-    if(!this.OnGround)
+    if(this.OnGround)
     {
-      newVelocity.Y += this.GravityStrength * event.Dt;
+      //newVelocity.Y = 0;
     }
     else
     {
-      newVelocity.Y = 0;
+      newVelocity.Y += this.GravityStrength * event.Dt;
     }
     //Final application of velocity to the rigidbody. ONLY DO THIS ONCE PER FRAME
     this.RigidBody.Velocity = newVelocity;
-    this.UpdateOrientation();
-    
-    var newRot : Real3 = Math.RotateTowards(this.Orientation.WorldForward, this.RequestedMoveDirection, this.TurnSpeed * event.Dt);
 
-    this.Owner.Orientation.LookAtDirection(newRot);
-  }
-  
-  //***************************************************************************
-  function UpdateOrientation()
-  {
+    
+    //Turn toward the direction the stick is pointing relative to the camera
+    var sweepResults = this.Space.PhysicsSpace.SweepCollider(this.Owner.Collider, Real3(0, -0.5, 0), event.Dt, CastFilter());
+    var groundNormal = Real3.Zero;
+    if(sweepResults.IsNotEmpty)
+    {
+      var contactCounter = 0;
+      foreach(var result in sweepResults)
+      {
+        groundNormal += result.WorldNormalTowardsSelf;
+        ++contactCounter;
+      }
+      groundNormal /= contactCounter;
+    }
+    
     var ray = Ray(this.Owner.Transform.Translation, Real3(0, -1, 0));
     var result = this.Space.PhysicsSpace.CastRayFirst(ray);
-    this.Orientation.GlobalUp = result.Normal;
-    Print(this.Orientation.WorldForward);
+    Print(this.OnGround);
+    var newRight = Math.Normalize(Math.Cross(result.Normal, this.Orientation.WorldForward));
+    
+    
+    var newForward = Math.Cross(newRight, result.Normal);
+    var requestedMoveDirection = this.RequestedMoveDirection;
+    requestedMoveDirection.X *= -1;
+    
+    this.Orientation.LookAtDirectionWithUp(newForward, result.Normal);
+    var targetForward = Math.Cross(this.RequestedMoveDirection, result.Normal);
+    targetForward = Math.Cross(targetForward, result.Normal);
+    this.Orientation.LookAtDirectionWithUp(Math.RotateTowards(this.Orientation.WorldForward, targetForward, this.TurnSpeed * event.Dt), result.Normal);
   }
 }
