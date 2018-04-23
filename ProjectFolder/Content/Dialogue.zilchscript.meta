@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "Dialogue"
+		var ResourceId = 0x5a33e7ceae8629ec
+	}
+}

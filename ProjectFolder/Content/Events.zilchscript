@@ -337,3 +337,22 @@ class PopupEvent : ZilchEvent
   
   var ItemBase : ItemBase;
 }
+
+class DialogueEvent : MWEvent
+{
+  sends RequestDialogue : DialogueEvent;
+  sends DialogueWasBegun : DialogueEvent;
+  sends DidBeginDialogue : DialogueEvent;
+  sends DialogueEnded : DialogueEvent;
+  sends DialogueWindowSetup : DialogueEvent;
+  sends DialogueWindowFinishedOpening : DialogueEvent;
+  sends PageTurn : DialogueEvent;
+  sends AdvanceCurrentPage : DialogueEvent;
+  sends DialogueWindowShutdown : DialogueEvent;
+  sends DialogueWindowFinishedClosing : DialogueEvent;
+  
+  var Other : Cog;
+  var Dialogue : Dialogue;
+  var WindowWasCreated : Boolean = false;
+  var EndReached : Boolean = false;
+}

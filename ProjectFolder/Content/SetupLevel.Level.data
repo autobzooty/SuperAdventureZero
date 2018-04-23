@@ -44,7 +44,7 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{428, -741.5, 10}
+			var Translation = Real3{331.5, -222.5, 10}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -106,7 +106,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{428, -741.333374, 1.22391953e-06}
+			var LookTarget = Real3{331, -222.333374, -3.01608634e-06}
 			var MoveSensitivity = 1
 		}
 	}
@@ -2849,7 +2849,7 @@ Level
 							}
 							Cog [Id:0x5a29cb477f8433d1][ContextId:44]
 							{
-								var Name = "KANavConfirm"
+								var Name = "KANavCancel"
 								Transform 
 								{
 									var Translation = Real3{1, -595, 0}
@@ -2907,7 +2907,7 @@ Level
 								{
 									var PlayerIndex = 0
 									var Action = GameAction.NavCancel
-									var Key = Keys.Escape
+									var Key = Keys.Back
 								}
 								Hierarchy 
 								{

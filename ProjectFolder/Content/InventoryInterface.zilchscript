@@ -125,7 +125,7 @@ class InventoryInterface : ZilchComponent
     // 
     // some cool events and feedback and ish!
     
-    Print("Added `item.Name` to Inventory");
+    //Print("Added `item.Name` to Inventory");
     this.CreatePopup(item);
     
     item.Owner.AttachToPreserveLocal(this.InventoryRoot.Cog);

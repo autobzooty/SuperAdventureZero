@@ -34,6 +34,40 @@ class UiTextShadow : ZilchComponent
     }
   }
   [Display]
+  var FontSize : Integer
+  {
+    get
+    {
+      if (this.ST == null) return -1;
+      return this.ST.FontSize;
+    }
+    
+    set
+    {
+      if (this.ST == null) return;
+      this.ST.FontSize = value;
+      this.CoverST.FontSize = value;
+      this.ShadowST.FontSize = value;
+    }
+  }
+  [Display]
+  var TextAlign : TextAlign
+  {
+    get
+    {
+      if (this.ST == null) return TextAlign.Left;
+      return this.ST.TextAlign;
+    }
+    
+    set
+    {
+      if (this.ST == null) return;
+      this.ST.TextAlign = value;
+      this.CoverST.TextAlign = value;
+      this.ShadowST.TextAlign = value;
+    }
+  }
+  [Display]
   var TextColor : Real4
   {
     get

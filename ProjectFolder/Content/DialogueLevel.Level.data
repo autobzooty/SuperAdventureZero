@@ -97,7 +97,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 755
+			var Size = 535
 		}
 		EditorCameraController 
 		{
@@ -362,6 +362,25 @@ Level
 					var PaddingTop = 0
 					var PaddingRight = 0
 					var PaddingBottom = 0
+				}
+				DialogueMaster 
+				{
+					var WindowRootPath = CogPath
+					{
+						var Path = "."
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 6
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var WindowArchetype = "5a386b0e93a40b29:UiTextWindow"
 				}
 				Hierarchy 
 				{

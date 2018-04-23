@@ -4,13 +4,13 @@ Cog
 	var Name = "TextWindow"
 	Transform 
 	{
-		var Translation = Real3{30, 0, 0}
+		var Translation = Real3{36, -11, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
 	Area 
 	{
-		var Size = Real2{440, 240}
+		var Size = Real2{428, 228}
 		var Origin = Location.TopLeft
 	}
 	UiWidget 
@@ -28,7 +28,7 @@ Cog
 		var SizePolicyY = UiSizePolicy.Auto
 		var FlexSize = Real2{1, 1}
 		var AbsoluteMinSize = Real2{1, 1}
-		var VerticalAlignment = UiVerticalAlignment.Top
+		var VerticalAlignment = UiVerticalAlignment.Center
 		var HorizontalAlignment = UiHorizontalAlignment.Center
 		var MarginLeft = 0
 		var MarginTop = 0
@@ -62,6 +62,24 @@ Cog
 		var PaddingRight = 0
 		var PaddingBottom = 0
 	}
+	TextWindow 
+	{
+		var TextPath = CogPath
+		{
+			var Path = "MiddleLayer/TopLayer/Text"
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+	}
 	Hierarchy 
 	{
 		Cog [Id:0x5a386847bbc7a513]
@@ -69,13 +87,13 @@ Cog
 			var Name = "MiddleLayer"
 			Transform 
 			{
-				var Translation = Real3{10, -10, 0}
+				var Translation = Real3{2, -2, 0}
 				var Scale = Real3{1, 1, 1}
 				var Rotation = Quaternion{0, 0, 0, 1}
 			}
 			Area 
 			{
-				var Size = Real2{420, 220}
+				var Size = Real2{424, 224}
 				var Origin = Location.TopLeft
 			}
 			UiWidget 
@@ -93,12 +111,12 @@ Cog
 				var SizePolicyY = UiSizePolicy.Auto
 				var FlexSize = Real2{1, 1}
 				var AbsoluteMinSize = Real2{1, 1}
-				var VerticalAlignment = UiVerticalAlignment.Top
+				var VerticalAlignment = UiVerticalAlignment.Center
 				var HorizontalAlignment = UiHorizontalAlignment.Center
-				var MarginLeft = 10
-				var MarginTop = 10
-				var MarginRight = 10
-				var MarginBottom = 10
+				var MarginLeft = 2
+				var MarginTop = 2
+				var MarginRight = 2
+				var MarginBottom = 2
 				var DockMode = UiDockMode.Left
 			}
 			Sprite 
@@ -134,13 +152,13 @@ Cog
 					var Name = "TopLayer"
 					Transform 
 					{
-						var Translation = Real3{10, -10, 0}
+						var Translation = Real3{4, -4, 0}
 						var Scale = Real3{1, 1, 1}
 						var Rotation = Quaternion{0, 0, 0, 1}
 					}
 					Area 
 					{
-						var Size = Real2{400, 200}
+						var Size = Real2{416, 216}
 						var Origin = Location.TopLeft
 					}
 					UiWidget 
@@ -154,16 +172,16 @@ Cog
 						var CanTakeFocus = false
 						var LocalColor = Real4{0, 0, 0, 0.100000001}
 						var HierarchyColor = Real4{1, 1, 1, 1}
-						var SizePolicyX = UiSizePolicy.Fixed
-						var SizePolicyY = UiSizePolicy.Fixed
+						var SizePolicyX = UiSizePolicy.Auto
+						var SizePolicyY = UiSizePolicy.Auto
 						var FlexSize = Real2{1, 1}
 						var AbsoluteMinSize = Real2{1, 1}
-						var VerticalAlignment = UiVerticalAlignment.Top
+						var VerticalAlignment = UiVerticalAlignment.Center
 						var HorizontalAlignment = UiHorizontalAlignment.Center
-						var MarginLeft = 10
-						var MarginTop = 10
-						var MarginRight = 10
-						var MarginBottom = 10
+						var MarginLeft = 4
+						var MarginTop = 4
+						var MarginRight = 4
+						var MarginBottom = 4
 						var DockMode = UiDockMode.Left
 					}
 					Sprite 
@@ -187,19 +205,19 @@ Cog
 					}
 					UiFillLayout 
 					{
-						var PaddingLeft = 10
-						var PaddingTop = 10
-						var PaddingRight = 10
-						var PaddingBottom = 10
+						var PaddingLeft = 0
+						var PaddingTop = 0
+						var PaddingRight = 0
+						var PaddingBottom = 0
 					}
 					Hierarchy 
 					{
 						Cog [Id:0x5a3937b2ba290241]
 						{
-							var Name = "TestText"
+							var Name = "Text"
 							Transform 
 							{
-								var Translation = Real3{10, -10, 0}
+								var Translation = Real3{8, -8, 0}
 								var Scale = Real3{1, 1, 1}
 								var Rotation = Quaternion{0, 0, 0, 1}
 							}
@@ -223,7 +241,7 @@ Cog
 							}
 							Area 
 							{
-								var Size = Real2{380, 76}
+								var Size = Real2{400, 200}
 								var Origin = Location.TopLeft
 							}
 							UiWidget 
@@ -237,16 +255,16 @@ Cog
 								var CanTakeFocus = false
 								var LocalColor = Real4{1, 1, 1, 1}
 								var HierarchyColor = Real4{1, 1, 1, 1}
-								var SizePolicyX = UiSizePolicy.Flex
+								var SizePolicyX = UiSizePolicy.Fixed
 								var SizePolicyY = UiSizePolicy.Fixed
 								var FlexSize = Real2{1, 1}
 								var AbsoluteMinSize = Real2{1, 1}
-								var VerticalAlignment = UiVerticalAlignment.Top
-								var HorizontalAlignment = UiHorizontalAlignment.Left
-								var MarginLeft = 0
-								var MarginTop = 0
-								var MarginRight = 0
-								var MarginBottom = 0
+								var VerticalAlignment = UiVerticalAlignment.Center
+								var HorizontalAlignment = UiHorizontalAlignment.Center
+								var MarginLeft = 8
+								var MarginTop = 8
+								var MarginRight = 8
+								var MarginBottom = 8
 								var DockMode = UiDockMode.Left
 							}
 							UiTextShadow 

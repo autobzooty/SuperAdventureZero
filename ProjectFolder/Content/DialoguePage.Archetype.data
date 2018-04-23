@@ -1,0 +1,11 @@
+[Version:1]
+Cog 
+{
+	var Name = "Page00"
+	DialoguePage 
+	{
+		var Text = "Text goes here"
+		var FontSize = 28
+		var TextAlign = TextAlign.Left
+	}
+}

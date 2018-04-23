@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-0.205800533, 5.02759886, -6.24727201}
+			var Translation = Real3{-12.3471928, 6.41897488, 2.96954584}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.283026695, -0.194132492, -0.0586121045, 0.93742907}
+			var Rotation = Quaternion{-0.255783945, 0.0606961437, 0.0160933044, 0.964692473}
 		}
 		CameraViewport 
 		{
@@ -264,16 +264,16 @@ Level
 			var FarPlane = 200
 			var PerspectiveMode = PerspectiveMode.Perspective
 			var FieldOfView = 60
-			var Size = 4.03428125
+			var Size = 0.494023532
 		}
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 8.17973518
-			var VerticalAngle = 0.586430967
-			var HorizontalAngle = -5.87477779
-			var LookTarget = Real3{2.5, 0.501000226, -12.5}
+			var LookDistance = 10.5454302
+			var VerticalAngle = 0.518363476
+			var HorizontalAngle = -6.40885496
+			var LookTarget = Real3{-13.4953108, 1.19414353, -6.11830664}
 			var MoveSensitivity = 1
 		}
 	}
@@ -5038,6 +5038,922 @@ Level
 							var CollisionGroup = "4e740859314e5515:DefaultGroup"
 							var Offset = Real3{0, 0, 0}
 							var HalfSize = Real3{0.0500000007, 0.0500000007, 0.425000012}
+						}
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:142]
+	{
+		var Name = "Sign"
+		Transform 
+		{
+			var Translation = Real3{-13.5, 1, -6}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		CylinderCollider 
+		{
+			var Ghost = true
+			var SendsEvents = true
+			var Material = "5a2935c7a1ba7d2d:Ghost"
+			var CollisionGroup = "4e740859314e5515:DefaultGroup"
+			var Offset = Real3{0, 0, 0}
+			var Radius = 2
+			var Height = 3
+			var Direction = AxisDirection.Y
+		}
+		Interactive 
+		{
+		}
+		Dialogue 
+		{
+			var PageRootPath = CogPath
+			{
+				var Path = "PageRoot"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 143
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5a338df841328df6][ContextId:144]
+			{
+				var Name = "Parts"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a338d94449f8435][ContextId:145]
+					{
+						var Name = "Cube"
+						Transform 
+						{
+							var Translation = Real3{0, 0.125, 0}
+							var Scale = Real3{0.25, 1.25, 0.100000001}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a33c8e929370126:Wood"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						BoxCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var HalfSize = Real3{0.5, 0.5, 0.5}
+						}
+					}
+					Cog [Id:0x5a338d94449f847b][ContextId:146]
+					{
+						var Name = "Cube"
+						Transform 
+						{
+							var Translation = Real3{0, 0.360000014, 0.102499962}
+							var Scale = Real3{1, 0.649999976, 0.100000001}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a33c8e929370126:Wood"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						BoxCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var HalfSize = Real3{0.5, 0.5, 0.5}
+						}
+					}
+					Cog [Id:0x5a338d94449f84ba][ContextId:147]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{-0.0500001907, 0.629999995, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f84ef][ContextId:148]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{0.0500001907, 0.629999995, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8521][ContextId:149]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{-0.0500001907, 0.100000024, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8551][ContextId:150]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{0.0500001907, 0.100000024, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8582][ContextId:151]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{-0.0249996185, 0.5, 0.131000042}
+							var Scale = Real3{0.75, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f85b3][ContextId:152]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{0, 0.399999976, 0.131000042}
+							var Scale = Real3{0.800000012, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f85e5][ContextId:153]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{-0.0500001907, 0.299999952, 0.131000042}
+							var Scale = Real3{0.699999988, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8616][ContextId:154]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{-0.0150003433, 0.200000048, 0.131000042}
+							var Scale = Real3{0.769999981, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a338d9e4448fdbe][ContextId:143]
+			{
+				var Name = "PageRoot"
+				Hierarchy 
+				{
+					Cog [Id:0x5a338da8475381e2][ContextId:155]
+					{
+						var Name = "Page00"
+						DialoguePage 
+						{
+							var Text = "COOL KIDS ONLY"
+							var FontSize = 72
+							var TextAlign = TextAlign.Center
+						}
+					}
+					Cog [Id:0x5a3444d4b454dbcc][ContextId:156]
+					{
+						var Name = "Page01"
+						DialoguePage 
+						{
+							var Text = "\\n\\n\\n\\neveryone else go home"
+							var FontSize = 16
+							var TextAlign = TextAlign.Center
+						}
+					}
+					Cog [Id:0x5a344546a32ecfba][ContextId:157]
+					{
+						var Name = "Page02"
+						DialoguePage 
+						{
+							var Text = "\\n\\n\\n\\n\\n\\n\\n\\n\\n\\nexcept mom"
+							var FontSize = 12
+							var TextAlign = TextAlign.Center
+						}
+					}
+				}
+			}
+		}
+	}
+	Cog [ContextId:158]
+	{
+		var Name = "Sign"
+		Transform 
+		{
+			var Translation = Real3{-9.25, 1, -6}
+			var Scale = Real3{1, 1, 1}
+			var Rotation = Quaternion{0, 0, 0, 1}
+		}
+		CylinderCollider 
+		{
+			var Ghost = true
+			var SendsEvents = true
+			var Material = "5a2935c7a1ba7d2d:Ghost"
+			var CollisionGroup = "4e740859314e5515:DefaultGroup"
+			var Offset = Real3{0, 0, 0}
+			var Radius = 2
+			var Height = 3
+			var Direction = AxisDirection.Y
+		}
+		Interactive 
+		{
+		}
+		Dialogue 
+		{
+			var PageRootPath = CogPath
+			{
+				var Path = "PageRoot"
+				var ErrorOnResolveToNull = false
+				var ErrorOnPathCantCompute = false
+				var ErrorOnDirectLinkFail = false
+				var UpdateCogOnPathChange = true
+				var UpdatePathOnCogChange = true
+				var UpdateCogOnInitialize = true
+				var ResolvedNullErrorOccurred = false
+				var Cog = 159
+				var PathPreference0 = CogPathPreference.CogRelative
+				var PathPreference1 = CogPathPreference.SpaceRelative
+				var PathPreference2 = CogPathPreference.Absolute
+			}
+		}
+		Hierarchy 
+		{
+			Cog [Id:0x5a338df841328df6][ContextId:160]
+			{
+				var Name = "Parts"
+				Transform 
+				{
+					var Translation = Real3{0, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Hierarchy 
+				{
+					Cog [Id:0x5a338d94449f8435][ContextId:161]
+					{
+						var Name = "Cube"
+						Transform 
+						{
+							var Translation = Real3{0, 0.125, 0}
+							var Scale = Real3{0.25, 1.25, 0.100000001}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a33c8e929370126:Wood"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						BoxCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var HalfSize = Real3{0.5, 0.5, 0.5}
+						}
+					}
+					Cog [Id:0x5a338d94449f847b][ContextId:162]
+					{
+						var Name = "Cube"
+						Transform 
+						{
+							var Translation = Real3{0, 0.360000014, 0.102499962}
+							var Scale = Real3{1, 0.649999976, 0.100000001}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5a33c8e929370126:Wood"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						BoxCollider 
+						{
+							var Ghost = false
+							var SendsEvents = true
+							var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+							var CollisionGroup = "4e740859314e5515:DefaultGroup"
+							var Offset = Real3{0, 0, 0}
+							var HalfSize = Real3{0.5, 0.5, 0.5}
+						}
+					}
+					Cog [Id:0x5a338d94449f84ba][ContextId:163]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{-0.0500001907, 0.629999995, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f84ef][ContextId:164]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{0.0500001907, 0.629999995, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8521][ContextId:165]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{-0.0500001907, 0.100000024, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8551][ContextId:166]
+					{
+						var Name = "Nail"
+						Transform 
+						{
+							var Translation = Real3{0.0500001907, 0.100000024, 0.0549998283}
+							var Scale = Real3{0.0199999996, 0.200000033, 0.0200000014}
+							var Rotation = Quaternion{0.707106829, 0, 0, 0.707106769}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b3572e:Cylinder"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.745000005, 0.745000005, 0.745000005, 1}
+							var MetallicValue = 1
+							var RoughnessValue = 0.400000006
+							var SpecularValue = 1
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8582][ContextId:167]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{-0.0249996185, 0.5, 0.131000042}
+							var Scale = Real3{0.75, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f85b3][ContextId:168]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{0, 0.399999976, 0.131000042}
+							var Scale = Real3{0.800000012, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f85e5][ContextId:169]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{-0.0500001907, 0.299999952, 0.131000042}
+							var Scale = Real3{0.699999988, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+					Cog [Id:0x5a338d94449f8616][ContextId:170]
+					{
+						var Name = "Text"
+						Transform 
+						{
+							var Translation = Real3{-0.0150003433, 0.200000048, 0.131000042}
+							var Scale = Real3{0.769999981, 0.0199999996, 0.0500000007}
+							var Rotation = Quaternion{0, 0, 0, 1}
+						}
+						Model 
+						{
+							var Visible = true
+							var ViewCulling = true
+							var VisibilityEvents = true
+							var OverrideBoundingBox = false
+							var LocalAabbCenter = Real3{0, 0, 0}
+							var LocalAabbHalfExtents = Real3{1, 1, 1}
+							var GroupSortValue = 0
+							var Material = "5828b036bd65b5d8:OpaqueFlat"
+							var Mesh = "4de0354322b345ae:Cube"
+						}
+						MaterialInputs 
+						{
+							var Color = Real4{0.5, 0.5, 0.5, 1}
+							var AlbedoValue = Real4{0.100000001, 0.100000001, 0.100000001, 1}
+							var MetallicValue = 0
+							var RoughnessValue = 1
+							var SpecularValue = 0
+							var StippleDensity = 0.5
+							var StippleScale = 2
+							var NearDistance = 20
+							var FarDistance = 30
+							var MinVisibility = 0
+							var MaxVisibility = 1
+							var XrayColor = Real4{1, 0, 0, 1}
+						}
+					}
+				}
+			}
+			Cog [Id:0x5a338d9e4448fdbe][ContextId:159]
+			{
+				var Name = "PageRoot"
+				Hierarchy 
+				{
+					Cog [Id:0x5a350a3ea58bc659][ContextId:171]
+					{
+						var Name = "Page00"
+						DialoguePage 
+						{
+							var Text = "Jolly Rancher\\nSour Bites"
+							var FontSize = 40
+							var TextAlign = TextAlign.Left
+						}
+					}
+					Cog [Id:0x5a350a3ba50dafd4][ContextId:172]
+					{
+						var Name = "Page01"
+						DialoguePage 
+						{
+							var Text = "- Green Apple\\n- Watermelon\\n- Cherry\\n- Orange"
+							var FontSize = 28
+							var TextAlign = TextAlign.Left
+						}
+					}
+					Cog [Id:0x5a350a3aa57f5c18][ContextId:173]
+					{
+						var Name = "Page02"
+						DialoguePage 
+						{
+							var Text = "Naturally & artificially flavored"
+							var FontSize = 28
+							var TextAlign = TextAlign.Left
+						}
+					}
+					Cog [Id:0x5a350a39a54fd008][ContextId:174]
+					{
+						var Name = "Page03"
+						DialoguePage 
+						{
+							var Text = "CAREFUL: SOUR LEVEL MAY CAUSE IRRITATION TO THE MOUTH."
+							var FontSize = 28
+							var TextAlign = TextAlign.Left
 						}
 					}
 				}
