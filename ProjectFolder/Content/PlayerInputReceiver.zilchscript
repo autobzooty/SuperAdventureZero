@@ -30,6 +30,8 @@ class PlayerInputReceiver : ZilchComponent
     ie.RequestedMoveDirection.Y = 0;
     ie.RequestedMoveDirection = Math.Normalize(ie.RequestedMoveDirection);
     ie.StickX = moveStick.X;
+    ie.JumpTriggered = this.IM.Triggered(GameAction.Jump);
+    ie.JumpReleased = this.IM.Released(GameAction.Jump);
     
     ie.Magnitude = Math.Length(moveStick);
     

@@ -16,7 +16,7 @@ GameSession
 		var ConsoleLevel = "null"
 		var SetupLevel = "5ab90cdb31e5b884:SetupLevel"
 		var DialogueLevel = "null"
-		var LevelChoice = EditorStartingLevelChoice.ChosenLevel
+		var LevelChoice = EditorStartingLevelChoice.EditorLevel
 	}
 	IM 
 	{

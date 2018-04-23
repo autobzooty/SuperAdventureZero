@@ -14,7 +14,8 @@ class StandardMover : ZilchComponent
   [Dependency]
   var Orientation : Orientation;
   var IM : IM;
-  var MoverSpeed : Real = 0;
+  var MoverHSpeed : Real = 0;
+  var MoverVSpeed : Real = 0;
   [Property]
   var Acceleration : Real = 50;
   [Property]
@@ -27,9 +28,18 @@ class StandardMover : ZilchComponent
   [Property]
   var BaseMaxSpeed : Real = 1000;
   var OnGround : Boolean = true;
+  var OnGroundLastFrame : Boolean = true;
   [Property]
-  var GravityStrength : Real = -10;
+  var GravityStrength : Real = 30;
   var StickX : Real;
+  [Property]
+  var JumpStrength : Real = 50;
+  [Property]
+  var JumpTime : Real = 0.25;
+  var JumpStopwatch : Real = 0.0;
+  var Jumping : Boolean = false;
+  
+  
   
   //***************************************************************************
   function Initialize(init : CogInitializer)
@@ -42,84 +52,118 @@ class StandardMover : ZilchComponent
   //***************************************************************************
   function OnMovementRequest(event : InputEvent)
   {
-    this.MoverSpeed += this.Acceleration * event.Magnitude * event.Dt;
+    //Store relevant input data from the movement request event
+    this.MoverHSpeed += this.Acceleration * event.Magnitude * event.Dt;
     if(event.Magnitude >= this.MinimumStickThreshold)
     {
       this.RequestedMoveDirection = event.RequestedMoveDirection;
     }
     else
     {
-      if(this.MoverSpeed >= this.Deceleration * event.Dt)
+      if(this.MoverHSpeed >= this.Deceleration * event.Dt)
       {
-        this.MoverSpeed -= this.Deceleration * event.Dt;
+        this.MoverHSpeed -= this.Deceleration * event.Dt;
       }
       else
       {
-        this.MoverSpeed = 0;
+        this.MoverHSpeed = 0;
       }
     }
-    if(this.MoverSpeed > this.BaseMaxSpeed)
+    if(this.MoverHSpeed > this.BaseMaxSpeed)
     {
-      this.MoverSpeed = this.BaseMaxSpeed;
+      this.MoverHSpeed = this.BaseMaxSpeed;
     }
     this.StickX = event.StickX;
+    if(event.JumpTriggered)
+    {
+      this.AttemptJump();
+    }
+    if(event.JumpReleased)
+    {
+      this.Jumping = false;
+    }
+  }
+  
+  //***************************************************************************
+  function AttemptJump()
+  {
+    if(this.OnGround)
+    {
+      this.OnGround = false;
+      this.Jumping = true;
+    }
+    Print(this.MoverVSpeed);
   }
 
   //***************************************************************************
   function OnPhysicsUpdate(event : UpdateEvent)
   {
-    var newVelocity = this.Orientation.WorldForward * this.MoverSpeed * event.Dt;
+    //Calculate our velocity based on our facing direction and current speed
+    var newVelocity = this.Orientation.WorldForward * this.MoverHSpeed * event.Dt;
+    
+    if(this.Jumping)
+    {
+      Print(this.JumpStopwatch);
+      this.MoverVSpeed += this.JumpStrength * event.Dt;
+      this.JumpStopwatch += event.Dt;
+      if(this.JumpStopwatch >= this.JumpTime)
+      {
+        this.Jumping = false;
+        this.JumpStopwatch = 0;
+      }
+    }
     
     //Check collision on our feet to see if we're on the ground
     this.OnGround = false;
     var contacts = this.Owner.Collider.Contacts;
     foreach(var contactPoint in contacts)
     {
-      if(contactPoint.FirstPoint.LocalPoint.Y < -0.44)
+      if(contactPoint.FirstPoint.LocalPoint.Y < -0)
       {
         this.OnGround = true;
       }
     }
     //Apply gravity if we're not on the ground
-    if(this.OnGround)
+    if(!this.OnGround)
     {
-      //newVelocity.Y = 0;
+      this.MoverVSpeed -= this.GravityStrength * event.Dt;
     }
     else
     {
-      newVelocity.Y += this.GravityStrength * event.Dt;
+      if(!this.Jumping)
+        this.MoverVSpeed = 0;
     }
+    newVelocity += Real3.YAxis * this.MoverVSpeed;
+    
     //Final application of velocity to the rigidbody. ONLY DO THIS ONCE PER FRAME
     this.RigidBody.Velocity = newVelocity;
 
     
-    //Turn toward the direction the stick is pointing relative to the camera
-    var sweepResults = this.Space.PhysicsSpace.SweepCollider(this.Owner.Collider, Real3(0, -0.5, 0), event.Dt, CastFilter());
-    var groundNormal = Real3.Zero;
-    if(sweepResults.IsNotEmpty)
-    {
-      var contactCounter = 0;
-      foreach(var result in sweepResults)
-      {
-        groundNormal += result.WorldNormalTowardsSelf;
-        ++contactCounter;
-      }
-      groundNormal /= contactCounter;
-    }
-    
+    //Find the point below our feet and adjust our standing angle to match the normal we're standing on
+    var newRight = Real3();
+    var newForward = Real3();
+    var targetForward = Real3();
     var ray = Ray(this.Owner.Transform.Translation, Real3(0, -1, 0));
-    var result = this.Space.PhysicsSpace.CastRayFirst(ray);
-    Print(this.OnGround);
-    var newRight = Math.Normalize(Math.Cross(result.Normal, this.Orientation.WorldForward));
-    
-    
-    var newForward = Math.Cross(newRight, result.Normal);
+    var rayResult = this.Space.PhysicsSpace.CastRayFirst(ray);
     var requestedMoveDirection = this.RequestedMoveDirection;
     requestedMoveDirection.X *= -1;
     
-    this.Orientation.LookAtDirectionWithUp(newForward, result.Normal);
-    var targetForward = Math.Cross(this.RequestedMoveDirection, result.Normal);
-    targetForward = Math.Cross(targetForward, result.Normal);
-    this.Orientation.LookAtDirectionWithUp(Math.RotateTowards(this.Orientation.WorldForward, targetForward, this.TurnSpeed * event.Dt), result.Normal);
+    if(this.OnGround)
+    {
+      newRight = Math.Normalize(Math.Cross(rayResult.Normal, this.Orientation.WorldForward));
+      newForward = Math.Cross(newRight, rayResult.Normal);
+      this.Orientation.LookAtDirectionWithUp(newForward, rayResult.Normal);
+      targetForward = Math.Cross(this.RequestedMoveDirection, rayResult.Normal);
+      targetForward = Math.Cross(targetForward, rayResult.Normal);
+      //Turn the character around the normal he's standing on to face the direction of the stick
+      this.Orientation.LookAtDirectionWithUp(Math.RotateTowards(this.Orientation.WorldForward, targetForward, this.TurnSpeed * event.Dt), rayResult.Normal);
+    }
+    else
+    {
+      newRight = Math.Cross(this.Orientation.WorldForward, Real3.YAxis);
+      newForward = Math.Cross(newRight, Real3.YAxis);
+      targetForward = newForward;
+      this.Orientation.LookAtDirectionWithUp(-newForward, Real3.YAxis);
+    }
   }
 }
