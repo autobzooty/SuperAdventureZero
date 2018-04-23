@@ -1,0 +1,192 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class TextWindow : ZilchComponent
+{
+  [Property]
+  var TextPath : CogPath = CogPath();
+  
+  var TextWidget : UiWidget;
+  var UiTextShadow : UiTextShadow;
+  var PageArray : Array[DialoguePage];
+  var PageIndex : Integer = 0;
+  var TextInitialSize : Real2;
+  var OpenDuration : Real = 0.1;
+  var CrawlSpeed : Real = 90; // runes per second
+  
+  var Instigator : Cog;
+  var Other : Cog;
+  var CurrentPageSoFar : StringBuilder;
+  var CurrentPageRunes : Array[Rune];
+  var CurrentPageRuneIndex : Integer;
+  var CurrentPageLength : Integer;
+  var Crawling : Boolean = false;
+  
+  var CrawlSequence : ActionSequence;
+  
+  var CrawlCounter_ : Integer = 0;
+  var CrawlCounter : Integer
+  {
+    get { return this.CrawlCounter_; }
+    
+    set
+    {
+      while (this.CurrentPageRuneIndex < value)
+      {
+        var rune = this.CurrentPageRunes[this.CurrentPageRuneIndex];
+        this.CurrentPageSoFar.Write(String.FromRune(rune));
+        ++this.CurrentPageRuneIndex;
+      }
+      
+      this.SetText(this.CurrentPageSoFar.ToString());
+      
+      this.CrawlCounter_ = value;
+    }
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.CrawlSequence = Action.Sequence(this.Owner.Actions);
+    
+    this.TextWidget = this.TextPath.UiWidget;
+    this.UiTextShadow = this.TextPath.UiTextShadow;
+    this.TextInitialSize = this.TextWidget.Size;
+    
+    Zero.Connect(this.Owner, Events.DialogueWindowSetup, this.OnDialogueWindowSetup);
+    Zero.Connect(this.Owner, Events.PageTurn, this.OnPageTurn);
+    Zero.Connect(this.Owner, Events.AdvanceCurrentPage, this.OnAdvanceCurrentPage);
+    Zero.Connect(this.Owner, Events.DialogueWindowShutdown, this.OnDialogueWindowShutdown);
+  }
+  
+  
+  //***************************************************************************
+  function OnDialogueWindowSetup(event : DialogueEvent)
+  {
+    this.Instigator = event.Instigator;
+    this.Other = event.Other;
+    this.PageArray = event.Dialogue.PageArray;
+    this.UiTextShadow.Text = "";
+    this.TextWidget.Size = Real2.Zero;
+    
+    var seq = Action.Sequence(this.Owner.Actions);
+      
+      Action.Property(seq, @this.TextWidget.Size, this.TextInitialSize, this.OpenDuration, Ease.QuadOut);
+      Action.Call(seq, this.FinishOpening);
+  }
+  
+  
+  //***************************************************************************
+  function OnPageTurn(event : DialogueEvent)
+  {
+    if (this.Crawling)
+      return;
+    
+    ++this.PageIndex;
+    
+    if (this.PageIndex >= this.PageArray.Count)
+      event.EndReached = true;
+    else
+      this.DisplayNextPage();
+  }
+  
+  
+  //***************************************************************************
+  function OnAdvanceCurrentPage(event : DialogueEvent)
+  {
+    if (!this.Crawling)
+      return;
+    
+    this.CrawlSequence.Cancel();
+    this.CrawlCounter = this.CurrentPageLength;
+    this.FinishCrawling();
+  }
+  
+  
+  //***************************************************************************
+  function OnDialogueWindowShutdown(event : DialogueEvent)
+  {
+    this.UiTextShadow.Text = "";
+    
+    var seq = Action.Sequence(this.Owner.Actions);
+      
+      Action.Property(seq, @this.TextWidget.Size, Real2.Zero, this.OpenDuration, Ease.QuadIn);
+      Action.Call(seq, this.FinishClosing);
+  }
+  
+  
+  //***************************************************************************
+  function DisplayNextPage()
+  {
+    var page = this.PageArray[this.PageIndex];
+    this.DisplayPage(page);
+  }
+  
+  
+  //***************************************************************************
+  function DisplayPage(page : DialoguePage)
+  {
+    var string = page.Text.Replace("\\n", "\n").Replace("\\t", "\t");
+    
+    this.CurrentPageSoFar = StringBuilder();
+    this.CurrentPageRunes = Array[Rune]();
+    this.CurrentPageRuneIndex = 0;
+    
+    foreach (var rune in string)
+      this.CurrentPageRunes.Add(rune);
+    
+    this.CurrentPageLength = this.CurrentPageRunes.Count;
+    var duration = this.CurrentPageLength / this.CrawlSpeed;
+    this.CrawlCounter_ = 0;
+    
+    this.UiTextShadow.FontSize = page.FontSize;
+    this.UiTextShadow.TextAlign = page.TextAlign;
+    
+    this.Crawling = true;
+    
+    this.CrawlSequence.Cancel();
+    this.CrawlSequence = Action.Sequence(this.Owner.Actions);
+      
+      Action.Property(this.CrawlSequence, @this.CrawlCounter,
+        this.CurrentPageLength, duration, Ease.Linear);
+      Action.Call(this.CrawlSequence, this.FinishCrawling);
+  }
+  
+  
+  //***************************************************************************
+  function SetText(text : String)
+  {
+    this.UiTextShadow.Text = text;
+  }
+  
+  
+  //***************************************************************************
+  function FinishCrawling()
+  {
+    this.Crawling = false;
+  }
+  
+  
+  //***************************************************************************
+  function FinishOpening()
+  {
+    this.DisplayNextPage();
+    var de = DialogueEvent(this.Instigator);
+    de.Other = this.Other;
+    this.Owner.DispatchEvent(Events.DialogueWindowFinishedOpening, de);
+  }
+  
+  
+  //***************************************************************************
+  function FinishClosing()
+  {
+    var de = DialogueEvent(this.Instigator);
+    de.Other = this.Other;
+    this.Owner.DispatchEvent(Events.DialogueWindowFinishedClosing, de);
+  }
+}

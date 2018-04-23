@@ -203,6 +203,21 @@ class ScheduledDeferredRenderer : ZilchComponent
       event.Event.AddRenderTaskRenderPass(lightSettings, RenderGroup.Lights, lightPass);
     }
     
+    // x-ray stuff
+    event.Event.AddRenderTaskClearTarget(event.XrayBuffer, Real4(0));
+    var xraySettings = RenderSettings();
+    xraySettings.ColorTarget = event.XrayBuffer;
+    xraySettings.DepthTarget = depthStencil;
+    xraySettings.CullMode = CullMode.BackFace;
+    xraySettings.BlendSettings.BlendMode = BlendMode.Enabled;
+    xraySettings.BlendSettings.BlendEquation = BlendEquation.Add;
+    xraySettings.BlendSettings.BlendEquationAlpha = BlendEquation.Add;
+    xraySettings.BlendSettings.SourceFactor = BlendFactor.One;
+    xraySettings.BlendSettings.DestFactor = BlendFactor.One;
+    xraySettings.DepthSettings.DepthMode = DepthMode.Read;
+    xraySettings.DepthSettings.DepthCompareFunc = TextureCompareFunc.Greater;
+    event.Event.AddRenderTaskRenderPass(xraySettings, RenderGroup.Xray, XrayRenderPass());
+    
     // Additive materials
     var alphaSettings = RenderSettings();
     alphaSettings.ColorTarget = lightBuffer;
@@ -228,6 +243,7 @@ class ScheduledDeferredRenderer : ZilchComponent
     // Alpha materials
     alphaSettings.ColorTarget = final;
     alphaSettings.BlendSettings.DestFactor = BlendFactor.InvSourceAlpha;
+    //alphaSettings.CullMode = CullMode.BackFace;
     event.Event.AddRenderTaskRenderPass(alphaSettings, RenderGroup.PreAlphaBlend, ColorOutput());
     event.Event.AddRenderTaskRenderPass(alphaSettings, RenderGroup.AlphaBlend, ColorOutput());
     event.Event.AddRenderTaskRenderPass(alphaSettings, RenderGroup.PostAlphaBlend, ColorOutput());

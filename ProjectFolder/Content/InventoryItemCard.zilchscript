@@ -21,12 +21,14 @@ class InventoryItemCard : ZilchComponent
   var ItemBase : ItemBase;
   
   
+  //***************************************************************************
   function Initialize(init : CogInitializer)
   {
     Zero.Connect(this.Owner, Events.InventoryListItemSetup, this.OnInventoryListItemSetup);
   }
   
   
+  //***************************************************************************
   function OnInventoryListItemSetup(event : InventoryMenuEvent)
   {
     var itemBase = event.ItemBase;

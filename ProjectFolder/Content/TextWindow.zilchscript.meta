@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "TextWindow"
+		var ResourceId = 0x5a338b1f8881935e
+	}
+}

@@ -25,7 +25,7 @@ Space
 		var Mode2D = false
 		var Deterministic = true
 		var SubStepCount = 1
-		var CollisionTable = "4e66a5c0b9dc59b9:DefaultCollisionTable"
+		var CollisionTable = "5a3ab75dc8e64ca8:CustomCollisionTable"
 		var PhysicsSolverConfig = "5391c496ad3459b8:PostStabilization"
 		var DynamicBroadphaseType = "DynamicAabbTree"
 		var StaticBroadphaseType = "StaticAabbTree"

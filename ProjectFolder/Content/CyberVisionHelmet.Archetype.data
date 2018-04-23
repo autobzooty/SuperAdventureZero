@@ -13,6 +13,8 @@ Cog
 		var Name = "Cyber Vision Helmet"
 		var Description = "Shows things as they really are."
 		var Type = ItemType.Equipment
+		var Stackable = false
+		var Uses = 0
 	}
 	EquipmentBase 
 	{
@@ -29,17 +31,6 @@ Cog
 				var Addend = 0
 				var Bonus = 0
 			}
-			var TypeAddends = TypeMultiplierBlock
-			{
-				var Heat = 0
-				var Cold = 0
-				var Electricity = 0
-				var Psychic = 0
-				var Biological = 0
-				var Poison = 0
-				var Holy = 0
-				var Dark = 0
-			}
 			var TypeBonuses = TypeMultiplierBlock
 			{
 				var Heat = 0
@@ -53,6 +44,8 @@ Cog
 			}
 		}
 		var VisibleOnEquip = true
+		var EquipPosition = Real3{0, 0, 0}
+		var EquipAngles = Real3{0, 0, 0}
 	}
 	RigidBody 
 	{
@@ -66,16 +59,22 @@ Cog
 	}
 	SphereCollider 
 	{
-		var Ghost = false
+		var Ghost = true
 		var SendsEvents = true
-		var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+		var Material = "5a2935c7a1ba7d2d:Ghost"
 		var CollisionGroup = "4e740859314e5515:DefaultGroup"
 		var Offset = Real3{0, 0.130934998, -0.0558357984}
-		var Radius = 0.524999976
+		var Radius = 2
 	}
 	Collectable 
 	{
-		var CollectOnCollide = true
+		var CollectOnCollide = false
+	}
+	Interactive 
+	{
+	}
+	RequestCollectOnWasInteractedWith 
+	{
 	}
 	Hierarchy 
 	{
@@ -124,6 +123,16 @@ Cog
 						var FarDistance = 20
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
+					}
+					SphereCollider 
+					{
+						var Ghost = false
+						var SendsEvents = true
+						var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+						var CollisionGroup = "4e740859314e5515:DefaultGroup"
+						var Offset = Real3{0, 0, 0}
+						var Radius = 0.5
 					}
 				}
 			}
@@ -173,6 +182,7 @@ Cog
 						var FarDistance = 20
 						var MinVisibility = 0
 						var MaxVisibility = 1
+						var XrayColor = Real4{1, 0, 0, 1}
 					}
 				}
 				Cog [Id:0x5a8616cc1750299d]
@@ -220,6 +230,7 @@ Cog
 								var FarDistance = 20
 								var MinVisibility = 0
 								var MaxVisibility = 1
+								var XrayColor = Real4{1, 0, 0, 1}
 							}
 							Hierarchy 
 							{
@@ -270,6 +281,7 @@ Cog
 										var FarDistance = 20
 										var MinVisibility = 0
 										var MaxVisibility = 1
+										var XrayColor = Real4{1, 0, 0, 1}
 									}
 								}
 							}
@@ -319,6 +331,7 @@ Cog
 										var FarDistance = 20
 										var MinVisibility = 0
 										var MaxVisibility = 1
+										var XrayColor = Real4{1, 0, 0, 1}
 									}
 								}
 								Cog [Id:0x5a86175e3a62575d]
@@ -366,6 +379,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 										Cog [Id:0x5a8617e42d8fb0a2]
@@ -402,6 +416,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 										Cog [Id:0x5a86140d5333ae70]
@@ -422,7 +437,7 @@ Cog
 												var LocalAabbCenter = Real3{0, 0, 0}
 												var LocalAabbHalfExtents = Real3{1, 1, 1}
 												var GroupSortValue = 0
-												var Material = "5a86122c8cf069bc:TranslucentFlat"
+												var Material = "5a86122c8cf069bc:Additive"
 												var Mesh = "4de0354322b345ae:Cube"
 											}
 											MaterialInputs 
@@ -438,6 +453,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}

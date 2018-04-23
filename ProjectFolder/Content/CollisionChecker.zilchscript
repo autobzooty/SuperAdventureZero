@@ -1,0 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | 
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class CollisionChecker : ZilchComponent
+{
+  [Property]
+  var OtherPath = CogPath();
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    Print(this.Space.PhysicsSpace.WhyAreTheyNotColliding(this.Owner, this.OtherPath.Cog));
+    var ghostString = "I am not a ghost";
+    if (this.Owner.Collider.Ghost)
+      ghostString = "I am a ghost";
+    Print(ghostString);
+  }
+}

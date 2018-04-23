@@ -1,0 +1,20 @@
+[Version:1]
+ImageContent 
+{
+	SpriteSourceBuilder 
+	{
+		var Name = "TransparentToWhiteGradient"
+		var ResourceId = 0x5a3a37f7d3cb68ec
+		var FrameSizeX = 256
+		var FrameSizeY = 256
+		var FrameCount = 1
+		var FrameDelay = 0.0833333358
+		var OriginX = 128
+		var OriginY = 128
+		var PixelsPerUnit = 1
+		var Sampling = SpriteSampling.Linear
+		var Looping = true
+		var Slices = Real4{0, 0, 0, 0}
+		var Fill = SpriteFill.Stretch
+	}
+}

@@ -1,0 +1,104 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class DialogueMaster : ZilchComponent
+{
+  [Property]
+  var WindowRootPath : CogPath = CogPath(".");
+  [Property]
+  var WindowArchetype : Archetype = Archetype.UiTextWindow;
+  
+  var IM : IM;
+  var WindowRootCog : Cog;
+  var WindowRoot : UiWidget;
+  var CurrentWindow : Cog;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.IM = this.GameSession.IM;
+    this.WindowRootCog = this.WindowRootPath.Cog;
+    this.WindowRoot = this.WindowRootCog.UiWidget;
+    
+    Zero.Connect(this.GameSession, Events.RequestDialogue, this.OnRequestDialogue);
+  }
+  
+  
+  //***************************************************************************
+  function OnRequestDialogue(event : DialogueEvent)
+  {
+    if (this.CurrentWindow == null)
+      this.CreateWindow(event);
+  }
+  
+  
+  //***************************************************************************
+  function OnDialogueWindowFinishedOpening(event : DialogueEvent)
+  {
+    Zero.Connect(this.Space, Events.StandardUpdate, this.OnStandardUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnDialogueWindowFinishedClosing(event : DialogueEvent)
+  {
+    this.CurrentWindow.Destroy();
+    event.Other.DispatchEvent(Events.DialogueEnded, event);
+  }
+  
+  
+  //***************************************************************************
+  function OnStandardUpdate(event : UpdateEvent)
+  {
+    if (this.IM.Triggered(GameAction.NavConfirm))
+      this.TurnPage();
+    else if (this.IM.Triggered(GameAction.NavCancel))
+      this.AdvanceCurrentPage();
+  }
+  
+  
+  //***************************************************************************
+  function CreateWindow(event : DialogueEvent)
+  {
+    var window = this.Space.Create(this.WindowArchetype);
+    window.AttachTo(this.WindowRootCog);
+    window.DispatchEvent(Events.DialogueWindowSetup, event);
+    this.CurrentWindow = window;
+    Zero.Connect(window, Events.DialogueWindowFinishedOpening, this.OnDialogueWindowFinishedOpening);
+    Zero.Connect(window, Events.DialogueWindowFinishedClosing, this.OnDialogueWindowFinishedClosing);
+    event.WindowWasCreated = true;
+  }
+  
+  
+  //***************************************************************************
+  function TurnPage()
+  {
+    var de = DialogueEvent();
+    this.CurrentWindow.DispatchEvent(Events.PageTurn, de);
+    
+    if (de.EndReached)
+      this.CloseWindow();
+  }
+  
+  
+  //***************************************************************************
+  function AdvanceCurrentPage()
+  {
+    this.CurrentWindow.DispatchEvent(Events.AdvanceCurrentPage, DialogueEvent());
+  }
+  
+  
+  //***************************************************************************
+  function CloseWindow()
+  {
+    this.CurrentWindow.DispatchEvent(Events.DialogueWindowShutdown, DialogueEvent());
+    Zero.Connect(this.CurrentWindow, Events.DialogueWindowFinishedClosing, this.OnDialogueWindowFinishedClosing);
+    
+    Zero.Disconnect(this.Space, Events.StandardUpdate, this);
+  }
+}

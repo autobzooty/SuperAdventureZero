@@ -20,7 +20,10 @@ class GameFlowController : ZilchComponent
   {
     get
     {
-      return GameFlowController.Instance.MainSpace.TimeSpace.Frame;
+      var mainSpace = GameFlowController.Instance.MainSpace;
+      if (mainSpace == null)
+        return -1;
+      return mainSpace.TimeSpace.Frame;
     }
   }
   

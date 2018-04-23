@@ -97,7 +97,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 755
+			var Size = 535
 		}
 		EditorCameraController 
 		{
@@ -132,7 +132,7 @@ Level
 		{
 			var RenderInEditor = false
 			var RenderInGame = true
-			var RenderOrder = 1
+			var RenderOrder = 3
 			var CameraPath = CogPath
 			{
 				var Path = "."
@@ -165,7 +165,7 @@ Level
 			}
 			var ResolutionOrAspect = Integer2{1920, 1080}
 			var RenderToViewport = true
-			var ForwardViewportEvents = false
+			var ForwardViewportEvents = true
 			var ViewportScaling = ViewportScaling.Letterbox
 			var MarginColor = Real4{0, 0, 0, 1}
 			var NormalizedSize = Real2{1, 1}
@@ -182,6 +182,7 @@ Level
 		SoundListener 
 		{
 			var Active = true
+			var AttenuationScale = 1
 		}
 	}
 	Cog [ContextId:3]
@@ -208,7 +209,7 @@ Level
 			var LocalAabbHalfExtents = Real3{1, 1, 1}
 			var GroupSortValue = 0
 			var Material = "582c575af53d18c9:AlphaSprite"
-			var VertexColor = Real4{0.454999983, 0.454999983, 0.454999983, 1}
+			var VertexColor = Real4{0, 0, 0, 0}
 			var GeometryMode = SpriteGeometryMode.ZPlane
 			var SpriteSource = "5275aa4d802dd6dc:Square"
 			var FlipX = false
@@ -230,7 +231,7 @@ Level
 			var OnTop = false
 			var ClipChildren = true
 			var CanTakeFocus = true
-			var LocalColor = Real4{0.454999983, 0.454999983, 0.454999983, 1}
+			var LocalColor = Real4{0, 0, 0, 0}
 			var HierarchyColor = Real4{1, 1, 1, 1}
 			var SizePolicyX = UiSizePolicy.Auto
 			var SizePolicyY = UiSizePolicy.Auto
@@ -261,15 +262,130 @@ Level
 		}
 		UiStackLayout 
 		{
-			var PaddingLeft = 5
-			var PaddingTop = 5
-			var PaddingRight = 5
-			var PaddingBottom = 5
+			var PaddingLeft = 0
+			var PaddingTop = 0
+			var PaddingRight = 0
+			var PaddingBottom = 0
 			var StackDirection = UiStackLayoutDirection.TopToBottom
-			var Spacing = Real2{0, 5}
+			var Spacing = Real2{0, 0}
 		}
 		Hierarchy 
 		{
+			Cog [Id:0x5a386e2ffcf1b22b][ContextId:5]
+			{
+				var Name = "Spacer"
+				Transform 
+				{
+					var Translation = Real3{-250, 250, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Area 
+				{
+					var Size = Real2{500, 250}
+					var Origin = Location.TopLeft
+				}
+				UiWidget 
+				{
+					var Active = true
+					var Visible = true
+					var Interactive = true
+					var InLayout = true
+					var OnTop = false
+					var ClipChildren = false
+					var CanTakeFocus = false
+					var LocalColor = Real4{1, 1, 1, 1}
+					var HierarchyColor = Real4{1, 1, 1, 1}
+					var SizePolicyX = UiSizePolicy.Flex
+					var SizePolicyY = UiSizePolicy.Flex
+					var FlexSize = Real2{1, 1}
+					var AbsoluteMinSize = Real2{1, 1}
+					var VerticalAlignment = UiVerticalAlignment.Bottom
+					var HorizontalAlignment = UiHorizontalAlignment.Left
+					var MarginLeft = 0
+					var MarginTop = 0
+					var MarginRight = 0
+					var MarginBottom = 0
+					var DockMode = UiDockMode.Left
+				}
+				UiFillLayout 
+				{
+					var PaddingLeft = 0
+					var PaddingTop = 0
+					var PaddingRight = 0
+					var PaddingBottom = 0
+				}
+				Hierarchy 
+				{
+				}
+			}
+			Cog [Id:0x5a3a7349aaf49b7c][ContextId:6]
+			{
+				var Name = "DialogueArea"
+				Transform 
+				{
+					var Translation = Real3{-250, 0, 0}
+					var Scale = Real3{1, 1, 1}
+					var Rotation = Quaternion{0, 0, 0, 1}
+				}
+				Area 
+				{
+					var Size = Real2{500, 250}
+					var Origin = Location.TopLeft
+				}
+				UiWidget 
+				{
+					var Active = true
+					var Visible = true
+					var Interactive = true
+					var InLayout = true
+					var OnTop = false
+					var ClipChildren = false
+					var CanTakeFocus = false
+					var LocalColor = Real4{1, 1, 1, 1}
+					var HierarchyColor = Real4{1, 1, 1, 1}
+					var SizePolicyX = UiSizePolicy.Flex
+					var SizePolicyY = UiSizePolicy.Flex
+					var FlexSize = Real2{1, 1}
+					var AbsoluteMinSize = Real2{1, 1}
+					var VerticalAlignment = UiVerticalAlignment.Bottom
+					var HorizontalAlignment = UiHorizontalAlignment.Left
+					var MarginLeft = 0
+					var MarginTop = 0
+					var MarginRight = 0
+					var MarginBottom = 0
+					var DockMode = UiDockMode.Left
+				}
+				UiFillLayout 
+				{
+					var PaddingLeft = 0
+					var PaddingTop = 0
+					var PaddingRight = 0
+					var PaddingBottom = 0
+				}
+				DialogueMaster 
+				{
+					var WindowRootPath = CogPath
+					{
+						var Path = "."
+						var ErrorOnResolveToNull = false
+						var ErrorOnPathCantCompute = false
+						var ErrorOnDirectLinkFail = false
+						var UpdateCogOnPathChange = true
+						var UpdatePathOnCogChange = true
+						var UpdateCogOnInitialize = true
+						var ResolvedNullErrorOccurred = false
+						var Cog = 6
+						var PathPreference0 = CogPathPreference.CogRelative
+						var PathPreference1 = CogPathPreference.SpaceRelative
+						var PathPreference2 = CogPathPreference.Absolute
+					}
+					var WindowArchetype = "5a386b0e93a40b29:UiTextWindow"
+				}
+				Hierarchy 
+				{
+				}
+			}
 		}
 	}
 }

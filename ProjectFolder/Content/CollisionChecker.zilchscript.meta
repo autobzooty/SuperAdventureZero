@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "CollisionChecker"
+		var ResourceId = 0x5a3ab5e73ec94db1
+	}
+}

@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "Interactor"
+		var ResourceId = 0x5a26f7df944fabc4
+	}
+}

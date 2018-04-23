@@ -1,0 +1,58 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class XrayRenderer : ZilchComponent
+{
+  [Dependency] var RenderScheduler : RenderScheduler;
+  
+  
+  [Property]
+  var Active : Boolean = true;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PostProcessRenderUpdate, this.OnPostProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    //if (!this.Active) return;
+    
+    //var final = event.FinalTarget;
+    //var xrayBuffer = event.XrayBuffer;
+    
+    //var copyTarget = CopyTarget();
+    //copyTarget.Texture = xrayBuffer.Texture;
+    //var xraySettings = RenderSettings();
+    //xraySettings.ColorTarget = final;
+    //xraySettings.BlendSettings.BlendMode = BlendMode.Enabled;
+    //xraySettings.BlendSettings.BlendEquation = BlendEquation.Add;
+    
+    //event.Event.AddRenderTaskPostProcess(xraySettings, copyTarget);
+    
+    if (!this.Active) return;
+    
+    var final = event.FinalTarget;
+    var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
+    var xrayBuffer = event.XrayBuffer;
+    
+    var postXray = PostXray();
+    postXray.SceneTexture = final.Texture;
+    postXray.XrayBuffer = xrayBuffer.Texture;
+    event.Event.AddRenderTaskPostProcess(sceneTarget, postXray);
+    
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = sceneTarget.Texture;
+    
+    event.Event.AddRenderTaskPostProcess(final, copyTarget);
+  }
+}

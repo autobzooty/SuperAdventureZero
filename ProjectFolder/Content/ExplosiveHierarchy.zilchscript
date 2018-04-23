@@ -1,0 +1,100 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class ExplosiveHierarchy : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  
+  
+  [Property]
+  var DestroyOnDetonation : Boolean = true;
+  [Property]
+  var UseParentPhysicsMaterial : Boolean = true;
+  [Property]
+  var FallbackPhysicsMaterial : PhysicsMaterial = PhysicsMaterial.DefaultPhysicsMaterial;
+  
+  var CanDetonate : Boolean { get { return true; }}
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.DetonationRequest, this.OnDetonationRequest);
+  }
+  
+  
+  //***************************************************************************
+  function OnDetonationRequest(event : DetonationEvent)
+  {
+    if (this.CanDetonate)
+      this.Detonate(event);
+  }
+  
+  
+  //***************************************************************************
+  function Detonate(event : DetonationEvent)
+  {
+    this.Owner.DispatchEvent(Events.WasDetonated, event);
+    if (event.Instigator != null)
+      event.Instigator.DispatchEvent(Events.DidDetonate, event);
+    
+    this.Explode();
+  }
+  
+  
+  //***************************************************************************
+  function Explode()
+  {
+    var physicsMaterial = this.FallbackPhysicsMaterial;
+    
+    if (this.UseParentPhysicsMaterial)
+    {
+      var thisCollider = this.Owner.Collider;
+      
+      if (thisCollider != null)
+      {
+        physicsMaterial = thisCollider.Material;
+      }
+    }
+    
+    var children = Array[Cog]();
+    
+    foreach (var child in this.Owner.Children)
+      children.Add(child);
+    
+    var count = children.Count;
+    for (var i = 0; i < count; ++i)
+    {
+      var child = children[i];
+      var rb = child.RigidBody;
+      
+      if (rb == null)
+        continue;
+      
+      child.Detach();
+      
+      var transform = child.Transform;
+      var worldOffset = transform.WorldTranslation - this.Transform.WorldTranslation;
+      
+      var collider = child.Collider;
+      
+      if (collider != null)
+      {
+        collider.Ghost = false;
+        collider.SendsEvents = true;
+        collider.Material = physicsMaterial;
+      }
+      
+      rb.DynamicState = RigidBodyDynamicState.Dynamic;
+      rb.Velocity = worldOffset * 10;
+    }
+    
+    if (this.DestroyOnDetonation)
+      this.Owner.Destroy();
+  }
+}

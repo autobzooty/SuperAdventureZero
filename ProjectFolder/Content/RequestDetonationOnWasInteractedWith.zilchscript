@@ -1,0 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | 
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class RequestDetonationOnWasInteractedWith : ZilchComponent
+{
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.WasInteractedWith, this.OnWasInteractedWith);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasInteractedWith(event : InteractionEvent)
+  {
+    this.Owner.DispatchEvent(Events.DetonationRequest, DetonationEvent(event));
+  }
+}

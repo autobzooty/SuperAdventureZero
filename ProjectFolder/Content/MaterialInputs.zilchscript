@@ -20,4 +20,5 @@ class MaterialInputs : ZilchComponent
   [Property][ShaderInput] var FarDistance : Real = 30;
   [Property][Slider(0, 1, 0.05)][ShaderInput] var MinVisibility : Real = 0;
   [Property][Slider(0, 1, 0.05)][ShaderInput] var MaxVisibility : Real = 1;
+  [Property][ShaderInput] var XrayColor : Real4 = Real4(1, 0, 0, 1);
 }

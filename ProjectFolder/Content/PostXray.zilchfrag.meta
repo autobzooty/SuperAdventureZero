@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchFragmentBuilder 
+	{
+		var Name = "PostXray"
+		var ResourceId = 0x5a393f488dd2cda7
+	}
+}

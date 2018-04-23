@@ -1,0 +1,96 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class Dialogue : ZilchComponent
+{
+  [Property]
+  var PauseSpace : Boolean = true;
+  [Property]
+  var PageRootPath : CogPath = CogPath(".");
+  
+  var PageRoot : Cog;
+  
+  var PageArray : Array[DialoguePage]
+  {
+    get
+    {
+      var array = Array[DialoguePage]();
+      
+      foreach (var child in this.PageRoot.Children)
+      {
+        var page = child.DialoguePage;
+        
+        if (page != null)
+          array.Add(page);
+      }
+      
+      return array;
+    }
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.PageRoot = this.PageRootPath.Cog;
+    
+    Zero.Connect(this.Owner, Events.WasInteractedWith, this.OnWasInteractedWith);
+    Zero.Connect(this.Owner, Events.DialogueEnded, this.OnDialogueEnded);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasInteractedWith(event : InteractionEvent)
+  {
+    // TODO:
+    // 
+    // okay. currently, we have this Dialogue component that acts as the
+    // interface to the dialogue text stored in strings in the DialoguePage
+    // instances that are on the children of the blah blah blah. anyway,
+    // besides holding the reference to the pages, this component also responds
+    // to interaction to request dialogue. i figure this is proooooobably safe,
+    // but like... maybe not?
+    // 
+    // like what if i have something that has dialogue that is supposed to be
+    // played under some other circumstances, maybe in response to some event
+    // in a cutscene or something, but that thing is also Interactive, and it's
+    // supposed to do something else when you interact with it? with the
+    // current implementation of this component, it would do whatever other
+    // thing and also request dialogue, and that would be NO GOOD
+    // 
+    // so basically, i should consider having another component that requests
+    // dialogue when it's interacted with, and it would basically require (if
+    // not literally require) this component
+    
+    var de = DialogueEvent(event);
+    de.Other = this.Owner;
+    de.Dialogue = this;
+    this.GameSession.DispatchEvent(Events.RequestDialogue, de);
+    
+    if (this.PauseSpace && de.WindowWasCreated)
+      event.Instigator.Space.TimeSpace.Paused = true;
+  }
+  
+  
+  //***************************************************************************
+  function OnDialogueEnded(event : DialogueEvent)
+  {
+    if (this.PauseSpace)
+      event.Instigator.Space.TimeSpace.Paused = false;
+  }
+}
+
+
+class DialoguePage : ZilchComponent
+{
+  [Property]
+  var Text : String = "";
+  [Property]
+  var FontSize : Integer = 28;
+  [Property]
+  var TextAlign : TextAlign = TextAlign.Left;
+}

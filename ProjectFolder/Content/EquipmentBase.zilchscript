@@ -8,6 +8,8 @@
 class EquipmentBase : ZilchComponent
 {
   [Dependency]
+  var Transform : Transform;
+  [Dependency]
   var IB : ItemBase;
   
   
@@ -17,6 +19,14 @@ class EquipmentBase : ZilchComponent
   var StatBlock : StatBlock = StatBlock();
   [Property]
   var VisibleOnEquip : Boolean = false;
+  [Property]
+  var EquipPosition : Real3 = Real3.Zero;
+  [Property]
+  var EquipAngles : Real3 = Real3.Zero;
+  [Display]
+  function SetEquipPosition() { this.EquipPosition = this.Transform.LocalTranslation; }
+  [Display]
+  function SetEquipAngles() { this.EquipAngles = Math.ToDegrees(this.Transform.EulerAngles); }
   
   var Equipper : EquipmentInterface;
   var EquippedSlot : EquipmentSlot;

@@ -1,0 +1,179 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class HPMeter : ZilchComponent
+{
+  [Property]
+  var BarPath : CogPath = CogPath();
+  [Property]
+  var BackBarPath : CogPath = CogPath();
+  [Property]
+  var NumbersPath : CogPath = CogPath();
+  
+  var Bar : UiWidget;
+  var BackBar : UiWidget;
+  var NumbersText : UiTextShadow;
+  var EmptyWidth : Real = 0;
+  var FullWidth : Real;
+  var LerpActions : ActionSet;
+  var PreDelay : Real = 0;
+  var Duration : Real = 0.1;
+  var CritPreDelay : Real = 0;
+  var CritDuration : Real = 1;
+  var BackPreDelay : Real = 0.25;
+  var BackDuration : Real = 0.5;
+  var BackCritPreDelay : Real = 0.1;
+  var BackCritDuration : Real = 1;
+  
+  var BarFraction : Real
+  {
+    get { return (this.Bar.Size.X - this.EmptyWidth) / (this.FullWidth - this.EmptyWidth); }
+    
+    set
+    {
+      var size = this.Bar.Size;
+      size.X = (this.FullWidth - this.EmptyWidth) * value + this.EmptyWidth;
+      this.Bar.Size = size;
+    }
+  }
+  
+  var BackBarFraction : Real
+  {
+    get { return (this.BackBar.Size.X - this.EmptyWidth) / (this.FullWidth - this.EmptyWidth); }
+    
+    set
+    {
+      var size = this.BackBar.Size;
+      size.X = (this.FullWidth - this.EmptyWidth) * value + this.EmptyWidth;
+      this.BackBar.Size = size;
+    }
+  }
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.LerpActions = Action.Group(this.Owner.Actions);
+    
+    this.Bar = this.BarPath.UiWidget;
+    this.BackBar = this.BackBarPath.UiWidget;
+    this.NumbersText = this.NumbersPath.UiTextShadow;
+    
+    this.FullWidth = this.Bar.Size.X;
+    
+    Zero.Connect(this.Space, Events.HealthSetup, this.OnHealthSetup);
+    Zero.Connect(this.Space, Events.WasDamaged, this.OnWasDamaged);
+    Zero.Connect(this.Space, Events.WasHealed, this.OnWasHealed);
+    Zero.Connect(this.Space, Events.EquipmentChangedMaxHP, this.OnEquipmentChangedMaxHP);
+  }
+  
+  
+  //***************************************************************************
+  function OnHealthSetup(event : HealthEvent)
+  {
+    this.BarFraction = 0;
+    this.BackBarFraction = 0;
+    this.UpdateMeter(event);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasDamaged(event : HealthEvent)
+  {
+    this.UpdateMeter(event);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasHealed(event : HealthEvent)
+  {
+    this.UpdateMeter(event);
+  }
+  
+  
+  //***************************************************************************
+  function OnEquipmentChangedMaxHP(event : HealthEvent)
+  {
+    this.UpdateMeter(event);
+  }
+  
+  
+  //***************************************************************************
+  function UpdateMeter(event : HealthEvent)
+  {
+    this.SetNumbers(event);
+    this.LerpSize(event);
+  }
+  
+  
+  //***************************************************************************
+  function SetNumbers(event : HealthEvent)
+  {
+    var newHPInt = event.NewHP as Integer;
+    
+    if (newHPInt == 0 && event.NewHP > 0.0)
+      newHPInt = 1;
+    
+    var maxHPInt = Math.Ceil(event.MaxHP) as Integer;
+    
+    if (maxHPInt == 0 && event.MaxHP > 0.0)
+      maxHPInt = 1;
+    
+    var str = "`newHPInt` / `maxHPInt`";
+    this.NumbersText.Text = str;
+  }
+  
+  
+  //***************************************************************************
+  function LerpSize(event : HealthEvent)
+  {
+    var oldFraction = event.OldHP / event.MaxHP;
+    var fraction = event.NewHP / event.MaxHP;
+    var preDelay = this.PreDelay;
+    var duration = this.Duration;
+    var backPreDelay = this.BackPreDelay;
+    var backDuration = this.BackDuration;
+    var ease = Ease.QuadInOut;
+    var backEase = Ease.QuadInOut;
+    
+    if (event.Critical)
+    {
+      preDelay = this.CritPreDelay;
+      duration = this.CritDuration;
+      backPreDelay = this.BackCritPreDelay;
+      backDuration = this.BackCritDuration;
+      ease = Ease.ElasticOut;
+      backEase = Ease.BounceOut;
+    }
+    
+    if (fraction > oldFraction)
+    {
+      var rTemp = preDelay;
+      preDelay = backPreDelay;
+      backPreDelay = rTemp;
+      rTemp = duration;
+      duration = backDuration;
+      backDuration = rTemp;
+      var eTemp = ease;
+      ease = backEase;
+      backEase = eTemp;
+    }
+    
+    this.LerpActions.Cancel();
+    this.LerpActions = Action.Group(this.Owner.Actions);
+      
+      var seq = Action.Sequence(this.LerpActions);
+        
+        Action.Delay(seq, preDelay);
+        Action.Property(seq, @this.BarFraction, fraction, duration, ease);
+      
+      var backSeq = Action.Sequence(this.LerpActions);
+        
+        Action.Delay(backSeq, backPreDelay);
+        Action.Property(backSeq, @this.BackBarFraction, fraction, backDuration, backEase);
+  }
+}

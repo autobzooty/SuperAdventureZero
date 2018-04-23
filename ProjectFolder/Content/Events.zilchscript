@@ -99,6 +99,7 @@ class UpdateEventSends
 class InputEvent : ZilchEvent
 {
   sends MovementRequest : InputEvent;
+  sends InteractionInput : InputEvent;  // TODO: come up with a better name
   
   var RequestedMoveDirection : Real3;
   var Direction : Real3; //Deprecated
@@ -153,10 +154,18 @@ class MWEvent : ZilchEvent
   {
     this.InstigatingFaction = instigatingFaction;
   }
+  
+  constructor(event : MWEvent) : base()
+  {
+    this.Instigator = event.Instigator;
+    this.InstigatingFaction = event.InstigatingFaction;
+    this.InstigatorName = event.InstigatorName;
+  }
 }
 
 class HealthEvent : MWEvent
 {
+  sends HealthSetup : HealthEvent;
   sends RequestDamage : HealthEvent;
   sends WasDamaged : HealthEvent;
   sends DidDamage : HealthEvent;
@@ -167,12 +176,26 @@ class HealthEvent : MWEvent
   sends DidDealCritical : HealthEvent;
   sends HPDepleted : HealthEvent;
   sends Death : HealthEvent;
+  sends EquipmentReducedCurrentHP : HealthEvent;
+  sends EquipmentChangedMaxHP : HealthEvent;
+  
+  // TODO:
+  // 
+  // change Receiver to Health
   
   // the amount of the HP change. the effects of whether it's a crit are
   // already factored in. this number should always be positive: a
   // positive value in a Damage event indicates a negative HP change,
   // and a positive value in a Heal event indicates a positive HP change
   var Amount : Real;
+  // the old current HP (before any change)
+  var OldHP : Real;
+  // the new current HP (after any change)
+  var NewHP : Real;
+  // the old max HP (before any change)
+  var OldMaxHP : Real;
+  // the current max HP (after any change)
+  var MaxHP : Real;
   // whether this is a crit
   var Critical : Boolean;
   // whether this attack can be evaded
@@ -288,4 +311,50 @@ class InventoryMenuEvent : ZilchEvent
   var ItemList : Array[ItemBase];
   var ItemBase : ItemBase;
   var InventoryInterface : InventoryInterface;
+}
+
+class InteractionEvent : MWEvent
+{
+  sends InteractionQuery : InteractionEvent;
+  sends RequestInteraction : InteractionEvent;
+  sends WasInteractedWith : InteractionEvent;
+  sends DidInteract : InteractionEvent;
+  
+  var Interactor : Interactor;
+  var Interactee : Interactive;
+  var QueryGroup : Array[Interactive];
+}
+
+class DetonationEvent : MWEvent
+{
+  sends DetonationRequest : DetonationEvent;
+  sends WasDetonated : DetonationEvent;
+  sends DidDetonate : DetonationEvent;
+}
+
+class PopupEvent : ZilchEvent
+{
+  sends ItemAddedToInventory : PopupEvent;
+  sends InventoryPopupSetup : PopupEvent;
+  
+  var ItemBase : ItemBase;
+}
+
+class DialogueEvent : MWEvent
+{
+  sends RequestDialogue : DialogueEvent;
+  sends DialogueWasBegun : DialogueEvent;
+  sends DidBeginDialogue : DialogueEvent;
+  sends DialogueEnded : DialogueEvent;
+  sends DialogueWindowSetup : DialogueEvent;
+  sends DialogueWindowFinishedOpening : DialogueEvent;
+  sends PageTurn : DialogueEvent;
+  sends AdvanceCurrentPage : DialogueEvent;
+  sends DialogueWindowShutdown : DialogueEvent;
+  sends DialogueWindowFinishedClosing : DialogueEvent;
+  
+  var Other : Cog;
+  var Dialogue : Dialogue;
+  var WindowWasCreated : Boolean = false;
+  var EndReached : Boolean = false;
 }

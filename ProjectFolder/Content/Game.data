@@ -12,11 +12,11 @@ GameSession
 		var DialogueSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
 		var MainSpaceArchetype = "576f215c0825de61:Space"
 		var StartingLevel = "5a8bbaedbdb20449:DumbassSandbox"
-		var ChosenLevel = "5ac29566b8463cbb:MovementTest"
+		var ChosenLevel = "5a8bbaedbdb20449:DumbassSandbox"
 		var ConsoleLevel = "null"
 		var SetupLevel = "5ab90cdb31e5b884:SetupLevel"
-		var DialogueLevel = "null"
-		var LevelChoice = EditorStartingLevelChoice.EditorLevel
+		var DialogueLevel = "5a7320cd542a931e:DialogueLevel"
+		var LevelChoice = EditorStartingLevelChoice.ChosenLevel
 	}
 	IM 
 	{

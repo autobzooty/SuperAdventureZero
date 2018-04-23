@@ -1,0 +1,31 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class HumanInteractorInterface : ZilchComponent
+{
+  var IM : IM;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.IM = this.GameSession.IM;
+    
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPlayerUpdate(event : UpdateEvent)
+  {
+    if (this.IM.Triggered(GameAction.Interact))
+    {
+      var ie = InputEvent();
+      this.Owner.DispatchEvent(Events.InteractionInput, ie);
+    }
+  }
+}

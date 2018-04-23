@@ -1,0 +1,97 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class Interactor : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  
+  
+  [Property]
+  var ColliderPath : CogPath = CogPath(".");
+  [Property]
+  var OrientationPath : CogPath = CogPath(".");
+  
+  var Collider : Collider;
+  var Orientation : Orientation;
+  var PreQueryFilter : CastFilter = CastFilter();
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.Collider = this.ColliderPath.Collider;
+    this.Orientation = this.OrientationPath.Orientation;
+    this.PreQueryFilter.IgnoreCog = this.Owner;
+    this.PreQueryFilter.IgnoreGhost = false;
+    
+    Zero.Connect(this.Owner, Events.InteractionInput, this.OnInteractionInput);
+  }
+  
+  
+  //***************************************************************************
+  function OnInteractionInput(event : InputEvent)
+  {
+    var castResults = this.Space.PhysicsSpace.CastCollider(Real3.Zero, this.Collider, this.PreQueryFilter);
+    
+    var ie = InteractionEvent(this.Owner);
+    ie.Interactor = this;
+    ie.QueryGroup = Array[Interactive]();
+    
+    // OPTIMIZATION:
+    // 
+    // i could have the queried objects put themselves into the array in sort
+    // order, so that i wouldn't have to then turn around and sort the array
+    foreach (var result in castResults)
+    {
+      result.ObjectHit.DispatchEvent(Events.InteractionQuery, ie);
+    }
+    
+    var worldPosition = this.Transform.WorldTranslation;
+    var worldForward = this.Orientation.WorldForward;
+    
+    var tempArray = Array[Interactive]();
+    var queriedCount = ie.QueryGroup.Count;
+    var bestProduct = Real.PositiveMax;
+    var bestObject = null as Cog;
+    var bestObjectsDistance = Real.PositiveMax;
+    
+    for (var i = 0; i < queriedCount; ++i)
+    {
+      var object = ie.QueryGroup[i].Owner;
+      var objectWorldPosition = object.Transform.WorldTranslation;
+      // sort based on proximity and dot
+      var toObject = objectWorldPosition - worldPosition;
+      var distance = Math.Length(toObject);
+      var dot = Math.Dot(Math.Normalize(toObject), worldForward);
+      var product = distance * (1 - dot);
+      
+      if (product < bestProduct)
+      {
+        bestProduct = product;
+        bestObject = object;
+        bestObjectsDistance = distance;
+      }
+      // if these are equal, it's probably because the dot is zero,
+      // so break the tie with distance
+      else if (product == bestProduct)
+      {
+        if (distance < bestObjectsDistance)
+        {
+          bestObject = object;
+          bestObjectsDistance = distance;
+        }
+      }
+    }
+    
+    if (bestObject != null)
+    {
+      ie.Interactee = bestObject.Interactive;
+      bestObject.DispatchEvent(Events.RequestInteraction, ie);
+    }
+  }
+}

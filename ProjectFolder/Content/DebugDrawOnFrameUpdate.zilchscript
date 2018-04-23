@@ -1,0 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class DebugDrawOnFrameUpdate : ZilchComponent
+{
+  [Property]
+  var DrawInEditor : Boolean = true;
+  [Property]
+  var DrawInGame : Boolean = true;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Space, Events.FrameUpdate, this.OnFrameUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnFrameUpdate(event : UpdateEvent)
+  {
+    if (this.DrawInEditor && this.Space.IsEditorMode || this.DrawInGame && !this.Space.IsEditorMode)
+      this.Owner.DebugDraw();
+  }
+}

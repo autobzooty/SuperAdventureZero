@@ -1,0 +1,33 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class ResetObjectEmitterOnWasInteractedWith : ZilchComponent
+{
+  [Dependency]
+  var ObjectEmitter : ObjectEmitter;
+  
+  
+  [Property]
+  var AlsoRestart : Boolean = true;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.WasInteractedWith, this.OnWasInteractedWith);
+  }
+  
+  
+  //***************************************************************************
+  function OnWasInteractedWith(event : InteractionEvent)
+  {
+    this.ObjectEmitter.ResetCount();
+    
+    if (this.AlsoRestart)
+      this.ObjectEmitter.Active = true;
+  }
+}
