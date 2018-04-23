@@ -194,9 +194,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-25.3521366, 29.1016426, -12.5844049}
+			var Translation = Real3{-30.8510818, 26.1491051, 3.07986307}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0.202933818, 0.784340322, 0.32729277, -0.486320376}
+			var Rotation = Quaternion{-0.251139075, -0.631394625, -0.227316111, 0.697565317}
 		}
 		CameraViewport 
 		{
@@ -253,9 +253,9 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 40.2386894
-			var VerticalAngle = 0.790634334
-			var HorizontalAngle = 8.31473255
+			var LookDistance = 40.2386818
+			var VerticalAngle = 0.691150546
+			var HorizontalAngle = 7.75448132
 			var LookTarget = Real3{0, 0.5, 0}
 			var MoveSensitivity = 1
 		}
@@ -285,7 +285,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -316,7 +316,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -347,7 +347,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -378,7 +378,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -423,7 +423,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -454,7 +454,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -485,7 +485,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -516,7 +516,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -547,7 +547,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -578,7 +578,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -609,7 +609,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -640,7 +640,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -671,7 +671,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -702,7 +702,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -765,8 +765,9 @@ Level
 			var MinimumStickThreshold = 0.400000006
 			var BaseMaxSpeed = 400
 			var GravityStrength = 30
-			var JumpStrength = 300
-			var JumpTime = 0.0500000007
+			var JumpStrength = 150
+			var JumpTime = 0.100000001
+			var FootCollisionThreshold = -0.400000006
 		}
 		Orientation 
 		{
@@ -860,7 +861,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c9e8c7ac:wedge15"
@@ -891,7 +892,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c9fcad4f:wedge45"
@@ -904,7 +905,7 @@ Level
 		{
 			var Translation = Real3{0, 0.5, 0}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.0922959596, -0.701057374, -0.092295967, 0.701057434}
+			var Rotation = Quaternion{-0.353553385, -0.353553414, -0.146446615, 0.853553355}
 		}
 		LockToCog 
 		{
@@ -1029,7 +1030,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c9e8c7ac:wedge15"
@@ -1074,7 +1075,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1105,7 +1106,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c9e8c7ac:wedge15"
@@ -1136,7 +1137,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1167,7 +1168,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1198,7 +1199,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1229,7 +1230,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1260,7 +1261,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c80093dd:wedge30"
@@ -1291,7 +1292,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1322,7 +1323,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1353,7 +1354,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1384,7 +1385,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1415,7 +1416,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1446,7 +1447,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1477,7 +1478,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1508,7 +1509,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1539,7 +1540,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1570,7 +1571,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1601,7 +1602,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1632,7 +1633,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var HalfSize = Real3{0.5, 0.5, 0.5}
@@ -1663,7 +1664,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c9fcad4f:wedge45"
@@ -1694,7 +1695,7 @@ Level
 		{
 			var Ghost = false
 			var SendsEvents = true
-			var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+			var Material = "5a8dcea67442f007:NoFrillsPhysics"
 			var CollisionGroup = "4e740859314e5515:DefaultGroup"
 			var Offset = Real3{0, 0, 0}
 			var ConvexMesh = "5ac2bf41c9fcad4f:wedge45"

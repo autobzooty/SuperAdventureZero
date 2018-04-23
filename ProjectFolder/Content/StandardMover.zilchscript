@@ -38,6 +38,8 @@ class StandardMover : ZilchComponent
   var JumpTime : Real = 0.25;
   var JumpStopwatch : Real = 0.0;
   var Jumping : Boolean = false;
+  [Property]
+  var FootCollisionThreshold : Real = -0.43;
   
   
   
@@ -118,7 +120,7 @@ class StandardMover : ZilchComponent
     var contacts = this.Owner.Collider.Contacts;
     foreach(var contactPoint in contacts)
     {
-      if(contactPoint.FirstPoint.LocalPoint.Y < -0)
+      if(contactPoint.FirstPoint.LocalPoint.Y < this.FootCollisionThreshold)
       {
         this.OnGround = true;
       }
