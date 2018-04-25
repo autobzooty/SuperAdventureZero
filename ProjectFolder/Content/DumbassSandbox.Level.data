@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-12.3471928, 6.41897488, 2.96954584}
+			var Translation = Real3{-10.7394123, 7.88162231, 3.38557172}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.255783945, 0.0606961437, 0.0160933044, 0.964692473}
+			var Rotation = Quaternion{-0.205753744, -0.57631129, -0.152806297, 0.776003242}
 		}
 		CameraViewport 
 		{
@@ -270,10 +270,10 @@ Level
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 10.5454302
-			var VerticalAngle = 0.518363476
-			var HorizontalAngle = -6.40885496
-			var LookTarget = Real3{-13.4953108, 1.19414353, -6.11830664}
+			var LookDistance = 12.8802214
+			var VerticalAngle = 0.518363237
+			var HorizontalAngle = 7.56076717
+			var LookTarget = Real3{-0.0287626386, 1.5, 0.151845843}
 			var MoveSensitivity = 1
 		}
 	}
@@ -5069,6 +5069,7 @@ Level
 		}
 		Dialogue 
 		{
+			var PauseSpace = true
 			var PageRootPath = CogPath
 			{
 				var Path = "PageRoot"
@@ -5522,6 +5523,7 @@ Level
 		}
 		Dialogue 
 		{
+			var PauseSpace = true
 			var PageRootPath = CogPath
 			{
 				var Path = "PageRoot"
@@ -5958,6 +5960,15 @@ Level
 					}
 				}
 			}
+		}
+	}
+	Cog [InheritId:"5abfc7314f64bc5f:KarateHeadband"][ContextId:175]
+	{
+		Transform 
+		{
+			var Translation = Real3{0, 2, 4}
+			var Rotation = Quaternion{0, 0, 1, -4.37113883e-08}
+			var Scale = Real3{1, 0.99999994, 0.99999994}
 		}
 	}
 }

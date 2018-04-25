@@ -98,7 +98,8 @@ class HPMeter : ZilchComponent
   //***************************************************************************
   function OnEquipmentChangedMaxHP(event : HealthEvent)
   {
-    this.UpdateMeter(event);
+    this.SetNumbers(event);
+    this.SetSize(event);
   }
   
   
@@ -125,6 +126,15 @@ class HPMeter : ZilchComponent
     
     var str = "`newHPInt` / `maxHPInt`";
     this.NumbersText.Text = str;
+  }
+  
+  
+  //***************************************************************************
+  function SetSize(event : HealthEvent)
+  {
+    var fraction = event.NewHP / event.MaxHP;
+    this.BarFraction = fraction;
+    this.BackBarFraction = fraction;
   }
   
   

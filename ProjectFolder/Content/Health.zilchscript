@@ -89,7 +89,9 @@ class Health : ZilchComponent
   //****************************************************************************
   function OnStatsWereCalculated(event : StatsEvent)
   {
+    var initialHP = this.HP;
     var initialMaxHP = this.MaxHP;
+    var hpFraction = this.HP / this.MaxHP;
     
     var statBlock = event.StatBlock;
     
@@ -118,13 +120,13 @@ class Health : ZilchComponent
       he.MaxHP = finalMaxHP;
       he.OldHP = this.HP;
       
-      if (this.HP > this.MaxHP)
-      {
-        this.HP = this.MaxHP;
-        this.Owner.DispatchEvent(Events.EquipmentReducedCurrentHP, he);
-      }
+      this.HP = finalMaxHP * hpFraction;
       
       he.NewHP = this.HP;
+      
+      if (he.NewHP < he.OldHP)
+        this.Owner.DispatchEvent(Events.EquipmentReducedCurrentHP, he);
+      
       this.Owner.DispatchEvent(Events.EquipmentChangedMaxHP, he);
     }
   }
