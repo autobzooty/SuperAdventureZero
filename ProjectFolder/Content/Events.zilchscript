@@ -356,3 +356,15 @@ class DialogueEvent : MWEvent
   var WindowWasCreated : Boolean = false;
   var EndReached : Boolean = false;
 }
+
+class ShakeEvent : ZilchEvent
+{
+  var Magnitude : Real = 0.1;
+  var Frequency : Real = 6;
+  var Axis : Real3 = Real3.YAxis;
+  var AttackDuration : Real = 0.1;
+  var SustainDuration : Real = 0.4;
+  var ReleaseDuration : Real = 1;
+  var AttackExponent : Real = 3;
+  var ReleaseExponent : Real = 2;
+}

@@ -1,0 +1,244 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class SineShaker : ZilchComponent
+{
+  [Property]
+  var BottomPath : CogPath = CogPath();
+  
+  var Bottom : Cog;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.Bottom = this.BottomPath.Cog;
+    Zero.Connect(Zero.Keyboard, Events.KeyDown, this.OnKeyDown);
+  }
+  
+  
+  function OnKeyDown(event : KeyboardEvent)
+  {
+    var se : ShakeEvent = null;
+    
+    if (event.Key == Keys.Five)
+    {
+      se = ShakeEvent();
+      se.Magnitude = 0.5;
+      se.Frequency = 2;
+      se.Axis = Real3.YAxis;
+      se.AttackDuration = 4;
+      se.SustainDuration = 0;
+      se.ReleaseDuration = 4;
+      se.AttackExponent = 2;
+      se.ReleaseExponent = 2;
+    }
+    else if (event.Key == Keys.Six)
+    {
+      se = ShakeEvent();
+      se.Magnitude = 0.25;
+      se.Frequency = 3;
+      se.Axis = Real3.YAxis;
+      se.AttackDuration = 0.5;
+      se.SustainDuration = 0.3;
+      se.ReleaseDuration = 2;
+      se.AttackExponent = 2.5;
+      se.ReleaseExponent = 2;
+    }
+    else if (event.Key == Keys.Seven)
+    {
+      se = ShakeEvent();
+      se.Magnitude = 0.18;
+      se.Frequency = 6;
+      se.Axis = Real3.YAxis;
+      se.AttackDuration = 0.1;
+      se.SustainDuration = 0;
+      se.ReleaseDuration = 1;
+      se.AttackExponent = 3;
+      se.ReleaseExponent = 2;
+    }
+    else if (event.Key == Keys.Eight)
+    {
+      se = ShakeEvent();
+      se.Magnitude = 0.1;
+      se.Frequency = 10;
+      se.Axis = Real3.YAxis;
+      se.AttackDuration = 0.08;
+      se.SustainDuration = 0;
+      se.ReleaseDuration = 0.75;
+      se.AttackExponent = 3;
+      se.ReleaseExponent = 2;
+    }
+    
+    if (se != null)
+    {
+      se.Axis = PRNG.RNG.UnitReal3();
+      this.BeginShake(se);
+    }
+  }
+  
+  
+  //***************************************************************************
+  function BeginShake(event : ShakeEvent)
+  {
+    var above = this.Bottom.Parent;
+    var node = this.Space.Create(Archetype.Transform);
+    node.AttachToPreserveLocal(above);
+    this.Bottom.AttachTo(node);
+    
+    var shake = Shake();
+    shake.Transform = node.Transform;
+    shake.Magnitude = event.Magnitude;
+    shake.Frequency = event.Frequency;
+    shake.Axis = event.Axis;
+    shake.AttackDuration = event.AttackDuration;
+    shake.SustainDuration = event.SustainDuration;
+    shake.ReleaseDuration = event.ReleaseDuration;
+    shake.AttackExponent = event.AttackExponent;
+    shake.ReleaseExponent = event.ReleaseExponent;
+    
+    shake.BeginShake(node.Actions);
+  }
+}
+
+
+//                                                                           //
+//                                                                           //
+//                                                                           //
+class Shake
+{
+  var Transform : Transform;
+  var Magnitude : Real = 0.1;
+  var Frequency : Real = 6;
+  var Axis : Real3 = Real3.YAxis;
+  var AttackDuration : Real = 0.1;
+  var SustainDuration : Real = 0.4;
+  var ReleaseDuration : Real = 1;
+  var AttackExponent : Real = 3;
+  var ReleaseExponent : Real = 2;
+  
+  var T_ : Real = 0;
+  var T : Real
+  {
+    get { return this.T_; }
+    
+    set
+    {
+      this.T_ = value;
+      
+      this.Translate(value);
+    }
+  }
+  
+  
+  //***************************************************************************
+  function BeginShake(actionSet : ActionSet)
+  {
+    var duration = this.AttackDuration + this.SustainDuration + this.ReleaseDuration;
+    
+    var seq = Action.Sequence(actionSet);
+      
+      Action.Property(seq, @this.T, duration, duration, Ease.Linear);
+      Action.Call(seq, this.EndShake);
+  }
+  
+  
+  //***************************************************************************
+  function EndShake()
+  {
+    var above = this.Transform.Owner.Parent;
+    var below = this.Transform.Owner.Children.Current;
+    below.AttachTo(above);
+    this.Transform.Owner.Destroy();
+  }
+  
+  
+  //***************************************************************************
+  function Translate(t : Real)
+  {
+    var offset = this.Magnitude * this.Carrier(t) * this.Envelope(t);
+    var axis = this.Axis;
+    var translation = offset * axis;
+    this.Transform.LocalTranslation = translation;
+  }
+  
+  
+  //***************************************************************************
+  function Carrier(t : Real) : Real
+  {
+    return Math.Sin(HM[Real].Tau * (this.Frequency * t));
+  }
+  
+  
+  //***************************************************************************
+  function Envelope(t : Real) : Real
+  {
+    if (t < this.AttackDuration)
+      return this.Attack(t);
+    else if (this.AttackDuration <= t && t < this.AttackDuration + this.SustainDuration)
+      return this.Sustain(t);
+    else if (this.AttackDuration + this.SustainDuration <= t && t <= this.AttackDuration + this.SustainDuration + this.ReleaseDuration)
+      return this.Release(t);
+    else
+      return 0;
+  }
+  
+  
+  //***************************************************************************
+  function AttackIn(t : Real) : Real
+  {
+    return t ^ this.AttackExponent;
+  }
+  
+  
+  //***************************************************************************
+  function AttackOut(t : Real) : Real
+  {
+    return 1 - this.AttackIn(1 - t);
+  }
+  
+  
+  //***************************************************************************
+  function Attack(t : Real) : Real
+  {
+    if (t < this.AttackDuration / 2)
+      return this.AttackIn(2 * t / this.AttackDuration) / 2;
+    else
+      return (this.AttackOut(2 * t / this.AttackDuration - 1) + 1) / 2;
+  }
+  
+  
+  //***************************************************************************
+  function Sustain(t : Real) : Real
+  {
+    return 1;
+  }
+  
+  
+  //***************************************************************************
+  function ReleaseIn(t : Real) : Real
+  {
+    return 1 - t ^ this.ReleaseExponent;
+  }
+  
+  
+  //***************************************************************************
+  function ReleaseOut(t : Real) : Real
+  {
+    return 1 - this.ReleaseIn(1 - t);
+  }
+  
+  
+  //***************************************************************************
+  function Release(t : Real) : Real
+  {
+    if (t < this.AttackDuration + this.SustainDuration + this.ReleaseDuration / 2)
+      return (this.ReleaseIn(2 * (t - this.AttackDuration - this.SustainDuration) / this.ReleaseDuration) + 1) / 2;
+    else
+      return this.ReleaseOut(2 * (t - this.AttackDuration - this.SustainDuration) / this.ReleaseDuration - 1) / 2;
+  }
+}
