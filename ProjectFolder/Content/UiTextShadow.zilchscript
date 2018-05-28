@@ -14,6 +14,8 @@ class UiTextShadow : ZilchComponent
   var Ui : UiWidget;
   [Dependency]
   var ST : SpriteText;
+  [Dependency]
+  var Area : Area;
   
   
   [Display]
@@ -126,6 +128,8 @@ class UiTextShadow : ZilchComponent
   var CoverST : SpriteText { get { return this.Cover.SpriteText; }}
   var ShadowUi : UiWidget { get { return this.Shadow.UiWidget; }}
   var CoverUi : UiWidget { get { return this.Cover.UiWidget; }}
+  var ShadowA : Area { get { return this.Shadow.Area; }}
+  var CoverA : Area { get { return this.Cover.Area; }}
   
   
   function Initialize(init : CogInitializer)
@@ -189,6 +193,8 @@ class UiTextShadow : ZilchComponent
     this.ShadowT.LocalRotation = this.Transform.LocalRotation;
     this.ShadowT.LocalScale = this.Transform.LocalScale;
     
+    this.ShadowA.Origin = this.Area.Origin;
+    
     this.CoverST.Font = this.ST.Font;
     this.CoverST.FontSize = this.ST.FontSize;
     this.CoverST.PixelsPerUnit = this.ST.PixelsPerUnit;
@@ -205,6 +211,8 @@ class UiTextShadow : ZilchComponent
     
     this.CoverT.LocalRotation = this.Transform.LocalRotation;
     this.CoverT.LocalScale = this.Transform.LocalScale;
+    
+    this.CoverA.Origin = this.Area.Origin;
   }
   
   

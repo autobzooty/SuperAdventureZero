@@ -87,7 +87,7 @@ class CustomUiRenderer : ZilchComponent
       var zoomThreeToOneHotkey = Zero.Keyboard.KeyIsDown(Keys.Three) && Zero.Keyboard.KeyIsDown(Keys.Control);
       
       // Make the camera zoom level 1 to 1 with the viewport (pixel perfect)
-      if(firstRender || zoomOneToOneHotkey)
+      if (firstRender || zoomOneToOneHotkey)
         cameraCog.Camera.Size = viewportSize.Y;
       else if (zoomTwoToOneHotkey)
         cameraCog.Camera.Size = viewportSize.Y / 2;
@@ -102,6 +102,14 @@ class CustomUiRenderer : ZilchComponent
       
       // The editor camera controller zoom can make it non-integral
       camera.Size = Math.Round(camera.Size);
+      
+      // by the way, let's move it if we're asking to move it
+      if (Zero.Keyboard.KeyIsDown(Keys.R) && Zero.Keyboard.KeyIsDown(Keys.Control))
+      {
+        var lookTarget = cameraCog.EditorCameraController.LookTarget;
+        lookTarget.Y = this.UiRootWidget.WorldCenter.Y;
+        cameraCog.EditorCameraController.LookTarget = lookTarget;
+      }
     }
     
     // Camera's position should always be snapped because the
