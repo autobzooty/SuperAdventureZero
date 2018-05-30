@@ -1,0 +1,46 @@
+[Version:1]
+GeometryContent 
+{
+	GeometryImport 
+	{
+		var CollapsePivots = false
+		var OriginOffset = Real3{0, 0, 0}
+		var ScaleFactor = 1
+		var ChangeBasis = false
+		var XBasisTo = BasisType.PositiveX
+		var YBasisTo = BasisType.PositiveY
+		var ZBasisTo = BasisType.PositiveZ
+	}
+	MeshBuilder 
+	{
+		var GenerateSmoothNormals = false
+		var SmoothingAngleDegreesThreshold = 30
+		var GenerateTangentSpace = true
+		var InvertUvYAxis = true
+		var FlipWindingOrder = false
+		var FlipNormals = false
+		var Meshes = Array
+		{
+			Object
+			{
+				var Name = "Arcade_01_polySurface3GeneratedMeshNode0"
+				var ResourceId = 0x5b6ee9cb33d44803
+			}
+			Object
+			{
+				var Name = "Arcade_01_polySurface3GeneratedMeshNode1"
+				var ResourceId = 0x5b6ee9cb33d44811
+			}
+		}
+	}
+	GeneratedArchetype 
+	{
+		var ResourceId = 0x5b6ee9cb33dec2c0
+	}
+	TextureContent 
+	{
+		var Textures = Array
+		{
+		}
+	}
+}

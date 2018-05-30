@@ -211,9 +211,9 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{-3.77844214, 6.49176359, 10.0750751}
+			var Translation = Real3{-8.10729694, 3.39757156, 5.56366634}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{-0.214593619, -0.175334126, -0.0391918123, 0.960037231}
+			var Rotation = Quaternion{0.135183886, 0.856932938, 0.40873611, -0.283418834}
 		}
 		CameraViewport 
 		{
@@ -264,16 +264,16 @@ Level
 			var FarPlane = 200
 			var PerspectiveMode = PerspectiveMode.Perspective
 			var FieldOfView = 60
-			var Size = 0.494023532
+			var Size = 1.81272948
 		}
 		EditorCameraController 
 		{
 			var ControlMode = ControlMode.Orbit
 			var Previous3DMode = ControlMode.Orbit
-			var LookDistance = 11.723834
-			var VerticalAngle = 0.439822763
-			var HorizontalAngle = 6.64446878
-			var LookTarget = Real3{-0.0287626386, 1.5, 0.151845843}
+			var LookDistance = 2.89106321
+			var VerticalAngle = 0.890118003
+			var HorizontalAngle = -10.0636005
+			var LookTarget = Real3{-7.02247524, 1.15079319, 7.0242815}
 			var MoveSensitivity = 1
 		}
 	}
@@ -6000,6 +6000,15 @@ Level
 			var Translation = Real3{0, 2, 4}
 			var Rotation = Quaternion{0, 0, 1, -4.37113883e-08}
 			var Scale = Real3{1, 0.99999994, 0.99999994}
+		}
+	}
+	Cog [InheritId:"5b6ee9cb33dec2c0:Arcade_01"][ContextId:177]
+	{
+		Transform 
+		{
+			var Translation = Real3{-7, 0.949999988, 7}
+			var Rotation = Quaternion{0, 0, 0, 1}
+			var Scale = Real3{0.200000003, 0.200000003, 0.200000003}
 		}
 	}
 }

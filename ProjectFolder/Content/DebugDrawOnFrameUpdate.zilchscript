@@ -12,6 +12,8 @@ class DebugDrawOnFrameUpdate : ZilchComponent
   var DrawInEditor : Boolean = true;
   [Property]
   var DrawInGame : Boolean = true;
+  [Property]
+  var ChildrenToo : Boolean = true;
   
   
   //***************************************************************************
@@ -25,6 +27,26 @@ class DebugDrawOnFrameUpdate : ZilchComponent
   function OnFrameUpdate(event : UpdateEvent)
   {
     if (this.DrawInEditor && this.Space.IsEditorMode || this.DrawInGame && !this.Space.IsEditorMode)
+      this.Draw();
+  }
+  
+  
+  //***************************************************************************
+  function Draw()
+  {
+    if (this.ChildrenToo)
+      this.DrawRecursive(this.Owner);
+    else
       this.Owner.DebugDraw();
+  }
+  
+  
+  //***************************************************************************
+  function DrawRecursive(cog : Cog)
+  {
+    cog.DebugDraw();
+    
+    foreach (var child in cog.Children)
+      this.DrawRecursive(child);
   }
 }

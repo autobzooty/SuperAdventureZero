@@ -1,0 +1,25 @@
+[Version:1]
+Material 
+{
+	var RenderGroups = Array
+	{
+		"581cffd64d449122:Opaque"
+		"580269d9a1d6b870:ShadowCasters"
+	}
+	AlbedoMap 
+	{
+		var AlbedoMap = "5b6eeb1fd82bfd0a:Arcade_01_Albedo"
+	}
+	MetallicValue 
+	{
+		var MetallicValue = 0.0799999982
+	}
+	RoughnessValue 
+	{
+		var RoughnessValue = 0.800000012
+	}
+	SpecularValue 
+	{
+		var SpecularValue = 0.5
+	}
+}
