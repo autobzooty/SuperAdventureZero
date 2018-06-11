@@ -5,31 +5,126 @@
 ///           |
 ///////////////////////////////////////////////////////////////////////////////
 
+
+/*
+
+Okay, here's what I'm trying. The state machine's State class will actually
+just be the StateMachine class itself. That way, if any state needs sub-states
+(and many of them often do), they'll be full-fledged state machines themselves
+to control all that, and the tunneling can go arbitrarily deep.
+
+Notes:
+- state machines have the data and functions of both state machines and states
+
+*/
+
+
 class StateMachine
 {
+  var Name : String = "Default State Machine";
   var CurrentState : StateMachine;
+  var Links : Array[StateLink] = Array[StateLink]();
+  var Duration : Real = 0;
+  var Timer : Real = 0;
+  var Owner : Cog;
+  
+  var Ding : Boolean { get { return this.Timer >= this.Duration; }}
   
   
   //***************************************************************************
-  [Virtual]
-  function Enter()
+  function StateMachineUpdate(event : UpdateEvent)
   {
-    
+    this.UpdateTimer(event);
+    this.UpdateCurrentState(event);
+    this.CheckLinks();
   }
   
   
   //***************************************************************************
-  [Virtual]
-  function Update()
+  function UpdateTimer(event : UpdateEvent)
   {
-    
+    this.CurrentState.Tick(event.Dt);
   }
   
   
   //***************************************************************************
-  [Virtual]
-  function Exit()
+  function UpdateCurrentState(event : UpdateEvent)
   {
+    this.CurrentState.Update(this.Owner, event);
+  }
+  
+  
+  //***************************************************************************
+  function CheckLinks()
+  {
+    // check every link in the list. if the Test predicate for any of them
+    // comes back positive, then toss that link on a list of change candidates
     
+    var changeCandidates = Array[StateLink]();
+    
+    foreach (var link in this.CurrentState.Links)
+      if (link.Test(this))
+        changeCandidates.Add(link);
+    
+    // now, somehow decide which candidate to change to. for now, we'll just
+    // default to the first one in the list
+    // 
+    // TODO: add link priority or something like that
+    
+    var chosenState = changeCandidates[0].ToState;
+    this.ChangeTo(chosenState);
+  }
+  
+  
+  //***************************************************************************
+  function ChangeTo(toState : StateMachine)
+  {
+    this.CurrentState.Exit(this.Owner);
+    this.CurrentState.ResetTimer();
+    this.CurrentState = toState;
+    this.CurrentState.Enter(this.Owner);
+  }
+  
+  
+  //***************************************************************************
+  [Virtual] function Enter (owner : Cog)                      {}
+  [Virtual] function Update(owner : Cog, event : UpdateEvent) {}
+  [Virtual] function Exit  (owner : Cog)                      {}
+  //***************************************************************************
+  
+  
+  //***************************************************************************
+  function CreateLink(toState : StateMachine, test : delegate(parentState : StateMachine) : Boolean)
+  {
+    this.Links.Add(StateLink(toState, test));
+  }
+  
+  
+  function Tick(dt : Real)
+  //***************************************************************************
+  {
+    this.Timer += dt;
+  }
+  
+  
+  //***************************************************************************
+  function ResetTimer()
+  {
+    this.Timer = 0;
+  }
+}
+
+
+class StateLink
+{
+  var ToState : StateMachine;
+  var Test : delegate(parentState : StateMachine) : Boolean;
+  
+  
+  //***************************************************************************
+  constructor(toState : StateMachine, test : delegate(parentState : StateMachine) : Boolean)
+  {
+    this.ToState = toState;
+    this.Test = test;
   }
 }

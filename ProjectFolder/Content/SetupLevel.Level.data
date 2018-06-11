@@ -44,7 +44,7 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{1173, -461.5, 10}
+			var Translation = Real3{1045.5, -178.5, 10}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -97,7 +97,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 935
+			var Size = 715
 		}
 		EditorCameraController 
 		{
@@ -106,7 +106,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{1173, -462, 4.05604515e-05}
+			var LookTarget = Real3{1045.24707, -178.220413, 3.49762631e-05}
 			var MoveSensitivity = 1
 		}
 	}
@@ -5345,6 +5345,101 @@ Level
 						}
 						Hierarchy 
 						{
+							Cog [Id:0x5b66f2412e32aee0][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:80]
+							{
+								var Name = "Node0"
+								Transform 
+								{
+									var Translation = Real3{177, -297, 0}
+									var Rotation = Quaternion{0, 0, 0, 1}
+									var Scale = Real3{1, 1, 1}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b66f1c16d653eda][ContextId:81]
+									{
+										Transform 
+										{
+											var Translation = Real3{4, -4, 0}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b66fbdccea697bc][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:82]
+							{
+								var Name = "Node1"
+								Transform 
+								{
+									var Translation = Real3{568, -75, 0}
+									var Rotation = Quaternion{0, 0, 0, 1}
+									var Scale = Real3{1, 1, 1}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b66f1c16d653eda][ContextId:83]
+									{
+										Transform 
+										{
+											var Translation = Real3{4, -4, 0}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b669f3424f7f6a9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:84]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -316, 0}
+									var Rotation = Quaternion{0, 0, 0.255334616, 0.966852784}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{398, 14}
+								}
+								StateMachineEdgeUI 
+								{
+									var Thickness = 10
+									var HeadWidth = 10
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:85]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:86]
+											{
+												Area 
+												{
+													var Size = Real2{363, 10}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:87]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:88]
+											{
+												Area 
+												{
+													var Size = Real2{24, 10}
+												}
+												UiWidget 
+												{
+													var Size = Real2{24, 10}
+													var MarginLeft = 2
+													var MarginTop = 2
+													var MarginRight = 7
+													var MarginBottom = 2
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}

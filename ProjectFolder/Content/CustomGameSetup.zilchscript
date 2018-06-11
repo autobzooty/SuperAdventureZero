@@ -79,7 +79,8 @@ class CustomGameSetup : ZilchComponent
     setupSpace.DispatchEvent(Events.CustomGameSetup, GameSetupEvent());
     
     // but this one must be destroyed, for it is only for setup
-    setupSpace.Destroy();
+    //setupSpace.Destroy();
+    // actually maybe not
     
     // no level needed
     this.DataSpace = this.GameSession.CreateNamedSpace("DataSpace", this.DataSpaceArchetype);

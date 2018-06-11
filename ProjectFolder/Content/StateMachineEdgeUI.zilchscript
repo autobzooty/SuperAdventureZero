@@ -1,0 +1,93 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+
+[RunInEditor]
+class StateMachineEdgeUI : ZilchComponent
+{
+  [Static] var Thickness_ : Real = 8;
+  [Display] var Thickness : Real
+  {
+    get { return StateMachineEdgeUI.Thickness_; }
+    set { StateMachineEdgeUI.Thickness_ = value; }
+  }
+  [Static] var HeadWidth_ : Real = 12;
+  [Display] var HeadWidth : Real
+  {
+    get { return StateMachineEdgeUI.HeadWidth_; }
+    set { StateMachineEdgeUI.HeadWidth_ = value; }
+  }
+  
+  
+  [Dependency]
+  var Transform : Transform;
+  [Dependency]
+  var UiWidget : UiWidget;
+  
+  
+  [Property]
+  var FromPath : CogPath = CogPath();
+  [Property]
+  var ToPath : CogPath = CogPath();
+  [Property]
+  var ShaftPath : CogPath = CogPath();
+  [Property]
+  var HeadPath : CogPath = CogPath();
+  
+  
+  var FromWidget : UiWidget;
+  var ToWidget : UiWidget;
+  var ShaftWidget : UiWidget;
+  var HeadWidget : UiWidget;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.FromWidget = this.FromPath.UiWidget;
+    this.ToWidget = this.ToPath.UiWidget;
+    this.ShaftWidget = this.ShaftPath.UiWidget;
+    this.HeadWidget = this.HeadPath.UiWidget;
+  }
+  
+  
+  //***************************************************************************
+  [Display] function PutInPosition()
+  {
+    Console.WriteLine("Connecting `this.FromWidget` to `this.ToWidget`");
+    if (this.FromWidget == null || this.ToWidget == null)
+      return;
+    
+    var fromPos = this.FromWidget.WorldCenter;
+    var toPos = this.ToWidget.WorldCenter;
+    var difference = toPos - fromPos;
+    var direction = Math.Normalize(difference);
+    var angle = Math.Angle2D(Real3(direction, 0));
+    
+    var fromRadius = this.FromWidget.Size.X / 2;
+    var toRadius = this.ToWidget.Size.X / 2;
+    var fromPadding = -6.0;
+    var toPadding = -6.0;
+    
+    var arrowBasePos = fromPos + direction * (fromRadius + fromPadding);
+    var arrowTipPos = toPos - direction * (toRadius + toPadding);
+    var arrowVector = arrowTipPos - arrowBasePos;
+    var arrowLength = Math.Length(arrowVector);
+    
+    this.Transform.SetEulerAnglesXYZ(0, 0, angle);
+    this.UiWidget.WorldCenterLeft = arrowBasePos;
+    var arrowSize = this.UiWidget.Size;
+    arrowSize.X = arrowLength;
+    this.UiWidget.Size = arrowSize;
+    var shaftSize = this.ShaftWidget.Size;
+    shaftSize.Y = this.Thickness;
+    this.ShaftWidget.Size = shaftSize;
+    var headSize = this.HeadWidget.Size;
+    headSize.Y = this.HeadWidth;
+    this.HeadWidget.Size = headSize;
+  }
+}

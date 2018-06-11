@@ -1,0 +1,57 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class StateMachineUser : ZilchComponent
+{
+  [Dependency]
+  var Transform : Transform;
+  [Dependency]
+  var Orientation : Orientation;
+  [Dependency]
+  var Sweeper : SweptController;
+  
+  
+  [Property]
+  var MaxSpeed : Real = 16;
+  [Property]
+  var TurnSpeed : Real = 1080; // deg / sec
+  
+  var StateMachine : StateMachine = StateMachine();
+  var IdleState : StateMachine = StateMachine();
+  var MovingState : StateMachine = StateMachine();
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    
+    
+    Zero.Connect(this.Owner, Events.MovementRequest, this.OnMovementRequest);
+  }
+  
+  
+  //***************************************************************************
+  function OnMovementRequest(event : InputEvent)
+  {
+    if (event.JumpTriggered)
+      this.Sweeper.Jump();
+    else if (event.JumpReleased)
+      this.Sweeper.JumpCancel();
+    
+    this.Sweeper.MaxMoveSpeed = this.MaxSpeed * event.Magnitude;
+    this.Sweeper.Update(event.Direction, event.Dt);
+    
+    if (event.ActiveInput)
+    {
+      var thisQuat = Math.ToQuaternion(this.Orientation.WorldForward, Real3.YAxis);
+      var lookAtQuat = Math.ToQuaternion(event.Direction, Real3.YAxis);
+      var newQuat = Math.RotateTowards(thisQuat, lookAtQuat, Math.ToRadians(this.TurnSpeed) * event.Dt);
+      
+      this.Orientation.SetWorldLookAtRotation(newQuat);
+    }
+  }
+}
