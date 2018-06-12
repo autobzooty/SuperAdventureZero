@@ -3,8 +3,8 @@ TextContent
 {
 	ZilchScriptBuilder 
 	{
-		var Name = "LissajousMovement"
-		var ResourceId = 0x5a476ae3b7a23e7c
+		var Name = "StateMachineEdgeUiMaster"
+		var ResourceId = 0x5b64763f359bee7a
 	}
 	ContentTags 
 	{

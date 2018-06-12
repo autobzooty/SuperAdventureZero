@@ -44,7 +44,7 @@ Level
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{1045.5, -178.5, 10}
+			var Translation = Real3{1084, -422.5, 10}
 			var Scale = Real3{1, 1, 1}
 			var Rotation = Quaternion{0, 0, 0, 1}
 		}
@@ -97,7 +97,7 @@ Level
 			var FarPlane = 100
 			var PerspectiveMode = PerspectiveMode.Orthographic
 			var FieldOfView = 45
-			var Size = 715
+			var Size = 935
 		}
 		EditorCameraController 
 		{
@@ -106,7 +106,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{1045.24707, -178.220413, 3.49762631e-05}
+			var LookTarget = Real3{1084.51941, -422.661102, 3.66928725e-05}
 			var MoveSensitivity = 1
 		}
 	}
@@ -5343,6 +5343,25 @@ Level
 							var AnimationSpeed = 1
 							var StartFrame = 0
 						}
+						StateMachineEdgeUiMaster 
+						{
+							var EdgeParentPath = CogPath
+							{
+								var Path = "."
+								var ErrorOnResolveToNull = false
+								var ErrorOnPathCantCompute = false
+								var ErrorOnDirectLinkFail = false
+								var UpdateCogOnPathChange = true
+								var UpdatePathOnCogChange = true
+								var UpdateCogOnInitialize = true
+								var ResolvedNullErrorOccurred = false
+								var Cog = 79
+								var PathPreference0 = CogPathPreference.CogRelative
+								var PathPreference1 = CogPathPreference.SpaceRelative
+								var PathPreference2 = CogPathPreference.Absolute
+							}
+							var PutawaySpacing = 4
+						}
 						Hierarchy 
 						{
 							Cog [Id:0x5b66f2412e32aee0][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:80]
@@ -5354,86 +5373,469 @@ Level
 									var Rotation = Quaternion{0, 0, 0, 1}
 									var Scale = Real3{1, 1, 1}
 								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b66f1c16d653eda][ContextId:81]
-									{
-										Transform 
-										{
-											var Translation = Real3{4, -4, 0}
-										}
-									}
-								}
 							}
-							Cog [Id:0x5b66fbdccea697bc][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:82]
+							Cog [Id:0x5b66fbdccea697bc][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:81]
 							{
 								var Name = "Node1"
 								Transform 
 								{
-									var Translation = Real3{568, -75, 0}
+									var Translation = Real3{715, -449, 0}
 									var Rotation = Quaternion{0, 0, 0, 1}
 									var Scale = Real3{1, 1, 1}
 								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b66f1c16d653eda][ContextId:83]
-									{
-										Transform 
-										{
-											var Translation = Real3{4, -4, 0}
-										}
-									}
-								}
 							}
-							Cog [Id:0x5b669f3424f7f6a9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:84]
+							Cog [Id:0x5b669f3424f7f6a9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:82]
 							{
 								Transform 
 								{
-									var Translation = Real3{232, -316, 0}
-									var Rotation = Quaternion{0, 0, 0.255334616, 0.966852784}
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
 									var Scale = Real3{1, 1, 1}
 								}
 								Area 
 								{
-									var Size = Real2{398, 14}
+									var Size = Real2{513, 18}
 								}
-								StateMachineEdgeUI 
+								UiWidget 
 								{
-									var Thickness = 10
-									var HeadWidth = 10
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = "../Node0"
+										var Cog = 80
+									}
+									var ToPath = CogPath
+									{
+										var Path = "../Node1"
+										var Cog = 81
+									}
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:85]
+									Cog [Id:0x5b6680c0e10ca214][ContextId:83]
 									{
 										Hierarchy 
 										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:86]
+											Cog [Id:0x5b669241eb3b26c2][ContextId:84]
 											{
 												Area 
 												{
-													var Size = Real2{363, 10}
+													var Size = Real2{479, 8}
 												}
 											}
 										}
 									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:87]
+									Cog [Id:0x5b6692d013a23b96][ContextId:85]
 									{
 										Hierarchy 
 										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:88]
+											Cog [Id:0x5b669257e57bf5b3][ContextId:86]
 											{
 												Area 
 												{
-													var Size = Real2{24, 10}
+													var Size = Real2{24, 12}
 												}
-												UiWidget 
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402c8fb02f168][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:87]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:88]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:89]
+											{
+												Area 
 												{
-													var Size = Real2{24, 10}
-													var MarginLeft = 2
-													var MarginTop = 2
-													var MarginRight = 7
-													var MarginBottom = 2
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:90]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:91]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402cbfb22f1d9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:92]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:93]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:94]
+											{
+												Area 
+												{
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:95]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:96]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402cafb46fa1a][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:97]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:98]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:99]
+											{
+												Area 
+												{
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:100]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:101]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402cafb67d949][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:102]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:103]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:104]
+											{
+												Area 
+												{
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:105]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:106]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402cdfb9c83e8][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:107]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:108]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:109]
+											{
+												Area 
+												{
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:110]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:111]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402ccfbb0d503][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:112]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:113]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:114]
+											{
+												Area 
+												{
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:115]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:116]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
+												}
+											}
+										}
+									}
+								}
+							}
+							Cog [Id:0x5b6402cffbc08012][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:117]
+							{
+								Transform 
+								{
+									var Translation = Real3{232, -336, 0}
+									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
+									var Scale = Real3{1, 1, 1}
+								}
+								Area 
+								{
+									var Size = Real2{513, 18}
+								}
+								UiWidget 
+								{
+									var Size = Real2{513, 18}
+								}
+								StateMachineEdgeUi 
+								{
+									var FromPath = CogPath
+									{
+										var Path = ""
+									}
+									var ToPath = CogPath
+									{
+										var Path = ""
+									}
+								}
+								Hierarchy 
+								{
+									Cog [Id:0x5b6680c0e10ca214][ContextId:118]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669241eb3b26c2][ContextId:119]
+											{
+												Area 
+												{
+													var Size = Real2{479, 8}
+												}
+											}
+										}
+									}
+									Cog [Id:0x5b6692d013a23b96][ContextId:120]
+									{
+										Hierarchy 
+										{
+											Cog [Id:0x5b669257e57bf5b3][ContextId:121]
+											{
+												Area 
+												{
+													var Size = Real2{24, 12}
 												}
 											}
 										}

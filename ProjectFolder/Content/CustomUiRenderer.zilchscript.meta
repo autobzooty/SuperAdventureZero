@@ -6,4 +6,11 @@ TextContent
 		var Name = "CustomUiRenderer"
 		var ResourceId = 0x5a4d8211e7b65d2b
 	}
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"Ui"
+		}
+	}
 }

@@ -4,13 +4,13 @@ Cog
 	var Name = "StateMachineEdge"
 	Transform 
 	{
-		var Translation = Real3{307, -150, 0}
+		var Translation = Real3{11, -18, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
 	Area 
 	{
-		var Size = Real2{106, 16}
+		var Size = Real2{64, 18}
 		var Origin = Location.CenterLeft
 	}
 	UiWidget 
@@ -36,11 +36,20 @@ Cog
 		var MarginBottom = 0
 		var DockMode = UiDockMode.Left
 	}
-	StateMachineEdgeUI 
+	UiStackLayout 
+	{
+		var PaddingLeft = 0
+		var PaddingTop = 0
+		var PaddingRight = 0
+		var PaddingBottom = 0
+		var StackDirection = UiStackLayoutDirection.LeftToRight
+		var Spacing = Real2{0, 0}
+	}
+	StateMachineEdgeUi 
 	{
 		var FromPath = CogPath
 		{
-			var Path = "../Node0"
+			var Path = ""
 			var ErrorOnResolveToNull = false
 			var ErrorOnPathCantCompute = false
 			var ErrorOnDirectLinkFail = false
@@ -55,7 +64,7 @@ Cog
 		}
 		var ToPath = CogPath
 		{
-			var Path = "../Node1"
+			var Path = ""
 			var ErrorOnResolveToNull = false
 			var ErrorOnPathCantCompute = false
 			var ErrorOnDirectLinkFail = false
@@ -99,15 +108,6 @@ Cog
 			var PathPreference2 = CogPathPreference.Absolute
 		}
 	}
-	UiStackLayout 
-	{
-		var PaddingLeft = 0
-		var PaddingTop = 0
-		var PaddingRight = 0
-		var PaddingBottom = 0
-		var StackDirection = UiStackLayoutDirection.LeftToRight
-		var Spacing = Real2{0, 0}
-	}
 	Hierarchy 
 	{
 		Cog [Id:0x5b6680c0e10ca214]
@@ -121,7 +121,7 @@ Cog
 			}
 			Area 
 			{
-				var Size = Real2{75, 12}
+				var Size = Real2{32, 12}
 				var Origin = Location.CenterLeft
 			}
 			UiWidget 
@@ -186,7 +186,7 @@ Cog
 					}
 					Area 
 					{
-						var Size = Real2{73, 8}
+						var Size = Real2{30, 8}
 						var Origin = Location.CenterLeft
 					}
 					UiWidget 
@@ -242,13 +242,13 @@ Cog
 			var Name = "Head"
 			Transform 
 			{
-				var Translation = Real3{75, 0, 0}
+				var Translation = Real3{32, 0, 0}
 				var Scale = Real3{1, 1, 1}
 				var Rotation = Quaternion{0, 0, 0, 1}
 			}
 			Area 
 			{
-				var Size = Real2{31, 16}
+				var Size = Real2{32, 18}
 				var Origin = Location.CenterLeft
 			}
 			UiWidget 
@@ -334,9 +334,9 @@ Cog
 						var VerticalAlignment = UiVerticalAlignment.Top
 						var HorizontalAlignment = UiHorizontalAlignment.Left
 						var MarginLeft = 2
-						var MarginTop = 2
-						var MarginRight = 5
-						var MarginBottom = 2
+						var MarginTop = 3
+						var MarginRight = 6
+						var MarginBottom = 3
 						var DockMode = UiDockMode.Left
 					}
 					Sprite 

@@ -1,0 +1,73 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+[RunInEditor]
+class StateMachineEdgeUiMaster : ZilchComponent
+{
+  [Property]
+  var EdgeParentPath : CogPath = CogPath(".");
+  [Property]
+  var PutawaySpacing : Real = 4;
+  
+  var EdgeParent : Cog;
+  var EdgeParentWidget : UiWidget;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.EdgeParent = this.EdgeParentPath.Cog;
+    this.EdgeParentWidget = this.EdgeParentPath.UiWidget;
+  }
+  
+  
+  //***************************************************************************
+  [Display] function PutEdgesAway()
+  {
+    var edges = this.FindEdges();
+    var spacing = this.PutawaySpacing;
+    
+    var firstEdgeTopLeft = this.EdgeParentWidget.WorldTopLeft + Real2(spacing, -spacing);
+    var y = 0.0;
+    
+    foreach (var edge in edges)
+    {
+      var transform = edge.Transform;
+      transform.WorldRotation = Quaternion.Identity;
+      
+      var widget = edge.UiWidget;
+      var widgetTopLeft = firstEdgeTopLeft - y * Real2.YAxis;
+      widget.WorldTopLeft = widgetTopLeft;
+      
+      var edgeUi = edge.StateMachineEdgeUi;
+      edgeUi.ResetSizes();
+      
+      y += widget.Size.Y + spacing;
+    }
+  }
+  
+  
+  //***************************************************************************
+  [Display] function CleanEdgesUp()
+  {
+    foreach (var edge in this.FindEdges())
+      edge.StateMachineEdgeUi.PutInPosition();
+  }
+  
+  
+  //***************************************************************************
+  function FindEdges() : Array[Cog]
+  {
+    var edges = Array[Cog]();
+    
+    foreach (var child in this.EdgeParent.Children)
+      if (child.StateMachineEdgeUi != null)
+        edges.Add(child);
+    
+    return edges;
+  }
+}

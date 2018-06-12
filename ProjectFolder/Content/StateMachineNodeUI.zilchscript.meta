@@ -3,7 +3,14 @@ TextContent
 {
 	ZilchScriptBuilder 
 	{
-		var Name = "StateMachineNodeUI"
+		var Name = "StateMachineNodeUi"
 		var ResourceId = 0x5b6685a197df44b8
+	}
+	ContentTags 
+	{
+		var Tags = Array
+		{
+			"Ui"
+		}
 	}
 }

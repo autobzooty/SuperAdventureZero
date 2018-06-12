@@ -7,19 +7,19 @@
 
 
 [RunInEditor]
-class StateMachineEdgeUI : ZilchComponent
+class StateMachineEdgeUi : ZilchComponent
 {
   [Static] var Thickness_ : Real = 8;
   [Display] var Thickness : Real
   {
-    get { return StateMachineEdgeUI.Thickness_; }
-    set { StateMachineEdgeUI.Thickness_ = value; }
+    get { return StateMachineEdgeUi.Thickness_; }
+    set { StateMachineEdgeUi.Thickness_ = value; }
   }
   [Static] var HeadWidth_ : Real = 12;
   [Display] var HeadWidth : Real
   {
-    get { return StateMachineEdgeUI.HeadWidth_; }
-    set { StateMachineEdgeUI.HeadWidth_ = value; }
+    get { return StateMachineEdgeUi.HeadWidth_; }
+    set { StateMachineEdgeUi.HeadWidth_ = value; }
   }
   
   
@@ -43,6 +43,8 @@ class StateMachineEdgeUI : ZilchComponent
   var ToWidget : UiWidget;
   var ShaftWidget : UiWidget;
   var HeadWidget : UiWidget;
+  var InitialShaftSize : Real2;
+  var InitialHeadSize : Real2;
   
   
   //***************************************************************************
@@ -52,13 +54,23 @@ class StateMachineEdgeUI : ZilchComponent
     this.ToWidget = this.ToPath.UiWidget;
     this.ShaftWidget = this.ShaftPath.UiWidget;
     this.HeadWidget = this.HeadPath.UiWidget;
+    
+    this.InitialShaftSize = this.ShaftWidget.Size;
+    this.InitialHeadSize = this.HeadWidget.Size;
   }
   
   
   //***************************************************************************
-  [Display] function PutInPosition()
+  function ResetSizes()
   {
-    Console.WriteLine("Connecting `this.FromWidget` to `this.ToWidget`");
+    this.ShaftWidget.Size = this.InitialShaftSize;
+    this.HeadWidget.Size = this.InitialHeadSize;
+  }
+  
+  
+  //***************************************************************************
+  function PutInPosition()
+  {
     if (this.FromWidget == null || this.ToWidget == null)
       return;
     
@@ -70,8 +82,8 @@ class StateMachineEdgeUI : ZilchComponent
     
     var fromRadius = this.FromWidget.Size.X / 2;
     var toRadius = this.ToWidget.Size.X / 2;
-    var fromPadding = -6.0;
-    var toPadding = -6.0;
+    var fromPadding = -8.0;
+    var toPadding = -10.0;
     
     var arrowBasePos = fromPos + direction * (fromRadius + fromPadding);
     var arrowTipPos = toPos - direction * (toRadius + toPadding);

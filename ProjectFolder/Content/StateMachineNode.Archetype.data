@@ -4,7 +4,7 @@ Cog
 	var Name = "Node1"
 	Transform 
 	{
-		var Translation = Real3{510, -119, 0}
+		var Translation = Real3{715, -449, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
@@ -62,7 +62,7 @@ Cog
 		var PaddingRight = 4
 		var PaddingBottom = 4
 	}
-	StateMachineNodeUI 
+	StateMachineNodeUi 
 	{
 	}
 	Hierarchy 
