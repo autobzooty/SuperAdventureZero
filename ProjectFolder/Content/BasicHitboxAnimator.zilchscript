@@ -1,0 +1,78 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class BasicHitboxAnimator : ZilchComponent
+{
+  [Property]
+  var TransformPath : CogPath = CogPath(".");
+  [Property]
+  var StipplePath : CogPath = CogPath(".");
+  [Property]
+  var Duration : Real = 0.2;
+  
+  var Transform : Transform;
+  var MaterialInputs : MaterialInputs;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    this.Transform = this.TransformPath.Transform;
+    this.MaterialInputs = this.StipplePath.MaterialInputs;
+    
+    var basePosition = this.Transform.LocalTranslation;
+    
+    var baseScale = this.Transform.LocalScale;
+    var width = baseScale.X;
+    var halfWidth = width / 2;
+    var leftX = basePosition.X - halfWidth;
+    var rightX = basePosition.X + halfWidth;
+    
+    var initialPosition = basePosition;
+    initialPosition.X = leftX;
+    var finalPosition = basePosition;
+    finalPosition.X = rightX;
+    
+    var initialScale = baseScale;
+    initialScale.X = 0;
+    
+    var baseStippleDensity = this.MaterialInputs.StippleDensity;
+    var initialStippleDensity = 0;
+    
+    var duration = this.Duration;
+    var halfDuration = duration / 2;
+    
+    this.Transform.LocalTranslation = initialPosition;
+    this.Transform.LocalScale = initialScale;
+    this.MaterialInputs.StippleDensity = initialStippleDensity;
+    
+    var mainSeq = Action.Sequence(this.Owner.Actions);
+      
+      var mainGrp = Action.Group(mainSeq);
+        
+        Action.Property(mainGrp, @this.Transform.LocalTranslation, finalPosition, duration, Ease.QuadInOut);
+        
+        var scaleSeq = Action.Sequence(mainGrp);
+          
+          Action.Property(scaleSeq, @this.Transform.LocalScale, baseScale, halfDuration, Ease.QuadIn);
+          Action.Property(scaleSeq, @this.Transform.LocalScale, initialScale, halfDuration, Ease.QuadOut);
+        
+        var stippleSeq = Action.Sequence(mainGrp);
+          
+          Action.Property(stippleSeq, @this.MaterialInputs.StippleDensity, baseStippleDensity, halfDuration, Ease.QuadIn);
+          Action.Property(stippleSeq, @this.MaterialInputs.StippleDensity, initialStippleDensity, halfDuration, Ease.QuadOut);
+        
+      Action.Call(mainSeq, this.EndSequence);
+  }
+  
+  
+  //***************************************************************************
+  function EndSequence()
+  {
+    this.Owner.Destroy();
+  }
+}

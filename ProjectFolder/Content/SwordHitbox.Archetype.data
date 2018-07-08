@@ -1,0 +1,94 @@
+[Version:1]
+Cog 
+{
+	var Name = "SwordHitbox"
+	Transform 
+	{
+		var Translation = Real3{0, 1, 0.5}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	BasicHitboxAnimator 
+	{
+		var TransformPath = CogPath
+		{
+			var Path = "Hitbox"
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+		var StipplePath = CogPath
+		{
+			var Path = "Hitbox"
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+		var Duration = 0.25
+	}
+	Hierarchy 
+	{
+		Cog [Id:0x5b3ac6d95ce5ea90]
+		{
+			var Name = "Hitbox"
+			Transform 
+			{
+				var Translation = Real3{0, 0, 0.75}
+				var Scale = Real3{1.25, 0.100000001, 1.5}
+				var Rotation = Quaternion{0, 0, 0, 1}
+			}
+			Model 
+			{
+				var Visible = true
+				var ViewCulling = true
+				var VisibilityEvents = true
+				var OverrideBoundingBox = false
+				var LocalAabbCenter = Real3{0, 0, 0}
+				var LocalAabbHalfExtents = Real3{1, 1, 1}
+				var GroupSortValue = 0
+				var Material = "5b3acccc5d63099a:StippledFlatEnergy"
+				var Mesh = "4de0354322b345ae:Cube"
+			}
+			BoxCollider 
+			{
+				var Ghost = false
+				var SendsEvents = true
+				var Material = "4de020863e872da8:DefaultPhysicsMaterial"
+				var CollisionGroup = "4e740859314e5515:DefaultGroup"
+				var Offset = Real3{0, 0, 0}
+				var HalfSize = Real3{0.5, 0.5, 0.5}
+			}
+			MaterialInputs 
+			{
+				var Color = Real4{0.5, 0.5, 0.5, 1}
+				var AlbedoValue = Real4{1.5, 1.34400034, 0.299999982, 1}
+				var MetallicValue = 0
+				var RoughnessValue = 1
+				var SpecularValue = 0
+				var StippleDensity = 1
+				var StippleScale = 2
+				var NearDistance = 20
+				var FarDistance = 30
+				var MinVisibility = 0
+				var MaxVisibility = 1
+				var XrayColor = Real4{1, 0, 0, 1}
+			}
+		}
+	}
+}

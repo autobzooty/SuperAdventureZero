@@ -1,0 +1,31 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class StateMachineUi : ZilchComponent
+{
+  //var StateMachine : StateMachine = StateMachine();
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    //foreach (var child in this.Owner.Children)
+    //{
+    //  var smnui = child.StateMachineNodeUi;
+    //  var smeui = child.StateMachineEdgeUi;
+      
+    //  if (smnui != null)
+    //  {
+        
+    //  }
+    //  else if (smeui != null)
+    //  {
+        
+    //  }
+    //}
+  }
+}

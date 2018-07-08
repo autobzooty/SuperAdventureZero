@@ -33,6 +33,10 @@ class AtmosphericAttenuationRenderer : ZilchComponent
     var final = event.FinalTarget;
     var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
     
+    // TODO:
+    // 
+    // make this take near and far thresholds
+    
     var atmosphericAttenuation = AtmosphericAttenuation();
     atmosphericAttenuation.AtmosphereColor = this.AtmosphereColor;
     atmosphericAttenuation.Power = this.Power;

@@ -7,7 +7,6 @@ DataContent
 		var ResourceId = 0x5b66f2412e312057
 		var LoaderType = "Cog"
 		var Version = 0
-		var ShowInEditor = true
 	}
 	ContentTags 
 	{

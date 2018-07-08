@@ -38,15 +38,18 @@ Level
 			var HighlightInterval = 10
 			var FollowEditorCamera = false
 		}
+		InitializeCalculator 
+		{
+		}
 	}
 	Cog [ContextId:2]
 	{
 		var Name = "EditorCamera"
 		Transform 
 		{
-			var Translation = Real3{1084, -422.5, 10}
+			var Translation = Real3{1120.16333, -452.544556, 20.0000381}
 			var Scale = Real3{1, 1, 1}
-			var Rotation = Quaternion{0, 0, 0, 1}
+			var Rotation = Quaternion{0, -1.09278471e-08, 0, 1}
 		}
 		CameraViewport 
 		{
@@ -106,7 +109,7 @@ Level
 			var LookDistance = 20
 			var VerticalAngle = 0
 			var HorizontalAngle = 0
-			var LookTarget = Real3{1084.51941, -422.661102, 3.66928725e-05}
+			var LookTarget = Real3{1120.16333, -452.544556, 3.82508879e-05}
 			var MoveSensitivity = 1
 		}
 	}
@@ -5343,499 +5346,879 @@ Level
 							var AnimationSpeed = 1
 							var StartFrame = 0
 						}
-						StateMachineEdgeUiMaster 
-						{
-							var EdgeParentPath = CogPath
-							{
-								var Path = "."
-								var ErrorOnResolveToNull = false
-								var ErrorOnPathCantCompute = false
-								var ErrorOnDirectLinkFail = false
-								var UpdateCogOnPathChange = true
-								var UpdatePathOnCogChange = true
-								var UpdateCogOnInitialize = true
-								var ResolvedNullErrorOccurred = false
-								var Cog = 79
-								var PathPreference0 = CogPathPreference.CogRelative
-								var PathPreference1 = CogPathPreference.SpaceRelative
-								var PathPreference2 = CogPathPreference.Absolute
-							}
-							var PutawaySpacing = 4
-						}
 						Hierarchy 
 						{
-							Cog [Id:0x5b66f2412e32aee0][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:80]
+							Cog [Id:0x5b4cbaf9eb28cbcc][ContextId:80]
 							{
-								var Name = "Node0"
+								var Name = "DumbassMachine"
 								Transform 
 								{
-									var Translation = Real3{177, -297, 0}
+									var Translation = Real3{59, -40, 0}
+									var Scale = Real3{1, 1, 1}
 									var Rotation = Quaternion{0, 0, 0, 1}
-									var Scale = Real3{1, 1, 1}
-								}
-							}
-							Cog [Id:0x5b66fbdccea697bc][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:81]
-							{
-								var Name = "Node1"
-								Transform 
-								{
-									var Translation = Real3{715, -449, 0}
-									var Rotation = Quaternion{0, 0, 0, 1}
-									var Scale = Real3{1, 1, 1}
-								}
-							}
-							Cog [Id:0x5b669f3424f7f6a9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:82]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
 								}
 								Area 
 								{
-									var Size = Real2{513, 18}
+									var Size = Real2{694, 481}
+									var Origin = Location.TopLeft
 								}
 								UiWidget 
 								{
-									var Size = Real2{513, 18}
+									var Active = true
+									var Visible = true
+									var Interactive = true
+									var InLayout = true
+									var OnTop = false
+									var ClipChildren = false
+									var CanTakeFocus = false
+									var LocalColor = Real4{0, 0, 0, 0.200000048}
+									var HierarchyColor = Real4{1, 1, 1, 1}
+									var SizePolicyX = UiSizePolicy.Fixed
+									var SizePolicyY = UiSizePolicy.Fixed
+									var FlexSize = Real2{1, 1}
+									var AbsoluteMinSize = Real2{1, 1}
+									var VerticalAlignment = UiVerticalAlignment.Center
+									var HorizontalAlignment = UiHorizontalAlignment.Left
+									var MarginLeft = 0
+									var MarginTop = 0
+									var MarginRight = 0
+									var MarginBottom = 0
+									var DockMode = UiDockMode.Left
 								}
-								StateMachineEdgeUi 
+								StateMachineEdgeUiMaster 
 								{
-									var FromPath = CogPath
+									var EdgeParentPath = CogPath
 									{
-										var Path = "../Node0"
+										var Path = "."
+										var ErrorOnResolveToNull = false
+										var ErrorOnPathCantCompute = false
+										var ErrorOnDirectLinkFail = false
+										var UpdateCogOnPathChange = true
+										var UpdatePathOnCogChange = true
+										var UpdateCogOnInitialize = true
+										var ResolvedNullErrorOccurred = false
 										var Cog = 80
+										var PathPreference0 = CogPathPreference.CogRelative
+										var PathPreference1 = CogPathPreference.SpaceRelative
+										var PathPreference2 = CogPathPreference.Absolute
 									}
-									var ToPath = CogPath
-									{
-										var Path = "../Node1"
-										var Cog = 81
-									}
+									var PutawaySpacing = 16
+									var PutawayShaftSize = Real2{64, 4}
+									var PutawayHeadSize = Real2{12, 6}
+								}
+								Sprite 
+								{
+									var Visible = true
+									var ViewCulling = true
+									var VisibilityEvents = true
+									var OverrideBoundingBox = false
+									var LocalAabbCenter = Real3{0, 0, 0}
+									var LocalAabbHalfExtents = Real3{1, 1, 1}
+									var GroupSortValue = 0
+									var Material = "582c575af53d18c9:AlphaSprite"
+									var VertexColor = Real4{0, 0, 0, 0.200000048}
+									var GeometryMode = SpriteGeometryMode.ZPlane
+									var SpriteSource = "5275aa4d802dd6dc:Square"
+									var FlipX = false
+									var FlipY = false
+									var AnimationActive = true
+									var AnimationSpeed = 1
+									var StartFrame = 0
 								}
 								Hierarchy 
 								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:83]
+									Cog [Id:0x5b4cbad0edc87fe0][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:81]
 									{
+										var Name = "Node0"
+										Transform 
+										{
+											var Translation = Real3{208, -136, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{72, 72}
+										}
+										UiWidget 
+										{
+											var Size = Real2{72, 72}
+											var SizePolicyX = UiSizePolicy.Auto
+											var SizePolicyY = UiSizePolicy.Auto
+										}
+									}
+									Cog [Id:0x5b4cbad0edc88034][InheritId:"5b66f2412e312057:StateMachineNode"][ContextId:82]
+									{
+										var Name = "Node1"
+										Transform 
+										{
+											var Translation = Real3{485, -288, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+									}
+									Cog [Id:0x5b4cbad0edc880be][ContextId:83]
+									{
+										var Name = "StateMachineEdge"
+										Transform 
+										{
+											var Translation = Real3{269, -185, 0}
+											var Scale = Real3{1, 1, 1}
+											var Rotation = Quaternion{0, 0, -0.248311043, 0.968680382}
+										}
+										Area 
+										{
+											var Size = Real2{262, 18}
+											var Origin = Location.CenterLeft
+										}
+										UiWidget 
+										{
+											var Active = true
+											var Visible = true
+											var Interactive = true
+											var InLayout = true
+											var OnTop = false
+											var ClipChildren = false
+											var CanTakeFocus = false
+											var LocalColor = Real4{1, 1, 1, 1}
+											var HierarchyColor = Real4{1, 1, 1, 1}
+											var SizePolicyX = UiSizePolicy.Fixed
+											var SizePolicyY = UiSizePolicy.Auto
+											var FlexSize = Real2{1, 1}
+											var AbsoluteMinSize = Real2{1, 1}
+											var VerticalAlignment = UiVerticalAlignment.Top
+											var HorizontalAlignment = UiHorizontalAlignment.Left
+											var MarginLeft = 0
+											var MarginTop = 0
+											var MarginRight = 0
+											var MarginBottom = 0
+											var DockMode = UiDockMode.Left
+										}
+										UiStackLayout 
+										{
+											var PaddingLeft = 0
+											var PaddingTop = 0
+											var PaddingRight = 0
+											var PaddingBottom = 0
+											var StackDirection = UiStackLayoutDirection.LeftToRight
+											var Spacing = Real2{0, 0}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = "../Node0"
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 81
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var ToPath = CogPath
+											{
+												var Path = "../Node1"
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 82
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var ShaftPath = CogPath
+											{
+												var Path = "Shaft/ColorFill"
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 84
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+											var HeadPath = CogPath
+											{
+												var Path = "Head/ColorFill"
+												var ErrorOnResolveToNull = false
+												var ErrorOnPathCantCompute = false
+												var ErrorOnDirectLinkFail = false
+												var UpdateCogOnPathChange = true
+												var UpdatePathOnCogChange = true
+												var UpdateCogOnInitialize = true
+												var ResolvedNullErrorOccurred = false
+												var Cog = 85
+												var PathPreference0 = CogPathPreference.CogRelative
+												var PathPreference1 = CogPathPreference.SpaceRelative
+												var PathPreference2 = CogPathPreference.Absolute
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:84]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:86]
 											{
+												var Name = "Shaft"
+												Transform 
+												{
+													var Translation = Real3{0, 0, 0}
+													var Scale = Real3{1, 1, 1}
+													var Rotation = Quaternion{0, 0, 0, 1}
+												}
 												Area 
 												{
-													var Size = Real2{479, 8}
+													var Size = Real2{242, 12}
+													var Origin = Location.CenterLeft
+												}
+												UiWidget 
+												{
+													var Active = true
+													var Visible = true
+													var Interactive = true
+													var InLayout = true
+													var OnTop = false
+													var ClipChildren = false
+													var CanTakeFocus = false
+													var LocalColor = Real4{0, 0, 0, 0.700000048}
+													var HierarchyColor = Real4{1, 1, 1, 1}
+													var SizePolicyX = UiSizePolicy.Flex
+													var SizePolicyY = UiSizePolicy.Auto
+													var FlexSize = Real2{1, 1}
+													var AbsoluteMinSize = Real2{1, 1}
+													var VerticalAlignment = UiVerticalAlignment.Center
+													var HorizontalAlignment = UiHorizontalAlignment.Center
+													var MarginLeft = 0
+													var MarginTop = 0
+													var MarginRight = 0
+													var MarginBottom = 0
+													var DockMode = UiDockMode.Left
+												}
+												Sprite 
+												{
+													var Visible = true
+													var ViewCulling = true
+													var VisibilityEvents = true
+													var OverrideBoundingBox = false
+													var LocalAabbCenter = Real3{0, 0, 0}
+													var LocalAabbHalfExtents = Real3{1, 1, 1}
+													var GroupSortValue = 0
+													var Material = "582c575af53d18c9:AlphaSprite"
+													var VertexColor = Real4{0, 0, 0, 0.700000048}
+													var GeometryMode = SpriteGeometryMode.ZPlane
+													var SpriteSource = "5275aa4d802dd6dc:Square"
+													var FlipX = false
+													var FlipY = false
+													var AnimationActive = true
+													var AnimationSpeed = 1
+													var StartFrame = 0
+												}
+												UiFillLayout 
+												{
+													var PaddingLeft = 0
+													var PaddingTop = 0
+													var PaddingRight = 0
+													var PaddingBottom = 0
+												}
+												Hierarchy 
+												{
+													Cog [Id:0x5b669241eb3b26c2][ContextId:84]
+													{
+														var Name = "ColorFill"
+														Transform 
+														{
+															var Translation = Real3{2, 0, 0}
+															var Scale = Real3{1, 1, 1}
+															var Rotation = Quaternion{0, 0, 0, 1}
+														}
+														Area 
+														{
+															var Size = Real2{240, 8}
+															var Origin = Location.CenterLeft
+														}
+														UiWidget 
+														{
+															var Active = true
+															var Visible = true
+															var Interactive = true
+															var InLayout = true
+															var OnTop = false
+															var ClipChildren = false
+															var CanTakeFocus = false
+															var LocalColor = Real4{1, 1, 1, 1}
+															var HierarchyColor = Real4{1, 1, 1, 1}
+															var SizePolicyX = UiSizePolicy.Flex
+															var SizePolicyY = UiSizePolicy.Fixed
+															var FlexSize = Real2{1, 1}
+															var AbsoluteMinSize = Real2{1, 1}
+															var VerticalAlignment = UiVerticalAlignment.Center
+															var HorizontalAlignment = UiHorizontalAlignment.Center
+															var MarginLeft = 2
+															var MarginTop = 2
+															var MarginRight = 0
+															var MarginBottom = 2
+															var DockMode = UiDockMode.Left
+														}
+														Sprite 
+														{
+															var Visible = true
+															var ViewCulling = true
+															var VisibilityEvents = true
+															var OverrideBoundingBox = false
+															var LocalAabbCenter = Real3{0, 0, 0}
+															var LocalAabbHalfExtents = Real3{1, 1, 1}
+															var GroupSortValue = 0
+															var Material = "582c575af53d18c9:AlphaSprite"
+															var VertexColor = Real4{1, 1, 1, 1}
+															var GeometryMode = SpriteGeometryMode.ZPlane
+															var SpriteSource = "5275aa4d802dd6dc:Square"
+															var FlipX = false
+															var FlipY = false
+															var AnimationActive = true
+															var AnimationSpeed = 1
+															var StartFrame = 0
+														}
+														Hierarchy 
+														{
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:87]
+											{
+												var Name = "Head"
+												Transform 
+												{
+													var Translation = Real3{242, 0, 0}
+													var Scale = Real3{1, 1, 1}
+													var Rotation = Quaternion{0, 0, 0, 1}
+												}
+												Area 
+												{
+													var Size = Real2{20, 18}
+													var Origin = Location.CenterLeft
+												}
+												UiWidget 
+												{
+													var Active = true
+													var Visible = true
+													var Interactive = true
+													var InLayout = true
+													var OnTop = false
+													var ClipChildren = false
+													var CanTakeFocus = false
+													var LocalColor = Real4{0, 0, 0, 0.700000048}
+													var HierarchyColor = Real4{1, 1, 1, 1}
+													var SizePolicyX = UiSizePolicy.Auto
+													var SizePolicyY = UiSizePolicy.Auto
+													var FlexSize = Real2{1, 1}
+													var AbsoluteMinSize = Real2{1, 1}
+													var VerticalAlignment = UiVerticalAlignment.Center
+													var HorizontalAlignment = UiHorizontalAlignment.Center
+													var MarginLeft = 0
+													var MarginTop = 0
+													var MarginRight = 0
+													var MarginBottom = 0
+													var DockMode = UiDockMode.Left
+												}
+												Sprite 
+												{
+													var Visible = true
+													var ViewCulling = true
+													var VisibilityEvents = true
+													var OverrideBoundingBox = false
+													var LocalAabbCenter = Real3{0, 0, 0}
+													var LocalAabbHalfExtents = Real3{1, 1, 1}
+													var GroupSortValue = 0
+													var Material = "582c575af53d18c9:AlphaSprite"
+													var VertexColor = Real4{0, 0, 0, 0.700000048}
+													var GeometryMode = SpriteGeometryMode.ZPlane
+													var SpriteSource = "5b66f924002c995c:SquareTriangle"
+													var FlipX = false
+													var FlipY = false
+													var AnimationActive = true
+													var AnimationSpeed = 1
+													var StartFrame = 0
+												}
+												UiFillLayout 
+												{
+													var PaddingLeft = 0
+													var PaddingTop = 0
+													var PaddingRight = 0
+													var PaddingBottom = 0
+												}
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:85]
+													{
+														var Name = "ColorFill"
+														Transform 
+														{
+															var Translation = Real3{2, 0, 0}
+															var Scale = Real3{1, 1, 1}
+															var Rotation = Quaternion{0, 0, 0, 1}
+														}
+														Area 
+														{
+															var Size = Real2{12, 12}
+															var Origin = Location.CenterLeft
+														}
+														UiWidget 
+														{
+															var Active = true
+															var Visible = true
+															var Interactive = true
+															var InLayout = true
+															var OnTop = false
+															var ClipChildren = false
+															var CanTakeFocus = false
+															var LocalColor = Real4{1, 1, 1, 1}
+															var HierarchyColor = Real4{1, 1, 1, 1}
+															var SizePolicyX = UiSizePolicy.Fixed
+															var SizePolicyY = UiSizePolicy.Fixed
+															var FlexSize = Real2{1, 1}
+															var AbsoluteMinSize = Real2{1, 1}
+															var VerticalAlignment = UiVerticalAlignment.Top
+															var HorizontalAlignment = UiHorizontalAlignment.Left
+															var MarginLeft = 2
+															var MarginTop = 3
+															var MarginRight = 6
+															var MarginBottom = 3
+															var DockMode = UiDockMode.Left
+														}
+														Sprite 
+														{
+															var Visible = true
+															var ViewCulling = true
+															var VisibilityEvents = true
+															var OverrideBoundingBox = false
+															var LocalAabbCenter = Real3{0, 0, 0}
+															var LocalAabbHalfExtents = Real3{1, 1, 1}
+															var GroupSortValue = 0
+															var Material = "582c575af53d18c9:AlphaSprite"
+															var VertexColor = Real4{1, 1, 1, 1}
+															var GeometryMode = SpriteGeometryMode.ZPlane
+															var SpriteSource = "5b66f924002c995c:SquareTriangle"
+															var FlipX = false
+															var FlipY = false
+															var AnimationActive = true
+															var AnimationSpeed = 1
+															var StartFrame = 0
+														}
+														Hierarchy 
+														{
+														}
+													}
 												}
 											}
 										}
 									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:85]
+									Cog [Id:0x5b4cbad0edc8811b][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:88]
 									{
+										Transform 
+										{
+											var Translation = Real3{16, -38, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:86]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:89]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{24, 12}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:90]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:91]
+											{
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:92]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}
 									}
-								}
-							}
-							Cog [Id:0x5b6402c8fb02f168][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:87]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
+									Cog [Id:0x5b4cbad0edc88179][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:93]
 									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:88]
-									{
+										Transform 
+										{
+											var Translation = Real3{16, -54, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:89]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:94]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{479, 8}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:95]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:96]
+											{
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:97]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}
 									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:90]
+									Cog [Id:0x5b4cbad0edc881d9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:98]
 									{
+										Transform 
+										{
+											var Translation = Real3{16, -70, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:91]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:99]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{24, 12}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:100]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:101]
+											{
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:102]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}
 									}
-								}
-							}
-							Cog [Id:0x5b6402cbfb22f1d9][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:92]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
+									Cog [Id:0x5b4cbad0edc88233][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:103]
 									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:93]
-									{
+										Transform 
+										{
+											var Translation = Real3{16, -86, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:94]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:104]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{479, 8}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:105]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:106]
+											{
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:107]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}
 									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:95]
+									Cog [Id:0x5b4cbad0edc88298][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:108]
 									{
+										Transform 
+										{
+											var Translation = Real3{16, -102, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:96]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:109]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{24, 12}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:110]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:111]
+											{
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:112]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}
 									}
-								}
-							}
-							Cog [Id:0x5b6402cafb46fa1a][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:97]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
+									Cog [Id:0x5b4cbad0edc882f7][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:113]
 									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:98]
-									{
+										Transform 
+										{
+											var Translation = Real3{16, -118, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
+											{
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
+											}
+										}
 										Hierarchy 
 										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:99]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:114]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{479, 8}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:115]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
+												}
+											}
+											Cog [Id:0x5b6692d013a23b96][ContextId:116]
+											{
+												Hierarchy 
+												{
+													Cog [Id:0x5b669257e57bf5b3][ContextId:117]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}
 									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:100]
+									Cog [Id:0x5b4cbad0edc8835d][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:118]
 									{
-										Hierarchy 
+										Transform 
 										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:101]
+											var Translation = Real3{16, -134, 0}
+											var Rotation = Quaternion{0, 0, 0, 1}
+											var Scale = Real3{1, 1, 1}
+										}
+										Area 
+										{
+											var Size = Real2{64, 12}
+										}
+										UiWidget 
+										{
+											var Size = Real2{64, 12}
+										}
+										StateMachineEdgeUi 
+										{
+											var FromPath = CogPath
 											{
-												Area 
-												{
-													var Size = Real2{24, 12}
-												}
+												var Path = ""
+											}
+											var ToPath = CogPath
+											{
+												var Path = ""
 											}
 										}
-									}
-								}
-							}
-							Cog [Id:0x5b6402cafb67d949][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:102]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
-									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:103]
-									{
 										Hierarchy 
 										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:104]
+											Cog [Id:0x5b6680c0e10ca214][ContextId:119]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{479, 8}
+													Cog [Id:0x5b669241eb3b26c2][ContextId:120]
+													{
+														Area 
+														{
+															var Size = Real2{42, 4}
+														}
+													}
 												}
 											}
-										}
-									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:105]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:106]
+											Cog [Id:0x5b6692d013a23b96][ContextId:121]
 											{
-												Area 
+												Hierarchy 
 												{
-													var Size = Real2{24, 12}
-												}
-											}
-										}
-									}
-								}
-							}
-							Cog [Id:0x5b6402cdfb9c83e8][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:107]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
-									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:108]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:109]
-											{
-												Area 
-												{
-													var Size = Real2{479, 8}
-												}
-											}
-										}
-									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:110]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:111]
-											{
-												Area 
-												{
-													var Size = Real2{24, 12}
-												}
-											}
-										}
-									}
-								}
-							}
-							Cog [Id:0x5b6402ccfbb0d503][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:112]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
-									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:113]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:114]
-											{
-												Area 
-												{
-													var Size = Real2{479, 8}
-												}
-											}
-										}
-									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:115]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:116]
-											{
-												Area 
-												{
-													var Size = Real2{24, 12}
-												}
-											}
-										}
-									}
-								}
-							}
-							Cog [Id:0x5b6402cffbc08012][InheritId:"5b66fae9e36e4f0c:StateMachineEdge"][ContextId:117]
-							{
-								Transform 
-								{
-									var Translation = Real3{232, -336, 0}
-									var Rotation = Quaternion{0, 0, -0.137241125, 0.990537763}
-									var Scale = Real3{1, 1, 1}
-								}
-								Area 
-								{
-									var Size = Real2{513, 18}
-								}
-								UiWidget 
-								{
-									var Size = Real2{513, 18}
-								}
-								StateMachineEdgeUi 
-								{
-									var FromPath = CogPath
-									{
-										var Path = ""
-									}
-									var ToPath = CogPath
-									{
-										var Path = ""
-									}
-								}
-								Hierarchy 
-								{
-									Cog [Id:0x5b6680c0e10ca214][ContextId:118]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669241eb3b26c2][ContextId:119]
-											{
-												Area 
-												{
-													var Size = Real2{479, 8}
-												}
-											}
-										}
-									}
-									Cog [Id:0x5b6692d013a23b96][ContextId:120]
-									{
-										Hierarchy 
-										{
-											Cog [Id:0x5b669257e57bf5b3][ContextId:121]
-											{
-												Area 
-												{
-													var Size = Real2{24, 12}
+													Cog [Id:0x5b669257e57bf5b3][ContextId:122]
+													{
+														Area 
+														{
+															var Size = Real2{12, 6}
+														}
+													}
 												}
 											}
 										}

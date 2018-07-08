@@ -3,8 +3,8 @@ DataContent
 {
 	DataBuilder 
 	{
-		var Name = "Dumbass"
-		var ResourceId = 0x5a8bc03307355edb
+		var Name = "SwordHitbox"
+		var ResourceId = 0x5b3a3b11ad370aad
 		var LoaderType = "Cog"
 		var Version = 0
 	}

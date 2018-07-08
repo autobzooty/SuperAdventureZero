@@ -1,0 +1,9 @@
+[Version:1]
+TextContent 
+{
+	ZilchScriptBuilder 
+	{
+		var Name = "StateMachineUi"
+		var ResourceId = 0x5b4cb949183ada16
+	}
+}

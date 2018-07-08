@@ -43,8 +43,6 @@ class StateMachineEdgeUi : ZilchComponent
   var ToWidget : UiWidget;
   var ShaftWidget : UiWidget;
   var HeadWidget : UiWidget;
-  var InitialShaftSize : Real2;
-  var InitialHeadSize : Real2;
   
   
   //***************************************************************************
@@ -54,17 +52,15 @@ class StateMachineEdgeUi : ZilchComponent
     this.ToWidget = this.ToPath.UiWidget;
     this.ShaftWidget = this.ShaftPath.UiWidget;
     this.HeadWidget = this.HeadPath.UiWidget;
-    
-    this.InitialShaftSize = this.ShaftWidget.Size;
-    this.InitialHeadSize = this.HeadWidget.Size;
   }
   
   
   //***************************************************************************
-  function ResetSizes()
+  function ResetSizes(shaftSize : Real2, headSize : Real2)
   {
-    this.ShaftWidget.Size = this.InitialShaftSize;
-    this.HeadWidget.Size = this.InitialHeadSize;
+    this.UiWidget.Size = shaftSize;
+    this.ShaftWidget.Size = shaftSize;
+    this.HeadWidget.Size = headSize;
   }
   
   

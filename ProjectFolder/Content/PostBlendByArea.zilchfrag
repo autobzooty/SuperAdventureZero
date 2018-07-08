@@ -131,28 +131,28 @@ struct PostBlendByArea
   // this allows to detect actual corners and apply a less aggressive
   // processing, thus retaining more closely the true shape
   // of the object.
-  /*
-     HorizontalSharpCorner Diagram.
-     (x) = sample location
-     (c) = current pixel location
-     (o) = some filled pixel
-     rest is empty space (unfilled pixels).
-     Notice there is a sharp geometric corner on the left of (c)
-     we detect it by counting the 2 filled pixels (o) between the crossing edge.
-     Same situaltion on the right of (c) but only one filled pixel between the crossing edge,
-     hence not a geometic edge but a jagged line.
-     ________________________
-     |  x           x       |
-     |                      |
-     |  o  o  c  o          |
-     |                      |
-     |  o  o  o  o  o  o    |
-     |                      |
-     |  x  o  o  o  x  o  o |
-     |                      |
-     |  o  o  o  o  o  o  o |
-     |______________________|
-  */
+  
+     //HorizontalSharpCorner Diagram.
+     //(x) = sample location
+     //(c) = current pixel location
+     //(o) = some filled pixel
+     //rest is empty space (unfilled pixels).
+     //Notice there is a sharp geometric corner on the left of (c)
+     //we detect it by counting the 2 filled pixels (o) between the crossing edge.
+     //Same situaltion on the right of (c) but only one filled pixel between the crossing edge,
+     //hence not a geometic edge but a jagged line.
+     //________________________
+     //|  x           x       |
+     //|                      |
+     //|  o  o  c  o          |
+     //|                      |
+     //|  o  o  o  o  o  o    |
+     //|                      |
+     //|  x  o  o  o  x  o  o |
+     //|                      |
+     //|  o  o  o  o  o  o  o |
+     //|______________________|
+  
   function HorizontalSharpCorner(d : Real2, area : Real2, coords: Real4) : Real2
   {
     var roundingFactor = 0.75;
@@ -244,13 +244,13 @@ struct PostBlendByArea
     //return texcoord;
   }
   
-    /*
-        __
-       |
-      --
-   __|
-  |
-  */
+  
+  //      __
+  //     |
+  //    --
+  // __|
+  //|
+  
   // First diagnol search function, for diagnols at a 45 degree angle.
   function DiagnolSearch45Staircase(direction : Real2, e : Real2) : Real4
   {
@@ -276,12 +276,12 @@ struct PostBlendByArea
     return Real4(coord.ZW, e);
   }
   
-  /*
-  __
-    |__
-       |__ 
-          |
-  */
+  
+  //__
+  //  |__
+  //     |__ 
+  //        |
+  
   // Second Diagnol search function, for diagnols at a 135 degree angle.
   function DiagnolSearch135Staircase(direction : Real2, e : Real2) : Real4
   {

@@ -30,3 +30,51 @@ struct Mosaic
     this.Target0 = this.Texture.Sample(uv);
   }
 }
+
+
+[Pixel][PostProcess]
+struct DepthMosaic
+{
+  [StageInput] var Uv : Real2;
+  [Input] var SceneTexture : Sampler2d;
+  [Input] var DepthTexture : Sampler2d;
+  
+  [PropertyInput] var FarThreshold : Real = 0.25;
+  [PropertyInput] var NearThreshold : Real = 0.1;
+  [PropertyInput] var FarScale : Real = 8;
+  [PropertyInput] var FarThresholdScale : Real = 1;
+  [PropertyInput] var NearThresholdScale : Real = 1;
+  [PropertyInput] var NearScale : Real = 8;
+  
+  [Output] var Target0 : Real4;
+  
+  
+  function Main()
+  {
+    var uv = this.Uv;
+    
+    var depth = this.DepthTexture.Sample(uv).Z;
+    var farBandDepth = (depth - this.FarThreshold) / (1 - this.FarThreshold);
+    var midBandDepth = (depth - this.NearThreshold) / (this.FarThreshold - this.NearThreshold);
+    var nearBandDepth = depth / this.NearThreshold;
+    var farBandScale = Math.Lerp(this.FarScale, this.FarThresholdScale, farBandDepth);
+    var midBandScale = Math.Lerp(this.FarThresholdScale, this.NearThresholdScale, midBandDepth);
+    var nearBandScale = Math.Lerp(this.NearThresholdScale, this.NearScale, nearBandDepth);
+    
+    var isInFarBand = depth > this.FarThreshold;
+    var isInMidBand = depth > this.NearThreshold;
+    
+    var scale = Math.Lerp(farBandDepth, Math.Lerp(midBandDepth, nearBandDepth, isInMidBand as Real), isInFarBand as Real);
+    
+    var width = 1;
+    var height = 1;
+    
+    var size = this.SceneTexture.SampleSize(0);
+    var pixel = (uv * size) as Integer2;
+    uv = (pixel / (scale * Real2(width, height))) as Integer2 *
+      (scale * Real2(width, height)) + ((scale * Real2(width, height)) / 2.0);
+    uv /= size as Real2;
+    
+    this.Target0 = this.SceneTexture.Sample(uv);
+  }
+}

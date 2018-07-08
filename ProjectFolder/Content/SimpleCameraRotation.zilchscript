@@ -11,6 +11,8 @@ class SimpleCameraRotation : ZilchComponent
   [Property] var Sensitivity = Real2(1);
   [Property] var InvertX = false;
   [Property] var InvertY = false;
+  [Property] var InitialX : Real = 0;
+  [Property] var InitialY : Real = 0;
   
   var IM_ : IM;
   var IM : IM
@@ -44,6 +46,7 @@ class SimpleCameraRotation : ZilchComponent
   function Initialize(init : CogInitializer)
   {
     Zero.Mouse.Trapped = true;
+    this.Angles = Real3(this.InitialX, this.InitialY, 0);
     
     Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
   }

@@ -32,6 +32,13 @@ class StateMachine
   
   
   //***************************************************************************
+  constructor(name : String)
+  {
+    this.Name = name;
+  }
+  
+  
+  //***************************************************************************
   function StateMachineUpdate(event : UpdateEvent)
   {
     this.UpdateTimer(event);
@@ -71,6 +78,9 @@ class StateMachine
     // 
     // TODO: add link priority or something like that
     
+    if (changeCandidates.Count <= 0)
+      return;
+    
     var chosenState = changeCandidates[0].ToState;
     this.ChangeTo(chosenState);
   }
@@ -87,9 +97,9 @@ class StateMachine
   
   
   //***************************************************************************
-  [Virtual] function Enter (owner : Cog)                      {}
+  [Virtual] function Enter (owner : Cog)                      { Print("Entering state `this.Name`"); }
   [Virtual] function Update(owner : Cog, event : UpdateEvent) {}
-  [Virtual] function Exit  (owner : Cog)                      {}
+  [Virtual] function Exit  (owner : Cog)                      { Print("Exiting state `this.Name`"); }
   //***************************************************************************
   
   

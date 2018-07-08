@@ -11,4 +11,41 @@ class InitializeCalculator : ZilchComponent
   function Initialize(init : CogInitializer)
   {
   }
+  
+  
+  //***************************************************************************
+  [Display] function Execute()
+  {
+    //var phi = Math.Pi / 2;
+    //var phi = 0;
+    //var n = 5;
+    //var interiorPhi = 2 * Math.Pi / (2 * n);
+    //var thickness = 48.0;
+    //var exteriorRadius = 118.111;
+    //var interiorRadius = exteriorRadius - (thickness / Math.Cos(Math.Pi / n));
+    //var size = 384.0;
+    //var offset = size / 2;
+    
+    //Console.WriteLine("\n\n");
+    //Console.WriteLine("Exterior:");
+    //for (var i = 0; i < n; ++i)
+    //{
+    //  var x = +exteriorRadius * Math.Cos(phi + (i * 2 * Math.Pi / n)) + offset;
+    //  var y = -exteriorRadius * Math.Sin(phi + (i * 2 * Math.Pi / n)) + offset;
+      
+    //  Console.WriteLine(String.FormatC("  x: %8.2f   |   y: %8.2f", x, y));
+    //}
+    
+    //Console.WriteLine("        Interior:");
+    //for (var i = 0; i < n; ++i)
+    //{
+    //  var x = +interiorRadius * Math.Cos(interiorPhi + (i * 2 * Math.Pi / n)) + offset;
+    //  var y = -interiorRadius * Math.Sin(interiorPhi + (i * 2 * Math.Pi / n)) + offset;
+      
+    //  Console.WriteLine(String.FormatC("          x: %8.2f   |   y: %8.2f", x, y));
+    //}
+    
+    Console.WriteLine(180 - 113.79);
+  }
 }
+// -113.79

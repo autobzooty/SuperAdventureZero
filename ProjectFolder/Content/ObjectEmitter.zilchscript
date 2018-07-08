@@ -115,12 +115,14 @@ class ObjectEmitter : ZilchComponent
   }
   
   
+  //***************************************************************************
   function Initialize(init : CogInitializer)
   {
     this.Active = this.StartActive;
   }
   
   
+  //***************************************************************************
   function OnStandardUpdate(event : UpdateEvent)
   {
     // TODO: (very low priority)
@@ -139,8 +141,15 @@ class ObjectEmitter : ZilchComponent
   }
   
   
+  //***************************************************************************
   function Emit(count : Integer)
   {
+    // TODO:
+    // 
+    // remove the space destruction check when the fix that allows that happens
+    
+    if (this.Space.MarkedForDestruction) return;
+    
     this.TotalEmitted += count;
     // TODO:
     // 
@@ -249,18 +258,21 @@ class ObjectEmitter : ZilchComponent
   }
   
   
+  //***************************************************************************
   function Activate()
   {
     this.Active = true;
   }
   
   
+  //***************************************************************************
   function Deactivate()
   {
     this.Active = false;
   }
   
   
+  //***************************************************************************
   [Display]
   function ResetCount()
   {
@@ -288,6 +300,7 @@ enum ObjectEmitterFacing
 
 class RigidBodyExtensions
 {
+  //***************************************************************************
   [Extension(typeid(RigidBody))][Static]
   function Find(cog : Cog) : RigidBody
   {

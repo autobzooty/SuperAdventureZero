@@ -47,3 +47,54 @@ class MosaicRenderer : ZilchComponent
     event.Event.AddRenderTaskPostProcess(final, copyTarget);
   }
 }
+
+
+[RunInEditor]
+class DepthMosaicRenderer : ZilchComponent
+{
+  [Dependency] var RenderScheduler : RenderScheduler;
+  
+  
+  [Property] var Active : Boolean = true;
+  [Property] var FarThreshold : Real = 0.25;
+  [Property] var NearThreshold : Real = 0.1;
+  [Property] var FarScale : Real = 8;
+  [Property] var FarThresholdScale : Real = 1;
+  [Property] var NearThresholdScale : Real = 1;
+  [Property] var NearScale : Real = 8;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    Zero.Connect(this.Owner, Events.PostProcessRenderUpdate, this.OnPostProcessRenderUpdate);
+  }
+  
+  
+  //***************************************************************************
+  function OnPostProcessRenderUpdate(event : RenderScheduleEvent)
+  {
+    if (!this.Active || this.FarScale == 0.0 || this.NearScale == 0.0) return;
+    
+    var viewportSize = event.ViewportSize;
+    
+    var final = event.FinalTarget;
+    var sceneTarget = event.Event.GetRenderTarget(final.Texture.Size, final.Texture.Format, event.SamplerSettings);
+    
+    var depthMosaic = DepthMosaic();
+    depthMosaic.SceneTexture = final.Texture;
+    depthMosaic.DepthTexture = event.GeoTarget0.Texture;
+    depthMosaic.FarThreshold = this.FarThreshold;
+    depthMosaic.NearThreshold = this.NearThreshold;
+    depthMosaic.FarScale = this.FarScale;
+    depthMosaic.FarThresholdScale = this.FarThresholdScale;
+    depthMosaic.NearThresholdScale = this.NearThresholdScale;
+    depthMosaic.NearScale = this.NearScale;
+    event.Event.AddRenderTaskPostProcess(sceneTarget, depthMosaic);
+    
+    var copyTarget = CopyTarget();
+    copyTarget.Texture = sceneTarget.Texture;
+    
+    event.Event.AddRenderTaskPostProcess(final, copyTarget);
+  }
+}

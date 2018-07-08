@@ -19,39 +19,368 @@ class StateMachineUser : ZilchComponent
   var MaxSpeed : Real = 16;
   [Property]
   var TurnSpeed : Real = 1080; // deg / sec
+  [Property]
+  var HitboxArchetype : Archetype = Archetype.SwordHitbox;
+  [Property]
+  var HitboxLocalPosition : Real3 = Real3(0, 0.5, 0.5);
   
-  var StateMachine : StateMachine = StateMachine();
-  var IdleState : StateMachine = StateMachine();
-  var MovingState : StateMachine = StateMachine();
+  var IM : IM;
+  
+  var StateMachine : StateMachine = StateMachine("MainStateMachine");
+  
+  var IdleState : IdleState = IdleState("Idle");
+  var MovingState : MovingState = MovingState("Moving");
+  var JumpingState : JumpingState = JumpingState("Jumping");
+  var JumpCancelTransition : JumpCancelTransition = JumpCancelTransition("JumpCancelTransition");
+  var FallingState : FallingState = FallingState("Falling");
+  var AttackingState : AttackingState = AttackingState("Attacking");
   
   
   //***************************************************************************
   function Initialize(init : CogInitializer)
   {
+    this.IM = this.GameSession.IM;
     
+    this.StateMachine.Owner = this.Owner;
+    this.StateMachine.CurrentState = this.IdleState;
     
-    Zero.Connect(this.Owner, Events.MovementRequest, this.OnMovementRequest);
+    this.IdleState.User = this;
+    this.MovingState.User = this;
+    this.JumpingState.User = this;
+    this.JumpCancelTransition.User = this;
+    this.FallingState.User = this;
+    this.AttackingState.User = this;
+    this.AttackingState.Duration = 0.26;
+    
+    this.IdleState.CreateLink(this.MovingState, this.IdleState.ToMoving);
+    this.IdleState.CreateLink(this.JumpingState, this.IdleState.ToJumping);
+    this.IdleState.CreateLink(this.AttackingState, this.IdleState.ToAttacking);
+    this.MovingState.CreateLink(this.IdleState, this.MovingState.ToIdle);
+    this.MovingState.CreateLink(this.JumpingState, this.MovingState.ToJumping);
+    this.MovingState.CreateLink(this.AttackingState, this.MovingState.ToAttacking);
+    this.JumpingState.CreateLink(this.FallingState, this.JumpingState.ToFalling);
+    this.JumpingState.CreateLink(this.JumpCancelTransition, this.JumpingState.ToJumpCancelTransition);
+    this.JumpingState.CreateLink(this.AttackingState, this.JumpingState.ToAttacking);
+    this.JumpCancelTransition.CreateLink(this.FallingState, this.JumpCancelTransition.ToFalling);
+    this.FallingState.CreateLink(this.MovingState, this.FallingState.ToMoving);
+    this.FallingState.CreateLink(this.IdleState, this.FallingState.ToIdle);
+    this.FallingState.CreateLink(this.AttackingState, this.FallingState.ToAttacking);
+    this.AttackingState.CreateLink(this.IdleState, this.AttackingState.ToIdle);
+    this.AttackingState.CreateLink(this.FallingState, this.AttackingState.ToFalling);
+    
+    Zero.Connect(this.Space, Events.PlayerUpdate, this.OnPlayerUpdate);
   }
   
   
   //***************************************************************************
-  function OnMovementRequest(event : InputEvent)
+  function OnPlayerUpdate(event : UpdateEvent)
   {
-    if (event.JumpTriggered)
-      this.Sweeper.Jump();
-    else if (event.JumpReleased)
-      this.Sweeper.JumpCancel();
+    this.StateMachine.StateMachineUpdate(event);
     
-    this.Sweeper.MaxMoveSpeed = this.MaxSpeed * event.Magnitude;
-    this.Sweeper.Update(event.Direction, event.Dt);
+    // TODO:
+    // 
+    // update the sweeper here instead of in the state's update function
+  }
+}
+
+
+class IdleState : StateMachine
+{
+  var User : StateMachineUser;
+  
+  
+  //***************************************************************************
+  function ToMoving(parentState : StateMachine) : Boolean
+  {
+    var movementInput = this.User.IM.GetStick(GameStick.Move);
+    var movementInputMagnitudeSq = Math.LengthSq(movementInput);
+    var threshold = MovingState.MovementThreshold;
     
-    if (event.ActiveInput)
-    {
-      var thisQuat = Math.ToQuaternion(this.Orientation.WorldForward, Real3.YAxis);
-      var lookAtQuat = Math.ToQuaternion(event.Direction, Real3.YAxis);
-      var newQuat = Math.RotateTowards(thisQuat, lookAtQuat, Math.ToRadians(this.TurnSpeed) * event.Dt);
-      
-      this.Orientation.SetWorldLookAtRotation(newQuat);
-    }
+    return movementInputMagnitudeSq >= threshold * threshold;
+  }
+  
+  
+  //***************************************************************************
+  function ToJumping(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Triggered(GameAction.Jump);
+  }
+  
+  
+  //***************************************************************************
+  function ToAttacking(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Triggered(GameAction.Attack);
+  }
+}
+
+
+class MovingState : StateMachine
+{
+  [Static]
+  var MovementThreshold : Real = 0.1;
+  
+  var User : StateMachineUser;
+  
+  
+  //***************************************************************************
+  [Override]
+  function Update(owner : Cog, event : UpdateEvent)
+  {
+    var user = this.User;
+    var im = user.IM;
+    var sweeper = user.Sweeper;
+    var orientation = user.Orientation;
+    
+    var movementInput = im.GetStick(GameStick.Move);
+    var direction = Math.Normalize(Real3(movementInput.X, 0, -movementInput.Y));
+    var magnitude = Math.Length(movementInput);
+    
+    sweeper.MaxMoveSpeed = user.MaxSpeed * magnitude;
+    sweeper.Update(direction, event.Dt);
+    
+    var thisQuat = Math.ToQuaternion(orientation.WorldForward, Real3.YAxis);
+    var lookAtQuat = Math.ToQuaternion(direction, Real3.YAxis);
+    var newQuat = Math.RotateTowards(thisQuat, lookAtQuat, Math.ToRadians(user.TurnSpeed) * event.Dt);
+    
+    orientation.SetWorldLookAtRotation(newQuat);
+  }
+  
+  
+  //***************************************************************************
+  function ToIdle(parentState : StateMachine) : Boolean
+  {
+    var movementInput = this.User.IM.GetStick(GameStick.Move);
+    var movementInputMagnitudeSq = Math.LengthSq(movementInput);
+    var threshold = MovingState.MovementThreshold;
+    
+    return movementInputMagnitudeSq < threshold * threshold;
+  }
+  
+  
+  //***************************************************************************
+  function ToJumping(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Triggered(GameAction.Jump);
+  }
+  
+  
+  //***************************************************************************
+  function ToAttacking(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Triggered(GameAction.Attack);
+  }
+}
+
+
+class JumpingState : StateMachine
+{
+  var User : StateMachineUser;
+  
+  
+  //***************************************************************************
+  [Override]
+  function Enter(owner : Cog)
+  {
+    Print("Jumping");
+    this.User.Sweeper.Jump();
+  }
+  
+  
+  //***************************************************************************
+  [Override]
+  function Update(owner : Cog, event : UpdateEvent)
+  {
+    // TODO: get help with this
+    // 
+    // i'm duplicating a lot of code here: what you do on update in Jumping is
+    // practically the same as what you do in Moving (and Falling, and who
+    // knows how many future states as well). should this be a case where i use
+    // the fact that these state machines are nested?
+    
+    // TODO: what if my state machines should not be nested, but parallel???
+    
+    var user = this.User;
+    var im = user.IM;
+    var sweeper = user.Sweeper;
+    var orientation = user.Orientation;
+    
+    var movementInput = im.GetStick(GameStick.Move);
+    var direction = Math.Normalize(Real3(movementInput.X, 0, -movementInput.Y));
+    var magnitude = Math.Length(movementInput);
+    
+    sweeper.MaxMoveSpeed = user.MaxSpeed * magnitude;
+    sweeper.Update(direction, event.Dt);
+    
+    var thisQuat = Math.ToQuaternion(orientation.WorldForward, Real3.YAxis);
+    var lookAtQuat = Math.ToQuaternion(direction, Real3.YAxis);
+    var newQuat = Math.RotateTowards(thisQuat, lookAtQuat, Math.ToRadians(user.TurnSpeed) * event.Dt);
+    
+    orientation.SetWorldLookAtRotation(newQuat);
+  }
+  
+  
+  //***************************************************************************
+  function ToJumpCancelTransition(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Released(GameAction.Jump);
+  }
+  
+  
+  //***************************************************************************
+  function ToFalling(parentState : StateMachine) : Boolean
+  {
+    var velocity = this.User.Sweeper.RigidBody.Velocity;
+    
+    return velocity.Y <= 0;
+  }
+  
+  
+  //***************************************************************************
+  function ToAttacking(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Triggered(GameAction.Attack);
+  }
+}
+
+
+class JumpCancelTransition : StateMachine
+{
+  var User : StateMachineUser;
+  
+  
+  //***************************************************************************
+  [Override]
+  function Enter(owner : Cog)
+  {
+    Print("Canceling jump");
+    this.User.Sweeper.JumpCancel();
+  }
+  
+  
+  //***************************************************************************
+  [Override]
+  function Update(owner : Cog, event : UpdateEvent)
+  {
+    var user = this.User;
+    var im = user.IM;
+    var sweeper = user.Sweeper;
+    var orientation = user.Orientation;
+    
+    var movementInput = im.GetStick(GameStick.Move);
+    var direction = Math.Normalize(Real3(movementInput.X, 0, -movementInput.Y));
+    var magnitude = Math.Length(movementInput);
+    
+    sweeper.MaxMoveSpeed = user.MaxSpeed * magnitude;
+    sweeper.Update(direction, event.Dt);
+    
+    var thisQuat = Math.ToQuaternion(orientation.WorldForward, Real3.YAxis);
+    var lookAtQuat = Math.ToQuaternion(direction, Real3.YAxis);
+    var newQuat = Math.RotateTowards(thisQuat, lookAtQuat, Math.ToRadians(user.TurnSpeed) * event.Dt);
+    
+    orientation.SetWorldLookAtRotation(newQuat);
+  }
+  
+  
+  //***************************************************************************
+  function ToFalling(parentState : StateMachine) : Boolean { return true; }
+}
+
+
+class FallingState : StateMachine
+{
+  var User : StateMachineUser;
+  
+  
+  //***************************************************************************
+  [Override]
+  function Update(owner : Cog, event : UpdateEvent)
+  {
+    var user = this.User;
+    var im = user.IM;
+    var sweeper = user.Sweeper;
+    var orientation = user.Orientation;
+    
+    var movementInput = im.GetStick(GameStick.Move);
+    var direction = Math.Normalize(Real3(movementInput.X, 0, -movementInput.Y));
+    var magnitude = Math.Length(movementInput);
+    
+    sweeper.MaxMoveSpeed = user.MaxSpeed * magnitude;
+    sweeper.Update(direction, event.Dt);
+    
+    var thisQuat = Math.ToQuaternion(orientation.WorldForward, Real3.YAxis);
+    var lookAtQuat = Math.ToQuaternion(direction, Real3.YAxis);
+    var newQuat = Math.RotateTowards(thisQuat, lookAtQuat, Math.ToRadians(user.TurnSpeed) * event.Dt);
+    
+    orientation.SetWorldLookAtRotation(newQuat);
+  }
+  
+  
+  //***************************************************************************
+  function ToMoving(parentState : StateMachine) : Boolean
+  {
+    var movementInput = this.User.IM.GetStick(GameStick.Move);
+    var movementInputMagnitudeSq = Math.LengthSq(movementInput);
+    var threshold = MovingState.MovementThreshold;
+    var moving = movementInputMagnitudeSq >= threshold * threshold;
+    
+    return this.User.Sweeper.Grounded && moving;
+  }
+  
+  
+  //***************************************************************************
+  function ToIdle(parentState : StateMachine) : Boolean
+  {
+    return this.User.Sweeper.Grounded;
+  }
+  
+  
+  //***************************************************************************
+  function ToAttacking(parentState : StateMachine) : Boolean
+  {
+    return this.User.IM.Triggered(GameAction.Attack);
+  }
+}
+
+
+class AttackingState : StateMachine
+{
+  var User : StateMachineUser;
+  
+  
+  //***************************************************************************
+  [Override]
+  function Enter(owner : Cog)
+  {
+    this.User.Sweeper.JumpCancel();
+    
+    var hitboxArchetype = this.User.HitboxArchetype;
+    var hitboxWorldPosition = this.User.Transform.TransformPoint(this.User.HitboxLocalPosition);
+    var hitbox = this.User.Space.CreateAtPosition(hitboxArchetype, hitboxWorldPosition);
+    
+    hitbox.AttachTo(this.User.Owner);
+    hitbox.Transform.LocalRotation = Quaternion.Identity;
+  }
+  
+  
+  //***************************************************************************
+  [Override]
+  function Update(owner : Cog, event : UpdateEvent)
+  {
+    this.User.Sweeper.Update(Real3.Zero, event.Dt);
+  }
+  
+  
+  //***************************************************************************
+  function ToFalling(parentState : StateMachine) : Boolean
+  {
+    return this.Ding && !this.User.Sweeper.Grounded;
+  }
+  
+  
+  //***************************************************************************
+  function ToIdle(parentState : StateMachine) : Boolean
+  {
+    return this.Ding && this.User.Sweeper.Grounded;
   }
 }

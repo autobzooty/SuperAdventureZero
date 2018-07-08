@@ -19,7 +19,7 @@ Cog
 		var Ghost = false
 		var SendsEvents = true
 		var Material = "4de020863e872da8:DefaultPhysicsMaterial"
-		var CollisionGroup = "4e740859314e5515:DefaultGroup"
+		var CollisionGroup = "5a3ab749d62f95dd:Player"
 		var Offset = Real3{0, -0.5, 0}
 		var Radius = 0.5
 		var Height = 1
@@ -123,11 +123,6 @@ Cog
 		var GroundTraction = 1
 		var AirTraction = 1
 	}
-	SimpleSweptMover 
-	{
-		var MaxSpeed = 16
-		var TurnSpeed = 1080
-	}
 	HumanMoverInterface 
 	{
 		var CameraPath = CogPath
@@ -182,6 +177,52 @@ Cog
 	}
 	Collector 
 	{
+	}
+	Interactor 
+	{
+		var ColliderPath = CogPath
+		{
+			var Path = "."
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+		var OrientationPath = CogPath
+		{
+			var Path = "."
+			var ErrorOnResolveToNull = false
+			var ErrorOnPathCantCompute = false
+			var ErrorOnDirectLinkFail = false
+			var UpdateCogOnPathChange = true
+			var UpdatePathOnCogChange = true
+			var UpdateCogOnInitialize = true
+			var ResolvedNullErrorOccurred = false
+			var Cog = 4294967293
+			var PathPreference0 = CogPathPreference.CogRelative
+			var PathPreference1 = CogPathPreference.SpaceRelative
+			var PathPreference2 = CogPathPreference.Absolute
+		}
+	}
+	HumanInteractorInterface 
+	{
+	}
+	HudMaster 
+	{
+		var HudSpaceArchetype = "4e39ae0ad564493d:DefaultSpace"
+		var HudLevel = "5a3a70d6fd68fdcc:HudLevel"
+	}
+	SimpleSweptMover 
+	{
+		var MaxSpeed = 12
+		var TurnSpeed = 1080
 	}
 	Hierarchy 
 	{
@@ -337,6 +378,9 @@ Cog
 					{
 						var SlotType = EquipmentType.Accessory
 					}
+					Hierarchy 
+					{
+					}
 				}
 			}
 		}
@@ -396,6 +440,7 @@ Cog
 								var FarDistance = 20
 								var MinVisibility = 0
 								var MaxVisibility = 1
+								var XrayColor = Real4{1, 0, 0, 1}
 							}
 						}
 						Cog [Id:0x5a2c0a0c4fd4507f]
@@ -465,6 +510,7 @@ Cog
 														var FarDistance = 20
 														var MinVisibility = 0
 														var MaxVisibility = 1
+														var XrayColor = Real4{1, 0, 0, 1}
 													}
 												}
 												Cog [Id:0x5ab2c771b46edb2f]
@@ -501,6 +547,7 @@ Cog
 														var FarDistance = 20
 														var MinVisibility = 0
 														var MaxVisibility = 1
+														var XrayColor = Real4{1, 0, 0, 1}
 													}
 												}
 												Cog [Id:0x5ab2c782a75051cf]
@@ -537,6 +584,7 @@ Cog
 														var FarDistance = 20
 														var MinVisibility = 0
 														var MaxVisibility = 1
+														var XrayColor = Real4{1, 0, 0, 1}
 													}
 												}
 											}
@@ -586,6 +634,7 @@ Cog
 														var FarDistance = 20
 														var MinVisibility = 0
 														var MaxVisibility = 1
+														var XrayColor = Real4{1, 0, 0, 1}
 													}
 												}
 												Cog [Id:0x5ab2c770b5b071fc]
@@ -622,6 +671,7 @@ Cog
 														var FarDistance = 20
 														var MinVisibility = 0
 														var MaxVisibility = 1
+														var XrayColor = Real4{1, 0, 0, 1}
 													}
 												}
 												Cog [Id:0x5ab2c78fd8e88e95]
@@ -658,6 +708,7 @@ Cog
 														var FarDistance = 20
 														var MinVisibility = 0
 														var MaxVisibility = 1
+														var XrayColor = Real4{1, 0, 0, 1}
 													}
 												}
 											}
@@ -709,6 +760,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}
@@ -762,6 +814,7 @@ Cog
 								var FarDistance = 20
 								var MinVisibility = 0
 								var MaxVisibility = 1
+								var XrayColor = Real4{1, 0, 0, 1}
 							}
 						}
 					}
@@ -833,6 +886,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}
@@ -895,6 +949,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}
@@ -970,6 +1025,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}
@@ -1032,6 +1088,7 @@ Cog
 												var FarDistance = 20
 												var MinVisibility = 0
 												var MaxVisibility = 1
+												var XrayColor = Real4{1, 0, 0, 1}
 											}
 										}
 									}

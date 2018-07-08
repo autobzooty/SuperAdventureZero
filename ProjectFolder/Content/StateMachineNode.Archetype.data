@@ -1,16 +1,16 @@
 [Version:1]
 Cog 
 {
-	var Name = "Node1"
+	var Name = "Node0"
 	Transform 
 	{
-		var Translation = Real3{715, -449, 0}
+		var Translation = Real3{177, -297, 0}
 		var Scale = Real3{1, 1, 1}
 		var Rotation = Quaternion{0, 0, 0, 1}
 	}
 	Area 
 	{
-		var Size = Real2{64, 64}
+		var Size = Real2{72, 72}
 		var Origin = Location.TopLeft
 	}
 	UiWidget 
@@ -24,8 +24,8 @@ Cog
 		var CanTakeFocus = false
 		var LocalColor = Real4{0, 0, 0, 0.300000012}
 		var HierarchyColor = Real4{1, 1, 1, 1}
-		var SizePolicyX = UiSizePolicy.Fixed
-		var SizePolicyY = UiSizePolicy.Fixed
+		var SizePolicyX = UiSizePolicy.Auto
+		var SizePolicyY = UiSizePolicy.Auto
 		var FlexSize = Real2{1, 1}
 		var AbsoluteMinSize = Real2{1, 1}
 		var VerticalAlignment = UiVerticalAlignment.Top
@@ -57,10 +57,10 @@ Cog
 	}
 	UiFillLayout 
 	{
-		var PaddingLeft = 4
-		var PaddingTop = 4
-		var PaddingRight = 4
-		var PaddingBottom = 4
+		var PaddingLeft = 0
+		var PaddingTop = 0
+		var PaddingRight = 0
+		var PaddingBottom = 0
 	}
 	StateMachineNodeUi 
 	{
@@ -72,7 +72,7 @@ Cog
 			var Name = "ColorFill"
 			Transform 
 			{
-				var Translation = Real3{4, -4, 0}
+				var Translation = Real3{8, -8, 0}
 				var Scale = Real3{1, 1, 1}
 				var Rotation = Quaternion{0, 0, 0, 1}
 			}
@@ -92,16 +92,16 @@ Cog
 				var CanTakeFocus = false
 				var LocalColor = Real4{0.899999976, 0.584999979, 0.359999955, 1}
 				var HierarchyColor = Real4{1, 1, 1, 1}
-				var SizePolicyX = UiSizePolicy.Flex
-				var SizePolicyY = UiSizePolicy.Flex
+				var SizePolicyX = UiSizePolicy.Fixed
+				var SizePolicyY = UiSizePolicy.Fixed
 				var FlexSize = Real2{1, 1}
 				var AbsoluteMinSize = Real2{1, 1}
 				var VerticalAlignment = UiVerticalAlignment.Center
 				var HorizontalAlignment = UiHorizontalAlignment.Center
-				var MarginLeft = 0
-				var MarginTop = 0
-				var MarginRight = 0
-				var MarginBottom = 0
+				var MarginLeft = 8
+				var MarginTop = 8
+				var MarginRight = 8
+				var MarginBottom = 8
 				var DockMode = UiDockMode.Left
 			}
 			Sprite 

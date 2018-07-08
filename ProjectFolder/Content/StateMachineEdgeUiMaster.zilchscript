@@ -12,6 +12,10 @@ class StateMachineEdgeUiMaster : ZilchComponent
   var EdgeParentPath : CogPath = CogPath(".");
   [Property]
   var PutawaySpacing : Real = 4;
+  [Property]
+  var PutawayShaftSize : Real2 = Real2(64, 4);
+  [Property]
+  var PutawayHeadSize : Real2 = Real2(12, 6);
   
   var EdgeParent : Cog;
   var EdgeParentWidget : UiWidget;
@@ -22,6 +26,14 @@ class StateMachineEdgeUiMaster : ZilchComponent
   {
     this.EdgeParent = this.EdgeParentPath.Cog;
     this.EdgeParentWidget = this.EdgeParentPath.UiWidget;
+  }
+  
+  
+  //***************************************************************************
+  [Display] function ConnectEdges()
+  {
+    foreach (var edge in this.FindEdges())
+      edge.StateMachineEdgeUi.PutInPosition();
   }
   
   
@@ -44,18 +56,10 @@ class StateMachineEdgeUiMaster : ZilchComponent
       widget.WorldTopLeft = widgetTopLeft;
       
       var edgeUi = edge.StateMachineEdgeUi;
-      edgeUi.ResetSizes();
+      edgeUi.ResetSizes(this.PutawayShaftSize, this.PutawayHeadSize);
       
-      y += widget.Size.Y + spacing;
+      y += spacing;
     }
-  }
-  
-  
-  //***************************************************************************
-  [Display] function CleanEdgesUp()
-  {
-    foreach (var edge in this.FindEdges())
-      edge.StateMachineEdgeUi.PutInPosition();
   }
   
   

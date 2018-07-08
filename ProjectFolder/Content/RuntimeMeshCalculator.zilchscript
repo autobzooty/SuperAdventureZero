@@ -1,0 +1,53 @@
+///////////////////////////////////////////////////////////////////////////////
+///           |
+/// AUTHORS   | Doug Zwick
+/// COPYRIGHT | (C) 2018 Milky Way Games
+///           |
+///////////////////////////////////////////////////////////////////////////////
+
+class RuntimeMeshCalculator : ZilchComponent
+{
+  [Dependency]
+  var Model : Model;
+  
+  
+  [Display]
+  var Mesh : Mesh;
+  
+  
+  //***************************************************************************
+  function Initialize(init : CogInitializer)
+  {
+    if (this.Mesh == null)
+    {
+      this.Model.Mesh = Mesh.Cube;
+      return;
+    }
+    
+    this.Model.Mesh = this.Mesh;
+  }
+  
+  
+  //***************************************************************************
+  [Display]
+  function Calculate()
+  {
+    var mesh = Mesh.CreateRuntime();
+    mesh.Vertices.AddAttribute(VertexSemantic.Position, VertexElementType.Real, 3);
+    
+    var n = 6;
+    var radius = 1.0;
+    
+    for (var i = 0; i < n; ++i)
+    {
+      var x = +radius * Math.Cos(i * 2 * Math.Pi / n);
+      var y = -radius * Math.Sin(i * 2 * Math.Pi / n);
+      var z = 0;
+      
+      mesh.Vertices.AddReal(Real3(x, y, z));
+    }
+    
+    this.Mesh = mesh;
+    this.Model.Mesh = mesh;
+  }
+}
